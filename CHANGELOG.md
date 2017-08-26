@@ -1,8 +1,5 @@
-## Joko SPA Starter Kit Changelog
+## Changelog
 
-Todos los cambios más importantes se listarán aquí.
+All major changes will be listed here
 
-### v0.0.1
-- Login con JWT
-- Bootstrap
-- Parsley para validación
+### v0.0.1 (In Development)
