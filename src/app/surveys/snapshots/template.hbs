@@ -1,0 +1,16 @@
+<div>
+  <div class="text-xs-right pull-right">
+    <button class="btn btn-primary" id="new-survey"> Answer New Survey
+      </button>
+  </div>
+  <h3>
+    Surveys</h3>
+  <ul class="list-group" id="snapshots-list">
+    {{#each snapshots}}
+    <li class="list-group-item">
+      <p>{{attributes.rowResource.savepointTimestamp}}</p>
+      <a href="#">{{attributes.rowResource.rowETag}}</a>
+    </li>
+    {{/each}}
+  </ul>
+</div>
