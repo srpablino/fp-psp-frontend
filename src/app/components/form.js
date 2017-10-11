@@ -11,14 +11,13 @@ class Form extends Component {
     return (
       <JsonSchemaForm
         schema={schema}
-        onChange={log('changed')}
         onSubmit={handleSubmit}
         onError={log('errors')}
       >
         <div>
           <button
             type="button"
-            onClick={handleCancel}
+            onClick={() => handleCancel()}
             className="btn btn-danger"
           >
             Cancel

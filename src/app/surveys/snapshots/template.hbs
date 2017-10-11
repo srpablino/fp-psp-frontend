@@ -1,15 +1,22 @@
 <div>
   <div class="text-xs-right pull-right">
-    <button class="btn btn-primary" id="new-survey"> Answer New Survey
-      </button>
+    <button class="btn btn-primary" id="new-survey"> Answer Survey
+    </button>
   </div>
-  <h3>
-    Surveys</h3>
+  <br />
+  <div>
+    <label>Surveys:</label>
+    <select id="table-id">
+      <option selected="selected" value="hamsterform">hamsterform</option>
+      <option value="poverty_stoplight_test4">poverty_stoplight_test4</option>
+    </select>
+  </div>
   <ul class="list-group" id="snapshots-list">
     {{#each snapshots}}
     <li class="list-group-item">
-      <p>{{attributes.rowResource.savepointTimestamp}}</p>
-      <a href="#">{{attributes.rowResource.rowETag}}</a>
+      {{#each attributes.rowResource.orderedColumns}}
+      <label>{{column}}</label>: {{value}}
+      <br /> {{/each}}
     </li>
     {{/each}}
   </ul>
