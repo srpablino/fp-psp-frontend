@@ -25,9 +25,11 @@ export default Mn.View.extend({
     this.getRegion('surveysContent').show(newSurveyView);
   },
 
-  showSnapshots() {
+  showSnapshots(tableId = null) {
     const snapshotsView = new SnapshotsView({
-      handleNewSurvey: this.newSurvey.bind(this)
+      handleNewSurvey: this.newSurvey.bind(this),
+      tableId: tableId,
+      handleSurveySelectChange: this.showSnapshots.bind(this)
     });
     this.getRegion('surveysContent').show(snapshotsView);
   }
