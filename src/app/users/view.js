@@ -13,7 +13,7 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-      users: this.collection.models,
+      users: this.collection.models
     };
-  },
+  }
 });

@@ -16,5 +16,19 @@ export default Mn.AppRouter.extend({
     users: 'showUsers',
     organizations: 'showOrganizations',
     surveys: 'showSurveys'
+  },
+  onRoute(name, path) {
+    // On navigation the active menu did not change,
+    // so we do this manually.
+    this.selectActiveMenu(path);
+  },
+  selectActiveMenu(activePath) {
+    $('.nav')
+      .find('.active')
+      .removeClass('active');
+    $('.nav')
+      .find(`a[href=${activePath}]`)
+      .parent()
+      .addClass('active');
   }
 });

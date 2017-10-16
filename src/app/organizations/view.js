@@ -1,19 +1,28 @@
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
-import Collection from './collection';
+import OrganizationListView from './list/view';
+import AddOrganizationView from './add/view';
 
 export default Mn.View.extend({
   template: Template,
-
-  initialize() {
-    this.collection = new Collection();
-    this.collection.on('sync', this.render);
-    this.collection.fetch();
+  regions: {
+    organizations: '#organizations-region'
   },
-
-  serializeData() {
-    return {
-      organizations: this.collection.models,
-    };
+  initialize() {},
+  onRender() {
+    this.listOrganizations();
   },
+  listOrganizations() {
+    const listView = new OrganizationListView({
+      addOrganization: this.addOrganization.bind(this)
+    });
+    this.getRegion('organizations').show(listView);
+  },
+  addOrganization(model) {
+    const addView = new AddOrganizationView({
+      model: model,
+      listOrganizations: this.listOrganizations.bind(this)
+    });
+    this.getRegion('organizations').show(addView);
+  }
 });

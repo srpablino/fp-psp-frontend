@@ -1,4 +1,5 @@
 import Mn from 'backbone.marionette';
+import Bb from 'backbone';
 import template from './template.hbs';
 import UsersView from '../users/view';
 import OrganizationsView from '../organizations/view';
@@ -10,7 +11,6 @@ export default Mn.View.extend({
   regions: {
     content: '#content'
   },
-
   showUsers() {
     this.getRegion('content').show(new UsersView());
   },
