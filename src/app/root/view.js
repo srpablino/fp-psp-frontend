@@ -1,9 +1,7 @@
 import Mn from 'backbone.marionette';
-import Bb from 'backbone';
 import template from './template.hbs';
 import UsersView from '../users/view';
 import OrganizationsView from '../organizations/view';
-import SurveysView from '../surveys/view';
 
 export default Mn.View.extend({
   template,
@@ -17,8 +15,5 @@ export default Mn.View.extend({
 
   showOrganizations() {
     this.getRegion('content').show(new OrganizationsView());
-  },
-  showSurveys() {
-    this.getRegion('content').show(new SurveysView());
   }
 });

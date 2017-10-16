@@ -14,8 +14,7 @@ export default Mn.AppRouter.extend({
   appRoutes: {
     '': 'showUsers',
     users: 'showUsers',
-    organizations: 'showOrganizations',
-    surveys: 'showSurveys'
+    organizations: 'showOrganizations'
   },
   onRoute(name, path) {
     // On navigation the active menu did not change,
