@@ -1,6 +1,6 @@
 import Bn from 'backbone';
-import env from '../env';
+import env from '../../env';
 
 export default Bn.Collection.extend({
-  url: `${env.API}/organizations`,
+  url: `${env.API}/surveys`
 });

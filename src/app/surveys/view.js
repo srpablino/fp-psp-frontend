@@ -1,36 +1,28 @@
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
-import NewSurveyView from './definitions/view';
-import SnapshotsView from './snapshots/view';
+import ListView from './list/view';
+import AddView from './add/view';
 
 export default Mn.View.extend({
   template: Template,
-
   regions: {
     surveysContent: '#surveys-content'
   },
-
   initialize() {},
-
   onRender() {
-    this.showSnapshots();
+    this.list();
   },
-
-  newSurvey(event) {
-    const newSurveyView = new NewSurveyView({
-      surveyId: 123,
-      handleCancel: this.showSnapshots.bind(this)
+  list() {
+    const listView = new ListView({
+      add: this.add.bind(this)
     });
-
-    this.getRegion('surveysContent').show(newSurveyView);
+    this.getRegion('surveysContent').show(listView);
   },
-
-  showSnapshots(tableId = null) {
-    const snapshotsView = new SnapshotsView({
-      handleNewSurvey: this.newSurvey.bind(this),
-      tableId: tableId,
-      handleSurveySelectChange: this.showSnapshots.bind(this)
+  add(model) {
+    const addView = new AddView({
+      model: model,
+      listSurveys: this.list.bind(this)
     });
-    this.getRegion('surveysContent').show(snapshotsView);
+    this.getRegion('surveysContent').show(addView);
   }
 });
