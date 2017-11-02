@@ -1,6 +1,6 @@
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
-import NewSurveyView from './add/view';
+import NewSnapshotView from './add/view';
 import SnapshotsView from './list/view';
 import SurveyModel from '../surveys/add/model';
 
@@ -21,19 +21,19 @@ export default Mn.View.extend({
     this.showSnapshots();
   },
 
-  newSurvey() {
-    const newSurveyView = new NewSurveyView({
+  newSnapshot() {
+    const newSnapshotView = new NewSnapshotView({
       surveyId: this.surveyModel.get('id'),
       handleCancel: this.render.bind(this)
     });
 
-    this.getRegion('snapshotsContent').show(newSurveyView);
+    this.getRegion('snapshotsContent').show(newSnapshotView);
   },
 
   showSnapshots() {
     const snapshotsView = new SnapshotsView({
       surveyModel: this.surveyModel,
-      handleNewSurvey: this.newSurvey.bind(this)
+      handleNewSnapshot: this.newSnapshot.bind(this)
     });
     this.getRegion('snapshotsContent').show(snapshotsView);
   }

@@ -3,8 +3,8 @@ import Template from './template.hbs';
 import Form from '../../components/form';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DefinitionModel from './new_survey_definition';
-import SnapshotModel from './new_snapshot';
+import SurveyModel from '../../surveys/add/model';
+import SnapshotModel from './model';
 import _ from 'lodash';
 
 export default Mn.View.extend({
@@ -17,7 +17,10 @@ export default Mn.View.extend({
 
   initialize(options) {
     const { surveyId, handleCancel } = options;
-    this.definitionModel = new DefinitionModel({ id: surveyId });
+    this.surveyModel = new SurveyModel({ id: surveyId });
+    this.surveyModel.on('sync', () => this.renderForm());
+    this.surveyModel.fetch();
+
     this.props = {};
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
@@ -47,49 +50,36 @@ export default Mn.View.extend({
     newSchema.properties = newProps;
     return newSchema;
   },
-
-  onRender() {
-    this.renderForm();
-  },
   renderForm() {
-    const surveyId = this.$el.find('#survey-id').val();
-
     const placeHolder = this.$el.find('#new-survey')[0];
-
-    this.definitionModel
-      //.fetch({ data: { survey_id: this.props.surveyId } })
-      .fetch()
-      .then(result => {
-        this.props.surveyDefinition = result;
-        const { survey_schema } = result;
-        const localizedSchema = this.getLocalizedSchema(survey_schema);
-        this.reactView = React.createElement(Form, {
-          schema: localizedSchema,
-          handleSubmit: this.hadleSubmit.bind(this),
-          handleCancel: this.props.handleCancel,
-          view: this
-        });
-        ReactDOM.unmountComponentAtNode(placeHolder);
-        ReactDOM.render(this.reactView, placeHolder);
-      });
+    const { survey_schema } = this.surveyModel.attributes;
+    const localizedSchema = this.getLocalizedSchema(survey_schema);
+    this.reactView = React.createElement(Form, {
+      schema: localizedSchema,
+      handleSubmit: this.hadleSubmit.bind(this),
+      handleCancel: this.props.handleCancel,
+      view: this
+    });
+    ReactDOM.unmountComponentAtNode(placeHolder);
+    ReactDOM.render(this.reactView, placeHolder);
   },
 
   onGoBack() {
     this.props.handleCancel();
   },
-  onSurveySelectChange(event) {
+  onSurveySelectChange() {
     this.renderForm();
   },
   getIndicators({ formData }) {
     return _.pick(
       formData,
-      this.props.surveyDefinition.survey_ui_schema['ui:group:indicators']
+      this.surveyModel.get('survey_ui_schema')['ui:group:indicators']
     );
   },
   getEconomics({ formData }) {
     return _.pick(
       formData,
-      this.props.surveyDefinition.survey_ui_schema['ui:group:economics']
+      this.surveyModel.get('survey_ui_schema')['ui:group:economics']
     );
   },
   hadleSubmit(formResult) {
@@ -99,7 +89,7 @@ export default Mn.View.extend({
       economic_survey_data: this.getEconomics(formResult)
     };
 
-    new SnapshotModel().save(snapshot).then(result => {
+    new SnapshotModel().save(snapshot).then(() => {
       this.props.handleCancel();
     });
   }

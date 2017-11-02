@@ -6,12 +6,12 @@ import SnapshotItem from './item/view';
 export default Mn.View.extend({
   template: Template,
   events: {
-    'click #new-survey': 'newSurvey'
+    'click #new-snapshot': 'newSnapshot'
   },
   initialize(options) {
-    const { handleNewSurvey, surveyModel } = options;
+    const { handleNewSnapshot, surveyModel } = options;
     this.props = {};
-    this.props.handleNewSurvey = handleNewSurvey;
+    this.props.handleNewSnapshot = handleNewSnapshot;
     this.props.surveyModel = surveyModel;
 
     this.collection = new SnapshotCollection();
@@ -33,8 +33,8 @@ export default Mn.View.extend({
       surveyTitle: this.props.surveyModel.get('title')
     };
   },
-  newSurvey() {
+  newSnapshot() {
     const surveyId = this.$el.find('#survey-id').val();
-    this.props.handleNewSurvey(surveyId);
+    this.props.handleNewSnapshot(surveyId);
   }
 });
