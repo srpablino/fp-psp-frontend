@@ -13,7 +13,7 @@ class Form extends Component {
     return (
      <JsonSchemaForm
         schema={schema}
-        uiSchema={uiSchema['ui:fields']}
+        uiSchema={uiSchema['ui:custom:fields']?uiSchema['ui:custom:fields']:{}}
         fields={{ gallery: Gallery }}
         onSubmit={handleSubmit}
         onError={log('errors')}

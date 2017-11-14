@@ -16,27 +16,32 @@ class Gallery extends React.Component {
 
         this.state = { 
             selected : current,
-            urls: props.schema.items.enum,
+            images: props.schema.items.enum,
             title: props.schema.title,
             required: props.required ? '*': ''
         };
     }
 
-    renderImage(imageUrl, index, className) {
+    renderImage(imageUrl, imageDescription, imageValue, index, className) {
         return (
-            <div  key={index} onClick={this._handleClickOnImage(index, imageUrl)} className={className} >
+            <div  key={index} onClick={this._handleClickOnImage(index, imageUrl, imageDescription, imageValue)} className={className} >
+            <figure>
                 <img src={imageUrl} />
+                <figcaption>{imageDescription}</figcaption>
+                </figure>
             </div>
         );
     }
 
     render() {
         var images = [];
-        for (var i = 0; i < this.state.urls.length; i++) {
-            var url = this.state.urls[i];
+        for (var i = 0; i < this.state.images.length; i++) {
+            var url = this.state.images[i]['url'];
+            var description = this.state.images[i]['description'];
+            var value = this.state.images[i]['value'];
             var clazz = url == this.state.selected ? 'gallery-selected' : '';
             clazz += ' gallery-image gallery-image-div '
-            images.push(this.renderImage(url, i, clazz));
+            images.push(this.renderImage(url, description, value, i, clazz));
         }
 
         return (
@@ -49,14 +54,14 @@ class Gallery extends React.Component {
         );
     }
 
-    _handleClickOnImage(index, imageUrl) {
+    _handleClickOnImage(index, imageUrl, imageDescription, imageValue) {
         var component = this;
         return function () {
-            if (component.props.onChange) component.props.onChange(index, imageUrl);
+            if (component.props.onChange) component.props.onChange(index, imageUrl, imageDescription, imageValue);
             component.setState({
                 selected: imageUrl
             });
-            setImmediate(() => component.props.onChange([ imageUrl ]));
+            setImmediate(() => component.props.onChange([ {"url":imageUrl, "description":imageDescription, "value":imageValue} ]));
         }
 
     }
