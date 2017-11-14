@@ -248,22 +248,32 @@ div.fp-form {
 
 // GALLERY WIDGET
 
-.gallery-image > img {
+.gallery-image > figure > img {
   opacity: 0.5;
-  height: 200px;
+  height: 240px;
   width: 300px; 
-  margin: 10px;
-  float: left;
 }
 
-.gallery-image.gallery-selected > img {
+.gallery-image > figure {
+  float: left;
+  margin: 10px;
+}
+
+.gallery-image > figure > figcaption {
+  width: 300px;
+  margin: 10px;
+  text-align: justify;
+}
+
+
+.gallery-image.gallery-selected > figure > img {
   opacity: 1;
-  height: 210px;
+  height: 250px;
   width: 310px; 
 }
 
 .field-gallery > div {
-  height: 220px;
+  height: 400px;
   width: 1200px;
   
 }
