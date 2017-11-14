@@ -54,8 +54,11 @@ export default Mn.View.extend({
     const placeHolder = this.$el.find('#new-survey')[0];
     const { survey_schema } = this.surveyModel.attributes;
     const localizedSchema = this.getLocalizedSchema(survey_schema);
+    const uiSchema = this.surveyModel.attributes.survey_ui_schema;
+    
     this.reactView = React.createElement(Form, {
       schema: localizedSchema,
+      uiSchema : uiSchema,
       handleSubmit: this.hadleSubmit.bind(this),
       handleCancel: this.props.handleCancel,
       view: this
@@ -82,7 +85,9 @@ export default Mn.View.extend({
       this.surveyModel.get('survey_ui_schema')['ui:group:economics']
     );
   },
+
   hadleSubmit(formResult) {
+    
     const snapshot = {
       survey_id: this.props.surveyId,
       indicator_survey_data: this.getIndicators(formResult),

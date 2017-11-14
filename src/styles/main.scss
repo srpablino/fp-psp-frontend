@@ -190,3 +190,25 @@ a {
 #text-editor {
   min-height: 150px;
 }
+
+// GALLERY WIDGET
+
+.gallery-image > img {
+  opacity: 0.5;
+  height: 200px;
+  width: 300px; 
+  margin: 10px;
+  float: left;
+}
+
+.gallery-image.gallery-selected > img {
+  opacity: 1;
+  height: 210px;
+  width: 310px; 
+}
+
+.field-gallery > div {
+  height: 220px;
+  width: 1200px;
+  
+}

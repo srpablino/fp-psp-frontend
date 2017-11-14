@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 import JsonSchemaForm from 'react-jsonschema-form';
+import Gallery from './gallery';
+
 const log = type => console.log.bind(console, type);
 
 class Form extends Component {
   render() {
-    const { schema, handleSubmit, handleCancel } = this.props;
-
+    const { schema, uiSchema, handleSubmit, handleCancel } = this.props;
+  
     return (
-      <JsonSchemaForm
+     <JsonSchemaForm
         schema={schema}
+        uiSchema={uiSchema['ui:fields']}
+        fields={{ gallery: Gallery }}
         onSubmit={handleSubmit}
         onError={log('errors')}
       >
