@@ -86,8 +86,25 @@ export default Mn.View.extend({
     );
   },
 
+  fixedGalleryFieldValue(formResult){
+      var self = this;
+      var galleryFields = [];
+      var customFields = this.surveyModel.attributes.survey_ui_schema['ui:custom:fields'];
+
+      $.each(customFields, function(i, item) {
+        if(item['ui:field'] && item['ui:field']==='gallery'){
+          var itemSelected = formResult['formData'][i];
+          formResult['formData'][i] = itemSelected[0]['value'];
+          formResult['schema']['properties'][i]['type'] = 'string';
+          self.surveyModel.attributes.survey_schema.properties[i]['type'] = 'string';
+        }
+      });
+  },
+
   hadleSubmit(formResult) {
-    
+    //Convert from array to string, using property "value" 
+    this.fixedGalleryFieldValue(formResult);
+
     const snapshot = {
       survey_id: this.props.surveyId,
       indicator_survey_data: this.getIndicators(formResult),
