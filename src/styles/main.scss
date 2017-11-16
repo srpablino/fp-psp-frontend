@@ -195,30 +195,31 @@ a {
 
 .gallery-image > figure > img {
   opacity: 0.5;
-  height: 240px;
-  width: 300px; 
+  min-height: 240px;
+  max-width: 340px; 
 }
 
 .gallery-image > figure {
   float: left;
-  margin: 10px;
+  margin: 5px;
+  min-height: 300px;
 }
 
 .gallery-image > figure > figcaption {
-  width: 300px;
-  margin: 10px;
+  max-width: 340px;
+  margin: 5px;
   text-align: justify;
 }
 
 
 .gallery-image.gallery-selected > figure > img {
   opacity: 1;
-  height: 250px;
-  width: 310px; 
+  min-height: 250px;
+  max-width: 350px; 
 }
 
 .field-gallery > div {
-  height: 400px;
-  width: 1200px;
+  min-height: 430px;
+  max-width: 1200px;
   
 }
