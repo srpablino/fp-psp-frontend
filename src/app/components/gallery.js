@@ -6,9 +6,10 @@ class Gallery extends React.Component {
         super(props);
 
         var current = '';
-        if (props.formData) {
-            if (Array.isArray(props.formData)) {
-                current = props.formData[0];
+
+        if (props.schema && props.schema['default']) {
+            if (Array.isArray(props.schema['default'])) {
+                current = props.schema['default'][0]['url'];
             } else {
                 current = props.formData;
             }
