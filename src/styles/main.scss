@@ -12,22 +12,29 @@ a {
   padding: 0px;
   > img {
     height: 100%;
-    padding: 15px;
+    padding: 5px;
     width: auto;
   }
 }
 
+
 .fp-navbar {
-  background-color: #26e462;
+  background-color: #7cd071;
   .navbar-nav {
+    > li {
+      border-right: 1px solid #50aa47;
+    }
     > li > a {
-      color: #fff;
+      color: #ffffff;
+      font-family: "Roboto";
+      font-weight: 400;
+      font-size: 13px;
     }
 
     > .active > a,
     .navbar-default .navbar-nav > .active > a:focus,
     .navbar-default .navbar-nav > .active > a:hover {
-      background-color: #29a74f;
+      background-color: #71bf67 !important;
     }
 
     > .open > a,
@@ -35,18 +42,27 @@ a {
     .navbar-default .navbar-nav > .open > a:hover {
       background-color: #29a74f;
     }
+    > .navbar-brand-right {
+      border-left: 1px solid #50aa47;
+      border-right: 0px;
+      > img {
+        height: auto;
+        padding: 5px;
+        width: 59%;
+      }
+    }
   }
 }
 
 #sub-header {
-  background-color: #ffffff;
-  font-family: "helvetica-regular", Arial, Helvetica, sans-serif;
+  background-color: #f9f9f9;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 12px;
   height: 50px;
   margin-bottom: 0px !important;
   min-width: 770px;
   z-index: 100;
-  border-color: rgba(#333, 0.85);
+  border-bottom: 1px solid #8c8c8c;
 
   .navbar-collapse.collapse {
     height: 40px;
@@ -244,4 +260,19 @@ div.fp-form {
 
 .list-container article.card {
   margin: 0px;
+}
+
+
+.footer{
+  background-image: linear-gradient(270deg, #599dd1, #95e78b );
+  position: absolute;
+  right: 0;
+  bottom: 0.3em;
+  left: 0;
+  padding: 10px;
+  color: #ffffff;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 10px;
+
 }
