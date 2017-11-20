@@ -276,3 +276,17 @@ div.fp-form {
   font-size: 10px;
 
 }
+.card-title {
+  border-bottom: 1px solid #efefef;
+  > h4 {
+
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
+  color: #60b4ef ;
+  }
+}
+
+article {
+    background: #ffffff;
+}

@@ -3,6 +3,8 @@ import organizations from '../organizations/routes';
 import surveys from '../surveys/routes';
 import snapshots from '../snapshots/routes';
 import users from '../users/routes';
+import families from '../families/routes';
+import home from '../home/routes';
 
 import _ from 'lodash';
 
@@ -10,10 +12,13 @@ const initRouter = props => {
   const { app } = props;
 
   const { appRoutes, controller } = _.merge(
+    users(props),
     organizations(props),
     surveys(props),
     snapshots(props),
-    users(props)
+    families(props),
+    home(props)
+
   );
 
   return new BaseRouter({

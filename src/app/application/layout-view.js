@@ -1,6 +1,6 @@
 import Mn from 'backbone.marionette';
 import template from './template.hbs';
-import UsersView from '../users/view';
+import HomeView from '../home/view';
 
 import SubMenuView from '../subheader/view';
 import SubMenuModel from '../subheader/model';
@@ -21,7 +21,9 @@ export default Mn.View.extend({
   initialize(options) {
     this.showHeader();
     this.showFooter();
+    this.showView(new HomeView());
     this.app = options.app;
+
   },
   showHeader() {
     this.getRegion('header').show(new HeaderView());
