@@ -1,7 +1,18 @@
 @import "typography/typography";
 
+body {
+    font: 16px -apple-system, "Roboto", Lato, Arial, sans-serif;
+    margin: 0;
+    padding: 1.5em;
+    padding-bottom: 100px;
+    background-color: #e7e7e7;
+}
+
 #content {
-  margin: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 a {
@@ -35,6 +46,23 @@ a {
     .navbar-default .navbar-nav > .active > a:focus,
     .navbar-default .navbar-nav > .active > a:hover {
       background-color: #71bf67 !important;
+      width: 100%;
+      color: #ffffff;
+
+      &:after {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid #71bf67;
+        content: " ";
+        position: absolute;
+        bottom: -8px;
+        left: 25%;
+
+      }
+
+
     }
 
     > .open > a,
@@ -48,21 +76,21 @@ a {
       > img {
         height: auto;
         padding: 5px;
-        width: 59%;
+        width: 66%;
       }
     }
   }
 }
 
 #sub-header {
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 12px;
   height: 50px;
   margin-bottom: 0px !important;
   min-width: 770px;
   z-index: 100;
-  border-bottom: 1px solid #8c8c8c;
+//  border-bottom: 1px solid #8c8c8c;
 
   .navbar-collapse.collapse {
     height: 40px;
@@ -219,11 +247,13 @@ div.fp-form {
   border-color: rgba(#333, 0.85);
 }
 
-.card img {
-  width: 100px;
-  height: 100px;
-  background: white url("/static/images/image-loader.gif") no-repeat center;
-  margin: 0 2px;
+.card  img:not(.pull-right){
+    width: 100px;
+    height: 100px;
+    background: white url("/static/images/image-loader.gif") no-repeat center;
+    margin: 0 2px;
+
+
 }
 
 .search-container {
@@ -264,10 +294,11 @@ div.fp-form {
 
 
 .footer{
-  background-image: linear-gradient(270deg, #599dd1, #95e78b );
-  position: absolute;
+  background-image:  linear-gradient(270deg, #599dd1, #95e78b );
+  position: fixed;
   right: 0;
-  bottom: 0.3em;
+  bottom: 0;
+  height: 30px;
   left: 0;
   padding: 10px;
   color: #ffffff;
@@ -285,8 +316,90 @@ div.fp-form {
   font-size: 14px;
   color: #60b4ef ;
   }
+  > h4:hover{
+    color: #4a9fda ;
+  }
+  >h4 img:hover{
+     background-image: url('/static/images/icon_more_hover.png');
+
+  }
 }
 
 article {
     background: #ffffff;
+}
+
+
+/* activity Feed*/
+.activity-feed {
+  > li > span > a {
+    color:#7cd071;
+    font-family: "Helvetica Neue (TT)";
+    font-weight: bold;
+    font-size: 12px;
+
+  }
+  > li > span > a:hover{
+    color:#50aa47;
+    font-size: 12px;
+  }
+  > li > span > time{
+    color: #cccccc;
+    font-family: "Helvetica Neue (TT)";
+    font-style: italic;
+    margin-top: -5px;
+  }
+  padding: 15px;
+  list-style: none;
+
+  .feed-item {
+    position: relative;
+    padding-bottom: 30px;
+    padding-left: 10px;
+    border-left: 1px solid #60b4ef;
+    font-size: 12px;
+    font-family: "Helvetica Neue (TT)";
+    color: #788c9a;
+
+    &:last-child {
+      border-color: transparent;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -3px;
+      width: 5px;
+      height: 5px;
+      border-radius: 6px;
+      background: #60b4ef;
+      border: 1px solid #60b4ef;
+    }
+
+    .text {
+      position: relative;
+      top: -5px;
+    }
+
+  }
+}
+
+.strike{
+  text-align: center;
+    color: #788c9a;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 100px;
+
+}
+
+.strike-text {
+  font-family: "Helvetica Neue (TT)";
+  font-size: 22px !important;
+  color: #cccccc;
+  text-align: center;
+  margin-top: -50px;
+
 }
