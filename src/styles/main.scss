@@ -245,3 +245,36 @@ div.fp-form {
 .list-container article.card {
   margin: 0px;
 }
+
+// GALLERY WIDGET
+
+.gallery-image > figure > img {
+  opacity: 0.5;
+  min-height: 240px;
+  max-width: 340px; 
+}
+
+.gallery-image > figure {
+  float: left;
+  margin: 5px;
+  min-height: 300px;
+}
+
+.gallery-image > figure > figcaption {
+  max-width: 340px;
+  margin: 5px;
+  text-align: justify;
+}
+
+
+.gallery-image.gallery-selected > figure > img {
+  opacity: 1;
+  min-height: 250px;
+  max-width: 350px; 
+}
+
+.field-gallery > div {
+  min-height: 430px;
+  max-width: 1200px;
+  
+}
