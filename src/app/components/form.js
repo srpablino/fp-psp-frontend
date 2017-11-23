@@ -119,7 +119,6 @@ class Form extends Component {
         formData={this.state.formData}
       >
         <div>
-          <pre>{JSON.stringify(this.state.formData)}</pre>
           <button
             type="button"
             onClick={() => this.onCancel(this.state.formData)}
