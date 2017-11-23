@@ -38,8 +38,7 @@ class Gallery extends React.Component {
     render() {
 
         const { schema, uiSchema, fields, onSubmit, onError, formData } = this.props;
-        console.log(this.props);
-        if(this.props.name!==this.state.name){
+        if(this.props.name !== this.state.name){
             this.state = {
                 selected: formData[0].url,
                 images: schema.items.enum,

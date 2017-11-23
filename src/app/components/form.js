@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 
 import JsonSchemaForm from 'react-jsonschema-form';
 import Gallery from './gallery';
+import Gmap from './gmap';
 
 const log = type => console.log.bind(console, type);
 
@@ -28,7 +29,6 @@ class Form extends Component {
       stepsUISchema : stepsUISchema
     };
 
-    // https://stackoverflow.com/questions/45998744/react-this-state-is-undefined
     this.onSubmit = this.onSubmit.bind(this);;
   }
 
@@ -36,7 +36,7 @@ class Form extends Component {
     var uischemaToRet = {}
     uischemaToRet.key = key;
     uischemaToRet['properties'] = {};
-    //uischemaToRet['ui:custom:fields'] = {};
+   
     uischemaToRet['ui:group:economics'] = [];
     uischemaToRet['ui:group:indicators'] = [];
     
@@ -75,7 +75,7 @@ class Form extends Component {
     var newData = JSON.parse(JSON.stringify(this.state.formData));
     var currentStep = this.state.stepsSchema[this.state.step];
     newData[currentStep.key] = data.formData[currentStep.key];
-   // console.log(newData);
+ 
     if (this.state.step < this.state.stepsSchema.length - 1) {
       this.setState({
         step: this.state.step + 1,
@@ -92,7 +92,7 @@ class Form extends Component {
   onCancel(data){
     var newData = JSON.parse(JSON.stringify(this.state.formData));
     var currentStep = this.state.stepsSchema[this.state.step];
-    delete newData[currentStep.key];
+  
     if (this.state.step > 0) {
       this.setState({
         step: this.state.step - 1,
@@ -113,7 +113,7 @@ class Form extends Component {
      <JsonSchemaForm
         schema={this.state.stepsSchema[this.state.step]}
 	      uiSchema={this.state.stepsUISchema[this.state.step]}
-        fields={{ gallery: Gallery }}
+        fields={{ gallery: Gallery, gmap: Gmap}}
         onSubmit={this.onSubmit}
         onError={log('errors')}
         formData={this.state.formData}
