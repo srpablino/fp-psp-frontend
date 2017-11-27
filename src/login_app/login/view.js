@@ -1,65 +1,71 @@
-/**
- *
- * @type Module marionette|Module marionette
- */
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
+import env from '../env';
+import $ from 'jquery';
+import session from '../../common/session';
 
-require('parsleyjs');
-// TODO Esto funciona mágicamente y
-// no se ni como. Investigar mejor
-// y documentar
-require('parsleyjs/dist/i18n/es');
-
-const ENTER_KEY = 13;
-
-export default Mn.ItemView.extend({
+export default Mn.View.extend({
   template: Template,
+
   events: {
-    'click #login-btn': 'onLoginAttempt',
-    'keyup #login-password-input': 'onPasswordKeyup',
+    'click #btn-login': 'doLogin'
   },
-  onPasswordKeyup(event) {
-    const k = event.keyCode || event.which;
 
-    if (k === ENTER_KEY && $('#login-password-input').val() === '') {
-      event.preventDefault();
-    } else if (k === ENTER_KEY) {
-      event.preventDefault();
-      this.onLoginAttempt();
-      return false;
-    }
+  initialize(options) {
+    this.app = options.app;
+    session.fetch();
   },
-  onLoginAttempt(event) {
-    let self = this,
-      userData;
-    if (event) {
-      event.preventDefault();
-    }
-    const valid = this.$('#login-form')
-      .parsley()
-      .validate();
+  doLogin(event) {
+    event.preventDefault();
+    var url = `${env.API_AUTH}/token`;
 
-    if (valid) {
-      userData = {
-        email: this.$('#login-mail-input').val(),
-        password: this.$('#login-password-input').val(),
-      };
+    var username = $('#login-username').val();
+    var password = $('#login-password').val();
 
-      this.$('#login-btn').loading(true);
+    url =
+      url +
+      '?username=' +
+      username +
+      '&password=' +
+      password +
+      '&grant_type=password';
 
-      window.App.session.login(userData, {
-        success(res) {
-          window.App.showMainContent();
-        },
-        error(jqXHR, textStatus) {
-          // no hacemos nada, el errorHandler
-          // se va a encargar de hacer todo
-        },
-        complete() {
-          self.$('#login-btn').loading(false);
-        },
-      });
-    }
-  },
+    var clientid = 'barClientIdPassword';
+    var clientsecret = 'secret';
+
+    $.ajax({
+      url: url,
+      type: 'POST',
+      dataType: 'json',
+      headers: {
+        Authorization: 'Basic ' + btoa(clientid + ':' + clientsecret)
+      },
+
+      success: data => {
+        if (data.error) {
+          // If there is an error, show the error messages
+          $('.alert-error')
+            .text(data.error.text)
+            .show();
+        } else {
+          // If not, send them back to the home page
+          const { access_token, refresh_token, user } = data;
+          session.save({ access_token, refresh_token, user });
+
+          const fragment = session.getLoggedInRoute();
+          window.location.replace(`/#${fragment}`);
+        }
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        if (textStatus === 'Unauthorized') {
+          window.alert('No autorizado');
+        } else {
+          window.alert('Credenciales inválidos.. Intente de nuevo');
+          $('#login-username').val('');
+          $('#login-password').val('');
+          $('#login-username').focus();
+        }
+      }
+    });
+  }
 });

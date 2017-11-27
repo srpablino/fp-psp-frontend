@@ -10,15 +10,30 @@ const jetpack = require('fs-jetpack');
 const environment = $.util.env.type || 'development';
 const isProduction = environment === 'production';
 const webpackConfig = require('./webpack.config.js')[environment];
+const merge = require('merge-stream');
+const rename = require('gulp-rename');
 
 const port = $.util.env.port || 9000;
 const src = 'src/';
 const dist = 'dist/';
 const tests = 'tests/';
 
+const config = [
+  {
+    dist: 'dist/',
+    html: 'index.html',
+    webpackEntry: webpackConfig.entry.main
+  },
+  {
+    dist: 'dist/login/',
+    html: 'login.html',
+    webpackEntry: webpackConfig.entry.login_main
+  }
+];
+
 gulp.task('scripts', () => {
   return gulp
-    .src([webpackConfig.entry.main, webpackConfig.entry.login_main])
+    .src([webpackConfig.entry.main])
     .pipe($.webpackStream(webpackConfig))
     .on('error', function(error) {
       $.util.log($.util.colors.red(error.message));
@@ -29,20 +44,48 @@ gulp.task('scripts', () => {
     .pipe($.connect.reload());
 });
 
-gulp.task('html', () => {
+gulp.task('scripts:login', () => {
   return gulp
-    .src(src + 'index.html')
+    .src([webpackConfig.entry.login_main])
+    .pipe($.webpackStream(webpackConfig))
+    .on('error', function(error) {
+      $.util.log($.util.colors.red(error.message));
+      this.emit('end');
+    })
+    .pipe(gulp.dest(dist + 'login/js/'))
+    .pipe($.size({ title: 'js' }))
+    .pipe($.connect.reload());
+});
+
+gulp.task('html', () => {
+  var tasks = config.map(resource => {
+    return gulp
+      .src(src + resource.html)
+      .pipe(rename('index.html'))
+      .pipe(gulp.dest(resource.dist))
+      .pipe($.size({ title: 'html' }))
+      .pipe($.connect.reload());
+  });
+  return merge(tasks);
+});
+
+gulp.task('html:denied', () => {
+  return gulp
+    .src(src + 'denied.html')
     .pipe(gulp.dest(dist))
-    .pipe($.size({ title: 'html' }))
+    .pipe($.size({ title: 'html:denied' }))
     .pipe($.connect.reload());
 });
 
 gulp.task('styles', () => {
-  return gulp
-    .src(src + 'styles/main.scss')
-    .pipe($.sass({ outputStyle: isProduction ? 'compressed' : 'expanded' }))
-    .pipe(gulp.dest(dist + 'css/'))
-    .pipe($.connect.reload());
+  var tasks = config.map(resource => {
+    return gulp
+      .src(src + 'styles/main.scss')
+      .pipe($.sass({ outputStyle: isProduction ? 'compressed' : 'expanded' }))
+      .pipe(gulp.dest(resource.dist + 'css/'))
+      .pipe($.connect.reload());
+  });
+  return merge(tasks);
 });
 
 gulp.task('serve', () => {
@@ -67,8 +110,12 @@ gulp.task('static', cb => {
 
 gulp.task('watch', () => {
   gulp.watch(src + 'styles/**/*.scss', ['styles']);
-  gulp.watch(src + 'index.html', ['html']);
+  gulp.watch([src + 'index.html', src + 'login.html'], ['html']);
   gulp.watch([src + 'app/**/*.js', src + 'app/**/*.hbs'], ['scripts']);
+  gulp.watch(
+    [src + 'login_app/**/*.js', src + 'login_app/**/*.hbs'],
+    ['scripts:login']
+  );
 });
 
 gulp.task('lint', () => {
@@ -86,10 +133,10 @@ gulp.task('clean', cb => {
 
 gulp.task('environment', () => {
   const projectDir = jetpack;
-  const appDir = jetpack.cwd('./' + src + 'app');
+  const commonDir = jetpack.cwd('./' + src + 'common');
   const configFile = './config/env_' + environment + '.json';
 
-  projectDir.copy(configFile, appDir.path('env.json'), { overwrite: true });
+  projectDir.copy(configFile, commonDir.path('env.json'), { overwrite: true });
 });
 
 gulp.task('default', ['build', 'serve', 'watch']);
@@ -102,7 +149,9 @@ gulp.task('build', cb => {
       'test',
       'static',
       'html',
+      'html:denied',
       'scripts',
+      'scripts:login',
       'styles',
       cb
     );
@@ -112,7 +161,9 @@ gulp.task('build', cb => {
       'environment',
       'static',
       'html',
+      'html:denied',
       'scripts',
+      'scripts:login',
       'styles',
       cb
     );
