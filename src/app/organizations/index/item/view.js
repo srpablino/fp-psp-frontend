@@ -18,7 +18,6 @@ export default Mn.View.extend({
   },
   handleDelete() {
     event.preventDefault();
-    console.log('child delete');
     this.trigger('delete:model', this.model);
   }
 });

@@ -1,11 +1,9 @@
 import Mn from 'backbone.marionette';
 import template from './template.hbs';
-import UsersView from '../users/view';
-
-import SubMenuView from '../subheader/view';
-import SubMenuModel from '../subheader/model';
-
+import SubMenuView from '../header/subheader/view';
 import HeaderView from '../header/view';
+import headerStorage from '../header/storage';
+import subheaderStorage from '../header/subheader/storage';
 
 export default Mn.View.extend({
   template,
@@ -16,22 +14,24 @@ export default Mn.View.extend({
     subheader: '#sub-header'
   },
   initialize(options) {
-    this.showHeader();
     this.app = options.app;
+    this.showHeader();
   },
   showHeader() {
-    this.getRegion('header').show(new HeaderView());
+    const model = headerStorage.getByRolesInSession(this.app.getSession());
+    this.getRegion('header').show(new HeaderView({ model }));
   },
-  updateSubHeader(data) {
+  updateSubHeader(headerItems) {
     this.getRegion('subheader').empty();
 
-    if (!data) {
+    if (!headerItems) {
       return;
     }
-
-    this.getRegion('subheader').show(
-      new SubMenuView({ model: new SubMenuModel(data) })
+    const model = subheaderStorage.getByRolesInSession(
+      headerItems,
+      this.app.getSession()
     );
+    this.getRegion('subheader').show(new SubMenuView({ model }));
   },
   showView(view) {
     this.getRegion('content').show(view);

@@ -52,7 +52,7 @@ export default Mn.View.extend({
           const { access_token, refresh_token, user } = data;
           session.save({ access_token, refresh_token, user });
 
-          const fragment = session.getLoggedInRoute();
+          const fragment = session.getLoggedUserHomeRoute();
           window.location.replace(`/#${fragment}`);
         }
       },

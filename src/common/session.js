@@ -26,8 +26,11 @@ var SessionModel = Bb.Model.extend({
     }
     return this.get('access_token') && this.get('access_token').length > 0;
   },
-  getLoggedInRoute: function() {
+  getLoggedUserHomeRoute: function() {
+    // Se if there are any previously stored
+    // route.
     let route = this.get('returnFragment') || 'home';
+
     if (this.userHasRole('ROLE_APP_ADMIN') || this.userHasRole('ROLE_USER')) {
       const orgId = this.get('user').organization.id;
       route = `organizations/${orgId}`;

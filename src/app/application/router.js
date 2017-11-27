@@ -3,48 +3,37 @@ import organizations from '../organizations/routes';
 import surveys from '../surveys/routes';
 import snapshots from '../snapshots/routes';
 import users from '../users/routes';
-
+import dashboard from '../dashboard/routes';
+import logout from '../logout/routes';
+import initAuthorizer from './router-authorizer';
 import _ from 'lodash';
 
 const initRouter = props => {
-  const { app } = props;
+  const { app, before, onAccessDenied } = props;
 
   const { appRoutes, controller } = _.merge(
+    logout(props),
     organizations(props),
     surveys(props),
     snapshots(props),
-    users(props)
+    users(props),
+    dashboard(props)
   );
+
+  const authorizer = initAuthorizer({
+    onAccessDenied,
+    session: app.getSession(),
+    appRoutes
+  });
 
   return new BaseRouter({
     appRoutes,
     controller,
-    before: () => {
-      app.emptySubHeader();
+    before: route => {
+      authorizer.canAccess(route);
+      before.apply();
     }
   });
 };
-
-// BaseRouter.extend({
-//   initialize(options) {
-//     this.before = options.before || function() {};
-//     this.after = options.after || function() {};
-//   },
-//   appRoutes: {},
-//   selectActiveMenu(path) {
-//     const menuPath = path.split('/').length > 0 ? path.split('/')[0] : path;
-//     const elem = $('.nav').find(`a[href="#${menuPath}"]`);
-//     if (elem.length === 0) {
-//       return;
-//     }
-//     $('.nav')
-//       .find('.active')
-//       .removeClass('active');
-//     elem.parent().addClass('active');
-//   },
-//   onRoute: function(name, path, args) {
-//     // this.selectActiveMenu(path);
-//   }
-// });
 
 export default initRouter;

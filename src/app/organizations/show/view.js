@@ -14,7 +14,8 @@ export default Mn.View.extend({
   },
 
   onRender() {
-    this.app.updateSubHeader(storage.getSubHeaderItems(this.model));
+    const headerItems = storage.getSubHeaderItems(this.model);
+    this.app.updateSubHeader(headerItems);
   },
 
   getTemplate() {
