@@ -50,9 +50,10 @@ class Authorizer {
     // of an organization, so cannot CRUD
     // other organizations.
     if (this.session.userHasRole('ROLE_APP_ADMIN')) {
-      return routesKeys.filter(
-        route => !_.includes(adminCrudRoutes.organizations, route)
-      );
+      return routesKeys
+        .filter(route => !_.includes(adminCrudRoutes.organizations, route))
+        .filter(route => !_.includes(adminCrudRoutes.users, route))
+        .filter(route => !_.includes(adminCrudRoutes.families, route));
     }
 
     // regular user

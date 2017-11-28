@@ -33,9 +33,10 @@ var HeaderStorage = Storage.extend({
     if (session.userHasRole('ROLE_APP_ADMIN')) {
       const items = {
         mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
-        navigationItems: allMenuItems.navigationItems.filter(
-          item => !(item.link === '#organizations')
-        )
+        navigationItems: allMenuItems.navigationItems
+          .filter(item => !(item.link === '#organizations'))
+          .filter(item => !(item.link === '#users'))
+          .filter(item => !(item.link === '#families'))
       };
       return new Model(items);
     }
