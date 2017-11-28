@@ -112,7 +112,7 @@ class Form extends Component {
     return (
      <JsonSchemaForm
         schema={this.state.stepsSchema[this.state.step]}
-	      uiSchema={this.state.stepsUISchema[this.state.step]}
+	uiSchema={this.state.stepsUISchema[this.state.step]}
         fields={{ gallery: Gallery, gmap: Gmap}}
         onSubmit={this.onSubmit}
         onError={log('errors')}
