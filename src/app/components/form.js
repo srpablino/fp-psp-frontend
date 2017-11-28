@@ -66,7 +66,12 @@ class Form extends Component {
     if(schema.required && schema.required.includes(key)){
       schemaToRet.required.push(key);
     }
-    
+    if(this.props.uiSchema['ui:group:economics'] &&  this.props.uiSchema['ui:group:economics'].includes(key)){
+      schemaToRet.description = 'Socio-econimic Information';
+    }
+    if(this.props.uiSchema['ui:group:indicators'] &&  this.props.uiSchema['ui:group:indicators'].includes(key)){
+      schemaToRet.description = 'Indicators';
+    }
     return schemaToRet;
   }
 
