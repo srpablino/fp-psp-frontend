@@ -251,18 +251,18 @@ div.fp-form {
 .gallery-image > figure > img {
   opacity: 0.5;
   min-height: 240px;
-  max-width: 340px; 
+  max-width: 360px; 
 }
 
 .gallery-image > figure {
   float: left;
-  margin: 5px;
+  margin: 10px;
   min-height: 300px;
 }
 
 .gallery-image > figure > figcaption {
-  max-width: 340px;
-  margin: 5px;
+  max-width: 360px;
+  margin: 10px;
   text-align: justify;
 }
 
@@ -270,11 +270,17 @@ div.fp-form {
 .gallery-image.gallery-selected > figure > img {
   opacity: 1;
   min-height: 250px;
-  max-width: 350px; 
+  max-width: 370px; 
 }
 
 .field-gallery > div {
   min-height: 430px;
   max-width: 1200px;
-  
+}
+
+//MAP WIDGET
+.gmap {
+  min-width: 800px !important;
+  min-height: 600px !important;
+  position: relative !important;
 }

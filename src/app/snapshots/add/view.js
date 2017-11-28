@@ -73,29 +73,30 @@ export default Mn.View.extend({
   onSurveySelectChange() {
     this.renderForm();
   },
-  getIndicators({ formData }) {
+  getIndicators(formData ) {
     return _.pick(
       formData,
       this.surveyModel.get('survey_ui_schema')['ui:group:indicators']
     );
   },
-  getEconomics({ formData }) {
+  getEconomics( formData ) {
     return _.pick(
       formData,
       this.surveyModel.get('survey_ui_schema')['ui:group:economics']
     );
   },
 
-  fixedGalleryFieldValue(formResult){
+  fixedGalleryFieldValue(formData){
       var self = this;
       var galleryFields = [];
       var customFields = this.surveyModel.attributes.survey_ui_schema['ui:custom:fields'];
-
+  
       $.each(customFields, function(i, item) {
         if(item['ui:field'] && item['ui:field']==='gallery'){
-          var itemSelected = formResult['formData'][i];
-          formResult['formData'][i] = itemSelected[0]['value'];
-          formResult['schema']['properties'][i]['type'] = 'string';
+          var itemSelected = formData[i];
+          if(itemSelected && itemSelected!==undefined && Array.isArray(itemSelected)){
+            formData[i] = itemSelected[0]['value'];
+          }
           self.surveyModel.attributes.survey_schema.properties[i]['type'] = 'string';
         }
       });

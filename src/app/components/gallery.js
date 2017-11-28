@@ -19,7 +19,8 @@ class Gallery extends React.Component {
             selected : current,
             images: props.schema.items.enum,
             title: props.schema.title,
-            required: props.required ? '*': ''
+            required: props.required ? '*': '',
+            name: props.name
         };
     }
 
@@ -35,6 +36,18 @@ class Gallery extends React.Component {
     }
 
     render() {
+
+        const { schema, uiSchema, fields, onSubmit, onError, formData } = this.props;
+        if(this.props.name !== this.state.name){
+            this.state = {
+                selected: formData[0].url,
+                images: schema.items.enum,
+                title: schema.title,
+                required: this.props.required ? '*':'',
+                name: this.props.name
+            };
+        }
+
         var images = [];
         for (var i = 0; i < this.state.images.length; i++) {
             var url = this.state.images[i]['url'];
