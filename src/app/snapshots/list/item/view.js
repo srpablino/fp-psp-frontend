@@ -89,7 +89,7 @@ export default Mn.View.extend({
       indicators.forEach(element => {
         snapshotView.push(
         `<div class="indicator-circle-snapshot "> 
-            <div class="circle-content ${element['value']}" />
+            <div class="circle-content ${element['value'].toLowerCase()}" />
             <p>${this.getName(element['name'])}</p> 
         </div> `);  
         }
