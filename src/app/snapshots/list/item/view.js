@@ -12,12 +12,9 @@ export default Mn.View.extend({
   },
 
   serializeData() {
-
     const snapshot = [];
-    this.snapshotData = this.getSnapshot();
-
     const header = this.createHeaderRepresentation();
-    const indicators = this.createIndicatorRepresentation(this.snapshotData['indicators']);
+    const indicators = this.createIndicatorRepresentation(this.model.attributes.indicators_survey_data);
 
     header.forEach(function(v) {snapshot.push(v)});
     indicators.forEach(function(v) {snapshot.push(v)});
@@ -25,61 +22,6 @@ export default Mn.View.extend({
     return {
       snapshots: snapshot
     };
-  },
-
-  getCreatedAt() {
-    const createdAt = this.model.attributes.created_at;
-    if (!createdAt) {
-      return null;
-    }
-    return moment(createdAt).format('D/M/YYYY hh:mm:ss');
-  },
-
-  getSnapshot(){
-    var indicators = this.getIndicators();
-    var snapshot = {};
-    snapshot['created_at'] = this.getCreatedAt();
-    snapshot['indicators'] = indicators.indicators;
-    snapshot['count_red'] = indicators.red;
-    snapshot['count_yellow'] = indicators.yellow;
-    snapshot['count_green'] = indicators.green;
-    return snapshot; 
-  },
-  
-  getIndicators(){
-    var toRet = {};
-    var indicators = [];
-    var red = 0;
-    var green = 0;
-    var yellow = 0;
-
-    this.model.attributes.indicators_survey_data.forEach( element => {
-      const keysToPick = _.keys(element);
-      _.forOwn(
-        _.pick(element, keysToPick),
-        (value, key) => {
-
-          if(key==='value'){
-            switch (value.toUpperCase()){
-              case 'RED':
-                red++;
-                break;
-              case 'GREEN':
-                green++;
-                break;
-              case 'YELLOW':
-                yellow++;
-                break;
-            }
-          }
-        }
-      );
-    });
-    toRet.indicators = this.model.attributes.indicators_survey_data;
-    toRet.red = red;
-    toRet.yellow = yellow;
-    toRet.green = green;
-    return toRet;
   },
 
   createIndicatorRepresentation(indicators){
@@ -90,7 +32,7 @@ export default Mn.View.extend({
         snapshotView.push(
         `<div class="indicator-circle-snapshot "> 
             <div class="circle-content ${element['value'].toLowerCase()}" />
-            <p>${this.getName(element['name'])}</p> 
+            <p>${element['name']}</p> 
         </div> `);  
         }
       );
@@ -103,13 +45,13 @@ export default Mn.View.extend({
     var headerView = [];
     headerView.push((
       `<div class="header-indicators-snapshot"> 
-          <h3 class="pull-left"> SNAPSHOT  ${this.snapshotData.created_at} </h3> 
+          <h3 class="pull-left"> SNAPSHOT  ${this.getCreatedAt()} </h3> 
           <div class="pull-right header-resume">
-            <p>${this.snapshotData.count_red}</p>
+            <p>${this.model.attributes.count_red_indicators}</p>
             <div class="circle-header red " />
-            <p>${this.snapshotData.count_yellow}</p>
+            <p>${this.model.attributes.count_yellow_indicators}</p>
             <div class="circle-header yellow " />
-            <p>${this.snapshotData.count_green}</p>
+            <p>${this.model.attributes.count_green_indicators}</p>
             <div class="circle-header green " />
           </div>
       </div>`));
@@ -118,7 +60,7 @@ export default Mn.View.extend({
     _.forOwn(
        _.forEach(this.model.attributes.family_data, keysToPick),
        (value, key) => {
-         headerView.push(`<label>${this.getName(key)}:</label> ${value}`);
+         headerView.push(`<label>${key}:</label> ${value}`);
       }
     );
     headerView.push(`<hr></hr>`);
@@ -126,8 +68,11 @@ export default Mn.View.extend({
     return headerView;
   },
 
-  getName(indicator){
-    return indicator.replace(/([A-Z])/g, ' $1')
-    .replace(/^./, function(str){ return str.toUpperCase(); });
+  getCreatedAt() {
+    const createdAt = this.model.attributes.created_at;
+    if (!createdAt) {
+      return null;
+    }
+    return moment(createdAt).format('D/M/YYYY hh:mm:ss');
   }
 });
