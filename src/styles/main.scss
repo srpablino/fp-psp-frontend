@@ -298,6 +298,7 @@ div.fp-form {
 }
 
 
+
 .footer{
   background-image:  linear-gradient(270deg, #599dd1, #95e78b );
   padding: 10px;
@@ -601,3 +602,42 @@ article {
 
 }
   //fin de Home de family - mcespedes
+=======
+// GALLERY WIDGET
+
+.gallery-image > figure > img {
+  opacity: 0.5;
+  min-height: 240px;
+  max-width: 360px;
+}
+
+.gallery-image > figure {
+  float: left;
+  margin: 10px;
+  min-height: 300px;
+}
+
+.gallery-image > figure > figcaption {
+  max-width: 360px;
+  margin: 10px;
+  text-align: justify;
+}
+
+
+.gallery-image.gallery-selected > figure > img {
+  opacity: 1;
+  min-height: 250px;
+  max-width: 370px;
+}
+
+.field-gallery > div {
+  min-height: 430px;
+  max-width: 1200px;
+}
+
+//MAP WIDGET
+.gmap {
+  min-width: 800px !important;
+  min-height: 600px !important;
+  position: relative !important;
+}
