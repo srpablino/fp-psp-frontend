@@ -56,7 +56,7 @@ without any modification.
 
 Use `config/env_production.json` in production environments.
 
-#### OAuth Authentication
+#### OAuth Configuration
 
 When the authentication security is enabled in the server, the parameter en the
 `config/env_XXX.json` file should be set to `true`:
@@ -64,6 +64,10 @@ When the authentication security is enabled in the server, the parameter en the
 ```json
   "authenticationEnabled": true
 ```
+
+### Users and roles
+
+To see a list of default users and roles check the [backend documentation](https://github.com/FundacionParaguaya/FP-PSP-SERVER/blob/develop/docs/OAUTH.md#default-roles-and-users).
 
 ### Build for production
 
