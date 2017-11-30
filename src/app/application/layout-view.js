@@ -1,11 +1,13 @@
 import Mn from 'backbone.marionette';
 import template from './template.hbs';
-import UsersView from '../users/view';
+import HomeView from '../home/view';
 
 import SubMenuView from '../subheader/view';
 import SubMenuModel from '../subheader/model';
 
 import HeaderView from '../header/view';
+
+import FooterView from '../footer/view';
 
 export default Mn.View.extend({
   template,
@@ -13,14 +15,21 @@ export default Mn.View.extend({
   regions: {
     header: '#header',
     content: '#content',
-    subheader: '#sub-header'
+    subheader: '#sub-header',
+    footer: '#footer'
   },
   initialize(options) {
     this.showHeader();
+    this.showFooter();
+    this.showView(new HomeView());
     this.app = options.app;
+
   },
   showHeader() {
     this.getRegion('header').show(new HeaderView());
+  },
+  showFooter() {
+    this.getRegion('footer').show(new FooterView());
   },
   updateSubHeader(data) {
     this.getRegion('subheader').empty();
