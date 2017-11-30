@@ -6,6 +6,9 @@ import users from '../users/routes';
 import dashboard from '../dashboard/routes';
 import logout from '../logout/routes';
 import initAuthorizer from './router-authorizer';
+import families from '../families/routes';
+import home from '../home/routes';
+
 import _ from 'lodash';
 
 const initRouter = props => {
@@ -17,7 +20,8 @@ const initRouter = props => {
     surveys(props),
     snapshots(props),
     users(props),
-    dashboard(props)
+    families(props),
+    home(props)
   );
 
   const authorizer = initAuthorizer({

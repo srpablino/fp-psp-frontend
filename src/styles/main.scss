@@ -1,7 +1,18 @@
 @import "typography/typography";
 
+body {
+    font: 16px -apple-system, "Roboto", Lato, Arial, sans-serif;
+    margin: 0;
+    padding: 1.5em;
+    padding-bottom: 100px;
+    background-color: #e7e7e7;
+}
+
 #content {
-  margin: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 a {
@@ -12,22 +23,46 @@ a {
   padding: 0px;
   > img {
     height: 100%;
-    padding: 15px;
+    padding: 5px;
     width: auto;
   }
 }
 
+
 .fp-navbar {
-  background-color: #26e462;
+  background-color: #7cd071;
   .navbar-nav {
+    > li {
+      border-right: 1px solid #50aa47;
+    }
     > li > a {
-      color: #fff;
+      color: #ffffff;
+      font-family: "Roboto";
+      font-weight: 400;
+      font-size: 13px;
     }
 
     > .active > a,
     .navbar-default .navbar-nav > .active > a:focus,
     .navbar-default .navbar-nav > .active > a:hover {
-      background-color: #29a74f;
+      background-color: #71bf67 !important;
+      width: 100%;
+      color: #ffffff;
+
+      &:after {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid #71bf67;
+        content: " ";
+        position: absolute;
+        bottom: -8px;
+        left: 25%;
+
+      }
+
+
     }
 
     > .open > a,
@@ -35,18 +70,28 @@ a {
     .navbar-default .navbar-nav > .open > a:hover {
       background-color: #29a74f;
     }
+    > .navbar-brand-right {
+      border-left: 1px solid #50aa47;
+      border-right: 0px;
+      > img {
+        height: auto;
+        padding: 5px;
+        width: 66%;
+      }
+    }
   }
 }
 
 #sub-header {
   background-color: #ffffff;
-  font-family: "helvetica-regular", Arial, Helvetica, sans-serif;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
   font-size: 12px;
   height: 50px;
   margin-bottom: 0px !important;
   min-width: 770px;
   z-index: 100;
-  border-color: rgba(#333, 0.85);
+//  border-bottom: 1px solid #8c8c8c;
+  margin-top: 30px;
 
   .navbar-collapse.collapse {
     height: 40px;
@@ -203,12 +248,18 @@ div.fp-form {
   border-color: rgba(#333, 0.85);
 }
 
-.card img {
-  width: 100px;
-  height: 100px;
-  background: white url("/static/images/image-loader.gif") no-repeat center;
-  margin: 0 2px;
+#card-item{
+  .card img{
+      width: 100px;
+      height: 100px;
+      background: white url("/static/images/image-loader.gif") no-repeat center;
+      margin: 0 2px;
+
+
+  }
+
 }
+
 
 .search-container {
   display: flex;
@@ -246,6 +297,309 @@ div.fp-form {
   margin: 0px;
 }
 
+.footer{
+  background-image:  linear-gradient(270deg, #599dd1, #95e78b );
+  padding: 10px;
+  color: #ffffff;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 10px;
+  position: relative;
+  z-index: 10;
+  top: 100px;
+  clear: both;
+  margin-left: -20px;
+margin-right: -20px;
+
+
+
+
+}
+.card-title {
+  border-bottom: 1px solid #efefef;
+  > h4 {
+
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
+  color: #60b4ef ;
+  }
+  > h4:hover{
+    color: #4a9fda ;
+  }
+  >h4 img:hover{
+     background-image: url('/static/images/icon_more_hover.png');
+
+  }
+}
+
+article {
+    background: #ffffff;
+    margin: 10px 0 0 0;
+}
+
+
+/* activity Feed*/
+.activity-feed {
+  > li > span > a {
+    color:#7cd071;
+    font-family: "Helvetica Neue (TT)";
+    font-weight: bold;
+    font-size: 12px;
+
+  }
+  > li > span > a:hover{
+    color:#50aa47;
+    font-size: 12px;
+  }
+  > li > span > time{
+    color: #cccccc;
+    font-family: "Helvetica Neue (TT)";
+    font-style: italic;
+    margin-top: -5px;
+  }
+  padding: 15px;
+  list-style: none;
+
+  .feed-item {
+    position: relative;
+    padding-bottom: 30px;
+    padding-left: 10px;
+    border-left: 1px solid #60b4ef;
+    font-size: 12px;
+    font-family: "Helvetica Neue (TT)";
+    color: #788c9a;
+
+    &:last-child {
+      border-color: transparent;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -3px;
+      width: 5px;
+      height: 5px;
+      border-radius: 6px;
+      background: #60b4ef;
+      border: 1px solid #60b4ef;
+    }
+
+    .text {
+      position: relative;
+      top: -5px;
+    }
+
+  }
+}
+
+.strike{
+  text-align: center;
+    color: #788c9a;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 100px;
+
+}
+
+.strike-text {
+  font-family: "Helvetica Neue (TT)";
+  font-size: 22px !important;
+  color: #cccccc;
+  text-align: center;
+  margin-top: -50px;
+
+}
+
+
+// organizations-Families - jdferreira 23-11-2017
+#floating-survey{
+  position: absolute;
+  z-index: 10;
+  top: 12%;
+  width: 4%;
+  height: auto;
+  left: 92%;
+}
+
+#floating-survey:hover{
+  -moz-box-shadow: 0 0 20px #ccc;
+  		-webkit-box-shadow: 0 0 20px #ccc;
+  		box-shadow: 0 0 20px #ccc;
+      border-radius: 50%;
+}
+
+#floating-user{
+  position: absolute;
+  z-index: 10;
+  top: 12%;
+  width: 4%;
+  height: auto;
+  left: 87%;
+}
+
+#floating-user:hover{
+  -moz-box-shadow: 0 0 20px #ccc;
+  		-webkit-box-shadow: 0 0 20px #ccc;
+  		box-shadow: 0 0 20px #ccc;
+      border-radius: 50%;
+}
+
+#table-top-indicators{
+  > thead {
+  background: #f9f9f9;
+  color: #60b4ef;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 15px;
+    > tr > th > img {
+      border-radius: 50%;
+      width: 40%;
+      height: auto;
+
+    }
+  }
+  >thead:first-child>tr:first-child>th:first-child {
+    width: 70%;
+  }
+  >tbody>tr>td{
+    color: #788c9a;
+    font-family: "Helvetica";
+    font-weight: 400;
+    font-size: 14px;
+    border-top: 1px solid #f9f9f9;
+  }
+}
+
+
+
+//Home de family - mcespedes
+.list-priorities{
+  border-bottom: 1px solid #efefef;
+    padding-bottom: 19px;
+    position: relative;
+    .centered {
+        position: absolute;
+        top: 40%;
+        left: 3%;
+        transform: translate(-50%, -50%);
+        color: #ccccca;
+        font-family: "Roboto";
+        font-weight: 700;
+        font-size: 20px;
+    }
+  > img {
+    width: 50px;
+    height: auto;
+    margin-right: 20px;
+    position: relative;
+    text-align: center;
+
+  }
+  > div {
+    color: #60b4ef;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+
+
+    .text-muted{
+      color: #788c9a;
+      font-family: "Helvetica Neue (TT)";
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+  }
+
+}
+
+#snapshot-indicators{
+
+
+    padding: 10px;
+    position: relative;
+    height: auto;
+    width: 100%;
+
+    .centered {
+        position: absolute;
+        top: 40%;
+        left: 3%;
+        transform: translate(-50%, -50%);
+        color: #ccccca;
+        font-family: "Roboto";
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+  >span{
+    color: #ffffff;
+    font-family: "Roboto";
+    font-weight: 400;
+  }
+  > #green{
+    background-color: #50aa47;
+    position: absolute;
+    top: 10%;
+    left: 31%;
+    border-radius: 50%;
+    padding: 33px;
+    font-size: 33px;
+  }
+  >#yellow{
+
+    background-color: #f0cc39;
+    position: absolute;
+    top: 32%;
+    left: 35%;
+    border-radius: 50%;
+    padding: 27px;
+    font-size: 27px;
+  }
+  >#red{
+    background-color: #e0504c;
+    position: absolute;
+    top: 52%;
+    left: 37%;
+    border-radius: 50%;
+    padding: 23px;
+    font-size: 23px;
+  }
+}
+
+#card-interventions{
+  > ul > li{
+    > p{
+      color: #60b4ef;
+      font-family: "Roboto";
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    > img {
+      width: 15%;
+    }
+
+    > .pull-right{
+        margin-top: 27px;
+    }
+    > .pull-left{
+        margin-right: 5px;
+    }
+    > .text-muted{
+      color: #788c9a;
+      font-family: "Helvetica Neue (TT)";
+      font-weight: 400;
+      font-size: 12px;
+    }
+
+  }
+
+}
+  //fin de Home de family - mcespedes
 .list-group-item{
   margin: 10px;
 }
@@ -337,7 +691,7 @@ div.fp-form {
 .gallery-image > figure > img {
   opacity: 0.5;
   min-height: 240px;
-  max-width: 360px; 
+  max-width: 360px;
 }
 
 .gallery-image > figure {
@@ -356,7 +710,7 @@ div.fp-form {
 .gallery-image.gallery-selected > figure > img {
   opacity: 1;
   min-height: 250px;
-  max-width: 370px; 
+  max-width: 370px;
 }
 
 .field-gallery > div {
