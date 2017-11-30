@@ -298,6 +298,7 @@ div.fp-form {
 }
 
 
+
 .footer{
   background-image:  linear-gradient(270deg, #599dd1, #95e78b );
   padding: 10px;
@@ -601,3 +602,128 @@ article {
 
 }
   //fin de Home de family - mcespedes
+
+.list-group-item{
+  margin: 10px;
+}
+
+.indicator-circle-snapshot{
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+.indicator-circle-snapshot > div{
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.indicator-circle-snapshot > figcaption{
+   text-align: center;
+   font-weight: bold;
+ }
+
+
+.indicators-snapshot {
+  //-webkit-column-count: 6;
+  //-moz-column-count: 6;
+  column-count: 5;
+}
+
+.circle-content {
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+}
+
+.circle-header {
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+
+.red {
+  background: red;
+}
+
+.green {
+  background: green;
+}
+
+.yellow {
+  background: yellow;
+}
+
+.indicator-circle-snapshot > p {
+  text-align: center;
+}
+
+.indicator-circle-snapshot > div {
+  margin: 0 auto;
+
+}
+
+.indicator-circle-snapshot {
+  text-align: center;
+  page-break-inside:avoid;
+}
+
+.header-indicators-snapshot{
+  min-height: 20px;
+}
+
+.header-indicators-snapshot > h3 {
+  font-weight: bold;
+}
+
+.header-resume{
+  column-count: 6;
+}
+
+.header-resume > p{
+  font-weight: bold;
+}
+
+// GALLERY WIDGET
+
+.gallery-image > figure > img {
+  opacity: 0.5;
+  min-height: 240px;
+  max-width: 360px;
+}
+
+.gallery-image > figure {
+  float: left;
+  margin: 10px;
+  min-height: 300px;
+}
+
+.gallery-image > figure > figcaption {
+  max-width: 360px;
+  margin: 10px;
+  text-align: justify;
+}
+
+
+.gallery-image.gallery-selected > figure > img {
+  opacity: 1;
+  min-height: 250px;
+  max-width: 370px;
+}
+
+.field-gallery > div {
+  min-height: 430px;
+  max-width: 1200px;
+}
+
+//MAP WIDGET
+.gmap {
+  min-width: 800px !important;
+  min-height: 600px !important;
+  position: relative !important;
+}
