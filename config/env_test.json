@@ -1,3 +1,5 @@
 {
-    "API": "https://jsonplaceholder.typicode.com"
+  "API": "https://jsonplaceholder.typicode.com",
+  "API_AUTH": "http://127.0.0.1:8080/oauth",
+  "authenticationEnabled": false
 }

@@ -4,11 +4,12 @@ const home = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
+      '': 'showHome',
       home: 'showHome'
     },
     controller: {
       showHome() {
-        app.showViewOnRoute(new HomeView());
+        app.showHomeForUser(new HomeView({}));
       }
     }
   };
