@@ -1,21 +1,35 @@
+
+
+
 <div id="card-item">
   <!-- Card -->
   <article class="card animated fadeInLeft">
-    <a href="#organizations/{{organization.id}}">
-      <img class="card-img-top img-responsive img-thumbnail" src="{{imageUrl}}" alt="" />
-    </a>
+
     <div class="card-block">
-      <h4 class="card-title">{{organization.name}}</h4>
-      <h6 class="text-muted"></h6>
-      <p class="card-text">{{organization.description}}</p>
-      <a id="delete" href="#" class="icon">
+      <div class="card-title">
+        <h4 >
+          <img class="pull-right" src="/static/images/icon_more.png" >
+        </h4>
+        <br/>
+      </div>
+      <br><br>
+      <a href="#organizations/{{organization.id}}">
+        <!--img class="card-img-top img-responsive img-thumbnail img-card center-block" src="{{imageUrl}}" alt="" /--->
+        <img class="card-img-top img-responsive  img-card center-block" src="/static/images/icon_logo_place.png" alt="" />
+      </a>
+        <br><br>
+      <p class="organizarion-name text-center">{{organization.description}}</p>
+
+      <!--a id="delete" href="#" class="icon">
         <span class="glyphicon glyphicon-trash pull-right"></span>
       </a>
       <a id="edit" href="#" class="icon">
         <span class="glyphicon glyphicon-pencil pull-right"></span>
-      </a>
-      <br/>
+      </a-->
+
     </div>
   </article>
+
 </div>
+
 <!-- .end Card -->
