@@ -248,7 +248,7 @@ div.fp-form {
   border-color: rgba(#333, 0.85);
 }
 
-#card-item{
+/*#card-item{
   .card img{
       width: 100px;
       height: 100px;
@@ -258,10 +258,18 @@ div.fp-form {
 
   }
 
+}*/
+.img-card{
+      width: 100px;
+      height: 100px;
+      background: white url("/static/images/image-loader.gif") no-repeat center;
+
 }
 
 
 .search-container {
+  margin: 10px;
+  padding-top: 5px;
   display: flex;
   justify-content: space-between;
 }
@@ -271,6 +279,13 @@ div.fp-form {
   max-width: 350px;
   width: 33%;
   padding: 4px;
+  outline: 1px;
+  outline-color: #efefef;
+  border-radius: 2px;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
+  color: #788c9a;
 }
 
 .list-container {
@@ -280,8 +295,8 @@ div.fp-form {
 
 .list-container > div {
   float: left;
-  min-width: 15%;
-  padding: 10px;
+  min-width: 20%;
+  padding: 2%;
 }
 
 /* but this is not removing the float: */
@@ -306,15 +321,12 @@ div.fp-form {
   font-size: 10px;
   position: relative;
   z-index: 10;
-  top: 100px;
+  top: 2px;
   clear: both;
   margin-left: -20px;
-margin-right: -20px;
-
-
-
-
+  margin-right: -20px;
 }
+
 .card-title {
   border-bottom: 1px solid #efefef;
   > h4 {
@@ -723,4 +735,88 @@ article {
   min-width: 800px !important;
   min-height: 600px !important;
   position: relative !important;
+}
+
+
+//ORGANIZATIONS
+.search::-webkit-input-placeholder {
+ //color: transparent;
+ //text-indent: -9999px;
+ padding-left: 8%;
+ background: url("/static/images/icon_buscar.png") no-repeat scroll 7px 7px;
+ background-position: 1% 50%;
+ background-repeat: no-repeat;
+ background-size: contain;
+}
+
+.floating-organization{
+ position: absolute;
+ z-index: 10;
+ top: 12%;
+ width: 4%;
+ height: auto;
+ left: 92%;
+}
+
+.view-items{
+ padding-top: 8px;
+padding-right: 10px;
+
+}
+
+.organizarion-name {
+ font-family: "Roboto";
+ font-weight: 400;
+ font-size: 14px;
+ color: #60b4ef ;
+
+}
+.organizarion-name:hover{
+ color: #4a9fda ;
+}
+
+
+#img-cam{
+ margin-left: 25%;
+ margin-right: 25%;
+ border: 4px dashed #f6f6f6;
+
+ > p{
+   font-family: "Roboto";
+   font-weight: 400;
+   font-size: 14px;
+   color: #dddddd ;
+   margin-top: 10%;
+   margin-bottom: 20%;
+ }
+ >img{
+     margin-top: 20%;
+     width: 35%;
+
+ }
+}
+
+#add-organization{
+ > form {
+   padding-left: 10%;
+   padding-right: 10%;
+
+   input {
+     font-family: "Roboto";
+     font-weight: 400;
+     font-size: 14px;
+     color: #788c9a ;
+     border-radius: 2px;
+     border-color: #f6f6f6;
+   }
+   button {
+       background: #7cd071;
+       width: 100%;
+       border-radius: 2px;
+       font-family: "Roboto";
+       font-weight: 400;
+       font-size: 13px;
+       color: #ffffff ;
+  }
+ }
 }
