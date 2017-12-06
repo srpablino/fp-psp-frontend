@@ -27,7 +27,11 @@ module.exports.development = {
     loaders: [
       { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.hbs$/, loader: 'handlebars-loader' },
-      { test: /\.json$/, loader: 'json-loader' }
+      { test: /\.json$/, loader: 'json-loader' },
+      {
+        test: /bootstrap.+\.(jsx|js)$/,
+        loader: 'imports?jQuery=jquery,$=jquery,this=>window'
+      }
     ]
   }
 };
@@ -40,7 +44,11 @@ module.exports.production = {
     loaders: [
       { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },
       { test: /\.hbs$/, loader: 'handlebars-loader' },
-      { test: /\.json$/, loader: 'json-loader' }
+      { test: /\.json$/, loader: 'json-loader' },
+      {
+        test: /bootstrap.+\.(jsx|js)$/,
+        loader: 'imports?jQuery=jquery,$=jquery,this=>window'
+      }
     ]
   },
   plugins: [uglifyJsPlugin]

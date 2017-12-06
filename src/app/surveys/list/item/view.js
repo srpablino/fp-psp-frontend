@@ -11,8 +11,8 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    this.props = Object.assign({}, options);
-    this.model = this.props.model;
+    this.deleteSurvey = options.deleteSurvey;
+    this.model = options.model;
   },
 
   serializeData() {
@@ -27,7 +27,7 @@ export default Mn.View.extend({
   },
   handleDelete(event) {
     event.preventDefault();
-    this.props.deleteSurvey(this.model);
+    this.deleteSurvey(this.model);
   },
   handleShowSnapshots(event) {
     if (event.target.tagName.toLowerCase() !== 'a') {

@@ -3,6 +3,9 @@ import Mn from 'backbone.marionette';
 import initRouter from './router';
 import LayoutView from './layout-view';
 import sessionMgr from './session-manager';
+import FlashesService from '../flashes/service';
+import ModalService from '../modal/service';
+import $ from 'jquery';
 
 export default Mn.Application.extend({
   region: '#main',
@@ -18,6 +21,16 @@ export default Mn.Application.extend({
       return;
     }
 
+    ModalService.setup({
+      container: this.layoutView.getRegion('overlay')
+    });
+
+    FlashesService.setup({
+      container: this.layoutView.getRegion('flashes')
+    });
+
+    this.setupAjax();
+
     this.router = initRouter({
       app: this,
       before: this.beforeRoute.bind(this),
@@ -26,11 +39,13 @@ export default Mn.Application.extend({
       }
     });
 
-    this.sessionMgr.configure({
-      router: this.router
-    });
     Bb.history.start();
     this.showView(this.layoutView);
+
+    FlashesService.request('add', {
+      type: 'danger',
+      title: 'Server Error'
+    });
   },
   getSession() {
     return this.sessionMgr.getSession();
@@ -57,5 +72,29 @@ export default Mn.Application.extend({
   },
   logout() {
     this.sessionMgr.logout().toLoginPage();
+  },
+  setupAjax() {
+    const accessToken = this.sessionMgr.getAccessToken();
+    $.ajaxSetup({
+      beforeSend: xhr => {
+        if (accessToken) {
+          xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+        }
+      },
+      statusCode: {
+        401: () => {
+          this.redirectToLoginAfterError();
+        },
+        403: () => {
+          this.redirectToDeniedPage();
+        },
+        500: () => {
+          FlashesService.request('add', {
+            type: 'danger',
+            title: 'Server Error'
+          });
+        }
+      }
+    });
   }
 });
