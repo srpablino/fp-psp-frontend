@@ -41,6 +41,11 @@ export default Mn.Application.extend({
 
     Bb.history.start();
     this.showView(this.layoutView);
+
+    FlashesService.request('add', {
+      type: 'danger',
+      title: 'Server Error'
+    });
   },
   getSession() {
     return this.sessionMgr.getSession();
