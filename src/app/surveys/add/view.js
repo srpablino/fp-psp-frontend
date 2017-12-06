@@ -1,6 +1,7 @@
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 import Model from './model';
+import CodeMirror from 'codemirror';
 
 export default Mn.View.extend({
   template: Template,
@@ -16,15 +17,12 @@ export default Mn.View.extend({
     this.startCodeMirror();
   },
   startCodeMirror() {
-    this.schema = window.CodeMirror.fromTextArea(
-      this.$el.find('#schema-editor')[0],
-      {
-        mode: 'text/html',
-        tabMode: 'indent',
-        lineNumbers: true
-      }
-    );
-    this.schemaUI = window.CodeMirror.fromTextArea(
+    this.schema = CodeMirror.fromTextArea(this.$el.find('#schema-editor')[0], {
+      mode: 'text/html',
+      tabMode: 'indent',
+      lineNumbers: true
+    });
+    this.schemaUI = CodeMirror.fromTextArea(
       this.$el.find('#schema-ui-editor')[0],
       {
         mode: 'text/html',

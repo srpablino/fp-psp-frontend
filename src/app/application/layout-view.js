@@ -13,16 +13,17 @@ export default Mn.View.extend({
 
   regions: {
     header: '#header',
+    flashes: '#flashes',
     content: '#content',
     subheader: '#sub-header',
-    footer: '#footer'
+    footer: '#footer',
+    overlay: '#overlay'
   },
   initialize(options) {
     this.app = options.app;
     this.showHeader();
     this.showFooter();
     this.showView(new HomeView());
-    this.app = options.app;
   },
   showHeader() {
     const model = headerStorage.getByRolesInSession(this.app.getSession());
