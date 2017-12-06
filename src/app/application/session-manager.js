@@ -1,14 +1,9 @@
 import Bn from 'backbone';
 import session from '../../common/session';
-import $ from 'jquery';
 
 const SessionManager = Bn.Model.extend({
   initialize() {
     session.fetch();
-  },
-  configure({ router }) {
-    this.router = router;
-    this.setupAjax();
   },
   getSession() {
     return session;
@@ -50,24 +45,6 @@ const SessionManager = Bn.Model.extend({
   redirectToLoginAfterError() {
     // TODO Show a friendly message to the user
     this.toLoginPage();
-  },
-  setupAjax() {
-    const accessToken = this.getAccessToken();
-    $.ajaxSetup({
-      beforeSend: xhr => {
-        if (accessToken) {
-          xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
-        }
-      },
-      statusCode: {
-        401: () => {
-          this.redirectToLoginAfterError();
-        },
-        403: () => {
-          this.redirectToDeniedPage();
-        }
-      }
-    });
   }
 });
 
