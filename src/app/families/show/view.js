@@ -30,7 +30,7 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-    //  family: this.model.attributes
+      family: this.model.attributes
     };
   }
 });
