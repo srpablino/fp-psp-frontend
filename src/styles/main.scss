@@ -873,8 +873,8 @@ article {
 #family-snapshot{
 
   >img{
-    width: 70%;
-    height: auto;
+  //  width: 100px;
+    height: 380px;
   }
     padding: 10px;
     position: relative;
@@ -927,3 +927,27 @@ article {
   }
 }
 /* ########## */
+
+
+// View snapshots - jdferreira
+
+.article-title{
+  color: #60b4ef;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
+}
+
+#item-number {
+
+   margin-right: 15px;
+   border-radius: 50%;
+   padding-left: 12px;
+   padding-right: 12px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   font-size: 20px;
+   border: 5px solid #ccccca;
+   color: #ccccca;
+   margin-top: -5px;
+}
