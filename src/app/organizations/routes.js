@@ -13,7 +13,9 @@ const organizations = props => {
     },
     controller: {
       showOrganizations() {
-        organizationsStorage.findAll().then(collection => {
+        organizationsStorage.findAll({
+          data: { page: '1' }
+        }).then(collection => {
           app.showViewOnRoute(new OrganizationsView({ collection }));
         });
       },
