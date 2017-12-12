@@ -2,5 +2,6 @@ import Bn from 'backbone';
 import env from '../../../../env';
 
 export default Bn.Model.extend({
-  urlRoot: `${env.API}/snapshots/priority`
+  urlRoot: `${env.API}/snapshots/priority`,
+  id: 'snapshotIndicatorId'
 });

@@ -25,19 +25,25 @@ export default Marionette.View.extend({
     },
     render(){
 
-        this.indicatorPriority={};
-        this.indicatorPriority.indicator = this.options.indicatorName;
-        this.indicatorPriority.reason = '';
-        this.indicatorPriority.action = '';
-        this.indicatorPriority.estimated_date = null;
+        this.indicatorPriority = {
+          indicator: this.options.indicatorName,
+          reason: '',
+          action: '',
+          estimated_date: new Date()
+        };
 
         var html=Template();
         this.$el.html(html);
         var title = (this.options&&this.options.indicatorName)||"";
         this.$el.find('.title-blue').append(title);
         this.$el.find("#modal-content").attr('data-id', this.options.dataId);
+
         var $fecha = this.$el.find('#datetimepicker1');
-        $fecha.datetimepicker({locale:'es', format:"DD/MM/YYYY" });
+        $fecha.datetimepicker({
+          locale:'es',
+          format:"DD/MM/YYYY" 
+        });
+
         return this;
     },
 
@@ -72,15 +78,12 @@ export default Marionette.View.extend({
             this.indicatorPriority.estimated_date = this.$el.find('#fecha').val();
             this.indicatorPriority.snapshot_indicator_id = this.options.snapshotIndicatorId;
           
-        var self = this;
 
-        this.model.save(this.indicatorPriority).then( function (){
-          //self.model.on('sync', self.render);
-          self.model.fetch({
-            data: { snapshotIndicatorId: self.options.snapshotIndicatorId}
-          });
-        
-          self.close();
+        this.model.save(this.indicatorPriority).then(model => {
+          console.log(model)
+          this.trigger('change', model)
+        }, error => {
+          
         });
     }
 });

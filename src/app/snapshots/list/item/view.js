@@ -5,79 +5,86 @@ import moment from 'moment';
 import PriorityView from './priority/view';
 import datetimepicker from 'eonasdan-bootstrap-datetimepicker';
 import $ from 'jquery';
+import FlashesService from '../../../flashes/service';
+import PriorityModel from './priority/model';
+
 
 export default Mn.View.extend({
   template: Template,
   events: {
-    'click #circle': 'handlerOnClickIndicator'
+    'click #circle': 'handlerOnClickIndicator',
+    'click .btn-danger': 'handleOnDeletePriority'
+    
   },
 
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model;
-    console.log(this);
+    this.model.on('sync', this.render);
+    
   },
 
   serializeData() {
-    const snapshot = [];
-    const header = this.createHeaderRepresentation();
-    const indicators = this.createIndicatorRepresentation(this.model.attributes.indicators_survey_data);
-
-    header.forEach(function(v) {snapshot.push(v)});
-    indicators.forEach(function(v) {snapshot.push(v)});
-
-    const priorities = this.showIndicatorsPriorities();
-    priorities.forEach(function(v) {snapshot.push(v)});
-    
+    console.log(this.props.model.attributes.indicators_priorities)
     return {
-      snapshots: snapshot
+      header: {
+        date: this.getCreatedAt(),
+        data: this.model.attributes,
+        extra: this.createHeaderRepresentation()
+      },
+      data: this.model.attributes.indicators_survey_data.map(value => {
+        return {
+          clazz: value.value.toLowerCase(),
+          value: value.value,
+          name: value.name
+        }
+      }),
+      priorities: this.props.model.attributes.indicators_priorities
     };
   },
 
-  createIndicatorRepresentation(indicators){
-    var snapshotView = [];
-    snapshotView.push(`<div class="indicators-snapshot" >`);
-    if(indicators!==undefined && Array.isArray(indicators)){
-      indicators.forEach((element, index ) => {
-        snapshotView.push(
-        `<div class="indicator-circle-snapshot "> 
-            <div id="circle" class="circle-content ${element['value'].toLowerCase()}"  />
-            <p id="indicator-name" >${element['name']}</p> 
-            <p hidden id="indicator-value">${element['value']}</p>
-        </div> `);  
-        }
-      );
-    }
+  handleOnDeletePriority(event) {
+    const toRemoveId = $(event.currentTarget).data('id');
+    const model = new PriorityModel();
 
-    snapshotView.push(`</div>`);
-    return snapshotView;
-  }, 
+    model.set({
+      id : $(event.currentTarget).data('id')
+    });
+    model.destroy().then(() => {
+      
+      var elements = this.props.model.attributes.indicators_priorities;
+      elements = elements.filter(priority => {
+        return priority.snapshot_indicator_priority_id !== toRemoveId;
+      });
+      this.props.model.attributes.indicators_priorities = elements;
+      setTimeout(() => {
+        this.render();  
+      }, 300);
+    });
+    
+    /*.remove(
+      {
+        snapshotIndicatorId : $(event.currentTarget).data('id')
+      }
+    );*/
+  },
+
 
   createHeaderRepresentation(){
-    var headerView = [];
-    headerView.push((
-      `<div class="header-indicators-snapshot"> 
-          <h3 class="pull-left"> SNAPSHOT  ${this.getCreatedAt()} </h3> 
-          <div class="pull-right header-resume">
-            <p>${this.model.attributes.count_red_indicators}</p>
-            <div class="circle-header red " />
-            <p>${this.model.attributes.count_yellow_indicators}</p>
-            <div class="circle-header yellow " />
-            <p>${this.model.attributes.count_green_indicators}</p>
-            <div class="circle-header green " />
-          </div>
-      </div>`));
-
+    var headerExtra = [];
+    
     const keysToPick = _.keys(this.model.attributes.family_data);
     _.forOwn(
        _.forEach(this.model.attributes.family_data, keysToPick),
        (value, key) => {
-         headerView.push(`<label>${key}:</label> ${value}`);
+        headerExtra.push({
+          label: key,
+          value: value
+        });
       }
     );
-    headerView.push(`<hr></hr>`);
      
-    return headerView;
+    return headerExtra;
   },
 
   getCreatedAt() {
@@ -93,14 +100,24 @@ export default Mn.View.extend({
     const indicatorSelectedValue = e.target.parentNode.children['indicator-value'].innerHTML;
     
     if(indicatorSelectedValue.toUpperCase()==='GREEN'){
+
+      FlashesService.request('add', {
+        type: 'danger',
+        title: 'No se puede agregar cosas al verde'
+      });
       return;
     }
     this.showDialogPriority(indicatorSelected);
     this.priorityDialog.open();
-    console.log('volvio del dialogo');
-    console.log(this);
+    this.priorityDialog.on('change', data => {
+      this.props.model.attributes.indicators_priorities.push(data);
+      setTimeout(() => {
+        this.render();  
+      }, 300);
+      this.priorityDialog.close();
+    })
 
-
+    
   },
 
   showDialogPriority(indicator){
@@ -114,38 +131,6 @@ export default Mn.View.extend({
     });
 
     $('#modal-region').append(this.priorityDialog.render().el);
-  }, 
-
-  showIndicatorsPriorities(){
-    var priorities = [];
-    const indicatorsPriorities = this.props.model.attributes.indicators_priorities;
-    if(indicatorsPriorities!==undefined && Array.isArray(indicatorsPriorities) && indicatorsPriorities.length>0){
-    priorities.push(`<br/> <br/> <table class="table table-hover margin bottom center" id="prioritiesTable" >
-	  <thead  class="thead-light">
-	    <tr>
-	      <th>Indicator</th>
-	      <th>Why? I do not have it?</th>
-	      <th>What to do? to have it?</th>
-	      <th>When you achieve it?</th>
-	    </tr>
-	  </thead>
-	  <tbody id="tbodypriorities">   `);
-
-    indicatorsPriorities.forEach((element, index) => {
-      priorities.push(`<tr> 
-        <td> ${element.indicator}</td>
-        <td> ${element.reason}</td>
-        <td> ${element.action}</td>
-        <td> ${element.estimated_date}</td>
-      <tr/>`);
-
-    });
-
-    priorities.push(`</tbody>
-      </table>`);
-  }
-    return priorities;
-
   }
 
 });
