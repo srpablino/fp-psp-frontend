@@ -4,38 +4,44 @@
             <div class="modal-header">
 
                 <h3 class="title-blue modal-title">
-                    <!--i class="fa fa-life-ring"></i-->
                 </h3>
 
             </div>
             <div class="modal-body app-modal-body">
 
-                <form id="form">
+                <form id="form" role="form">
+
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> Why I don't have it? </p>
+                                <p> Why I don't have it? * </p>
                                 <textarea value="{{indicatorPriority.reason}}" 
                                           class="form-control" 
                                           name="reason"
                                           rows="5"
-                                          placeholder="Description" required />
+                                          maxlength="500"
+                                          placeholder="Description"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> What do I do to attain it? </p>
-                                <input value="{{indicatorPriority.action}}" type="text" class="form-control" name="action" placeholder="Description" required>
+                                <p> What do I do to attain it? * </p>
+                                <textarea value="{{indicatorPriority.action}}"  
+                                          class="form-control" 
+                                          name="action" 
+                                          placeholder="Description" 
+                                          maxlength="500"
+                                          rows="5"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> When will I have it? </p>
-                                <div class='input-group date' id='datetimepicker1'>
+                                <p> When will I have it? * </p>
+                                <div class='input-group date' id='datetimepicker'>
                                     <input id="fecha" value={{indicatorPriority.estimatedDate}} type='text' class="form-control" placeholder="DD/MM/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -51,9 +57,8 @@
                 <div class="row">
                     <div class="modal-footer-button-content">
                         <div class="modal-footer-button form-item-right col-xs-6 col-xs-offset-6">
-                            <button type="button" type="submit" id="add-priority" class="btn form-button btn-primary">Accept</button>
                             <button type="button" id="cancel-priority" class="btn form-button btn-primary margin-left-30">Cancel</button>
-
+                            <button type="button" type="submit" id="add-priority" class="btn form-button btn-primary">Accept</button>
                         </div>
                     </div>
                 </div>
