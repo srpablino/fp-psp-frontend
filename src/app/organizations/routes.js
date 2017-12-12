@@ -12,11 +12,11 @@ const organizations = props => {
       'organizations/:id(/:entity)': 'showOrganization'
     },
     controller: {
+      //paginated organizations
       showOrganizations() {
-        organizationsStorage.findAll({
-          data: { page: '1' }
-        }).then(collection => {
-          app.showViewOnRoute(new OrganizationsView({ collection }));
+        organizationsStorage.find()
+        .then(model => {
+          app.showViewOnRoute(new OrganizationsView({ model }));
         });
       },
       showOrganization(organizationId, entity) {
