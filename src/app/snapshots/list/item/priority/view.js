@@ -5,17 +5,17 @@ import PriorityCollection from './collection';
 import _ from 'lodash';
 import datetimepicker from 'eonasdan-bootstrap-datetimepicker';
 import $ from 'jquery';
+import FlashesService from '../../../../flashes/service';
+import moment from 'moment';
 
 export default Marionette.View.extend({
     initialize(options){
       this.options=options;
       this.model = new PriorityModel();
       this.collection = new PriorityCollection();
-  
       this.collection.fetch({
         data: { snapshotIndicatorId: this.options.snapshotIndicatorId}
       });
-  
     },
     template: Template,
     events:{
@@ -23,13 +23,13 @@ export default Marionette.View.extend({
         'click #cancel-priority':'close'
 
     },
+    
     render(){
-
         this.indicatorPriority = {
           indicator: this.options.indicatorName,
           reason: '',
           action: '',
-          estimated_date: new Date()
+          estimated_date: ''
         };
 
         var html=Template();
@@ -38,18 +38,13 @@ export default Marionette.View.extend({
         this.$el.find('.title-blue').append(title);
         this.$el.find("#modal-content").attr('data-id', this.options.dataId);
 
-        var $fecha = this.$el.find('#datetimepicker1');
+        var $fecha = this.$el.find('#datetimepicker');
         $fecha.datetimepicker({
-          locale:'es',
-          format:"DD/MM/YYYY" 
+          format:"DD/MM/YYYY",
+          minDate: new Date()
         });
 
         return this;
-    },
-
-    actionModal(e){
-        e.preventDefault();
-        this.trigger("modalConfirmAction");
     },
 
     open(){
@@ -68,22 +63,41 @@ export default Marionette.View.extend({
 
     addPriority(e){
 
-        e.preventDefault();
-        this.$el
-            .find('#form')
-            .serializeArray()
-            .forEach(element => {
-                this.indicatorPriority[element.name] = element.value;
-              });
-            this.indicatorPriority.estimated_date = this.$el.find('#fecha').val();
-            this.indicatorPriority.snapshot_indicator_id = this.options.snapshotIndicatorId;
-          
+      e.preventDefault();
+      this.$el
+          .find('#form')
+          .serializeArray()
+          .forEach(element => {
+              this.indicatorPriority[element.name] = element.value;
+            });
+          this.indicatorPriority.estimated_date = this.$el.find('#fecha').val();
+          this.indicatorPriority.snapshot_indicator_id = this.options.snapshotIndicatorId;
 
-        this.model.save(this.indicatorPriority).then(model => {
-          console.log(model)
-          this.trigger('change', model)
-        }, error => {
-          
+      var errors = this.model.validate((this.indicatorPriority));
+      
+      if (errors) {
+        errors.forEach(error =>{
+          FlashesService.request('add', {
+            type: 'warning',
+            title: error
+          })
         });
-    }
+        return;
+
+      } else {
+        
+        this.model.save(this.indicatorPriority).then(model => {
+          this.trigger('change', model);
+          FlashesService.request('add', {
+            type: 'info',
+            title: 'The information has been saved'
+          });
+        }, error => {
+          FlashesService.request('add', {
+            type: 'warning',
+            title: error.responseJSON.description
+          });
+        });
+      }
+  }
 });

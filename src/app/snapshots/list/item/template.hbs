@@ -12,13 +12,12 @@
     </div>
 
   </div>
-  <hr />
+  <br/>
+  <hr/>
   <div>
     {{#each header.extra}}
     <label>{{this.label}}:</label> {{this.value}} {{/each}}
   </div>
-  <hr />
-  <hr /> 
 
   <div class="row">
     {{#each data}}
@@ -28,20 +27,16 @@
       <p hidden id="indicator-value">{{ this.value }}</p>
     </div>
     {{/each}}
-
-
   </div>
-
-
-  <br/>
-  <br/>
-  <table class="table table-hover margin bottom center" id="prioritiesTable">
+ 
+  <h3 class="{{this.clazz}}" style="font-weight: bold" >My Priorities </h3>
+  <table class="table table-hover margin bottom center {{this.clazz}}" id="prioritiesTable">
     <thead class="thead-light">
       <tr>
         <th>Indicator</th>
-        <th>Why? I do not have it?</th>
-        <th>What to do? to have it?</th>
-        <th>When you achieve it?</th>
+        <th>Why I don't have it?</th>
+        <th>What do I do to attain it?</th>
+        <th>When will I have it?</th>
       </tr>
     </thead>
     <tbody id="tbodypriorities">
@@ -51,7 +46,10 @@
         <td> {{this.reason}}</td>
         <td> {{this.action}}</td>
         <td> {{this.estimated_date}}</td>
-        <td> <button class="btn btn-danger" data-id="{{ this.snapshot_indicator_priority_id }}">Borrar</button></td>
+        <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right" data-id="{{ this.snapshot_indicator_priority_id }}">
+            <span class="glyphicon glyphicon-trash pull-right"></span>
+        </a> </td>
+        <!--td> <button class="btn btn-danger" data-id="{{ this.snapshot_indicator_priority_id }}">Borrar</button></td-->
       </tr>
       {{/each}}
 

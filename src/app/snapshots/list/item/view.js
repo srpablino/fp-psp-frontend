@@ -7,6 +7,8 @@ import datetimepicker from 'eonasdan-bootstrap-datetimepicker';
 import $ from 'jquery';
 import FlashesService from '../../../flashes/service';
 import PriorityModel from './priority/model';
+import ModalService from '../../../modal/service';
+
 
 
 export default Mn.View.extend({
@@ -20,15 +22,20 @@ export default Mn.View.extend({
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model;
-    this.model.on('sync', this.render);
-    
+    this.model.on('sync', this.render); 
   },
 
   serializeData() {
-    console.log(this.props.model.attributes.indicators_priorities)
+    var self = this;
+    this.props.model.attributes.indicators_priorities.forEach(value =>{
+      var date = self.formartterOnlyDate(value.estimated_date);
+      value.estimated_date = date;
+
+    });
+
     return {
       header: {
-        date: this.getCreatedAt(),
+        date: this.formartterWithTime(this.model.attributes.created_at),
         data: this.model.attributes,
         extra: this.createHeaderRepresentation()
       },
@@ -39,7 +46,8 @@ export default Mn.View.extend({
           name: value.name
         }
       }),
-      priorities: this.props.model.attributes.indicators_priorities
+      priorities: this.props.model.attributes.indicators_priorities,
+      clazz: this.props.model.attributes.indicators_priorities<=0?'hidden':''
     };
   },
 
@@ -50,23 +58,31 @@ export default Mn.View.extend({
     model.set({
       id : $(event.currentTarget).data('id')
     });
-    model.destroy().then(() => {
-      
-      var elements = this.props.model.attributes.indicators_priorities;
-      elements = elements.filter(priority => {
-        return priority.snapshot_indicator_priority_id !== toRemoveId;
-      });
-      this.props.model.attributes.indicators_priorities = elements;
-      setTimeout(() => {
-        this.render();  
-      }, 300);
-    });
-    
-    /*.remove(
-      {
-        snapshotIndicatorId : $(event.currentTarget).data('id')
+
+
+    ModalService.request('confirm', {
+      title: 'Confirm Deletion',
+      text: `Are you sure you want to delete this priority?`
+    }).then(confirmed => {
+
+      if (!confirmed) {
+        return;
       }
-    );*/
+
+      model.destroy().then(() => {
+        
+        var elements = this.props.model.attributes.indicators_priorities;
+        elements = elements.filter(priority => {
+          return priority.snapshot_indicator_priority_id !== toRemoveId;
+        });
+        this.props.model.attributes.indicators_priorities = elements;
+        setTimeout(() => {
+          this.render();  
+        }, 300);
+      });
+    });
+
+    
   },
 
 
@@ -87,23 +103,43 @@ export default Mn.View.extend({
     return headerExtra;
   },
 
-  getCreatedAt() {
-    const createdAt = this.model.attributes.created_at;
-    if (!createdAt) {
+  formartterWithTime(date) {
+    if (!date) {
       return null;
     }
-    return moment(createdAt).format('D/M/YYYY hh:mm:ss');
+    return moment(date).format('DD/MM/YYYY hh:mm:ss');
   }, 
+
+  formartterOnlyDate(date){
+    if (!date) {
+      return null;
+    }
+    return moment(date).format('DD/MM/YYYY');
+  },
 
   handlerOnClickIndicator(e){
     const indicatorSelected = e.target.parentNode.children['indicator-name'].innerHTML;
     const indicatorSelectedValue = e.target.parentNode.children['indicator-value'].innerHTML;
     
-    if(indicatorSelectedValue.toUpperCase()==='GREEN'){
+    var exists = [];
 
+    var self = this;
+    exists = this.props.model.attributes.indicators_priorities.filter(priority => {
+      return priority.indicator === indicatorSelected;
+    });
+
+    if(exists.length>0){
       FlashesService.request('add', {
-        type: 'danger',
-        title: 'No se puede agregar cosas al verde'
+        type: 'info',
+        title: `The "${indicatorSelected}" indicator was previously selected`
+      });
+      return;
+    }
+
+    if(indicatorSelectedValue.toUpperCase()==='GREEN'){
+      FlashesService.request('add', {
+        type: 'info',
+        title: `The "${indicatorSelected}" indicator is really good`
       });
       return;
     }
