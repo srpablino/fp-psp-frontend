@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import SurveyModel from '../../surveys/add/model';
 import SnapshotModel from './model';
 import _ from 'lodash';
+import $ from 'jquery';
 
 export default Mn.View.extend({
   template: Template,
