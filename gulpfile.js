@@ -12,6 +12,8 @@ const isProduction = environment === 'production';
 const webpackConfig = require('./webpack.config.js')[environment];
 const merge = require('merge-stream');
 const rename = require('gulp-rename');
+const imagemin = require('gulp-imagemin');
+const noop = require('gulp-noop');
 
 const port = $.util.env.port || 9000;
 const src = 'src/';
@@ -21,20 +23,19 @@ const tests = 'tests/';
 const config = [
   {
     dist: 'dist/',
-    html: 'index.html',
-    webpackEntry: webpackConfig.entry.main
+    html: 'index.html'
   },
   {
     dist: 'dist/login/',
-    html: 'login.html',
-    webpackEntry: webpackConfig.entry.login_main
+    html: 'login.html'
   }
 ];
 
 gulp.task('scripts', () => {
-  return gulp
-    .src([webpackConfig.entry.main])
-    .pipe($.webpackStream(webpackConfig))
+  let entryPoint = webpackConfig.entryPointsConfig.main;
+  gulp
+    .src([entryPoint.fullPath])
+    .pipe($.webpackStream(webpackConfig.getConfig(entryPoint.webpackEntry)))
     .on('error', function(error) {
       $.util.log($.util.colors.red(error.message));
       this.emit('end');
@@ -45,9 +46,10 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('scripts:login', () => {
-  return gulp
-    .src([webpackConfig.entry.login_main])
-    .pipe($.webpackStream(webpackConfig))
+  let entryPoint = webpackConfig.entryPointsConfig.login_main;
+  gulp
+    .src([entryPoint.fullPath])
+    .pipe($.webpackStream(webpackConfig.getConfig(entryPoint.webpackEntry)))
     .on('error', function(error) {
       $.util.log($.util.colors.red(error.message));
       this.emit('end');
@@ -101,21 +103,28 @@ gulp.task('serve', () => {
   });
 });
 
-gulp.task('static', cb => {
-  return gulp
-    .src(src + 'static/**/*')
-    .pipe($.size({ title: 'static' }))
-    .pipe(gulp.dest(dist + 'static/'));
+gulp.task('static', () => {
+  let fonts = gulp
+    .src(src + 'static/fonts/*')
+    .pipe($.size({ title: 'static/fonts' }))
+    .pipe(gulp.dest(dist + 'static/fonts/'));
+  let images = gulp
+    .src(src + 'static/images/*')
+    .pipe($.size({ title: 'static/images' }))
+    .pipe(isProduction ? imagemin() : noop())
+    .pipe(gulp.dest(dist + 'static/images/'));
+
+  return merge(fonts, images);
 });
 
 gulp.task('watch', () => {
-  gulp.watch(src + 'styles/**/*.scss', ['styles']);
+  gulp.watch([src + 'styles/**/*.scss', src + 'common/**/*.scss'], ['styles']);
   gulp.watch([src + 'index.html', src + 'login.html'], ['html']);
-  gulp.watch([src + 'app/**/*.js', src + 'app/**/*.hbs'], ['scripts']);
-  gulp.watch(
-    [src + 'login_app/**/*.js', src + 'login_app/**/*.hbs'],
-    ['scripts:login']
-  );
+
+  // gulp.watch(
+  //   [src + 'login_app/**/*.js', src + 'login_app/**/*.hbs'],
+  //   ['scripts:login']
+  // );
 });
 
 gulp.task('lint', () => {
@@ -146,7 +155,6 @@ gulp.task('build', cb => {
     $.runSequence(
       'clean',
       'environment',
-      'test',
       'static',
       'html',
       'html:denied',

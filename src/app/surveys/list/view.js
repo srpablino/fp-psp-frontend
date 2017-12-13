@@ -2,6 +2,8 @@ import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 import Collection from './collection';
 import ItemView from './item/view';
+import ModalService from '../../modal/service';
+import FlashesService from '../../flashes/service';
 
 export default Mn.View.extend({
   template: Template,
@@ -43,6 +45,22 @@ export default Mn.View.extend({
     this.props.add();
   },
   deleteSurvey(model) {
-    this.collection.remove(model);
+    ModalService.request('confirm', {
+      title: 'Confirm Deletion',
+      text: `Are you sure you want to delete "${model.get('title')}"?`
+    }).then(confirmed => {
+      if (!confirmed) {
+        return;
+      }
+      this.collection.remove(model);
+      return this.handleDestroySuccess(model);
+    });
+  },
+  handleDestroySuccess(model) {
+    return FlashesService.request('add', {
+      timeout: 5000,
+      type: 'info',
+      body: 'The survey has been deleted!'
+    });
   }
 });

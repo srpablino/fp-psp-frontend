@@ -1,16 +1,18 @@
-@import "typography/typography";
+@import "base/base";
+@import "../common/styles";
 
-html{
-    position: relative;
-    min-height: 100%;
+html {
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    font: 16px -apple-system, "Roboto", Lato, Arial, sans-serif;
-    margin: 0;
-    padding: 1.5em;
-    padding-bottom: 100px;
-    background-color: #e7e7e7;
+  font: 16px -apple-system, "Roboto", Lato, Arial, sans-serif;
+  margin: 0;
+  padding: 1.5em;
+  padding-bottom: 100px;
+  background-color: #e7e7e7;
+  font-family: "Roboto";
 }
 
 #content {
@@ -18,6 +20,23 @@ body {
   margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;
+}
+
+input {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px !important;
+  color: #788c9a !important;
+  border-radius: 2px;
+  border-color: #f6f6f6;
+}
+button {
+  background: #7cd071;
+  border-radius: 2px;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 13px;
+  color: #ffffff;
 }
 
 a {
@@ -32,7 +51,6 @@ a {
     width: auto;
   }
 }
-
 
 .fp-navbar {
   background-color: #7cd071;
@@ -64,10 +82,7 @@ a {
         position: absolute;
         bottom: -8px;
         left: 25%;
-
       }
-
-
     }
 
     > .open > a,
@@ -95,7 +110,7 @@ a {
   margin-bottom: 0px !important;
   min-width: 770px;
   z-index: 100;
-//  border-bottom: 1px solid #8c8c8c;
+  //  border-bottom: 1px solid #8c8c8c;
   margin-top: 30px;
 
   .navbar-collapse.collapse {
@@ -108,12 +123,7 @@ a {
   }
 }
 
-div.fp-form {
-  border-color: #ccc;
-  -webkit-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.2);
-
+div.fp-form-container {
   > .panel-heading {
     color: #00415d;
     background-color: #fff;
@@ -137,7 +147,7 @@ div.fp-form {
   }
 }
 
-div.fp-form {
+div.fp-form-container {
   > .panel-heading {
     hr {
       margin-top: 10px;
@@ -173,58 +183,8 @@ div.fp-form {
   }
 }
 
-div.fp-form {
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  span.btn {
-    height: 45px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-    -webkit-transition: all 0.1s linear;
-    -moz-transition: all 0.1s linear;
-    transition: all 0.1s linear;
-  }
-  input:hover,
-  input:focus {
-    outline: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
-    border-color: #ccc;
-  }
-
-  .cancel-btn-container {
-    text-align: center;
-  }
-
-  .cancel-btn {
-    text-decoration: underline;
-    color: #888;
-  }
-  .cancel-btn:hover,
-  .cancel-btn:focus {
-    text-decoration: underline;
-    color: #666;
-  }
-
-  .save-btn {
-    background-color: #1cb94e;
-    outline: none;
-    color: #fff;
-    font-size: 14px;
-    height: auto;
-    font-weight: normal;
-    padding: 14px 0;
-    text-transform: uppercase;
-    border-color: #1cb94a;
-  }
-  .save-btn:hover,
-  .save-btn:focus {
-    color: #fff;
-    background-color: #1ca347;
-    border-color: #1ca347;
-  }
+.has-spinner {
+  position: relative;
 }
 
 // Box shadow helper
@@ -253,24 +213,11 @@ div.fp-form {
   border-color: rgba(#333, 0.85);
 }
 
-/*#card-item{
-  .card img{
-      width: 100px;
-      height: 100px;
-      background: white url("/static/images/image-loader.gif") no-repeat center;
-      margin: 0 2px;
-
-
-  }
-
-}*/
-.img-card{
-      width: 100px;
-      height: 100px;
-      background: white url("/static/images/image-loader.gif") no-repeat center;
-
+.img-card {
+  width: 100px;
+  height: 100px;
+  background: white url("/static/images/image-loader.gif") no-repeat center;
 }
-
 
 .search-container {
   margin: 10px;
@@ -296,14 +243,22 @@ div.fp-form {
 .list-container {
   margin-top: 15px;
   overflow: hidden; /* simple clearfix */
+
+  > div {
+    float: left;
+    min-width: 20%;
+    padding: 2%;
+  }
+  article.card {
+    margin: 0px;
+  }
 }
 
-.list-container > div {
-  float: left;
-  min-width: 20%;
-  padding: 2%;
+#organization-list {
+  &:empty {
+    @include screen-skeleton(40px);
+  }
 }
-
 /* but this is not removing the float: */
 @media only screen and (min-width: 150px) and (max-width: 780px) {
   .list-container > div {
@@ -313,12 +268,8 @@ div.fp-form {
   }
 }
 
-.list-container article.card {
-  margin: 0px;
-}
-
-.footer{
-  background-image:  linear-gradient(270deg, #599dd1, #95e78b );
+.footer {
+  background-image: linear-gradient(270deg, #599dd1, #95e78b);
   padding: 10px;
   color: #ffffff;
   font-family: "Roboto";
@@ -328,53 +279,45 @@ div.fp-form {
   left: 0;
   bottom: 0;
   width: 100%;
-  overflow:hidden;
-
+  overflow: hidden;
 }
-
-
-
 
 .card-title {
   border-bottom: 1px solid #efefef;
   > h4 {
-
-  font-family: "Roboto";
-  font-weight: 400;
-  font-size: 14px;
-  color: #60b4ef ;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    color: #60b4ef;
   }
-  > h4:hover{
-    color: #4a9fda ;
+  > h4:hover {
+    color: #4a9fda;
   }
-  >h4 img:hover{
-     background-image: url('/static/images/icon_more_hover.png');
-
+  > h4 img:hover {
+    background-image: url("/static/images/icon_more_hover.png");
   }
 }
 
 article {
-    background: #ffffff;
-    margin: 10px 0 0 0;
+  background: #ffffff;
+  margin: 10px 0 0 0;
 }
-
 
 /* activity Feed*/
 .activity-feed {
   > li > span > a {
-    color:#7cd071;
-    font-family: "Helvetica Neue (TT)";
+    color: #7cd071;
+    font-family: "Helvetica";
     font-weight: bold;
     font-size: 12px;
-
   }
-  > li > span > a:hover{
-    color:#50aa47;
+  > li > span > a:hover {
+    color: #50aa47;
     font-size: 12px;
   }
-  > li > span > time{
+  > li > span > time {
     color: #cccccc;
-    font-family: "Helvetica Neue (TT)";
+    font-family: "Helvetica";
     font-style: italic;
     margin-top: -5px;
   }
@@ -387,7 +330,7 @@ article {
     padding-left: 10px;
     border-left: 1px solid #60b4ef;
     font-size: 12px;
-    font-family: "Helvetica Neue (TT)";
+    font-family: "Helvetica";
     color: #788c9a;
 
     &:last-child {
@@ -411,31 +354,27 @@ article {
       position: relative;
       top: -5px;
     }
-
   }
 }
 
-.strike{
+.strike {
   text-align: center;
-    color: #788c9a;
-    font-family: "Roboto";
-    font-weight: 400;
-    font-size: 100px;
-
+  color: #788c9a;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 100px;
 }
 
 .strike-text {
-  font-family: "Helvetica Neue (TT)";
+  font-family: "Helvetica";
   font-size: 22px !important;
   color: #cccccc;
   text-align: center;
   margin-top: -50px;
-
 }
 
-
 // organizations-Families - jdferreira 23-11-2017
-#floating-survey{
+#floating-survey {
   position: absolute;
   z-index: 10;
   top: 5%;
@@ -444,7 +383,7 @@ article {
   left: 92%;
 }
 
-#floating-organization{
+#floating-organization {
   position: absolute;
   z-index: 10;
   top: 8%;
@@ -453,14 +392,14 @@ article {
   left: 92%;
 }
 
-#floating-survey:hover{
+#floating-survey:hover {
   -moz-box-shadow: 0 0 20px #ccc;
-  		-webkit-box-shadow: 0 0 20px #ccc;
-  		box-shadow: 0 0 20px #ccc;
-      border-radius: 50%;
+  -webkit-box-shadow: 0 0 20px #ccc;
+  box-shadow: 0 0 20px #ccc;
+  border-radius: 50%;
 }
 
-#floating-user{
+#floating-user {
   position: absolute;
   z-index: 10;
   top: 8%;
@@ -469,31 +408,30 @@ article {
   left: 87%;
 }
 
-#floating-user:hover{
+#floating-user:hover {
   -moz-box-shadow: 0 0 20px #ccc;
-  		-webkit-box-shadow: 0 0 20px #ccc;
-  		box-shadow: 0 0 20px #ccc;
-      border-radius: 50%;
+  -webkit-box-shadow: 0 0 20px #ccc;
+  box-shadow: 0 0 20px #ccc;
+  border-radius: 50%;
 }
 
-#table-top-indicators{
+#table-top-indicators {
   > thead {
-  background: #f9f9f9;
-  color: #60b4ef;
-  font-family: "Roboto";
-  font-weight: 400;
-  font-size: 15px;
+    background: #f9f9f9;
+    color: #60b4ef;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 15px;
     > tr > th > img {
       border-radius: 50%;
       width: 40%;
       height: auto;
-
     }
   }
-  >thead:first-child>tr:first-child>th:first-child {
+  > thead:first-child > tr:first-child > th:first-child {
     width: 70%;
   }
-  >tbody>tr>td{
+  > tbody > tr > td {
     color: #788c9a;
     font-family: "Helvetica";
     font-weight: 400;
@@ -502,30 +440,27 @@ article {
   }
 }
 
-
-
 //Home de family - mcespedes
-.list-priorities{
+.list-priorities {
   border-bottom: 1px solid #efefef;
-    padding-bottom: 19px;
-    position: relative;
-    .centered {
-        position: absolute;
-        top: 40%;
-        left: 3%;
-        transform: translate(-50%, -50%);
-        color: #ccccca;
-        font-family: "Roboto";
-        font-weight: 700;
-        font-size: 20px;
-    }
+  padding-bottom: 19px;
+  position: relative;
+  .centered {
+    position: absolute;
+    top: 40%;
+    left: 3%;
+    transform: translate(-50%, -50%);
+    color: #ccccca;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 20px;
+  }
   > img {
     width: 50px;
     height: auto;
     margin-right: 20px;
     position: relative;
     text-align: center;
-
   }
   > div {
     color: #60b4ef;
@@ -533,21 +468,352 @@ article {
     font-weight: 400;
     font-size: 14px;
 
-
-    .text-muted{
+    .text-muted {
       color: #788c9a;
-      font-family: "Helvetica Neue (TT)";
+      font-family: "Helvetica";
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+}
+
+#snapshot-indicators {
+  padding: 10px;
+  position: relative;
+  height: auto;
+  width: 100%;
+
+  .centered {
+    position: absolute;
+    top: 40%;
+    left: 3%;
+    transform: translate(-50%, -50%);
+    color: #ccccca;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  > span {
+    color: #ffffff;
+    font-family: "Roboto";
+    font-weight: 400;
+  }
+  > #green {
+    background-color: #50aa47;
+    position: absolute;
+    top: 10%;
+    left: 31%;
+    border-radius: 50%;
+    padding: 33px;
+    font-size: 33px;
+  }
+  > #yellow {
+    background-color: #f0cc39;
+    position: absolute;
+    top: 32%;
+    left: 35%;
+    border-radius: 50%;
+    padding: 27px;
+    font-size: 27px;
+  }
+  > #red {
+    background-color: #e0504c;
+    position: absolute;
+    top: 52%;
+    left: 37%;
+    border-radius: 50%;
+    padding: 23px;
+    font-size: 23px;
+  }
+}
+
+#card-interventions {
+  > ul > li {
+    > p {
+      color: #60b4ef;
+      font-family: "Roboto";
       font-weight: 400;
       font-size: 14px;
     }
 
-  }
+    > img {
+      width: 15%;
+    }
 
+    > .pull-right {
+      margin-top: 27px;
+    }
+    > .pull-left {
+      margin-right: 5px;
+    }
+    > .text-muted {
+      color: #788c9a;
+      font-family: "Helvetica";
+      font-weight: 400;
+      font-size: 12px;
+    }
+  }
+}
+//fin de Home de family - mcespedes
+.list-group-item {
+  margin: 10px;
 }
 
-#snapshot-indicators{
+.indicator-circle-snapshot {
+  text-align: center;
+  width: auto;
+  height: auto;
+}
 
+.indicator-circle-snapshot > div {
+  max-width: 100px;
+  max-height: 100px;
+}
 
+.indicator-circle-snapshot > figcaption {
+  text-align: center;
+  font-weight: bold;
+}
+
+.indicators-snapshot {
+  //-webkit-column-count: 6;
+  //-moz-column-count: 6;
+  column-count: 5;
+}
+
+.circle-content {
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+}
+
+.circle-header {
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.red {
+  background: red;
+}
+
+.green {
+  background: green;
+}
+
+.yellow {
+  background: yellow;
+}
+
+.indicator-circle-snapshot > p {
+  text-align: center;
+}
+
+.indicator-circle-snapshot > div {
+  margin: 0 auto;
+}
+
+.indicator-circle-snapshot {
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+.header-indicators-snapshot {
+  min-height: 20px;
+}
+
+.header-indicators-snapshot > h3 {
+  font-weight: bold;
+}
+
+.header-resume {
+  column-count: 6;
+}
+
+.header-resume > p {
+  font-weight: bold;
+}
+
+// GALLERY WIDGET
+
+.gallery-image > figure > img {
+  opacity: 0.5;
+  min-height: 240px;
+  max-width: 360px;
+}
+
+.gallery-image > figure {
+  float: left;
+  margin: 10px;
+  min-height: 300px;
+}
+
+.gallery-image > figure > figcaption {
+  max-width: 360px;
+  margin: 10px;
+  text-align: justify;
+}
+
+.gallery-image.gallery-selected > figure > img {
+  opacity: 1;
+  min-height: 250px;
+  max-width: 370px;
+}
+
+.field-gallery > div {
+  min-height: 430px;
+  max-width: 1200px;
+}
+
+//MAP WIDGET
+.gmap {
+  min-width: 800px !important;
+  min-height: 600px !important;
+  position: relative !important;
+}
+
+#flashes {
+  .container {
+    z-index: 2000;
+    position: fixed;
+    width: 500px;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+  }
+}
+
+.flashes {
+  &__alert {
+    @include BoxShadowHelper(1);
+  }
+}
+
+//ORGANIZATIONS
+.search::-webkit-input-placeholder {
+  padding-left: 8%;
+  background: url("/static/images/icon_buscar.png") no-repeat scroll 7px 7px;
+  background-position: 1% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.floating-organization {
+  position: absolute;
+  z-index: 10;
+  top: 12%;
+  width: 4%;
+  height: auto;
+  left: 92%;
+}
+
+.view-items {
+  padding-top: 8px;
+  padding-right: 10px;
+}
+
+.organizarion-name {
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
+  color: #60b4ef;
+}
+.organizarion-name:hover {
+  color: #4a9fda;
+}
+
+#img-cam {
+  margin-left: 25%;
+  margin-right: 25%;
+  border: 4px dashed #f6f6f6;
+
+  > p {
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    color: #dddddd;
+    margin-top: 10%;
+    margin-bottom: 20%;
+  }
+  > img {
+    margin-top: 20%;
+    width: 35%;
+  }
+}
+
+div.fp-form-container {
+  form {
+    padding-left: 10%;
+    padding-right: 10%;
+
+    input {
+      font-family: "Roboto";
+      font-weight: 400;
+      font-size: 14px;
+      color: #788c9a;
+      border-radius: 2px;
+      border-color: #f6f6f6;
+    }
+    button {
+      background: #7cd071;
+      width: 100%;
+      border-radius: 2px;
+      font-family: "Roboto";
+      font-weight: 400;
+      font-size: 13px;
+      color: #ffffff;
+    }
+  }
+}
+
+//login-page mcespedes
+.login-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin-left: -2%;
+  margin-top: -2%;
+}
+.bg-login {
+  background-image: linear-gradient(270deg, #599dd1, #95e78b);
+  opacity: 0.8;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin-left: -2%;
+  margin-top: -2%;
+}
+#btn-login {
+  background: #7cd071;
+  border-radius: 2px;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 13px;
+  color: #ffffff;
+  width: 100%;
+}
+#loginbox {
+  background: #ffffff;
+  margin-top: 50px;
+  > img {
+    width: 25%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+}
+
+// Family Snapshots -jdferreira
+#family-snapshot{
+
+  >img{
+  //  width: 100px;
+    height: 380px;
+  }
     padding: 10px;
     position: relative;
     height: auto;
@@ -572,268 +838,54 @@ article {
   > #green{
     background-color: #50aa47;
     position: absolute;
-    top: 10%;
-    left: 31%;
+    top: 8%;
+    left: 35%;
     border-radius: 50%;
-    padding: 33px;
-    font-size: 33px;
+    padding: 22px;
+    font-size: 32px;
   }
   >#yellow{
 
     background-color: #f0cc39;
     position: absolute;
-    top: 32%;
-    left: 35%;
+    top: 33%;
+    left: 37%;
     border-radius: 50%;
-    padding: 27px;
-    font-size: 27px;
+    padding: 20px;
+    font-size: 24px;
   }
   >#red{
     background-color: #e0504c;
     position: absolute;
-    top: 52%;
-    left: 37%;
+    top: 56%;
+    left: 40%;
     border-radius: 50%;
-    padding: 23px;
-    font-size: 23px;
+    padding: 15px;
+    font-size: 21px;
   }
 }
+/* ########## */
 
-#card-interventions{
-  > ul > li{
-    > p{
-      color: #60b4ef;
-      font-family: "Roboto";
-      font-weight: 400;
-      font-size: 14px;
-    }
 
-    > img {
-      width: 15%;
-    }
+// View snapshots - jdferreira
 
-    > .pull-right{
-        margin-top: 27px;
-    }
-    > .pull-left{
-        margin-right: 5px;
-    }
-    > .text-muted{
-      color: #788c9a;
-      font-family: "Helvetica Neue (TT)";
-      font-weight: 400;
-      font-size: 12px;
-    }
-
-  }
-
-}
-  //fin de Home de family - mcespedes
-.list-group-item{
-  margin: 10px;
+.article-title{
+  color: #60b4ef;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 14px;
 }
 
-.indicator-circle-snapshot{
-  text-align: center;
-  width: auto;
-  height: auto;
-}
+#item-number {
 
-.indicator-circle-snapshot > div{
-  max-width: 100px;
-  max-height: 100px;
-}
-
-.indicator-circle-snapshot > figcaption{
-   text-align: center;
-   font-weight: bold;
- }
-
-
-.indicators-snapshot {
-  //-webkit-column-count: 6;
-  //-moz-column-count: 6;
-  column-count: 5;
-}
-
-.circle-content {
-  width: 60px;
-  height: 60px;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  border-radius: 30px;
-}
-
-.circle-header {
-  width: 20px;
-  height: 20px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-}
-
-
-.red {
-  background: red;
-}
-
-.green {
-  background: green;
-}
-
-.yellow {
-  background: yellow;
-}
-
-.indicator-circle-snapshot > p {
-  text-align: center;
-}
-
-.indicator-circle-snapshot > div {
-  margin: 0 auto;
-
-}
-
-.indicator-circle-snapshot {
-  text-align: center;
-  page-break-inside:avoid;
-}
-
-.header-indicators-snapshot{
-  min-height: 20px;
-}
-
-.header-indicators-snapshot > h3 {
-  font-weight: bold;
-}
-
-.header-resume{
-  column-count: 6;
-}
-
-.header-resume > p{
-  font-weight: bold;
-}
-
-// GALLERY WIDGET
-
-.gallery-image > figure > img {
-  opacity: 0.5;
-  min-height: 240px;
-  max-width: 360px;
-}
-
-.gallery-image > figure {
-  float: left;
-  margin: 10px;
-  min-height: 300px;
-}
-
-.gallery-image > figure > figcaption {
-  max-width: 360px;
-  margin: 10px;
-  text-align: justify;
-}
-
-
-.gallery-image.gallery-selected > figure > img {
-  opacity: 1;
-  min-height: 250px;
-  max-width: 370px;
-}
-
-.field-gallery > div {
-  min-height: 430px;
-  max-width: 1200px;
-}
-
-//MAP WIDGET
-.gmap {
-  min-width: 800px !important;
-  min-height: 600px !important;
-  position: relative !important;
-}
-
-
-//ORGANIZATIONS
-.search::-webkit-input-placeholder {
- //color: transparent;
- //text-indent: -9999px;
- padding-left: 8%;
- background: url("/static/images/icon_buscar.png") no-repeat scroll 7px 7px;
- background-position: 1% 50%;
- background-repeat: no-repeat;
- background-size: contain;
-}
-
-.floating-organization{
- position: absolute;
- z-index: 10;
- top: 12%;
- width: 4%;
- height: auto;
- left: 92%;
-}
-
-.view-items{
- padding-top: 8px;
-padding-right: 10px;
-
-}
-
-.organizarion-name {
- font-family: "Roboto";
- font-weight: 400;
- font-size: 14px;
- color: #60b4ef ;
-
-}
-.organizarion-name:hover{
- color: #4a9fda ;
-}
-
-
-#img-cam{
- margin-left: 25%;
- margin-right: 25%;
- border: 4px dashed #f6f6f6;
-
- > p{
-   font-family: "Roboto";
-   font-weight: 400;
-   font-size: 14px;
-   color: #dddddd ;
-   margin-top: 10%;
-   margin-bottom: 20%;
- }
- >img{
-     margin-top: 20%;
-     width: 35%;
-
- }
-}
-
-#add-organization{
- > form {
-   padding-left: 10%;
-   padding-right: 10%;
-
-   input {
-     font-family: "Roboto";
-     font-weight: 400;
-     font-size: 14px;
-     color: #788c9a ;
-     border-radius: 2px;
-     border-color: #f6f6f6;
-   }
-   button {
-       background: #7cd071;
-       width: 100%;
-       border-radius: 2px;
-       font-family: "Roboto";
-       font-weight: 400;
-       font-size: 13px;
-       color: #ffffff ;
-  }
- }
+   margin-right: 15px;
+   border-radius: 50%;
+   padding-left: 12px;
+   padding-right: 12px;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   font-size: 20px;
+   border: 5px solid #ccccca;
+   color: #ccccca;
+   margin-top: -5px;
 }
