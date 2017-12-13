@@ -14,15 +14,10 @@
   </div>
   <br/>
   <hr/>
-  <div>
-    {{#each header.extra}}
-    <label>{{this.label}}:</label> {{this.value}} {{/each}}
-  </div>
-
   <div class="row">
     {{#each data}}
     <div class="col-md-2 col-lg-1 col-sm-2 col-xs-4 col-xm-2 indicator-circle-snapshot">
-      <div id="circle" class="circle-content {{ this.clazz }}" />
+      <div id="circle" class="circle-content {{ this.clazz }}" data-toggle="tooltip" title="Set priority for this indicator" />
       <p id="indicator-name">{{ this.name }}</p>
       <p hidden id="indicator-value">{{ this.value }}</p>
     </div>
@@ -46,10 +41,10 @@
         <td> {{this.reason}}</td>
         <td> {{this.action}}</td>
         <td> {{this.estimated_date}}</td>
-        <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right" data-id="{{ this.snapshot_indicator_priority_id }}">
+        <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right" data-id="{{ this.snapshot_indicator_priority_id }}" 
+        data-toggle="tooltip" title="Remove this priority">
             <span class="glyphicon glyphicon-trash pull-right"></span>
         </a> </td>
-        <!--td> <button class="btn btn-danger" data-id="{{ this.snapshot_indicator_priority_id }}">Borrar</button></td-->
       </tr>
       {{/each}}
 

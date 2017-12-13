@@ -20,7 +20,10 @@ export default Marionette.View.extend({
     template: Template,
     events:{
         'click #add-priority':'addPriority',
-        'click #cancel-priority':'close'
+        'click #cancel-priority':'close',
+        'shown.bs.modal' : function(){
+          this.$el.find('#reason')[0].focus();
+        }
 
     },
     
@@ -37,11 +40,10 @@ export default Marionette.View.extend({
         var title = (this.options&&this.options.indicatorName)||"";
         this.$el.find('.title-blue').append(title);
         this.$el.find("#modal-content").attr('data-id', this.options.dataId);
-
         var $fecha = this.$el.find('#datetimepicker');
         $fecha.datetimepicker({
           format:"DD/MM/YYYY",
-          minDate: new Date()
+          minDate: moment()
         });
 
         return this;

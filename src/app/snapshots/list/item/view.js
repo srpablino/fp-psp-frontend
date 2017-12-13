@@ -15,8 +15,7 @@ export default Mn.View.extend({
   template: Template,
   events: {
     'click #circle': 'handlerOnClickIndicator',
-    'click .btn-danger': 'handleOnDeletePriority'
-    
+    'click #delete': 'handleOnDeletePriority'
   },
 
   initialize(options) {
@@ -36,8 +35,7 @@ export default Mn.View.extend({
     return {
       header: {
         date: this.formartterWithTime(this.model.attributes.created_at),
-        data: this.model.attributes,
-        extra: this.createHeaderRepresentation()
+        data: this.model.attributes//,
       },
       data: this.model.attributes.indicators_survey_data.map(value => {
         return {
@@ -85,24 +83,6 @@ export default Mn.View.extend({
     
   },
 
-
-  createHeaderRepresentation(){
-    var headerExtra = [];
-    
-    const keysToPick = _.keys(this.model.attributes.family_data);
-    _.forOwn(
-       _.forEach(this.model.attributes.family_data, keysToPick),
-       (value, key) => {
-        headerExtra.push({
-          label: key,
-          value: value
-        });
-      }
-    );
-     
-    return headerExtra;
-  },
-
   formartterWithTime(date) {
     if (!date) {
       return null;
@@ -114,7 +94,7 @@ export default Mn.View.extend({
     if (!date) {
       return null;
     }
-    return moment(date).format('DD/MM/YYYY');
+    return moment(date, ["YYYY-MM-DD", "DD/MM/YYYY"]).format('DD/MM/YYYY');
   },
 
   handlerOnClickIndicator(e){
