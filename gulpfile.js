@@ -71,11 +71,11 @@ gulp.task('html', () => {
   return merge(tasks);
 });
 
-gulp.task('html:denied', () => {
+gulp.task('html:pages', () => {
   return gulp
-    .src(src + 'denied.html')
+    .src(src + 'pages/*')
     .pipe(gulp.dest(dist))
-    .pipe($.size({ title: 'html:denied' }))
+    .pipe($.size({ title: 'html:pages' }))
     .pipe($.connect.reload());
 });
 
@@ -157,7 +157,7 @@ gulp.task('build', cb => {
       'environment',
       'static',
       'html',
-      'html:denied',
+      'html:pages',
       'scripts',
       'scripts:login',
       'styles',
@@ -169,7 +169,7 @@ gulp.task('build', cb => {
       'environment',
       'static',
       'html',
-      'html:denied',
+      'html:pages',
       'scripts',
       'scripts:login',
       'styles',
