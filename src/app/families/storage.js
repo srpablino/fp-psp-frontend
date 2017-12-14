@@ -1,23 +1,24 @@
 import Storage from 'backbone.storage';
 import Model from './model';
+import Collection from './collection';
 
 var FamiliesStorage = Storage.extend({
   model: Model,
+  collection: Collection,
   getSubHeaderItems(model) {
     return {
       mainItem: {
-        name: 'Families',
-        link: `/#families`
+        name: model.get('name'),
+        link: `/#families/${model.get('id')}`
       },
       navigationItems: [
-
         {
           name: 'Intervenciones',
-          link: `/#families/interventions`
+          link: `/#families/${model.get('id')}/interventions`
         },
         {
           name: 'Snapshots',
-          link: `/#families/snapshots`
+          link: `/#families/${model.get('id')}/snapshots`
         }
       ]
     };
