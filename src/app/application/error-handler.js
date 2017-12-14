@@ -16,6 +16,12 @@ class ErrorHandler {
         }
       },
       statusCode: {
+        0: () => {
+          FlashesService.request('add', {
+            type: 'danger',
+            title: 'No connection to server'
+          });
+        },
         401: () => {
           this.redirectToLoginAfterError();
         },
