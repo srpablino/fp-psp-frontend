@@ -440,6 +440,10 @@ article {
   }
 }
 
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  border-top: none
+}
+
 //Home de family - mcespedes
 .list-priorities {
   border-bottom: 1px solid #efefef;
@@ -562,13 +566,15 @@ article {
 
 .indicator-circle-snapshot {
   text-align: center;
-  width: auto;
+ // width: auto;
   height: auto;
+  min-height: 10em;
 }
 
 .indicator-circle-snapshot > div {
-  max-width: 100px;
-  max-height: 100px;
+  //max-width: 100px;
+ //max-height: 100px;
+  margin: 0 auto;
 }
 
 .indicator-circle-snapshot > figcaption {
@@ -579,8 +585,11 @@ article {
 .indicators-snapshot {
   //-webkit-column-count: 6;
   //-moz-column-count: 6;
-  column-count: 5;
+  //column-count: 5;
+
 }
+
+
 
 .circle-content {
   width: 60px;
@@ -588,6 +597,7 @@ article {
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
   border-radius: 30px;
+  cursor: pointer;
 }
 
 .circle-header {
