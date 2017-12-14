@@ -3,12 +3,18 @@ import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
 import storage from '../storage';
-import FamiliesModel from '../model';
+import FamiliesModel from '../model-filter';
+import OrganizationsModel from '../../organizations/model';
+import CitiesModel from '../../cities/model';
+import CountiesModel from '../../countries/model';
 import $ from 'jquery';
 
 export default Mn.View.extend({
   template: Template,
   collection: new CollectionView(),
+  citiesCollection: new CitiesModel(),
+  countiesCollection: new CountiesModel(),
+  organizationsCollection: new OrganizationsModel(),
   regions: {
     list: '#family-list'
   },
@@ -17,13 +23,53 @@ export default Mn.View.extend({
   },
   initialize() {
     this.collection = new Backbone.Collection();
-    this.collection.on('remove', this.render);
+
+
   },
   onRender() {
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
+    var self = this;
+
+    this.citiesCollection.fetch({
+      success:function(response){
+        self.citiesCollection =response.toJSON();
+        $.each(self.citiesCollection, function(index, element) {
+         $('#city')
+             .append($("<option></option>")
+             .attr("value", element.id)
+             .text(element.city));
+           })
+      }
+    });
+
+    this.countiesCollection.fetch({
+      success:function(response){
+        self.countiesCollection =response.toJSON();
+        $.each(self.countiesCollection, function(index, element) {
+         $('#country')
+             .append($("<option></option>")
+             .attr("value", element.id)
+             .text(element.country));
+           })
+      }
+    });
+
+    this.organizationsCollection.fetch({
+      success:function(response){
+        self.organizationsCollection =response.get('list');
+        $.each(self.organizationsCollection, function(index, element) {
+         $('#organization')
+             .append($("<option></option>")
+             .attr("value", element.id)
+             .text(element.name));
+           })
+      }
+    });
+
+
   },
   showList() {
     this.getRegion('list').show(
