@@ -6,7 +6,7 @@ let allMenuItems = {
   navigationItems: [
     { name: 'Organizations', link: '#organizations' },
     { name: 'Reports', link: '#reports' },
-    { name: 'Families', link: '#families' },
+    { name: 'Families', link: '#families/1' },
     { name: 'Surveys', link: '#surveys' },
     { name: 'Users', link: '#users' }
   ]

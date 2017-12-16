@@ -1,14 +1,14 @@
 import FamiliesView from './view';
 import FamilyView from './show/view';
 import FamilySnapshotView from './show/snapshot/view';
-import FamiliesStorage from './storage';
+import familiesStorage from './storage';
 
 const families = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
       'families(/)': 'showFamilies',
-      'families/:entity': 'showFamily',
+      'families/:id': 'showFamilyFile',
       'families/snapshots/:id': 'showSnapshotFamily'
     },
     controller: {
@@ -17,6 +17,16 @@ const families = props => {
             app
           })
         );
+      },
+      showFamilyFile(familyId) {
+        familiesStorage.find(familyId)
+          .then(model => {
+            app.showViewOnRoute(new FamilyView({ 
+              app, 
+              model 
+            })
+          );
+        });
       },
       showFamily(entity) {
         app.showViewOnRoute(
