@@ -27,24 +27,6 @@ const SessionManager = Bn.Model.extend({
       Bn.history.fragment === 'logout' ? 'home' : Bn.history.fragment;
     session.save({ access_token: null, returnFragment: returnFragment });
     return this;
-  },
-  redirectToDeniedPage(error) {
-    window.location.replace('/denied.html');
-    if (error) {
-      throw error;
-    }
-  },
-  toLoginPage() {
-    this.rememberRoute();
-
-    // Redirects to the login page.
-    // FIXME: Ideally this should be only '/login'
-    window.location.replace('/login/index.html');
-  },
-
-  redirectToLoginAfterError() {
-    // TODO Show a friendly message to the user
-    this.toLoginPage();
   }
 });
 

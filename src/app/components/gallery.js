@@ -15,7 +15,7 @@ class Gallery extends React.Component {
             }
         }
 
-        this.state = { 
+        this.state = {
             selected : current,
             images: props.schema.items.enum,
             title: props.schema.title,
@@ -26,11 +26,13 @@ class Gallery extends React.Component {
 
     renderImage(imageUrl, imageDescription, imageValue, index, className) {
         return (
+          <div className="col-md-4">
             <div  key={index} onClick={this._handleClickOnImage(index, imageUrl, imageDescription, imageValue)} className={className} >
-            <figure>
-                <img src={imageUrl} />
+            <figure className={imageValue}>
+                <img src={imageUrl} className="img-responsive"/>
                 <figcaption>{imageDescription}</figcaption>
                 </figure>
+            </div>
             </div>
         );
     }
@@ -61,8 +63,13 @@ class Gallery extends React.Component {
         return (
             <div className="form-group field field-gallery">
                 <label className="control-label">{ this.state.title } { this.state.required }</label>
-                <div className="images">
+                <br/><br/>
+                  <div className="row">
+                <div className="images col-sm-8 col-md-offset-2">
+                    <div className="row">
                     {images}
+                    </div>
+                </div>
                 </div>
             </div>
         );

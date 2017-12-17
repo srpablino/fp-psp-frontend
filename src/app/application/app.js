@@ -5,7 +5,7 @@ import LayoutView from './layout-view';
 import sessionMgr from './session-manager';
 import FlashesService from '../flashes/service';
 import ModalService from '../modal/service';
-import $ from 'jquery';
+import errorHandler from './error-handler';
 import nprogress from 'nprogress';
 
 export default Mn.Application.extend({
@@ -18,11 +18,33 @@ export default Mn.Application.extend({
 
   onStart() {
     if (!this.sessionMgr.isAuthenticated()) {
-      this.sessionMgr.toLoginPage();
+      this.toLoginPage();
       return;
     }
+
+    this.setupApp();
+
+    this.router = initRouter({
+      app: this,
+      before: this.beforeRoute.bind(this),
+      onAccessDenied: () => {
+        errorHandler.redirectToErrorPage(
+          'denied',
+          new Error('Access denied error')
+        );
+      }
+    });
+
+    Bb.history.start();
+    this.showView(this.layoutView);
+  },
+  setupApp() {
     nprogress.configure({
       showSpinner: false
+    });
+
+    errorHandler.setup({
+      sessionMgr: sessionMgr
     });
 
     ModalService.setup({
@@ -32,19 +54,6 @@ export default Mn.Application.extend({
     FlashesService.setup({
       container: this.layoutView.getRegion('flashes')
     });
-
-    this.setupAjax();
-
-    this.router = initRouter({
-      app: this,
-      before: this.beforeRoute.bind(this),
-      onAccessDenied: () => {
-        this.sessionMgr.redirectToDeniedPage(new Error('Access denied error'));
-      }
-    });
-
-    Bb.history.start();
-    this.showView(this.layoutView);
   },
   getSession() {
     return this.sessionMgr.getSession();
@@ -70,39 +79,14 @@ export default Mn.Application.extend({
     this.layoutView.updateSubHeader(null);
   },
   logout() {
-    this.sessionMgr.logout().toLoginPage();
+    this.sessionMgr.logout();
+    this.toLoginPage();
   },
-  setupAjax() {
-    const accessToken = this.sessionMgr.getAccessToken();
-    $.ajaxSetup({
-      beforeSend: xhr => {
-        if (accessToken) {
-          xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
-        }
-      },
-      statusCode: {
-        401: () => {
-          this.sessionMgr.redirectToLoginAfterError();
-        },
-        403: () => {
-          this.sessionMgr.redirectToDeniedPage();
-        },
-        500: () => {
-          FlashesService.request('add', {
-            type: 'danger',
-            title: 'Server Error'
-          });
-        }
-      }
-    });
+  toLoginPage() {
+    this.sessionMgr.rememberRoute();
 
-    $(document).on({
-      ajaxStart: () => {
-        nprogress.start();
-      },
-      ajaxComplete: () => {
-        nprogress.done();
-      }
-    });
+    // Redirects to the login page.
+    // FIXME: Ideally this should be only '/login'
+    window.location.replace('/login/index.html');
   }
 });
