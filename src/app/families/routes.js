@@ -1,4 +1,4 @@
-import FamiliesView from './view';
+import FamiliesView from './index/layout-view';
 import FamilyView from './show/view';
 import FamilySnapshotView from './show/snapshot/view';
 import familiesStorage from './storage';
@@ -8,31 +8,39 @@ const families = props => {
   const routes = {
     appRoutes: {
       'families(/)': 'showFamilies',
-      'families/:id(/:entity)': 'showFamily'
+      'families/:id(/:entity)': 'showFamily',
+      'families/:id/snapshots(/:snapshotId)': 'showSnapshotFamily'
     },
     controller: {
       showFamilies() {
-        app.showViewOnRoute(new FamiliesView({
-            app
-          })
-        );
+        // familiesStorage.findAll().then(collection => {
+        //   app.showViewOnRoute(new FamiliesView({ collection }));
+        // });
+
+          app.showViewOnRoute(new FamiliesView());
+
       },
       showFamily(familyId, entity) {
-        familiesStorage.find(familyId)
-          .then(model => {
-            app.showViewOnRoute(new FamilyView({ 
-              app, 
+        familiesStorage.find(familyId).then(model => {
+          app.showViewOnRoute(
+            new FamilyView({
               model,
+              app,
               entity
             })
           );
         });
       },
-      showSnapshotFamily(snapshotId) {
-        app.showViewOnRoute(new FamilySnapshotView({
-          app,
-          snapshotId
-        }));
+      showSnapshotFamily(familyId, snapshotId) {
+        familiesStorage.find(familyId).then(model => {
+          app.showViewOnRoute(
+            new FamilySnapshotView({
+              model,
+              app,
+              snapshotId
+            })
+          );
+        });
       }
     }
   };

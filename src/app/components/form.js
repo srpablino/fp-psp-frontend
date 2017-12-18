@@ -23,7 +23,7 @@ class Form extends Component {
     }
 
     this.state = {
-      step: 0, 
+      step: 0,
       formData: {},
       stepsSchema : stepsSchema,
       stepsUISchema : stepsUISchema
@@ -36,10 +36,10 @@ class Form extends Component {
     var uischemaToRet = {}
     uischemaToRet.key = key;
     uischemaToRet['properties'] = {};
-   
+
     uischemaToRet['ui:group:economics'] = [];
     uischemaToRet['ui:group:indicators'] = [];
-    
+
     if(uischema['properties'] && uischema['properties'][key]){
       uischemaToRet['properties'][key] = uischema['properties'][key];
     }
@@ -52,10 +52,10 @@ class Form extends Component {
     if(uischema['ui:group:indicators'] && uischema['ui:group:indicators'].includes(key)){
       uischemaToRet['ui:group:indicators'].push(key);
     }
-    
+
     return uischemaToRet;
   }
-  
+
 
   schemaNewEntry(schema, key) {
     var schemaToRet = JSON.parse(JSON.stringify(schema));
@@ -76,11 +76,11 @@ class Form extends Component {
   }
 
   onSubmit(data) {
-    
+
     var newData = JSON.parse(JSON.stringify(this.state.formData));
     var currentStep = this.state.stepsSchema[this.state.step];
     newData[currentStep.key] = data.formData[currentStep.key];
- 
+
     if (this.state.step < this.state.stepsSchema.length - 1) {
       this.setState({
         step: this.state.step + 1,
@@ -97,7 +97,7 @@ class Form extends Component {
   onCancel(data){
     var newData = JSON.parse(JSON.stringify(this.state.formData));
     var currentStep = this.state.stepsSchema[this.state.step];
-  
+
     if (this.state.step > 0) {
       this.setState({
         step: this.state.step - 1,
@@ -113,7 +113,7 @@ class Form extends Component {
 
   render() {
     const { schema, uiSchema, handleSubmit, handleCancel } = this.props;
-  
+
     return (
      <JsonSchemaForm
         schema={this.state.stepsSchema[this.state.step]}
@@ -126,13 +126,14 @@ class Form extends Component {
         <div>
           <button
             type="button"
+
             onClick={() => this.onCancel(this.state.formData)}
-            className="btn btn-danger"
+            className="btn btn-circle survey-previous"
           >
-            Previous
+            <i className="fa fa-chevron-left"></i>
           </button>
-          <button type="submit" className="btn btn-primary">
-            Next
+          <button type="submit" className="btn btn-circle survey-next">
+            <i className="fa fa-chevron-right"></i>
           </button>
         </div>
       </JsonSchemaForm>
