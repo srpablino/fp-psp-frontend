@@ -74,6 +74,12 @@ export default Mn.View.extend({
   onSurveySelectChange() {
     this.renderForm();
   },
+  getPersonal(formData) {
+    return _.pick(
+      formData,
+      this.surveyModel.get('survey_ui_schema')['ui:group:personal']
+    );
+  },
   getIndicators(formData) {
     return _.pick(
       formData,
@@ -113,6 +119,7 @@ export default Mn.View.extend({
 
     const snapshot = {
       survey_id: this.props.surveyId,
+      personal_survey_data: this.getPersonal(formResult),
       indicator_survey_data: this.getIndicators(formResult),
       economic_survey_data: this.getEconomics(formResult)
     };
