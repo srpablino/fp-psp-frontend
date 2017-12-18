@@ -3,7 +3,7 @@ import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
 import storage from '../storage';
-import FamiliesModel from '../model-filter';
+import FamiliesColecction from '../collection';
 import OrganizationsModel from '../../organizations/model';
 import CitiesModel from '../../cities/model';
 import CountiesModel from '../../countries/model';
@@ -98,24 +98,24 @@ export default Mn.View.extend({
           free_text: $("#search").val()
         };
 
-        var elements = new FamiliesModel();
+        var elements = new FamiliesColecction();
         console.log(params)
         elements.fetch({
           data: params,
           success:function(response){
-            console.log(response.toJSON())
+            // setear al collection
+            console.log(response)
+            self.collection =response ;
+            self.showList();
+            section.reset();
 
-            self.collection.add(response.get('list'));
 
           }
         });
-        self.showList();
+
     }else{
-      alert("Seleccione")
+      alert("Choose an option")
     }
-
-
-
 
   }
 });
