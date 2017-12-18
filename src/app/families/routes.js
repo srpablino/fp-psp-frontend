@@ -8,8 +8,7 @@ const families = props => {
   const routes = {
     appRoutes: {
       'families(/)': 'showFamilies',
-      'families/:id': 'showFamilyFile',
-      'families/snapshots/:id': 'showSnapshotFamily'
+      'families/:id(/:entity)': 'showFamily'
     },
     controller: {
       showFamilies() {
@@ -18,23 +17,16 @@ const families = props => {
           })
         );
       },
-      showFamilyFile(familyId) {
+      showFamily(familyId, entity) {
         familiesStorage.find(familyId)
           .then(model => {
             app.showViewOnRoute(new FamilyView({ 
               app, 
-              model 
+              model,
+              entity
             })
           );
         });
-      },
-      showFamily(entity) {
-        app.showViewOnRoute(
-          new FamilyView({
-            app,
-            entity
-          })
-        );
       },
       showSnapshotFamily(snapshotId) {
         app.showViewOnRoute(new FamilySnapshotView({

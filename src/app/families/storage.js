@@ -10,14 +10,14 @@ var FamiliesStorage = Storage.extend({
         link: `/#families`
       },
       navigationItems: [
-
+      
         {
           name: 'Interventions',
           link: `/#families/interventions`
         },
         {
           name: 'Snapshots',
-          link: `/#families/snapshots`
+          link: `/#families/1/snapshots`
         }
       ]
     };
