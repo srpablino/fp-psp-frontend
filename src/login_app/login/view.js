@@ -4,6 +4,7 @@ import env from '../env';
 import $ from 'jquery';
 import session from '../../common/session';
 import utils from '../../common/utils';
+import FlashesService from '../../common/flashes/service';
 
 export default Mn.View.extend({
   template: Template,
@@ -59,7 +60,14 @@ export default Mn.View.extend({
           window.location.replace(`/#${fragment}`);
         }
       },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
+      error: function(xmlHttpRequest, textStatus, errorThrown) {
+        if (xmlHttpRequest && xmlHttpRequest.status === 0) {
+          FlashesService.request('add', {
+            type: 'danger',
+            title: 'No connection to server'
+          });
+          return;
+        }
         if (textStatus === 'Unauthorized') {
           window.alert('No autorizado');
         } else {

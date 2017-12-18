@@ -85,7 +85,8 @@
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-gmaps": "^1.7.0",
-    "react-jsonschema-form": "^0.50.1"
+    "react-jsonschema-form": "^0.50.1",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.43"
   },
   "scripts": {
     "start": "gulp",
