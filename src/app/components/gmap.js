@@ -52,8 +52,9 @@ class Gmap extends React.Component {
     render() {
 
         return (
-            <div className="gmap" >
-                <label className="control-label">{ this.state.title } { this.state.required }</label>
+          <div className= "row">
+            <div className="gmap col-sm-8 col-md-offset-2" >
+                <label className="control-label gmap-label">{ this.state.title } { this.state.required }</label>
                 <Gmaps
                     style={{ width: '100%', height: '100%', position: 'absolute' }}
                     lat={this.state.center.lat}
@@ -69,6 +70,7 @@ class Gmap extends React.Component {
                     />
 
                 </Gmaps>
+            </div>
             </div>
         );
     }
