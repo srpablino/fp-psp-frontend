@@ -13,7 +13,7 @@ var FamiliesStorage = Storage.extend({
       },
       navigationItems: [
         {
-          name: 'Intervenciones',
+          name: 'Interventions',
           link: `/#families/${model.get('id')}/interventions`
         },
         {

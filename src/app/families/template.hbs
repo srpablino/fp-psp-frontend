@@ -4,25 +4,25 @@
     <article class="card animated fadeInLeft">
       <div class="card-block">
         <div class="card-title" >
-          <h4 >Ficha
+          <h4>File
             <img class="pull-right" src="/static/images/icon_more.png" >
           </h4>
         </div>
 
         <div class="row">
             <div class="col-lg-3">
-                <img class="img-responsive" style="width:100% !important; height:100% !important;" src="static/images/dummy_barchart.png">
+                <img class="img-responsive" src="static/images/BG_families.jpg">
             </div>
 
             <div class="col-lg-6">
                 <p>#FLG4521</p>
-                <p>Contacto:<span>Lucia Gonzalez Pedroso</span></p>
-                <p>Celular:<span>Lucia Gonzalez Pedroso</span></p>
-                <p>Lugar:<span>Lucia Gonzalez Pedroso</span></p>
+                <p>Contact: <span>{{family.person.name}} {{family.person.lastname}}</span></p>
+                <p>Celphone: <span>{{family.person.phoneNumber}}</span></p>
+                <p>Place: <span>{{family.city.city}}, {{family.country.country}}</span></p>
             </div>
 
             <div class="col-lg-3">
-              <img class="img-responsive pull-right" src="static/images/dummy_barchart.png">
+              <img class="img-responsive pull-right" src="static/images/dummy_map.png">
             </div>
         </div>
       </div>
@@ -31,51 +31,20 @@
     <article class="card animated fadeInLeft">
       <div class="card-block">
         <div class="card-title" >
-          <h4 >Prioriades / Snapshot 2017-09
+          <h4 >Priorities / Snapshot {{createdAt}}
             <img class="pull-right" src="/static/images/icon_more.png" >
           </h4>
         </div>
         <br/>
-        <div class="list-priorities">
-              <span id="item-number" class="pull-left "> 1 </span>
+        {{#each family.snapshot_indicators.indicators_priorities}}
+          <div class="list-priorities">
+            <span id="item-number" class="pull-left ">{{[helpers/counter] @index}}</span>
             <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
+            <span>{{this.indicator}}</span><br>
+              <span class="text-muted">{{this.reason}}</span>
             </div>
-        </div>
-        <br/>
-        <div class="list-priorities">
-              <span id="item-number" class="pull-left "> 2 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-        <br/>
-        <div class="list-priorities">
-              <span id="item-number" class="pull-left "> 3 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-        <br/>
-        <div class="list-priorities">
-              <span id="item-number" class="pull-left "> 4 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-        <br/>
-        <div class="list-priorities">
-              <span id="item-number" class="pull-left "> 5 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-
+          </div>
+        {{/each}}
       </div>
     </article>
   </div>
@@ -85,26 +54,23 @@
       <article class="card animated fadeInLeft">
         <div  class="card-block">
           <div class="card-title">
-            <h4 >Indicadores / Snapshot 2017-09
+            <h4 >Indicators / Snapshot 
               <img class="pull-right" src="/static/images/icon_more.png" >
             </h4>
           </div>
 
         <div class="" id="snapshot-indicators">
             <img  class="center-block" src="/static/images/icon_semaforo.png">
-            <span class="center-block" id="green">25</span>
-            <span id="yellow">19</span>
-            <span id="red">10</span>
-
-
-
+            <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
+            <span id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+            <span id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
         </div>
       </article>
 
       <article class="card animated fadeInLeft">
         <div class="card-block" id="card-interventions">
           <div class="card-title" >
-            <h4 >Intervenciones
+            <h4 >Interventions
               <img class="pull-right" src="/static/images/icon_more.png" >
             </h4>
           </div>
@@ -113,20 +79,23 @@
                 <li class="list-group-item">
                   <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
                   <img class="pull-right" src="/static/images/icon_interv_conseguido.png" >
-                  <p>Lorem ipsun dolor</p>
-                  <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.Jdfsdf  </span>
+                  <p>Security: </p>
+                  <span class="text-muted">Se refiere a actos de violencia física contra la familia o contra su propiedad 
+                    ocurridos en su entorno de residencia.</span>
                 </li>
                 <li class="list-group-item">
                   <img class="pull-left" src="/static/images/icon_elipse_amarillo_01.png" >
                   <img class="pull-right" src="/static/images/icon_interv_noconseguido.png" >
-                  <p>Lorem ipsun dolor</p>
-                  <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.Jdfsdf  </span>
+                  <p>Read and Write: </p>
+                  <span class="text-muted">Permite a la familia poder comunicarse mejor para lograr mayores oportunidades económicas, 
+                    a la vez permite potenciar el crecimiento personal</span>
                 </li>
                 <li class="list-group-item">
                   <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
                   <img class="pull-right" src="/static/images/icon_interv_proceso.png" >
-                  <p>Lorem ipsun dolor</p>
-                  <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.Jdfsdf  </span>
+                  <p>Phone: </p>
+                  <span class="text-muted">Contar con servicio de telefonía pone a la familia en
+                    conexión fácil y rápida con el mundo.</span>
                 </li>
             </ul>
 
