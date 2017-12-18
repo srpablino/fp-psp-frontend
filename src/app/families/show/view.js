@@ -3,6 +3,7 @@ import Template from '../template.hbs';
 import InterventionsTemplate from './interventions-template.hbs';
 import SnapshotsTemplate from './snapshots-template.hbs';
 import storage from '../storage';
+import moment from 'moment';
 
 export default Mn.View.extend({
   template: Template,
@@ -11,7 +12,6 @@ export default Mn.View.extend({
     this.app = options.app;
     this.entity = options.entity;
   },
-
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
@@ -30,7 +30,16 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-    //  family: this.model.attributes
+      family: this.model.attributes,
+      createdAt: this.getCreatedAt()
     };
+  },
+
+  getCreatedAt() {
+    const createdAt = this.model.attributes.snapshot_indicators.created_at;
+    if (!createdAt) {
+      return null;
+    }
+    return moment(createdAt).format('YYYY-MM');
   }
 });
