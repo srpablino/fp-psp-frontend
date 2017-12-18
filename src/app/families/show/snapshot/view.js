@@ -15,6 +15,12 @@ export default Mn.View.extend({
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
+  },
+
+  serializeData() {
+    return {
+      family: this.model.attributes
+    };
   }
 
 });
