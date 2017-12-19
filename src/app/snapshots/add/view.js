@@ -7,6 +7,8 @@ import SurveyModel from '../../surveys/add/model';
 import SnapshotModel from './model';
 import _ from 'lodash';
 import $ from 'jquery';
+import Bn from 'backbone';
+
 
 export default Mn.View.extend({
   template: Template,
@@ -124,8 +126,8 @@ export default Mn.View.extend({
       economic_survey_data: this.getEconomics(formResult)
     };
 
-    new SnapshotModel().save(snapshot).then(() => {
-      this.props.handleCancel();
+    new SnapshotModel().save(snapshot).then(snapshot => {
+      Bn.history.navigate(`/survey/${snapshot.survey_id}/snapshot/${snapshot.snapshot_economic_id}`, true);      
     });
   }
 });
