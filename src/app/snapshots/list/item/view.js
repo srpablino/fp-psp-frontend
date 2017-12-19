@@ -23,7 +23,7 @@ export default Mn.View.extend({
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model;
-    this.model.on('sync', this.render); 
+    this.model.on('sync', this.render);
   },
 
   serializeData() {
@@ -33,7 +33,7 @@ export default Mn.View.extend({
       value.estimated_date = date;
 
     });
-
+    
     return {
       header: {
         date: this.formartterWithTime(this.model.attributes.created_at),
@@ -70,19 +70,19 @@ export default Mn.View.extend({
       }
 
       model.destroy().then(() => {
-        
+
         var elements = this.props.model.attributes.indicators_priorities;
         elements = elements.filter(priority => {
           return priority.snapshot_indicator_priority_id !== toRemoveId;
         });
         this.props.model.attributes.indicators_priorities = elements;
         setTimeout(() => {
-          this.render();  
+          this.render();
         }, 300);
       });
     });
 
-    
+
   },
 
   formartterWithTime(date) {
@@ -90,7 +90,7 @@ export default Mn.View.extend({
       return null;
     }
     return moment(date).format('DD/MM/YYYY hh:mm:ss');
-  }, 
+  },
 
   formartterOnlyDate(date){
     if (!date) {
@@ -102,7 +102,7 @@ export default Mn.View.extend({
   handlerOnClickIndicator(e){
     const indicatorSelected = e.target.parentNode.children['indicator-name'].innerHTML;
     const indicatorSelectedValue = e.target.parentNode.children['indicator-value'].innerHTML;
-    
+
     var exists = [];
 
     var self = this;
@@ -130,12 +130,12 @@ export default Mn.View.extend({
     this.priorityDialog.on('change', data => {
       this.props.model.attributes.indicators_priorities.push(data);
       setTimeout(() => {
-        this.render();  
+        this.render();
       }, 300);
       this.priorityDialog.close();
     })
 
-    
+
   },
 
   showDialogPriority(indicator){

@@ -85,7 +85,7 @@ export default Mn.View.extend({
     let container = this.$el.find('.list-container').eq(0);
     const section = utils.getLoadingSection(container);
 
-    if(organization_id != null && country_id != null && city_id != null ){
+  //  if(organization_id != null && country_id != null && city_id != null ){
       self.collection.reset();
       this.getRegion('list').empty();
       section.loading();
@@ -113,9 +113,9 @@ export default Mn.View.extend({
           }
         });
 
-    }else{
-      alert("Choose an option")
-    }
+  //  }else{
+  //    alert("Choose an option")
+  //  }
 
   }
 });

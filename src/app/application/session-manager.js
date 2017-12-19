@@ -1,5 +1,7 @@
 import Bn from 'backbone';
 import session from '../../common/session';
+import $ from 'jquery';
+import env from '../env';
 
 const SessionManager = Bn.Model.extend({
   initialize() {
@@ -15,8 +17,16 @@ const SessionManager = Bn.Model.extend({
     return session.get('access_token');
   },
   logout() {
-    session.save(session.defaults);
-    return this;
+    return $.ajax({
+      url: env.API_AUTH + '/revoke-token',
+      type: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.getAccessToken()}`
+      },
+      success: () => {
+        session.save(session.defaults);
+      }
+    });
   },
   /**
    * Stores where the user was,

@@ -617,15 +617,19 @@ article {
 }
 
 .red {
-  background: red;
+
+  background: red !important;
+  -webkit-print-color-adjust: exact;
 }
 
 .green {
-  background: green;
+  background: green !important;
+  -webkit-print-color-adjust: exact;
 }
 
 .yellow {
-  background: yellow;
+  background: yellow !important;
+  -webkit-print-color-adjust: exact;
 }
 
 .indicator-circle-snapshot > p {
