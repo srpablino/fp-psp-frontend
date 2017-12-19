@@ -83,8 +83,6 @@
     "moment": "^2.19.1",
     "nprogress": "^0.2.0",
     "parsleyjs": "^2.7.2",
-    "print-js": "^1.0.29",
-    "print-this": "^1.12.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-gmaps": "^1.7.0",

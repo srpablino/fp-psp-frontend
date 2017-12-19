@@ -1,12 +1,11 @@
 import Backbone from 'backbone';
 import $ from 'jquery';
-import printJS from 'print-js';
-
 Backbone.$ = $;
 import Marionette from 'backbone.marionette';
 import 'bootstrap';
 import 'backbone.localstorage';
-import printThis from 'print-this';
+
+import printThis from './printThis';
 
 // start the marionette inspector
 if (window.__agent) {
