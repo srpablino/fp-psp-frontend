@@ -7,7 +7,8 @@ export default Mn.View.extend({
   events: {
     'click #edit': 'handleEdit',
     'click #delete': 'handleDelete',
-    'click #show-snaps': 'handleShowSnapshots'
+    'click #show-snaps': 'handleShowSnapshots',
+    'click #answer': 'handleAnswer'
   },
 
   initialize(options) {
@@ -35,6 +36,12 @@ export default Mn.View.extend({
     }
     event.preventDefault();
     const route = event.target.getAttribute('href');
+    console.log(route);
     Bn.history.navigate(route, true);
+  }, 
+  handleAnswer(event) {
+    event.preventDefault();
+    Bn.history.navigate(`/survey/${this.model.attributes.id}/answer`, true);
   }
+
 });
