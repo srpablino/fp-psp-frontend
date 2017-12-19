@@ -1,4 +1,14 @@
-<li class="list-group-item">
+<!--div class="text-xs-right pull-right"     style="text-align: right;"-->
+    <button class="btn btn-primary" id="finish-snapshot" style="float: right;"> Finish this survey
+    </button>
+    <button class="btn btn-secondary" id="print" value="{{ header.data.snapshot_indicator_id }}" > Print</button>
+  <!--/div-->
+<li class="list-group-item" id="{{ header.data.snapshot_indicator_id }}">
+
+  
+  <br/>
+  <br/>
+  <hr/>
 
   <div class="header-indicators-snapshot">
     <h3 class="pull-left"> SNAPSHOT {{ header.date }} </h3>
@@ -9,6 +19,7 @@
       <div class="circle-header yellow " />
       <p>{{ header.data.count_green_indicators}}</p>
       <div class="circle-header green " />
+
     </div>
 
   </div>
@@ -23,7 +34,7 @@
     </div>
     {{/each}}
   </div>
- 
+
   <h3 class="{{this.clazz}}" style="font-weight: bold" >My Priorities </h3>
   <table class="table table-hover margin bottom center {{this.clazz}}" id="prioritiesTable">
     <thead class="thead-light">
@@ -35,13 +46,13 @@
       </tr>
     </thead>
     <tbody id="tbodypriorities">
-      {{#each priorities}} 
+      {{#each priorities}}
       <tr>
         <td> {{this.indicator}}</td>
         <td> {{this.reason}}</td>
         <td> {{this.action}}</td>
         <td> {{this.estimated_date}}</td>
-        <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right" data-id="{{ this.snapshot_indicator_priority_id }}" 
+        <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right" data-id="{{ this.snapshot_indicator_priority_id }}"
         data-toggle="tooltip" title="Remove this priority">
             <span class="glyphicon glyphicon-trash pull-right"></span>
         </a> </td>

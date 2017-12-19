@@ -8,6 +8,7 @@ import $ from 'jquery';
 import FlashesService from '../../../flashes/service';
 import PriorityModel from './priority/model';
 import ModalService from '../../../modal/service';
+import Bn from 'backbone';
 
 
 
@@ -15,13 +16,15 @@ export default Mn.View.extend({
   template: Template,
   events: {
     'click #circle': 'handlerOnClickIndicator',
-    'click #delete': 'handleOnDeletePriority'
+    'click #delete': 'handleOnDeletePriority',
+    'click #finish-snapshot' : 'handleShowFamilyMap',
+    'click #print': 'printSnapshot'
   },
 
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model;
-    this.model.on('sync', this.render); 
+    this.model.on('sync', this.render);
   },
 
   serializeData() {
@@ -31,7 +34,7 @@ export default Mn.View.extend({
       value.estimated_date = date;
 
     });
-
+    
     return {
       header: {
         date: this.formartterWithTime(this.model.attributes.created_at),
@@ -68,19 +71,19 @@ export default Mn.View.extend({
       }
 
       model.destroy().then(() => {
-        
+
         var elements = this.props.model.attributes.indicators_priorities;
         elements = elements.filter(priority => {
           return priority.snapshot_indicator_priority_id !== toRemoveId;
         });
         this.props.model.attributes.indicators_priorities = elements;
         setTimeout(() => {
-          this.render();  
+          this.render();
         }, 300);
       });
     });
 
-    
+
   },
 
   formartterWithTime(date) {
@@ -88,7 +91,7 @@ export default Mn.View.extend({
       return null;
     }
     return moment(date).format('DD/MM/YYYY hh:mm:ss');
-  }, 
+  },
 
   formartterOnlyDate(date){
     if (!date) {
@@ -100,7 +103,7 @@ export default Mn.View.extend({
   handlerOnClickIndicator(e){
     const indicatorSelected = e.target.parentNode.children['indicator-name'].innerHTML;
     const indicatorSelectedValue = e.target.parentNode.children['indicator-value'].innerHTML;
-    
+
     var exists = [];
 
     var self = this;
@@ -128,12 +131,12 @@ export default Mn.View.extend({
     this.priorityDialog.on('change', data => {
       this.props.model.attributes.indicators_priorities.push(data);
       setTimeout(() => {
-        this.render();  
+        this.render();
       }, 300);
       this.priorityDialog.close();
     })
 
-    
+
   },
 
   showDialogPriority(indicator){
@@ -147,6 +150,27 @@ export default Mn.View.extend({
     });
 
     $('#modal-region').append(this.priorityDialog.render().el);
+  },
+
+  handleShowFamilyMap(e){
+    e.preventDefault();
+    Bn.history.navigate(`/families/${this.props.model.attributes.family_id}/map`, true);
+  },
+  printSnapshot(event) {
+    var id = "#" + event.target.value
+    $(id).printThis({
+       loadCSS: ["/css/main.css"],
+       importCSS: true,
+       debug: false,
+		   importStyle: true,
+		   pageTitle: "",
+		   header: "<h3>Survey Results</h3>",
+	     footer: null,
+	     base: false ,
+       removeScripts: true,
+       copyTagClasses: true,
+       doctypeString: '<!DOCTYPE html>'
+    });
   }
 
 });

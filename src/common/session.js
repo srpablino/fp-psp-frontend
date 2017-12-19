@@ -34,6 +34,8 @@ var SessionModel = Bb.Model.extend({
     if (this.userHasRole('ROLE_APP_ADMIN') || this.userHasRole('ROLE_USER')) {
       const orgId = this.get('user').organization.id;
       route = `organizations/${orgId}`;
+    } else if (this.userHasRole('ROLE_SURVEY_USER')) {
+      route = 'surveys';
     }
     return route;
   },
@@ -57,8 +59,8 @@ var SessionModel = Bb.Model.extend({
 });
 
 /**
-* Singleton Pattern
-*/
+ * Singleton Pattern
+ */
 var instance = null;
 SessionModel.getInstance = function() {
   if (instance === null) {

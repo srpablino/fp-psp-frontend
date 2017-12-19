@@ -1,8 +1,12 @@
-<li class="list-group-item">
-  <a id="show-snaps" href="/snapshots/{{survey.id}}">
+<div class="list-group-item">
+  <a id="show-snaps">
     {{survey.title}}
   </a>
-  <a id="delete" href="#" class="icon">
-    <span class="glyphicon glyphicon-trash pull-right"></span>
+  
+  <a id="delete" href="#" class="icon " style="float:right" data-toggle="tooltip" title="Remove this survey" >
+    <span class="glyphicon glyphicon-trash"></span>
   </a>
-</li>
+  <a id="answer" class="icon " href="#" style="float:right; margin-right: 5px;  vertical-align: middle;" data-toggle="tooltip" title="Make this survey">
+    <span class="glyphicon glyphicon-share-alt"></span>
+  </a>
+</div>
