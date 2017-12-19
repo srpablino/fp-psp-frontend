@@ -8,6 +8,7 @@ import $ from 'jquery';
 import FlashesService from '../../../flashes/service';
 import PriorityModel from './priority/model';
 import ModalService from '../../../modal/service';
+import Bn from 'backbone';
 
 
 
@@ -15,7 +16,8 @@ export default Mn.View.extend({
   template: Template,
   events: {
     'click #circle': 'handlerOnClickIndicator',
-    'click #delete': 'handleOnDeletePriority'
+    'click #delete': 'handleOnDeletePriority',
+    'click #finish-snapshot' : 'handleShowFamilyMap'
   },
 
   initialize(options) {
@@ -147,6 +149,11 @@ export default Mn.View.extend({
     });
 
     $('#modal-region').append(this.priorityDialog.render().el);
+  },
+
+  handleShowFamilyMap(e){
+    e.preventDefault();
+    Bn.history.navigate(`/families/${this.props.model.attributes.family_id}/map`, true);
   }
 
 });
