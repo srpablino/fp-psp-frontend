@@ -23,6 +23,7 @@ const snapshots = props => {
         const surveyId = parseInt(hash, 10);
 
         const newSnapshotView = new NewSnapshot({
+          organizationId : app.getSession().get('user').organization?  app.getSession().get('user').organization.id:null,
           surveyId: surveyId,
           handleCancel: function() {
             Bn.history.navigate(`/surveys`, true);
