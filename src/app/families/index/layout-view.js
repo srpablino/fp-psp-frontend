@@ -99,12 +99,9 @@ export default Mn.View.extend({
         };
 
         var elements = new FamiliesColecction();
-        console.log(params)
         elements.fetch({
           data: params,
           success:function(response){
-            // setear al collection
-            console.log(response)
             self.collection =response ;
             self.showList();
             section.reset();
