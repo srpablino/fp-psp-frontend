@@ -27,7 +27,7 @@ export default Mn.View.extend({
   },
   showHeader() {
     const model = headerStorage.getByRolesInSession(this.app.getSession());
-    this.getRegion('header').show(new HeaderView({ model }));
+    this.getRegion('header').show(new HeaderView({ model, app: this.app }));
   },
   showFooter() {
     this.getRegion('footer').show(new FooterView());
