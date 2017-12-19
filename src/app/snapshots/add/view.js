@@ -9,7 +9,6 @@ import _ from 'lodash';
 import $ from 'jquery';
 import Bn from 'backbone';
 
-
 export default Mn.View.extend({
   template: Template,
 
@@ -19,7 +18,7 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { surveyId, handleCancel } = options;
+    const { organizationId, surveyId, handleCancel } = options;
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
     this.surveyModel.fetch();
@@ -27,6 +26,7 @@ export default Mn.View.extend({
     this.props = {};
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
+    this.props.organizationId = organizationId;
   },
 
   getLocalizedSchema(unlocalizedSchema) {
@@ -121,6 +121,7 @@ export default Mn.View.extend({
 
     const snapshot = {
       survey_id: this.props.surveyId,
+      organization_id : this.props.organizationId,
       personal_survey_data: this.getPersonal(formResult),
       indicator_survey_data: this.getIndicators(formResult),
       economic_survey_data: this.getEconomics(formResult)
