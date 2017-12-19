@@ -77,16 +77,18 @@
     "bootstrap": "^3.3.7",
     "codemirror": "^5.32.0",
     "create-react-class": "^15.5.2",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.43",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "nprogress": "^0.2.0",
     "parsleyjs": "^2.7.2",
+    "print-js": "^1.0.29",
+    "print-this": "^1.12.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-gmaps": "^1.7.0",
-    "react-jsonschema-form": "^0.50.1",
-    "eonasdan-bootstrap-datetimepicker": "^4.17.43"
+    "react-jsonschema-form": "^0.50.1"
   },
   "scripts": {
     "start": "gulp",
