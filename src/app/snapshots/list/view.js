@@ -7,8 +7,7 @@ import $ from 'jquery';
 export default Mn.View.extend({
   template: Template,
   events: {
-    'click #new-snapshot': 'newSnapshot',
-    'click #print': 'printSnapshot'
+    'click #new-snapshot': 'newSnapshot'
   },
   initialize(options) {
     const { handleNewSnapshot, surveyModel } = options;
@@ -38,21 +37,5 @@ export default Mn.View.extend({
   newSnapshot() {
     const surveyId = this.$el.find('#survey-id').val();
     this.props.handleNewSnapshot(surveyId);
-  },
-  printSnapshot(event) {
-    var id = "#" + event.target.value
-    $(id).printThis({
-       loadCSS: ["/css/main.css"],
-       importCSS: true,
-       debug: false,
-		   importStyle: true,
-		   pageTitle: "",
-		   header: "<h3>Survey Results</h3>",
-	     footer: null,
-	     base: false ,
-       removeScripts: true,
-       copyTagClasses: true,
-       doctypeString: '<!DOCTYPE html>'
-    });
   }
 });

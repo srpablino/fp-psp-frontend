@@ -17,7 +17,8 @@ export default Mn.View.extend({
   events: {
     'click #circle': 'handlerOnClickIndicator',
     'click #delete': 'handleOnDeletePriority',
-    'click #finish-snapshot' : 'handleShowFamilyMap'
+    'click #finish-snapshot' : 'handleShowFamilyMap',
+    'click #print': 'printSnapshot'
   },
 
   initialize(options) {
@@ -154,6 +155,22 @@ export default Mn.View.extend({
   handleShowFamilyMap(e){
     e.preventDefault();
     Bn.history.navigate(`/families/${this.props.model.attributes.family_id}/map`, true);
+  },
+  printSnapshot(event) {
+    var id = "#" + event.target.value
+    $(id).printThis({
+       loadCSS: ["/css/main.css"],
+       importCSS: true,
+       debug: false,
+		   importStyle: true,
+		   pageTitle: "",
+		   header: "<h3>Survey Results</h3>",
+	     footer: null,
+	     base: false ,
+       removeScripts: true,
+       copyTagClasses: true,
+       doctypeString: '<!DOCTYPE html>'
+    });
   }
 
 });
