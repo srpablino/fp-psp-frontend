@@ -66,11 +66,14 @@ export default Mn.View.extend({
         this.model.set(element.name, element.value);
       });
 
-      console.log('this');
-     console.log(this);
-      var errors = this.model.validate(this.model.attributes);
-      console.log('errors');
-      console.log(errors);
+      this.validate = {};
+      this.validate.title = this.model.title;
+      this.validate.description = this.model.description;
+      this.validate.survey_schema = this.schema.getValue();
+      this.validate.survey_ui_schema = this.schemaUI.getValue();
+     
+      var errors = [];
+      var errors = this.model.validate(this.validate);
 
       if (errors) {
         errors.forEach(error =>{
@@ -84,9 +87,9 @@ export default Mn.View.extend({
 
       } else {
 
-    this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
-    this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
-
+   
+        this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
+        this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
     
 
     this.model
@@ -99,8 +102,7 @@ export default Mn.View.extend({
         this.props.listSurveys();
       } 
       , error => {
-        console.log('error');
-        console.log(error);
+        
         FlashesService.request('add', {
           type: 'warning',
           title: error.responseJSON.message
