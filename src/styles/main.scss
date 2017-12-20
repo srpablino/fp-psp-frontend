@@ -1045,3 +1045,9 @@ div.fp-form-container {
 #root__description{
   display: none;
 }
+
+@media print{
+    .noPrint, .noPrint *{
+        display: none !important;
+    }
+}

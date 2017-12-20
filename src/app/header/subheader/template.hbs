@@ -11,8 +11,8 @@
   <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav">
       {{#each navigationItems}}
-      <li>
-        <a href="{{this.link}}">{{this.name}}</a>
+      <li id="subMenuItem">
+        <a href="{{this.link}}" >{{this.name}}</a>
       </li>
       {{/each}}
     </ul>
