@@ -99,18 +99,19 @@ export default Mn.View.extend({
       var self = this;
       var galleryFields = [];
       var customFields = this.surveyModel.attributes.survey_ui_schema['ui:custom:fields'];
-
+      
       $.each(customFields, function(i, item) {
         if(item['ui:field'] && item['ui:field']==='gallery'){
           var itemSelected = formData[i];
           if(itemSelected && itemSelected!==undefined && Array.isArray(itemSelected)){
             formData[i] = itemSelected[0]['value'];
           }
-          self.surveyModel.attributes.survey_schema.properties[i]['type'] = 'string';
+          //self.surveyModel.attributes.survey_schema.properties[i]['type'] = 'string';
 
         }
+        /*console.log(self);
         self.surveyModel.attributes.survey_schema.properties[i]['type'] =
-          'string';
+          'string';*/
 
     });
   },
