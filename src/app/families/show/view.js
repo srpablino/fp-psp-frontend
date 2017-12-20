@@ -1,7 +1,8 @@
 import Mn from 'backbone.marionette';
 import Template from '../template.hbs';
 import InterventionsTemplate from './interventions-template.hbs';
-import SnapshotsTemplate from './snapshots-template.hbs';
+import SnapshotsTemplate from '../show/snapshot/template.hbs';
+import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 import storage from '../storage';
 import moment from 'moment';
 
@@ -20,7 +21,8 @@ export default Mn.View.extend({
   getTemplate() {
 
     if (this.entity === 'interventions') {
-      return InterventionsTemplate;
+      //return InterventionsTemplate;
+      return UnderConstrucionTemplate;
     }
     if (this.entity === 'snapshots') {
       return SnapshotsTemplate;
