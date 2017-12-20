@@ -1,5 +1,6 @@
 import OrganizationsView from './index/layout-view';
 import OrganizationView from './show/view';
+import FamiliesView from './show/families/index/layout-view';
 import NewOrganizationView from './add/view';
 import organizationsStorage from './storage';
 

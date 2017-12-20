@@ -1,0 +1,107 @@
+<img id="floating-survey"  src="/static/images/icon_edit.png" >
+<div class="row">
+  <div class="col-lg-9">
+    <article class="card animated fadeInLeft">
+      <div class="card-block">
+        <div class="card-title" >
+          <h4>File
+            <img class="pull-right" src="/static/images/icon_more.png" >
+          </h4>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3">
+                <img class="img-responsive" src="static/images/BG_families.jpg">
+            </div>
+
+            <div class="col-lg-6">
+                <p>#FLG4521</p>
+                <p>Contact: <span>{{family.person.firstName}} {{family.person.lastName}}</span></p>
+                <p>Celphone: <span>{{family.person.phoneNumber}}</span></p>
+                <p>Place: <span>{{family.city.city}}, {{family.country.country}}</span></p>
+            </div>
+
+            <div class="col-lg-3">
+              <img class="img-responsive pull-right" src="static/images/dummy_map.png">
+            </div>
+        </div>
+      </div>
+      <br/><br/><br/>
+    </article>
+    <article class="card animated fadeInLeft">
+      <div class="card-block">
+        <div class="card-title" >
+          <h4 >Priorities / Snapshot {{createdAt}}
+            <img class="pull-right" src="/static/images/icon_more.png" >
+          </h4>
+        </div>
+        <br/>
+        {{#each family.snapshot_indicators.indicators_priorities}}
+          <div class="list-priorities">
+            <span id="item-number" class="pull-left ">{{[helpers/counter] @index}}</span>
+            <div class="">
+            <span>{{this.indicator}}</span><br>
+              <span class="text-muted">{{this.reason}}</span>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </article>
+  </div>
+
+  <div class="col-lg-3">
+      <!-- Card -->
+      <article class="card animated fadeInLeft">
+        <div  class="card-block">
+          <div class="card-title">
+            <h4 >Indicators / Snapshot 
+              <img class="pull-right" src="/static/images/icon_more.png" >
+            </h4>
+          </div>
+
+        <div class="" id="snapshot-indicators">
+            <img  class="center-block" src="/static/images/icon_semaforo.png">
+            <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
+            <span id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+            <span id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+        </div>
+      </article>
+
+      <article class="card animated fadeInLeft">
+        <div class="card-block" id="card-interventions">
+          <div class="card-title" >
+            <h4 >Interventions
+              <img class="pull-right" src="/static/images/icon_more.png" >
+            </h4>
+          </div>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                  <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
+                  <img class="pull-right" src="/static/images/icon_interv_conseguido.png" >
+                  <p>Security: </p>
+                  <span class="text-muted">Se refiere a actos de violencia física contra la familia o contra su propiedad 
+                    ocurridos en su entorno de residencia.</span>
+                </li>
+                <li class="list-group-item">
+                  <img class="pull-left" src="/static/images/icon_elipse_amarillo_01.png" >
+                  <img class="pull-right" src="/static/images/icon_interv_noconseguido.png" >
+                  <p>Read and Write: </p>
+                  <span class="text-muted">Permite a la familia poder comunicarse mejor para lograr mayores oportunidades económicas, 
+                    a la vez permite potenciar el crecimiento personal</span>
+                </li>
+                <li class="list-group-item">
+                  <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
+                  <img class="pull-right" src="/static/images/icon_interv_proceso.png" >
+                  <p>Phone: </p>
+                  <span class="text-muted">Contar con servicio de telefonía pone a la familia en
+                    conexión fácil y rápida con el mundo.</span>
+                </li>
+            </ul>
+
+        </div>
+      </article>
+
+  </div>
+</div>
+</div>
