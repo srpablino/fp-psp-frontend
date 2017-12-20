@@ -79,8 +79,9 @@ export default Mn.Application.extend({
     this.layoutView.updateSubHeader(null);
   },
   logout() {
-    this.sessionMgr.logout();
-    this.toLoginPage();
+    this.sessionMgr.logout().then(() => {
+      this.toLoginPage();
+    });
   },
   toLoginPage() {
     this.sessionMgr.rememberRoute();
