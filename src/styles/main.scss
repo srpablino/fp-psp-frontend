@@ -1029,6 +1029,7 @@ div.fp-form-container {
 
 }
 
+
 .gmap-label{
   font-family: "Roboto";
   font-weight: 400;
@@ -1043,6 +1044,12 @@ div.fp-form-container {
 }
 #root__description{
   display: none;
+}
+
+@media print{
+    .noPrint, .noPrint *{
+        display: none !important;
+    }
 }
 
 .text-blue{
@@ -1070,4 +1077,3 @@ div.fp-form-container {
   margin-left: auto;
   margin-right: auto 
 }
-
