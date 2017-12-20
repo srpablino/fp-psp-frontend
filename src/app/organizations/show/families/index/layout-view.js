@@ -1,16 +1,16 @@
 import Mn from 'backbone.marionette';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
-import utils from '../../utils';
+import utils from '../../../../utils';
 import storage from '../storage';
 import FamiliesColecction from '../collection';
-import OrganizationsModel from '../../organizations/model';
-import CitiesModel from '../../cities/model';
-import CountiesModel from '../../countries/model';
+import OrganizationsModel from '../../../../organizations/model';
+import CitiesModel from '../../../../cities/model';
+import CountiesModel from '../../../../countries/model';
 import $ from 'jquery';
 
 export default Mn.View.extend({
-  template: Template,
+   template: Template,
   collection: new CollectionView(),
   citiesCollection: new CitiesModel(),
   countiesCollection: new CountiesModel(),
@@ -27,11 +27,12 @@ export default Mn.View.extend({
 
   },
   onRender() {
+
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
-    var self = this;
+    var self = this;new Template()
 
     this.citiesCollection.fetch({
       success:function(response){
@@ -99,9 +100,12 @@ export default Mn.View.extend({
         };
 
         var elements = new FamiliesColecction();
+        console.log(params)
         elements.fetch({
           data: params,
           success:function(response){
+            // setear al collection
+            console.log(response)
             self.collection =response ;
             self.showList();
             section.reset();
