@@ -1,8 +1,9 @@
 import FamiliesView from './index/layout-view';
 import FamilyView from './show/view';
+import FamilySnapshotListView from './show/snapshot/list/view';
 import FamilySnapshotView from './show/snapshot/view';
 import familiesStorage from './storage';
-import SnapshotCollection from './show/snapshot/collection';
+import SnapshotCollection from './show/snapshot/list/collection';
 
 const families = props => {
   const { app } = props;
@@ -25,7 +26,7 @@ const families = props => {
         familiesStorage.find(familyId).then(model => {
           if(entity === 'snapshots'){
             app.showViewOnRoute(
-              new FamilySnapshotView({
+              new FamilySnapshotListView({
                 model,
                 app,
                 entity
