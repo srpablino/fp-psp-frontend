@@ -20,7 +20,7 @@ export default Mn.View.extend({
   },
   events: {
     'click #submit': 'handleSubmit',
-    'keyup #search': 'handleSubmit'
+    'keypress #search': 'handleSubmit'
   },
   initialize() {
     this.collection = new Backbone.Collection();
@@ -78,43 +78,45 @@ export default Mn.View.extend({
     );
   },
   handleSubmit(event) {
-    console.log(event.target.value)
-    var organization_id = $("#organization").val();
-    var country_id = $("#country").val();
-    var city_id = $("#city").val();
-    var free_text = $("#search").val();
-    var self = this;
-    let container = this.$el.find('.list-container').eq(0);
-    const section = utils.getLoadingSection(container);
+    console.log(event.which)
+    if(event.which == 13|| event.which == 1){
+      var organization_id = $("#organization").val();
+      var country_id = $("#country").val();
+      var city_id = $("#city").val();
+      var free_text = $("#search").val();
+      var self = this;
+      let container = this.$el.find('.list-container').eq(0);
+      const section = utils.getLoadingSection(container);
 
-  //  if(organization_id != null && country_id != null && city_id != null ){
-      self.collection.reset();
-      this.getRegion('list').empty();
-      section.loading();
-
-
-        var params = {
-          organization_id: $("#organization").val(),
-          country_id: $("#country").val(),
-          city_id: $("#city").val(),
-          free_text: $("#search").val()
-        };
-
-        var elements = new FamiliesColecction();
-        elements.fetch({
-          data: params,
-          success:function(response){
-            self.collection =response ;
-            self.showList();
-            section.reset();
+    //  if(organization_id != null && country_id != null && city_id != null ){
+        self.collection.reset();
+        this.getRegion('list').empty();
+        section.loading();
 
 
-          }
-        });
+          var params = {
+            organization_id: $("#organization").val(),
+            country_id: $("#country").val(),
+            city_id: $("#city").val(),
+            free_text: $("#search").val()
+          };
 
-  //  }else{
-  //    alert("Choose an option")
-  //  }
+          var elements = new FamiliesColecction();
+          elements.fetch({
+            data: params,
+            success:function(response){
+              self.collection =response ;
+              self.showList();
+              section.reset();
+
+
+            }
+          });
+
+    //  }else{
+    //    alert("Choose an option")
+    //  }
+    }
 
   }
 });
