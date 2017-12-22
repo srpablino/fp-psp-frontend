@@ -19,7 +19,8 @@ export default Mn.View.extend({
     list: '#family-list'
   },
   events: {
-    'click #submit': 'handleSubmit'
+    'click #submit': 'handleSubmit',
+    'keyup #search': 'handleSubmit'
   },
   initialize() {
     this.collection = new Backbone.Collection();
@@ -77,6 +78,7 @@ export default Mn.View.extend({
     );
   },
   handleSubmit(event) {
+    console.log(event.target.value)
     var organization_id = $("#organization").val();
     var country_id = $("#country").val();
     var city_id = $("#city").val();
