@@ -14,15 +14,8 @@ export default Mn.View.extend({
   initialize(options) {
     this.app = options.app;
     this.entity = options.entity;
+    this.organizationId = options.organizationId;
 
-  },
-  events: {
-    "click #subMenuItem" : "highlight"
-  },
-  highlight(e) {
-    alert("Hola")
-    $(e.target).parent().siblings('.subActive').removeClass('subActive');
-    $(e.target).parent().addClass('subActive');
   },
 
   onRender() {
@@ -40,8 +33,12 @@ export default Mn.View.extend({
   getTemplate() {
 
     if (this.entity === 'families') {
-      this.app.showViewOnRoute(new FamiliesView());
-      return  Template();
+      var organizationId = this.organizationId;
+      this.app.showViewOnRoute(new FamiliesView({
+        organizationId
+      }
+      ));
+      return  this.$el.html('');
     }
     if (this.entity === 'users') {
 
@@ -50,7 +47,9 @@ export default Mn.View.extend({
     if (this.entity === 'indicators') {
       return IndicatorsTemplate;
     }
+
     return Template;
+
   },
 
   serializeData() {

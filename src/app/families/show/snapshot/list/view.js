@@ -3,6 +3,7 @@ import Template from './template.hbs';
 import storage from '../../../storage';
 import CollectionView from './collection-view';
 import Collection from './collection';
+import $ from 'jquery';
 
 export default Mn.View.extend({
   template: Template,
@@ -18,6 +19,9 @@ export default Mn.View.extend({
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
+
+    $('#subMenuItem > a[href$="snapshots"]').parent().addClass('subActive');
+
     this.showList();
   },
   showList() {

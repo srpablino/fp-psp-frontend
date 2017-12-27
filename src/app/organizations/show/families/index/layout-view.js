@@ -1,12 +1,13 @@
 import Mn from 'backbone.marionette';
-import Template from './layout-template.hbs';
-import CollectionView from './collection-view';
+import Template from '../../../../families/index/layout-template.hbs';
+import CollectionView from '../../../../families/index/collection-view';
 import utils from '../../../../utils';
 import storage from '../storage';
-import FamiliesColecction from '../collection';
+import FamiliesColecction from '../../../../families/collection';
 import OrganizationsModel from '../../../../organizations/model';
 import CitiesModel from '../../../../cities/model';
 import CountiesModel from '../../../../countries/model';
+import session from '../../../../../common/session';
 import $ from 'jquery';
 
 export default Mn.View.extend({
@@ -21,18 +22,18 @@ export default Mn.View.extend({
   events: {
     'click #submit': 'handleSubmit'
   },
-  initialize() {
+  initialize(options) {
     this.collection = new Backbone.Collection();
-
+    this.organizationId = options.organizationId;
 
   },
   onRender() {
-
+    var organizationId = this.organizationId;
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
-    var self = this;new Template()
+    var self = this;
 
     this.citiesCollection.fetch({
       success:function(response){
@@ -67,9 +68,13 @@ export default Mn.View.extend({
              .attr("value", element.id)
              .text(element.name));
            })
+           $('#organization').val(organizationId)
+           $('#organization').attr('disabled', 'true')
+
       }
     });
 
+    console.log(this.organizationId)
 
   },
   showList() {

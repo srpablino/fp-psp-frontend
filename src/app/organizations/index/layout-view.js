@@ -31,6 +31,10 @@ export default Mn.View.extend({
     }, 0);
     this.showList();
   },
+  getTemplate() {
+
+    return Template;
+  },
   showList() {
     this.getRegion('list').show(
       new CollectionView({ collection: this.collection })
