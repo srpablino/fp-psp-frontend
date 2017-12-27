@@ -64,7 +64,7 @@ export default Mn.View.extend({
   },
   loadMore(e) {
     e.preventDefault();
-    
+
     var scrollHeight = $(document).height();
     var scrollPosition = $(window).height() + $(window).scrollTop();
     var margin = 150; //margin to scroll from the bottom
@@ -80,7 +80,7 @@ export default Mn.View.extend({
 
     //if not all organizations have been loaded
     if(self.model.get('currentPage') < self.model.get('totalPages')){
-      var params = { 
+      var params = {
         page: self.model.get('currentPage') + 1,
         per_page: 12
       };
@@ -91,7 +91,7 @@ export default Mn.View.extend({
         success:function(response){
           self.collection.add(response.get('list'));
           self.model.set('currentPage', response.get('currentPage'));
-        } 
+        }
       });
     }
   }
