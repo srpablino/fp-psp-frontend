@@ -129,6 +129,12 @@ a {
     padding: 10px 15px;
     line-height: 30px;
   }
+  a:hover{
+    background: #e7e7e7;
+  }
+  li:hover{
+    background: #e7e7e7;
+  }
 }
 
 div.fp-form-container {
@@ -1084,4 +1090,21 @@ div.fp-form-container {
   font-family: "Roboto";
   color: #788c9a !important;
   font-size: 1.7em;
+}
+
+.subActive{
+  background: #e7e7e7;
+  > a {
+    background: #e7e7e7;
+    font-weight: 400;
+    font-size: 13px;
+  }
+  > a:focus{
+    background: #e7e7e7 !important;
+  }
+
+}
+
+.subActive:hover{
+  background: #e7e7e7;
 }
