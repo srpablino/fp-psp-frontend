@@ -672,6 +672,7 @@ article {
 
 .gallery-image > figure {
   float: left;
+  cursor: pointer;
 //  margin: 10px;
 //  min-height: 300px;
 }
@@ -1084,4 +1085,8 @@ div.fp-form-container {
   font-family: "Roboto";
   color: #788c9a !important;
   font-size: 1.7em;
+}
+
+.progress-survey{
+  color: #788c9a !important;
 }
