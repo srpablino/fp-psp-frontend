@@ -678,6 +678,7 @@ article {
 
 .gallery-image > figure {
   float: left;
+  cursor: pointer;
 //  margin: 10px;
 //  min-height: 300px;
 }
@@ -1092,6 +1093,10 @@ div.fp-form-container {
   font-size: 1.7em;
 }
 
+.progress-survey{
+  color: #788c9a !important;
+}
+
 .subActive{
   background: #e7e7e7;
   > a {
@@ -1108,3 +1113,4 @@ div.fp-form-container {
 .subActive:hover{
   background: #e7e7e7;
 }
+

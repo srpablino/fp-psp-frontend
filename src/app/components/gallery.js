@@ -26,14 +26,14 @@ class Gallery extends React.Component {
 
     renderImage(imageUrl, imageDescription, imageValue, index, className) {
         return (
-          <div className="col-md-4">
-            <div  key={index} onClick={this._handleClickOnImage(index, imageUrl, imageDescription, imageValue)} className={className} >
-            <figure className={imageValue}>
+          <div className="col-md-4" key={index}>
+            <div onClick={this._handleClickOnImage(index, imageUrl, imageDescription, imageValue)} className={className} >
+                <figure className={imageValue}>
                 <img src={imageUrl} className="img-responsive"/>
                 <figcaption>{imageDescription}</figcaption>
                 </figure>
             </div>
-            </div>
+          </div>
         );
     }
 
