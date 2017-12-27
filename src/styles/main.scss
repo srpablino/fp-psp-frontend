@@ -253,7 +253,7 @@ div.fp-form-container {
   overflow: hidden; /* simple clearfix */
 
   > div {
-    float: left;
+    //float: left;
     min-width: 20%;
     padding: 2%;
   }
@@ -270,7 +270,7 @@ div.fp-form-container {
 /* but this is not removing the float: */
 @media only screen and (min-width: 150px) and (max-width: 780px) {
   .list-container > div {
-    float: none;
+    //float: none;
     min-width: 25%;
     padding: 10px;
   }
@@ -451,6 +451,7 @@ article {
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
   border-top: none
 }
+
 
 //Home de family - mcespedes
 .list-priorities {
@@ -768,6 +769,7 @@ article {
   font-weight: 400;
   font-size: 14px;
   color: #60b4ef;
+   word-wrap: break-word;
 }
 .organizarion-name:hover {
   color: #4a9fda;
@@ -1075,7 +1077,7 @@ div.fp-form-container {
 .img-center {
   display: block;
   margin-left: auto;
-  margin-right: auto 
+  margin-right: auto
 }
 
 .title-gray {
