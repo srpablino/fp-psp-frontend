@@ -8,7 +8,7 @@ const surveys = props => {
     },
     controller: {
       showSurveys() {
-        app.showViewOnRoute(new SurveysView());
+        app.showViewOnRoute(new SurveysView(app));
       }
     }
   };
