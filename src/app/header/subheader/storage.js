@@ -10,9 +10,11 @@ var SubheaderStorage = Storage.extend({
 
     const items = {
       mainItem: headerItems.mainItem,
-      navigationItems: headerItems.navigationItems.filter(
-        item => item.link.indexOf('users') < 0
-      )
+      navigationItems:
+        headerItems.navigationItems &&
+        headerItems.navigationItems.filter(
+          item => item.link.indexOf('users') < 0
+        )
     };
     return new Model(items);
   }
