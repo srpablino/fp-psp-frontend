@@ -50,7 +50,11 @@ class Gmap extends React.Component {
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng()
                 },
-                zoom : this.zoom
+                zoom : this.zoom,
+                center: {
+                    lat: this.center.lat(),
+                    lng: this.center.lng()
+                }
             });
 
             setImmediate(() => component.props.onChange(component.state.point.lat+','+component.state.point.lng));
@@ -66,8 +70,8 @@ class Gmap extends React.Component {
                 <label className="control-label gmap-label">{ this.state.title } { this.state.required }</label>
                 <Gmaps
                     style={{ width: '100%', height: '100%', position: 'absolute' }}
-                    lat={this.state.point.lat}
-                    lng={this.state.point.lng}
+                    lat={this.state.center.lat}
+                    lng={this.state.center.lng}
                     zoom={this.state.zoom}
                     loadingMessage={'Cargando...'}
                     params={params}
