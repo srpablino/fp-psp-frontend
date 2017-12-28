@@ -5,6 +5,7 @@ import HomeView from '../home/view';
 import HeaderView from '../header/view';
 import headerStorage from '../header/storage';
 import subheaderStorage from '../header/subheader/storage';
+import FamilyModel from '../families/model'
 
 import FooterView from '../footer/view';
 
@@ -23,7 +24,7 @@ export default Mn.View.extend({
     this.app = options.app;
     this.showHeader();
     this.showFooter();
-    this.showView(new HomeView());
+    this.showView();
   },
   showHeader() {
     const model = headerStorage.getByRolesInSession(this.app.getSession());
@@ -44,7 +45,11 @@ export default Mn.View.extend({
     );
     this.getRegion('subheader').show(new SubMenuView({ model }));
   },
-  showView(view) {
-    this.getRegion('content').show(view);
+  showView() {
+    const familyModel = new FamilyModel();
+    familyModel.urlRoot = familyModel.urlRoot + '/counter';
+    familyModel.fetch().then(data => {
+      this.getRegion('content').show(new HomeView({totalFamilies: data}));
+    })
   }
 });
