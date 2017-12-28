@@ -14,6 +14,7 @@ export default Mn.Application.extend({
   initialize() {
     this.sessionMgr = sessionMgr;
     this.layoutView = new LayoutView({ app: this });
+    this.router = {};
   },
 
   onStart() {
