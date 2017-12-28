@@ -14,8 +14,13 @@ class Gmap extends React.Component {
                 lat: 51.5258541,
                 lng: -0.08040660000006028
             },
+                point: {
+                    lat: 51.5258541,
+                    lng: -0.08040660000006028
+                },
             title: props.schema.title,
-            required: props.required ? '*': ''
+            required: props.required ? '*': '',
+            zoom: 12
         }
 
         if (props.formData && props.formData !== undefined) {
@@ -26,6 +31,7 @@ class Gmap extends React.Component {
             setImmediate(() => this.props.onChange(this.state.point.lat+','+this.state.point.lng));
 
         }
+       
     }
 
     onMapCreated(map) {
@@ -33,15 +39,18 @@ class Gmap extends React.Component {
             disableDefaultUI: false
         });
     }
-
+    
     onClick(e) {
+        
         var component = this;
         return function (e) {
+            
             component.setState({
                 point: {
                     lat: e.latLng.lat(),
                     lng: e.latLng.lng()
-                }
+                },
+                zoom : this.zoom
             });
 
             setImmediate(() => component.props.onChange(component.state.point.lat+','+component.state.point.lng));
@@ -57,16 +66,18 @@ class Gmap extends React.Component {
                 <label className="control-label gmap-label">{ this.state.title } { this.state.required }</label>
                 <Gmaps
                     style={{ width: '100%', height: '100%', position: 'absolute' }}
-                    lat={this.state.center.lat}
-                    lng={this.state.center.lng}
-                    zoom={12}
+                    lat={this.state.point.lat}
+                    lng={this.state.point.lng}
+                    zoom={this.state.zoom}
                     loadingMessage={'Cargando...'}
                     params={params}
                     onMapCreated={this.onMapCreated}
-                    onClick={this.onClick()}>
+                    onClick={this.onClick()}
+                    >
                     <Marker
                         lat={this.state.point.lat}
                         lng={this.state.point.lng}
+                        draggable={true}
                     />
 
                 </Gmaps>

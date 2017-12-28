@@ -8,6 +8,7 @@ import OrganizationsModel from '../../organizations/model';
 import CitiesModel from '../../cities/model';
 import CountiesModel from '../../countries/model';
 import $ from 'jquery';
+import session from '../../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -24,7 +25,6 @@ export default Mn.View.extend({
   },
   initialize() {
     this.collection = new Backbone.Collection();
-
 
   },
   onRender() {
@@ -67,6 +67,15 @@ export default Mn.View.extend({
              .attr("value", element.id)
              .text(element.name));
            })
+
+         if (session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN')) {
+            //nothing
+         }else{
+           $('#organization').attr('disabled', 'true')
+           $('#organization').val(session.get('user').organization.id)
+         }
+
+
       }
     });
 

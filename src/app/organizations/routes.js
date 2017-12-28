@@ -26,7 +26,8 @@ const organizations = props => {
             new OrganizationView({
               model,
               app,
-              entity
+              entity,
+              organizationId
             })
           );
         });

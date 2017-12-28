@@ -16,6 +16,13 @@ class Form extends Component {
     var stepsSchema = [];
     var stepsUISchema = [];
 
+    this.counter = {
+      countEconomic : 0,
+      countIndicator : 0,
+      countPersonal : 0
+
+    }
+ 
     var component = this;
     for (var i = 0; i < order.length; i++) {
       stepsSchema.push(component.schemaNewEntry(props.schema, order[i]))
@@ -63,14 +70,27 @@ class Form extends Component {
     schemaToRet.properties = {};
     schemaToRet.required = [];
     schemaToRet.properties[key] = schema.properties[key];
+  
     if(schema.required && schema.required.includes(key)){
       schemaToRet.required.push(key);
     }
     if(this.props.uiSchema['ui:group:economics'] &&  this.props.uiSchema['ui:group:economics'].includes(key)){
-      schemaToRet.description = 'Socio-economic Information';
+     
+      this.counter.countEconomic ++;
+      schemaToRet.description = `Socio-economic Information ${this.counter.countEconomic}/`;
+      schemaToRet.counter = 'countEconomic';
     }
     if(this.props.uiSchema['ui:group:indicators'] &&  this.props.uiSchema['ui:group:indicators'].includes(key)){
-      schemaToRet.description = 'Indicators';
+     
+      this.counter.countIndicator ++;
+      schemaToRet.counter = 'countIndicator';
+      schemaToRet.description = `Indicators ${this.counter.countIndicator}/`;
+    }
+    if(this.props.uiSchema['ui:group:personal'] &&  this.props.uiSchema['ui:group:personal'].includes(key)){
+      this.counter.countPersonal ++;
+      schemaToRet.counter = 'countPersonal';
+      schemaToRet.description = `Personal Information ${this.counter.countPersonal}/`;
+     
     }
     return schemaToRet;
   }
@@ -115,9 +135,16 @@ class Form extends Component {
     const { schema, uiSchema, handleSubmit, handleCancel } = this.props;
 
     return (
+      <div> 
+         <div>
+        <h4 className="progress-survey" > {this.state.stepsSchema[this.state.step].description}{this.counter[this.state.stepsSchema[this.state.step].counter]}
+        </h4>
+      </div>
+      <hr/>
+      <br/><br/>
      <JsonSchemaForm
         schema={this.state.stepsSchema[this.state.step]}
-	uiSchema={this.state.stepsUISchema[this.state.step]}
+	      uiSchema={this.state.stepsUISchema[this.state.step]}
         fields={{ gallery: Gallery, gmap: Gmap}}
         onSubmit={this.onSubmit}
         onError={log('errors')}
@@ -137,6 +164,7 @@ class Form extends Component {
           </button>
         </div>
       </JsonSchemaForm>
+      </div>
     );
   }
 }

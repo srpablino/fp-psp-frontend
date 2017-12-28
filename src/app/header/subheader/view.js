@@ -8,8 +8,8 @@ export default Mn.View.extend({
     "click #subMenuItem" : "highlight"
   },
   highlight(e) {
-    $(e.target).parent().siblings('.active').removeClass('active');
-    $(e.target).parent().addClass('active');
+    $(e.target).parent().siblings('.subActive').removeClass('subActive');
+    $(e.target).parent().addClass('subActive');
   },
 
   serializeData() {
