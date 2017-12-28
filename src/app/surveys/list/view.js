@@ -1,9 +1,11 @@
+import $ from 'jquery';
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 import Collection from './collection';
 import ItemView from './item/view';
 import ModalService from '../../modal/service';
 import FlashesService from '../../flashes/service';
+import session from '../../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -40,6 +42,12 @@ export default Mn.View.extend({
       // to the list/table
       element.append(itemView.render().el);
     });
+
+    if (session.userHasRole('ROLE_SURVEY_USER')) {
+      $('#add-new').hide();
+    }else{
+      $('#add-new').show();
+    }
   },
   handleAddNew() {
     this.props.add();
