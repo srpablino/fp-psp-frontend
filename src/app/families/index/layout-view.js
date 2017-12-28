@@ -87,7 +87,6 @@ export default Mn.View.extend({
     );
   },
   handleSubmit(event) {
-    console.log(event.which)
     if(event.which == 13|| event.which == 1){
       var organization_id = $("#organization").val();
       var country_id = $("#country").val();

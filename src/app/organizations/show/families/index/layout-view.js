@@ -74,8 +74,6 @@ export default Mn.View.extend({
       }
     });
 
-    console.log(this.organizationId)
-
   },
   showList() {
     this.getRegion('list').show(
@@ -91,37 +89,30 @@ export default Mn.View.extend({
     let container = this.$el.find('.list-container').eq(0);
     const section = utils.getLoadingSection(container);
 
-  //  if(organization_id != null && country_id != null && city_id != null ){
-      self.collection.reset();
-      this.getRegion('list').empty();
-      section.loading();
+    self.collection.reset();
+    this.getRegion('list').empty();
+    section.loading();
 
 
-        var params = {
-          organization_id: $("#organization").val(),
-          country_id: $("#country").val(),
-          city_id: $("#city").val(),
-          free_text: $("#search").val()
-        };
+      var params = {
+        organization_id: $("#organization").val(),
+        country_id: $("#country").val(),
+        city_id: $("#city").val(),
+        free_text: $("#search").val()
+      };
 
-        var elements = new FamiliesColecction();
-        console.log(params)
-        elements.fetch({
-          data: params,
-          success:function(response){
-            // setear al collection
-            console.log(response)
-            self.collection =response ;
-            self.showList();
-            section.reset();
+      var elements = new FamiliesColecction();
+      elements.fetch({
+        data: params,
+        success:function(response){
+          // set to the collection
+          self.collection =response ;
+          self.showList();
+          section.reset();
 
 
-          }
-        });
-
-  //  }else{
-  //    alert("Choose an option")
-  //  }
+        }
+      });
 
   }
 });
