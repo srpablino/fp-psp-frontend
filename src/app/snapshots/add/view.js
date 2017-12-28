@@ -103,7 +103,7 @@ export default Mn.View.extend({
       var self = this;
       var galleryFields = [];
       var customFields = this.surveyModel.attributes.survey_ui_schema['ui:custom:fields'];
-      
+
       $.each(customFields, function(i, item) {
         if(item['ui:field'] && item['ui:field']==='gallery'){
           var itemSelected = formData[i];
@@ -127,7 +127,7 @@ export default Mn.View.extend({
     };
 
     new SnapshotModel().save(snapshot).then(snapshot => {
-      Bn.history.navigate(`/survey/${snapshot.survey_id}/snapshot/${snapshot.snapshot_economic_id}`, true);      
+      Bn.history.navigate(`/survey/${snapshot.survey_id}/snapshot/${snapshot.snapshot_economic_id}`, true);
     });
   }
 });
