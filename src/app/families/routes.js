@@ -4,6 +4,7 @@ import FamilySnapshotListView from './show/snapshot/list/view';
 import FamilySnapshotView from './show/snapshot/view';
 import familiesStorage from './storage';
 import SnapshotCollection from './show/snapshot/list/collection';
+import SnapshotItemModel from '../snapshots/list/item/model'
 
 const families = props => {
   const { app } = props;
@@ -45,15 +46,23 @@ const families = props => {
         
       },
       showSnapshotFamily(familyId, snapshotId) {
-        familiesStorage.find(familyId).then(model => {
-          app.showViewOnRoute(
-            new FamilySnapshotView({
-              model,
-              app,
-              snapshotId
-            })
-          );
-        });
+        const snapshotModel = new SnapshotItemModel();
+        snapshotModel.fetch({
+          data : {
+            snapshot_id : snapshotId
+          }
+        }).then(data => {
+          familiesStorage.find(familyId).then(model => {
+            app.showViewOnRoute(
+              new FamilySnapshotView({
+                model,
+                app,
+                snapshotId,
+                snapshotModel
+              })
+            );
+          });
+        })
       }
     }
   };

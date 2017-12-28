@@ -34,6 +34,5 @@ export default Mn.View.extend({
         new CollectionView({ collection: collection})
       );
     });
-  },
-
+  }
 });
