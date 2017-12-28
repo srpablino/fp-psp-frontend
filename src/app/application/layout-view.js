@@ -5,7 +5,7 @@ import HomeView from '../home/view';
 import HeaderView from '../header/view';
 import headerStorage from '../header/storage';
 import subheaderStorage from '../header/subheader/storage';
-import FamilyModel from '../families/model'
+import FamilyCounterModel from '../families/counter/model'
 
 import FooterView from '../footer/view';
 
@@ -24,7 +24,7 @@ export default Mn.View.extend({
     this.app = options.app;
     this.showHeader();
     this.showFooter();
-    this.showView();
+    this.showHome();
   },
   showHeader() {
     const model = headerStorage.getByRolesInSession(this.app.getSession());
@@ -32,6 +32,13 @@ export default Mn.View.extend({
   },
   showFooter() {
     this.getRegion('footer').show(new FooterView());
+  },
+  showHome() {
+    var self = this;
+    const familyModel = new FamilyCounterModel();
+    familyModel.fetch().then(data => {
+      this.getRegion('content').show(new HomeView({totalFamilies: data}));
+    })
   },
   updateSubHeader(headerItems) {
     this.getRegion('subheader').empty();
@@ -45,11 +52,7 @@ export default Mn.View.extend({
     );
     this.getRegion('subheader').show(new SubMenuView({ model }));
   },
-  showView() {
-    const familyModel = new FamilyModel();
-    familyModel.urlRoot = familyModel.urlRoot + '/counter';
-    familyModel.fetch().then(data => {
-      this.getRegion('content').show(new HomeView({totalFamilies: data}));
-    })
+  showView(view) {
+    this.getRegion('content').show(view);
   }
 });

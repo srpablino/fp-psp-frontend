@@ -1,21 +1,19 @@
 import HomeView from './view';
-import FamilyModel from '../families/model'
+import FamilyCounterModel from '../families/counter/model'
 
 const home = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
       '': 'showHome',
-      home: 'showHome',
-      'home': 'showHome'
+      home: 'showHome'
     },
     controller: {
       showHome() {
-        const familyModel = new FamilyModel();
-        familyModel.urlRoot = familyModel.urlRoot + '/counter';
+        const familyModel = new FamilyCounterModel();
         familyModel.fetch().then(data => {
           app.showHomeForUser(new HomeView({totalFamilies: data}));
-        })        
+        })
       }
     }
   };
