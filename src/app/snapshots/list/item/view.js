@@ -154,10 +154,8 @@ export default Mn.View.extend({
 
   handleShowFamilyMap(e){
     e.preventDefault();
-    console.log(this.props.model);
-    
     Bn.history.navigate(`families/${this.props.model.attributes.family_id}/snapshots/${this.props.model.attributes.snapshot_economic_id}`, true);
-   // Bn.history.navigate(`/families/${this.props.model.attributes.family_id}/map`, true);
+
   },
   printSnapshot(event) {
     var id = "#" + event.target.value

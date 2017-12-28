@@ -5,7 +5,7 @@ var SurveysStorage = Storage.extend({
     getSubHeaderItems() {
       return {
         mainItem: {
-          name: `List of Surveys`,
+          name: `List of available surveys`,
           link: `/#surveys`
         }
       };
