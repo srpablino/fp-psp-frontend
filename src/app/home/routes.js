@@ -14,7 +14,7 @@ const home = props => {
         // avoid calling counter when
         // not allowed.
         if (app.getSession().userHasRole('ROLE_SURVEY_USER')) {
-          app.showHomeForUser(new HomeView({totalFamilies: null}));
+          app.showHomeForUser(new HomeView({model: new FamilyCounterModel()}));
           return;
         }
         const familyModel = new FamilyCounterModel();

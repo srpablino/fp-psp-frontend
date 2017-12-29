@@ -4,11 +4,11 @@ import Template from './template.hbs';
 export default Mn.View.extend({
   template: Template,
   initialize(options) {
-    this.totalFamilies = options.totalFamilies;
+    this.model = options.model;
   },
   serializeData() {
     return {
-      totalFamilies: this.totalFamilies
+      dashboard: this.model.attributes
     };
   }
 });

@@ -38,12 +38,12 @@ export default Mn.View.extend({
     // avoid calling counter when
     // not allowed.
     if (this.app.getSession().userHasRole('ROLE_SURVEY_USER')) {
-      this.getRegion('content').show(new HomeView({totalFamilies: null}));
+      this.getRegion('content').show(new HomeView({model: new FamilyCounterModel()}));
       return;
     }
     const familyModel = new FamilyCounterModel();
     familyModel.fetch().then(data => {
-      this.getRegion('content').show(new HomeView({totalFamilies: data}));
+      this.getRegion('content').show(new HomeView({model: familyModel}));
     });
   },
   updateSubHeader(headerItems) {
