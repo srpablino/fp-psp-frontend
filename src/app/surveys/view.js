@@ -20,7 +20,7 @@ export default Mn.View.extend({
   },
   add(model) {
     const addView = new AddView({
-      model: model,
+      model,
       listSurveys: this.list.bind(this)
     });
     this.getRegion('surveysContent').show(addView);

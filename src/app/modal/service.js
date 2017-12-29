@@ -7,9 +7,9 @@ import ConfirmView from './confirm/view';
 import PromptView from './prompt/view';
 
 const WiresModalService = ModalService.extend({
-  AlertView: AlertView,
-  ConfirmView: ConfirmView,
-  PromptView: PromptView,
+  AlertView,
+  ConfirmView,
+  PromptView,
 
   setup(options = {}) {
     this.container = options.container;

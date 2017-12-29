@@ -1,7 +1,5 @@
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
-import InterventionsTemplate from '../interventions-template.hbs';
-import SnapshotsTemplate from '../snapshots-template.hbs';
 import storage from '../../storage';
 
 export default Mn.View.extend({
@@ -22,5 +20,4 @@ export default Mn.View.extend({
       family: this.model.attributes
     };
   }
-
 });

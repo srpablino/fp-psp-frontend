@@ -21,15 +21,13 @@ var escapeRegExp = /[\-{}\[\]+?.,\\\^$|#\s]/g;
 
 // Convert a route string into a regular expression, suitable for matching
 // against the current location hash.
-var _routeToRegExp = function(route) {
+var _routeToRegExp = function routeToRegExp(route) {
   route = route
     .replace(escapeRegExp, '\\$&')
     .replace(optionalParam, '(?:$1)?')
-    .replace(namedParam, function(match, optional) {
-      return optional ? match : '([^/?]+)';
-    })
+    .replace(namedParam, (match, optional) => (optional ? match : '([^/?]+)'))
     .replace(splatParam, '([^?]*?)');
-  return new RegExp('^' + route + '(?:\\?([\\s\\S]*))?$');
+  return new RegExp(`^${route}(?:\\?([\\s\\S]*))?$`);
 };
 
 class Authorizer {
@@ -73,8 +71,10 @@ class Authorizer {
 
     const authorizedRoutes = this.getAuthorizedRoutes()
       .map(route => {
-        if (!_isRegExp(route)) return _routeToRegExp(route);
-        else return route;
+        if (!_isRegExp(route)) {
+          return _routeToRegExp(route);
+        }
+        return route;
       })
       .filter(route => route === routeParam || route.test(routeParam));
 
@@ -86,8 +86,6 @@ class Authorizer {
     }
   }
 }
-const initRouterAuthorizer = props => {
-  return new Authorizer(props);
-};
+const initRouterAuthorizer = props => new Authorizer(props);
 
 export default initRouterAuthorizer;

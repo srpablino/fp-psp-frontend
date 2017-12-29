@@ -30,7 +30,7 @@ export default Mn.View.extend({
         this.destroy();
       });
 
-      var itemView = new ItemView({
+      let itemView = new ItemView({
         model: item,
         addSurvey: this.props.add,
         deleteSurvey: this.deleteSurvey.bind(this)
@@ -56,7 +56,7 @@ export default Mn.View.extend({
       return this.handleDestroySuccess(model);
     });
   },
-  handleDestroySuccess(model) {
+  handleDestroySuccess() {
     return FlashesService.request('add', {
       timeout: 5000,
       type: 'info',

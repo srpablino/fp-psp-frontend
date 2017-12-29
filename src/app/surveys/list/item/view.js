@@ -1,6 +1,6 @@
 import Mn from 'backbone.marionette';
-import Template from './template.hbs';
 import Bn from 'backbone';
+import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
@@ -36,12 +36,10 @@ export default Mn.View.extend({
     }
     event.preventDefault();
     const route = event.target.getAttribute('href');
-    console.log(route);
     Bn.history.navigate(route, true);
-  }, 
+  },
   handleAnswer(event) {
     event.preventDefault();
     Bn.history.navigate(`/survey/${this.model.attributes.id}/answer`, true);
   }
-
 });

@@ -1,9 +1,8 @@
+import Bn from 'backbone';
 import SnapshotsView from './view';
 import NewSnapshot from './add/view';
 import SnapshotView from './list/item/view';
-import Bn from 'backbone';
-import SnapshotItemModel from './list/item/model'
-
+import SnapshotItemModel from './list/item/model';
 
 const snapshots = props => {
   const { app } = props;
@@ -23,28 +22,30 @@ const snapshots = props => {
         const surveyId = parseInt(hash, 10);
 
         const newSnapshotView = new NewSnapshot({
-          organizationId : app.getSession().get('user').organization?  app.getSession().get('user').organization.id:null,
-          surveyId: surveyId,
-          handleCancel: function() {
+          organizationId: app.getSession().get('user').organization
+            ? app.getSession().get('user').organization.id
+            : null,
+          surveyId,
+          handleCancel() {
             Bn.history.navigate(`/surveys`, true);
           }
         });
-    
+
         app.showViewOnRoute(newSnapshotView);
       },
       showSnapshot(hash, hashSnapshot) {
-        const surveyId = parseInt(hash, 10);
         const snapshotId = parseInt(hashSnapshot, 10);
 
         const model = new SnapshotItemModel();
-        model.fetch({
-          data : {
-            snapshot_id : snapshotId
-          }
-        }).then(data => {
-          app.showViewOnRoute(new SnapshotView({ model }));
-        })
-        
+        model
+          .fetch({
+            data: {
+              snapshot_id: snapshotId
+            }
+          })
+          .then(() => {
+            app.showViewOnRoute(new SnapshotView({ model }));
+          });
       }
     }
   };

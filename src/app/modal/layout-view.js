@@ -2,7 +2,7 @@ import { View } from 'backbone.marionette';
 import template from './layout-template.hbs';
 
 export default View.extend({
-  template: template,
+  template,
   className: 'modal fade',
 
   attributes: {

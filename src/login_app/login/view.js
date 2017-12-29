@@ -1,14 +1,18 @@
+/* eslint camelcase: 0 */
 import Mn from 'backbone.marionette';
+import $ from 'jquery';
 import Template from './template.hbs';
 import env from '../env';
-import $ from 'jquery';
 import session from '../../common/session';
-import utils from '../../common/utils';
+import { getLoadingButton } from '../../common/utils';
 import FlashesService from '../../common/flashes/service';
 
 export default Mn.View.extend({
   template: Template,
-
+  regions: {
+    container: '#container',
+    flashes: '#flashes'
+  },
   events: {
     'click #btn-login': 'doLogin'
   },
@@ -16,33 +20,33 @@ export default Mn.View.extend({
   initialize(options) {
     this.app = options.app;
     session.fetch();
+
+    FlashesService.setup({
+      container: this.getRegion('flashes')
+    });
   },
   doLogin(event) {
-    let loginBtn = this.$el.find('#btn-login');
-    let button = utils.getLoadingButton(loginBtn);
     event.preventDefault();
-    var url = `${env.API_AUTH}/token`;
 
-    var username = $('#login-username').val();
-    var password = $('#login-password').val();
+    const loginBtn = this.$el.find('#btn-login');
+    const button = getLoadingButton(loginBtn);
 
-    url =
-      url +
-      '?username=' +
-      username +
-      '&password=' +
-      password +
-      '&grant_type=password';
+    let username = $('#login-username').val();
+    let password = $('#login-password').val();
 
-    var clientid = 'barClientIdPassword';
-    var clientsecret = 'secret';
+    let url = `${
+      env.API_AUTH
+    }/token?username=${username}&password=${password}&grant_type=password`;
+
+    let clientid = 'barClientIdPassword';
+    let clientsecret = 'secret';
     button.loading();
     $.ajax({
-      url: url,
+      url,
       type: 'POST',
       dataType: 'json',
       headers: {
-        Authorization: 'Basic ' + btoa(clientid + ':' + clientsecret)
+        Authorization: `Basic ${btoa(`${clientid}:${clientsecret}`)}`
       },
 
       success: data => {
@@ -60,7 +64,7 @@ export default Mn.View.extend({
           window.location.replace(`/#${fragment}`);
         }
       },
-      error: function(xmlHttpRequest, textStatus, errorThrown) {
+      error(xmlHttpRequest, textStatus) {
         if (xmlHttpRequest && xmlHttpRequest.status === 0) {
           FlashesService.request('add', {
             type: 'danger',
@@ -69,9 +73,16 @@ export default Mn.View.extend({
           return;
         }
         if (textStatus === 'Unauthorized') {
-          window.alert('No autorizado');
+          FlashesService.request('add', {
+            type: 'warning',
+            title: 'Not authorized'
+          });
         } else {
-          window.alert('Credenciales inválidos.. Intente de nuevo');
+          FlashesService.request('add', {
+            type: 'warning',
+            title: 'Wrong credentials. Please try again.',
+            timeout: 3000
+          });
           $('#login-username').val('');
           $('#login-password').val('');
           $('#login-username').focus();

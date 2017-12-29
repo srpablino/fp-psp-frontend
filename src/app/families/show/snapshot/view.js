@@ -20,5 +20,4 @@ export default Mn.View.extend({
       family: this.model.attributes
     };
   }
-
 });

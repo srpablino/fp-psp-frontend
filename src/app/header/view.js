@@ -1,19 +1,24 @@
 import Mn from 'backbone.marionette';
-import Template from './template.hbs';
 import _toLower from 'lodash/toLower';
 import _startCase from 'lodash/startCase';
 import $ from 'jquery';
+import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
 
   events: {
-    "click #menuItem" : "highlight"
+    'click #menuItem': 'highlight'
   },
 
   highlight(e) {
-    $(e.target).parent().siblings('.active').removeClass('active');
-    $(e.target).parent().addClass('active');
+    $(e.target)
+      .parent()
+      .siblings('.active')
+      .removeClass('active');
+    $(e.target)
+      .parent()
+      .addClass('active');
   },
   initialize(options) {
     this.app = options.app;
@@ -22,7 +27,7 @@ export default Mn.View.extend({
   // The full profile user name should
   // be retrieved from the server and not parsed from username.
   getUserProfileName() {
-    let username = this.app.getSession().get('user').username;
+    const { username } = this.app.getSession().get('user');
     if (!username) {
       return 'Anonymous';
     }

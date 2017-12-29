@@ -1,6 +1,6 @@
 import Bn from 'backbone';
-import session from '../../common/session';
 import $ from 'jquery';
+import session from '../../common/session';
 import env from '../env';
 
 const SessionManager = Bn.Model.extend({
@@ -18,7 +18,7 @@ const SessionManager = Bn.Model.extend({
   },
   logout() {
     return $.ajax({
-      url: env.API_AUTH + '/revoke-token',
+      url: `${env.API_AUTH}/revoke-token`,
       type: 'GET',
       headers: {
         Authorization: `Bearer ${this.getAccessToken()}`
@@ -35,7 +35,7 @@ const SessionManager = Bn.Model.extend({
   rememberRoute() {
     var returnFragment =
       Bn.history.fragment === 'logout' ? 'home' : Bn.history.fragment;
-    session.save({ access_token: null, returnFragment: returnFragment });
+    session.save({ access_token: null, returnFragment });
     return this;
   }
 });

@@ -1,6 +1,5 @@
 import OrganizationsView from './index/layout-view';
 import OrganizationView from './show/view';
-import FamiliesView from './show/families/index/layout-view';
 import NewOrganizationView from './add/view';
 import organizationsStorage from './storage';
 
@@ -13,10 +12,9 @@ const organizations = props => {
       'organizations/:id(/:entity)': 'showOrganization'
     },
     controller: {
-      //paginated organizations
+      // paginated organizations
       showOrganizations() {
-        organizationsStorage.find()
-        .then(model => {
+        organizationsStorage.find().then(model => {
           app.showViewOnRoute(new OrganizationsView({ model }));
         });
       },
