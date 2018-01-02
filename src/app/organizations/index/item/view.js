@@ -8,7 +8,8 @@ export default Mn.View.extend({
   },
   serializeData() {
     return {
-      organization: this.model.attributes
+      organization: this.model.attributes,
+      logoUrl: this.model.get('logoUrl') || '/static/images/icon_logo_place.png'
     };
   },
   handleDelete() {
