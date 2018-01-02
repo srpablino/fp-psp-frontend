@@ -15,6 +15,7 @@ export default Mn.View.extend({
     this.app = options.app;
     this.entity = options.entity;
     this.organizationId = options.organizationId;
+    this.totalFamilies = options.totalFamilies;
   },
 
   onRender() {
@@ -35,7 +36,8 @@ export default Mn.View.extend({
       let organizationId = this.organizationId;
       this.app.showViewOnRoute(
         new FamiliesView({
-          organizationId
+          organizationId,
+          app: this.app
         })
       );
       return this.$el.html('');
@@ -52,7 +54,8 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-      organization: this.model.attributes
+      organization: this.model.attributes,
+      totalFamilies: this.totalFamilies
     };
   }
 });

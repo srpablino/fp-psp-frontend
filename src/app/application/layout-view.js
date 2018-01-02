@@ -5,6 +5,7 @@ import HomeView from '../home/view';
 import HeaderView from '../header/view';
 import headerStorage from '../header/storage';
 import subheaderStorage from '../header/subheader/storage';
+import FamilyCounterModel from '../families/counter/model';
 
 import FooterView from '../footer/view';
 
@@ -23,14 +24,27 @@ export default Mn.View.extend({
     this.app = options.app;
     this.showHeader();
     this.showFooter();
-    this.showView(new HomeView());
+    this.showHome();
   },
   showHeader() {
     const model = headerStorage.getByRolesInSession(this.app.getSession());
-    this.getRegion('header').show(new HeaderView({ model, app: this.app }));
+    this.getRegion('header').show(new HeaderView({model, app: this.app}));
   },
   showFooter() {
     this.getRegion('footer').show(new FooterView());
+  },
+  showHome() {
+    // FIXME: Temporal fix, to
+    // avoid calling counter when
+    // not allowed.
+    if (this.app.getSession().userHasRole('ROLE_SURVEY_USER')) {
+      this.getRegion('content').show(new HomeView({totalFamilies: null}));
+      return;
+    }
+    const familyModel = new FamilyCounterModel();
+    familyModel.fetch().then(data => {
+      this.getRegion('content').show(new HomeView({totalFamilies: data}));
+    });
   },
   updateSubHeader(headerItems) {
     this.getRegion('subheader').empty();
@@ -42,7 +56,7 @@ export default Mn.View.extend({
       headerItems,
       this.app.getSession()
     );
-    this.getRegion('subheader').show(new SubMenuView({ model }));
+    this.getRegion('subheader').show(new SubMenuView({model}));
   },
   showView(view) {
     this.getRegion('content').show(view);

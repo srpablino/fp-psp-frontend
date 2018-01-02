@@ -28,7 +28,8 @@ const snapshots = props => {
           surveyId,
           handleCancel() {
             Bn.history.navigate(`/surveys`, true);
-          }
+          },
+          app
         });
 
         app.showViewOnRoute(newSnapshotView);

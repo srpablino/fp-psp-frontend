@@ -23,15 +23,18 @@ export default Mn.View.extend({
     'click #submit': 'handleSubmit',
     'keypress #search': 'handleSubmit'
   },
-  initialize() {
+  initialize(options) {
     this.collection = new Bn.Collection();
+    this.app = options.app;
   },
   onRender() {
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
+
     const self = this;
+    const session = this.app.getSession();
 
     this.citiesCollection.fetch({
       success(response) {
@@ -69,6 +72,16 @@ export default Mn.View.extend({
               .text(element.name)
           );
         });
+
+        if (
+          session.userHasRole('ROLE_ROOT') ||
+          session.userHasRole('ROLE_HUB_ADMIN')
+        ) {
+          // nothing
+        } else {
+          $('#organization').attr('disabled', 'true');
+          $('#organization').val(session.get('user').organization.id);
+        }
       }
     });
   },

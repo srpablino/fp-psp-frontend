@@ -7,6 +7,7 @@ import Bn from 'backbone';
 import Mn from 'backbone.marionette';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import storage from '../storage';
 import Template from './template.hbs';
 import Form from '../../components/form';
 import SurveyModel from '../../surveys/add/model';
@@ -21,7 +22,7 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { organizationId, surveyId, handleCancel } = options;
+    const { organizationId, surveyId, handleCancel, app } = options;
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
     this.surveyModel.fetch();
@@ -30,25 +31,19 @@ export default Mn.View.extend({
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
     this.props.organizationId = organizationId;
+
+    this.app = app;
   },
 
   getLocalizedSchema(unlocalizedSchema) {
     const newSchema = Object.assign({}, unlocalizedSchema);
-    // schema = {
-    //   properties: {
-    //    XYZ:
-    //        { title: { es : value},
-    //          type: string
-    //        }
-    //   }
-    // transformar a:
-    // newSchema.properties.XYZ.title = value;
+
     const newProps = _.mapValues(newSchema.properties, obj =>
-      // obj = XYZ
       _.mapValues(obj, obj2 => {
-        // obj2 = title
         if (_.isObject(obj2) && obj2.hasOwnProperty('es')) {
           return obj2.es;
+        } else if (_.isObject(obj2) && obj2.hasOwnProperty('en')) {
+          return obj2.en;
         }
         return obj2;
       })
@@ -57,6 +52,12 @@ export default Mn.View.extend({
     return newSchema;
   },
   renderForm() {
+    const parameters = {};
+    parameters.survey_id = this.surveyModel.id;
+    parameters.survey_name = this.surveyModel.attributes.title;
+    const headerItems = storage.getSubHeaderItems(parameters);
+    this.app.updateSubHeader(headerItems);
+
     const placeHolder = this.$el.find('#new-survey')[0];
     const { survey_schema } = this.surveyModel.attributes;
     const localizedSchema = this.getLocalizedSchema(survey_schema);
