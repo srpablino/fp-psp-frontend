@@ -14,7 +14,6 @@ export default Mn.View.extend({
     this.app = options.app;
     this.entity = options.entity;
     this.organizationId = options.organizationId;
-    this.totalFamilies = options.totalFamilies;
   },
 
   onRender() {
@@ -52,8 +51,7 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-      organization: this.model.attributes,
-      totalFamilies: this.totalFamilies
+      organization: this.model.attributes
     };
   }
 });

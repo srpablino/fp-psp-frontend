@@ -3,12 +3,12 @@ import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
-  initialize(options) {
-    this.model = options.model;
-  },
   serializeData() {
+    if (!this.model) { 
+      this.model = new Backbone.Model();
+    }
     return {
-      dashboard: this.model.attributes
+      home: this.model.attributes
     };
   }
 });
