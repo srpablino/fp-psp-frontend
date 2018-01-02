@@ -33,14 +33,36 @@ export default Mn.View.extend({
         this.model.set(element.name, element.value);
       });
     button.loading();
-    storage
-      .save(this.model)
-      .then(model => {
-        button.reset();
-        history.navigate('organizations', { trigger: true });
-      })
-      .always(() => {
-        button.reset();
-      });
+
+    var file = document.getElementById('image-file').files[0];
+    if (file !== undefined) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        var fileBase64 = reader.result;
+        this.model.set('file', fileBase64);
+
+        storage
+          .save(this.model)
+          .then(model => {
+            button.reset();
+            history.navigate('organizations', {trigger: true});
+          })
+          .always(() => {
+            button.reset();
+          });
+      };
+    } else {
+      storage
+        .save(this.model)
+        .then(model => {
+          button.reset();
+          history.navigate('organizations', {trigger: true});
+        })
+        .always(() => {
+          button.reset();
+        });
+    }
   }
 });
