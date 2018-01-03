@@ -49,10 +49,13 @@ export default Mn.View.extend({
       $('#add-new').show();
     }
   },
+  
   handleAddNew() {
     this.props.add();
   },
+
   deleteSurvey(model) {
+    var self = this;
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
       text: `Are you sure you want to delete "${model.get('title')}"?`
@@ -60,15 +63,36 @@ export default Mn.View.extend({
       if (!confirmed) {
         return;
       }
-      this.collection.remove(model);
-      return this.handleDestroySuccess(model);
+     
+      model.destroy({
+         
+        success: function(model)
+        {
+          return self.handleDestroySuccess(model);
+        },
+        error: function(model,response)
+        {
+          self.render();
+          return self.handleDestroyError(response);
+        },
+        wait:true
+        });      
     });
   },
+
   handleDestroySuccess(model) {
     return FlashesService.request('add', {
       timeout: 5000,
       type: 'info',
       body: 'The survey has been deleted!'
+    });
+  },
+
+  handleDestroyError(error) {
+    return FlashesService.request('add', {
+      timeout: 5000,
+      type: 'danger',
+      body: error.responseJSON? error.responseJSON.message : "Error"
     });
   }
 });
