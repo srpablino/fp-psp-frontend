@@ -97,7 +97,7 @@ export default Marionette.View.extend({
         }, error => {
           FlashesService.request('add', {
             type: 'warning',
-            title: error.responseJSON.description
+            title: error.responseJSON.message
           });
         });
       }
