@@ -32,7 +32,7 @@ export default Mn.View.extend({
         this.destroy();
       });
 
-      var itemView = new ItemView({
+      let itemView = new ItemView({
         model: item,
         addSurvey: this.props.add,
         deleteSurvey: this.deleteSurvey.bind(this)

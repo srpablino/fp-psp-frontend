@@ -5,7 +5,6 @@ import HomeView from '../home/view';
 import HeaderView from '../header/view';
 import headerStorage from '../header/storage';
 import subheaderStorage from '../header/subheader/storage';
-import FamilyCounterModel from '../families/counter/model';
 
 import FooterView from '../footer/view';
 
@@ -34,17 +33,7 @@ export default Mn.View.extend({
     this.getRegion('footer').show(new FooterView());
   },
   showHome() {
-    // FIXME: Temporal fix, to
-    // avoid calling counter when
-    // not allowed.
-    if (this.app.getSession().userHasRole('ROLE_SURVEY_USER')) {
-      this.getRegion('content').show(new HomeView({totalFamilies: null}));
-      return;
-    }
-    const familyModel = new FamilyCounterModel();
-    familyModel.fetch().then(data => {
-      this.getRegion('content').show(new HomeView({totalFamilies: data}));
-    });
+    this.getRegion('content').show(new HomeView());
   },
   updateSubHeader(headerItems) {
     this.getRegion('subheader').empty();

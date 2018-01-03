@@ -1,9 +1,8 @@
 import OrganizationsView from './index/layout-view';
 import OrganizationView from './show/view';
-import FamiliesView from './show/families/index/layout-view';
 import NewOrganizationView from './add/view';
 import organizationsStorage from './storage';
-import FamilyCounterModel from '../families/counter/model'
+import OrganizationDashboard from './dashboard/model';
 
 const organizations = props => {
   const { app } = props;
@@ -14,32 +13,22 @@ const organizations = props => {
       'organizations/:id(/:entity)': 'showOrganization'
     },
     controller: {
-      //paginated organizations
+      // paginated organizations
       showOrganizations() {
-        organizationsStorage.find()
-        .then(model => {
+        organizationsStorage.find().then(model => {
           app.showViewOnRoute(new OrganizationsView({ model }));
         });
       },
       showOrganization(organizationId, entity) {
-        if(entity == null){
-          const familyModel = new FamilyCounterModel();
-          familyModel.fetch().then(data => {
-            const totalFamilies = data;
-            organizationsStorage.find(organizationId).then(model => {
-              app.showViewOnRoute(
-                new OrganizationView({
-                  model,
-                  app,
-                  entity,
-                  organizationId,
-                  totalFamilies
-                })
-              );
-            });
-          });
-        }else{
-          organizationsStorage.find(organizationId).then(model => {
+        // show the organization dashboard
+        const model = new OrganizationDashboard();
+        model
+          .fetch({
+            data: {
+              organizationId
+            }
+          })
+          .then(() => {
             app.showViewOnRoute(
               new OrganizationView({
                 model,
@@ -49,7 +38,6 @@ const organizations = props => {
               })
             );
           });
-        }
       },
       newOrganization() {
         app.showViewOnRoute(new NewOrganizationView());

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/FundacionParaguaya/fp-psp-frontend.svg?branch=master)](https://travis-ci.org/FundacionParaguaya/fp-psp-frontend)
+
 # Poverty Stoplight
 
 Fundación Paraguaya (FP from now on) has developed a methodology called “Poverty
