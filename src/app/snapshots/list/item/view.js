@@ -74,6 +74,13 @@ export default Mn.View.extend({
           this.render();
         }, 300);
       });
+
+      return FlashesService.request('add', {
+        timeout: 2000,
+        type: 'info',
+        title: `The priority has been deleted!`
+      });
+
     });
   },
 
@@ -104,19 +111,21 @@ export default Mn.View.extend({
     );
 
     if (exists.length > 0) {
-      FlashesService.request('add', {
+      return FlashesService.request('add', {
+        timeout: 2000,
         type: 'info',
         title: `The "${indicatorSelected}" indicator was previously selected`
       });
-      return;
+      
     }
 
     if (indicatorSelectedValue.toUpperCase() === 'GREEN') {
-      FlashesService.request('add', {
+      return FlashesService.request('add', {
+        timeout: 2000,
         type: 'info',
         title: `The "${indicatorSelected}" indicator is really good`
       });
-      return;
+      
     }
     this.showDialogPriority(indicatorSelected);
     this.priorityDialog.open();
