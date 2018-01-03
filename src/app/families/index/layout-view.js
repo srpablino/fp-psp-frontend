@@ -73,12 +73,7 @@ export default Mn.View.extend({
           );
         });
 
-        if (
-          session.userHasRole('ROLE_ROOT') ||
-          session.userHasRole('ROLE_HUB_ADMIN')
-        ) {
-          // nothing
-        } else {
+        if (!(session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
           $('#organization').attr('disabled', 'true');
           $('#organization').val(session.get('user').organization.id);
         }
