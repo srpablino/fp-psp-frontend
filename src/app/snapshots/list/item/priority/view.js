@@ -77,6 +77,7 @@ export default Marionette.View.extend({
     if (errors) {
       errors.forEach(error => {
         FlashesService.request('add', {
+          timeout: 2000,
           type: 'warning',
           title: error
         });
@@ -86,12 +87,14 @@ export default Marionette.View.extend({
         model => {
           this.trigger('change', model);
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'info',
             title: 'The information has been saved'
           });
         },
         error => {
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'warning',
             title: error.responseJSON.message
           });

@@ -66,12 +66,8 @@ export default Mn.View.extend({
      
       model.destroy({
          
-        success: function(model)
-        {
-          return self.handleDestroySuccess(model);
-        },
-        error: function(model,response)
-        {
+        success: () => self.handleDestroySuccess(),
+        error: (item, response) => {
           self.render();
           return self.handleDestroyError(response);
         },
@@ -80,9 +76,9 @@ export default Mn.View.extend({
     });
   },
 
-  handleDestroySuccess(model) {
+  handleDestroySuccess() {
     return FlashesService.request('add', {
-      timeout: 5000,
+      timeout: 2000,
       type: 'info',
       body: 'The survey has been deleted!'
     });
@@ -90,7 +86,7 @@ export default Mn.View.extend({
 
   handleDestroyError(error) {
     return FlashesService.request('add', {
-      timeout: 5000,
+      timeout: 2000,
       type: 'danger',
       body: error.responseJSON? error.responseJSON.message : "Error"
     });
