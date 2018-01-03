@@ -20,22 +20,24 @@ const organizations = props => {
         });
       },
       showOrganization(organizationId, entity) {
-        //show the organization dashboard
+        // show the organization dashboard
         const model = new OrganizationDashboard();
-        model.fetch({
-          data : {
-            organizationId : organizationId
-          }
-        }).then(data => {
-          app.showViewOnRoute(
-            new OrganizationView({
-              model,
-              app,
-              entity,
+        model
+          .fetch({
+            data: {
               organizationId
-            })
-          );
-        })
+            }
+          })
+          .then(() => {
+            app.showViewOnRoute(
+              new OrganizationView({
+                model,
+                app,
+                entity,
+                organizationId
+              })
+            );
+          });
       },
       newOrganization() {
         app.showViewOnRoute(new NewOrganizationView());
