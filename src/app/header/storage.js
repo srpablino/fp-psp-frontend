@@ -7,8 +7,9 @@ let allMenuItems = {
     { name: 'Organizations', link: '#organizations' },
     { name: 'Reports', link: '#reports' },
     { name: 'Families', link: '#families' },
-    { name: 'Surveys', link: '#surveys' }
-    //{ name: 'Users', link: '#users' }
+    { name: 'Surveys', link: '#surveys' },
+    //{ name: 'Users', link: '#users' },
+
   ]
 };
 

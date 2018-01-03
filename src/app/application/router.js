@@ -7,6 +7,7 @@ import logout from '../logout/routes';
 import initAuthorizer from './router-authorizer';
 import families from '../families/routes';
 import home from '../home/routes';
+import security from '../security/routes';
 
 import merge from 'lodash/merge';
 
@@ -20,7 +21,8 @@ const initRouter = props => {
     snapshots(props),
     users(props),
     families(props),
-    home(props)
+    home(props),
+    security(props)
   );
   const authorizer = initAuthorizer({
     onAccessDenied,
