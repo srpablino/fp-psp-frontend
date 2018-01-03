@@ -1,9 +1,10 @@
 import Mn from 'backbone.marionette';
+import $ from 'jquery';
+
 import Template from './template.hbs';
 import UsersTemplate from './users-template.hbs';
 import IndicatorsTemplate from './indicators-template.hbs';
 import FamiliesView from './families/index/layout-view';
-import $ from 'jquery';
 
 import storage from '../storage';
 
@@ -23,7 +24,7 @@ export default Mn.View.extend({
     if (this.entity == null) {
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
     } else {
-      $('#subMenuItem > a[href$="' + this.entity + '"]')
+      $(`#subMenuItem > a[href$="${this.entity}"]`)
         .parent()
         .addClass('subActive');
     }
@@ -31,10 +32,11 @@ export default Mn.View.extend({
 
   getTemplate() {
     if (this.entity === 'families') {
-      var organizationId = this.organizationId;
+      let organizationId = this.organizationId;
       this.app.showViewOnRoute(
         new FamiliesView({
-          organizationId
+          organizationId,
+          app: this.app
         })
       );
       return this.$el.html('');

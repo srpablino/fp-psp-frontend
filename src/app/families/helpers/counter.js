@@ -1,3 +1,3 @@
-module.exports = function (index) {
-    return index+1;
+module.exports = function counterFunc(index) {
+  return index + 1;
 };

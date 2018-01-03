@@ -2,7 +2,7 @@ import HomeView from './view';
 import ApplicationModel from '../application/model';
 
 const home = props => {
-  const {app} = props;
+  const { app } = props;
   const routes = {
     appRoutes: {
       '': 'showHome',
@@ -12,10 +12,10 @@ const home = props => {
       showHome() {
         if (app.getSession().userHasRole('ROLE_SURVEY_USER')) {
           app.showHomeForUser(new HomeView());
-        }else{
+        } else {
           const applicationModel = new ApplicationModel();
-          applicationModel.fetch().then(data => {
-            app.showHomeForUser(new HomeView({model: applicationModel}));
+          applicationModel.fetch().then(() => {
+            app.showHomeForUser(new HomeView({ model: applicationModel }));
           });
         }
       }

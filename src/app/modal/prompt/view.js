@@ -1,9 +1,9 @@
-import {View} from 'backbone.marionette';
-import {Model} from 'backbone';
+import { View } from 'backbone.marionette';
+import { Model } from 'backbone';
 import template from './template.hbs';
 
 export default View.extend({
-  template: template,
+  template,
   tagName: 'form',
 
   ui: {
@@ -15,8 +15,8 @@ export default View.extend({
   },
 
   triggers: {
-    'click .btn-default' : 'cancel',
-    'click .close'       : 'cancel'
+    'click .btn-default': 'cancel',
+    'click .close': 'cancel'
   },
 
   events: {
@@ -25,7 +25,7 @@ export default View.extend({
 
   submit(e) {
     e.preventDefault();
-    var val = this.ui.input.val();
+    let val = this.ui.input.val();
     this.trigger('submit', val);
   }
 });

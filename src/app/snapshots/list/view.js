@@ -2,7 +2,6 @@ import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 import SnapshotCollection from './collection';
 import SnapshotItem from './item/view';
-import $ from 'jquery';
 
 export default Mn.View.extend({
   template: Template,

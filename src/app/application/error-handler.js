@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import FlashesService from '../flashes/service';
 import nprogress from 'nprogress';
+import FlashesService from '../flashes/service';
 
 class ErrorHandler {
   setup(options) {
@@ -25,10 +25,10 @@ class ErrorHandler {
         401: () => {
           this.redirectToLoginAfterError();
         },
-        403: error => {
+        403: () => {
           this.redirectToErrorPage('denied');
         },
-        404: error => {
+        404: () => {
           this.redirectToErrorPage('notfound');
         },
         500: error => {

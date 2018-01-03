@@ -11,7 +11,7 @@ export default Mn.View.extend({
       organization: this.model.attributes
     };
   },
-  handleDelete() {
+  handleDelete(event) {
     event.preventDefault();
     this.trigger('delete:model', this.model);
   }

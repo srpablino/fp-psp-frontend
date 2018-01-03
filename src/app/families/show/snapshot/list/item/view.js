@@ -1,6 +1,6 @@
 import Mn from 'backbone.marionette';
-import Template from './template.hbs';
 import moment from 'moment';
+import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
