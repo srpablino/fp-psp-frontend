@@ -19,13 +19,13 @@
 
             <div class="col-lg-6">
                 <p>{{family.code}}</p>
-                <p class="text-blue">Contact: 
+                <p class="text-blue">Contact:
                   <span class="text-gray">{{family.person.firstName}} {{family.person.lastName}}</span>
                 </p>
-                <p class="text-blue">Celphone: 
+                <p class="text-blue">Celphone:
                   <span class="text-gray">{{family.person.phoneNumber}}</span>
                 </p>
-                <p class="text-blue">Place: 
+                <p class="text-blue">Place:
                   <span class="text-gray">{{family.city.city}}, {{family.country.country}}</span>
                 </p>
             </div>
@@ -63,16 +63,20 @@
       <article class="card animated fadeInLeft">
         <div  class="card-block">
           <div class="card-title">
-            <h4 >Indicators / Snapshot 
+            <h4 >Indicators / Snapshot
               <img class="pull-right" src="/static/images/icon_more.png" >
             </h4>
           </div>
 
-        <div class="" id="snapshot-indicators">
+        <div id="snapshot-indicators">
+          <div class="luces">
+
+          <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
+          <span class="center-block" id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+          <span class="center-block" id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+        </div>
             <img  class="center-block" src="/static/images/icon_semaforo.png">
-            <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
-            <span id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
-            <span id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+
         </div>
       </article>
 
@@ -89,14 +93,14 @@
                   <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
                   <img class="pull-right" src="/static/images/icon_interv_conseguido.png" >
                   <p>Security: </p>
-                  <span class="text-muted">Se refiere a actos de violencia física contra la familia o contra su propiedad 
+                  <span class="text-muted">Se refiere a actos de violencia física contra la familia o contra su propiedad
                     ocurridos en su entorno de residencia.</span>
                 </li>
                 <li class="list-group-item">
                   <img class="pull-left" src="/static/images/icon_elipse_amarillo_01.png" >
                   <img class="pull-right" src="/static/images/icon_interv_noconseguido.png" >
                   <p>Read and Write: </p>
-                  <span class="text-muted">Permite a la familia poder comunicarse mejor para lograr mayores oportunidades económicas, 
+                  <span class="text-muted">Permite a la familia poder comunicarse mejor para lograr mayores oportunidades económicas,
                     a la vez permite potenciar el crecimiento personal</span>
                 </li>
                 <li class="list-group-item">

@@ -38,7 +38,7 @@ export default Mn.View.extend({
         data: this.model.attributes // ,
       },
       data: this.model.attributes.indicators_survey_data.map(value => ({
-        clazz: value.value.toLowerCase(),
+        clazz: value.value !== null ? value.value.toLowerCase() : 'gray',
         value: value.value,
         name: value.name
       })),
