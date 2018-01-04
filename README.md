@@ -89,7 +89,7 @@ Unit and integration tests are run with
 $ npm test
 ```
 
-To detect potential errors and bugs we use [JSHint](http://jshint.com/):
+To detect potential errors and bugs we use [ESLint](https://eslint.org/):
 
 ```shell
 $ npm run lint
