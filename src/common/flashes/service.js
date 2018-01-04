@@ -17,7 +17,7 @@ const FlashesService = Service.extend({
 
   requests: {
     add: 'add',
-    remove: 'remove',
+    remove: 'remove'
   },
 
   add(flash) {

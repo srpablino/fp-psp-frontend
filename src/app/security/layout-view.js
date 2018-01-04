@@ -104,7 +104,6 @@ export default Mn.View.extend({
         itemViewOptions: {
           className: "col-md-4 col-xs-6"
         },
-        className: 'list-container row'
       });
 
       // Render the view, and append its element
@@ -152,7 +151,6 @@ export default Mn.View.extend({
   },
 
   deleteSurvey(model) {
-    console.log("Modal")
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
       text: `Are you sure you want to delete all the information about the "${model.get('code')}" family?\n\n

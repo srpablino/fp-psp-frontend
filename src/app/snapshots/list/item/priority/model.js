@@ -4,9 +4,9 @@ import env from '../../../../env';
 export default Bn.Model.extend({
   urlRoot: `${env.API}/snapshots/priority`,
   id: 'snapshotIndicatorId',
-  
+
   validate(attrs = {}) {
-    let errors = [];
+    const errors = [];
 
     if (attrs.reason === '') {
       errors.push('Missing "reason" field');

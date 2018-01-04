@@ -5,7 +5,7 @@ export default Bn.Model.extend({
   urlRoot: `${env.API}/surveys`,
 
   validate(attrs = {}) {
-    let errors = [];
+    const errors = [];
 
     if (attrs.title === '') {
       errors.push('Missing "Title" field');

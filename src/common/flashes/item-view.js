@@ -1,8 +1,8 @@
-import {View} from 'backbone.marionette';
+import { View } from 'backbone.marionette';
 import template from './item-template.hbs';
 
 export default View.extend({
-  template: template,
+  template,
 
   className() {
     return `flashes__alert alert alert-${this.model.get('type')}`;

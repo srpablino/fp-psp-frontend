@@ -5,10 +5,10 @@ const security = props => {
 
   const routes = {
     appRoutes: {
-      security: 'showFamilies'
+      security: 'showManageFamilies'
     },
     controller: {
-      showFamilies() {
+      showManageFamilies() {
         app.showViewOnRoute(new SecurityView(app));
       }
     }

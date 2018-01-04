@@ -1,6 +1,5 @@
 import OrganizationsView from './index/layout-view';
 import OrganizationView from './show/view';
-import FamiliesView from './show/families/index/layout-view';
 import NewOrganizationView from './add/view';
 import organizationsStorage from './storage';
 import OrganizationDashboard from './dashboard/model';
@@ -14,30 +13,31 @@ const organizations = props => {
       'organizations/:id(/:entity)': 'showOrganization'
     },
     controller: {
-      //paginated organizations
+      // paginated organizations
       showOrganizations() {
-        organizationsStorage.find()
-        .then(model => {
+        organizationsStorage.find().then(model => {
           app.showViewOnRoute(new OrganizationsView({ model }));
         });
       },
       showOrganization(organizationId, entity) {
-        //show the organization dashboard
+        // show the organization dashboard
         const model = new OrganizationDashboard();
-        model.fetch({
-          data : {
-            organizationId : organizationId
-          }
-        }).then(data => {
-          app.showViewOnRoute(
-            new OrganizationView({
-              model,
-              app,
-              entity,
+        model
+          .fetch({
+            data: {
               organizationId
-            })
-          );
-        })
+            }
+          })
+          .then(() => {
+            app.showViewOnRoute(
+              new OrganizationView({
+                model,
+                app,
+                entity,
+                organizationId
+              })
+            );
+          });
       },
       newOrganization() {
         app.showViewOnRoute(new NewOrganizationView());

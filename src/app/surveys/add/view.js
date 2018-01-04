@@ -1,15 +1,15 @@
 import Mn from 'backbone.marionette';
+import CodeMirror from 'codemirror';
+import 'codemirror/addon/edit/matchbrackets';
+import 'codemirror/addon/comment/continuecomment';
+import 'codemirror/addon/comment/comment';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/addon/lint/json-lint';
+
 import Template from './template.hbs';
 import Model from './model';
-import CodeMirror from 'codemirror';
 import utils from '../../utils';
 import FlashesService from '../../flashes/service';
-
-import MatchBrackets from '../../../../node_modules/codemirror/addon/edit/matchbrackets';
-import ContinueComment from '../../../../node_modules/codemirror/addon/comment/continuecomment';
-import Comment from '../../../../node_modules/codemirror/addon/comment/comment';
-import JavaScriptMode from '../../../../node_modules/codemirror/mode/javascript/javascript';
-import JsonLint from '../../../../node_modules/codemirror/addon/lint/json-lint';
 
 export default Mn.View.extend({
   template: Template,
@@ -66,49 +66,45 @@ export default Mn.View.extend({
         this.model.set(element.name, element.value);
       });
 
-      this.validate = {};
-      this.validate.title = this.model.title;
-      this.validate.description = this.model.description;
-      this.validate.survey_schema = this.schema.getValue();
-      this.validate.survey_ui_schema = this.schemaUI.getValue();
-     
-      var errors = [];
-      var errors = this.model.validate(this.validate);
+    this.validate = {};
+    this.validate.title = this.model.title;
+    this.validate.description = this.model.description;
+    this.validate.survey_schema = this.schema.getValue();
+    this.validate.survey_ui_schema = this.schemaUI.getValue();
 
-      if (errors) {
-        errors.forEach(error =>{
-          FlashesService.request('add', {
-            type: 'warning',
-            title: error
-          })
+    let errors = this.model.validate(this.validate);
+
+    if (errors) {
+      errors.forEach(error => {
+        FlashesService.request('add', {
+          type: 'warning',
+          title: error
         });
-        button.reset();
-        return;
+      });
+      button.reset();
+      return;
+    }
 
-      } else {
-
-   
-        this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
-        this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
-    
+    this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
+    this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
 
     this.model
       .save()
-      .then(result => {
-        FlashesService.request('add', {
-          type: 'info',
-          title: 'The survey has been saved'
-        });
-        this.props.listSurveys();
-      } 
-      , error => {
-        
-        FlashesService.request('add', {
-          type: 'warning',
-          title: error.responseJSON.message
-        });
-      })
+      .then(
+        () => {
+          FlashesService.request('add', {
+            type: 'info',
+            title: 'The survey has been saved'
+          });
+          this.props.listSurveys();
+        },
+        error => {
+          FlashesService.request('add', {
+            type: 'warning',
+            title: error.responseJSON.message
+          });
+        }
+      )
       .always(() => button.reset());
   }
-}
 });
