@@ -26,12 +26,12 @@ export default Mn.View.extend({
     'keypress #search': 'handleSubmit'
   },
   initialize(options) {
-    const { add } = options;
+    //const { add } = options;
     this.collection = new Backbone.Collection();
     this.collection.on('sync', this.render);
     this.collection.on('remove', this.render);
-    this.props = {};
-    this.props.add = add;
+    //this.props = {};
+    //this.props.add = add;
   },
   onRender() {
     setTimeout(() => {
@@ -98,7 +98,7 @@ export default Mn.View.extend({
         this.destroy();
       });
 
-      var itemView = new ItemView({
+      let itemView = new ItemView({
         model: item,
         deleteSurvey: this.deleteSurvey.bind(this),
         itemViewOptions: {
@@ -122,7 +122,6 @@ export default Mn.View.extend({
       let container = this.$el.find('.list-container').eq(0);
       const section = utils.getLoadingSection(container);
 
-      //  if(organization_id != null && country_id != null && city_id != null ){
       self.collection.reset();
       this.getRegion('list').empty();
       section.loading();
@@ -143,14 +142,11 @@ export default Mn.View.extend({
           section.reset();
         }
       });
-
-      //  }else{
-      //    alert("Choose an option")
-      //  }
     }
   },
 
   deleteSurvey(model) {
+    var self = this;
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
       text: `Are you sure you want to delete all the information about the "${model.get('code')}" family?\n\n
@@ -159,15 +155,31 @@ export default Mn.View.extend({
       if (!confirmed) {
         return;
       }
-      this.collection.remove(model);
-      return this.handleDestroySuccess(model);
+
+      model.destroy({
+        success: () => self.handleDestroySuccess(),
+        error: (item, response) => {
+          self.render();
+          return self.handleDestroyError(response);
+        },
+        wait:true
+        });
     });
   },
   handleDestroySuccess(model) {
+    this.showList();
     return FlashesService.request('add', {
-      timeout: 5000,
+      timeout: 2000,
       type: 'info',
-      body: 'The survey has been deleted!'
+      body: 'The family has been deleted!'
+    });
+  },
+
+  handleDestroyError(error) {
+    return FlashesService.request('add', {
+      timeout: 2000,
+      type: 'danger',
+      body: error.responseJSON? error.responseJSON.message : "Error"
     });
   }
 
