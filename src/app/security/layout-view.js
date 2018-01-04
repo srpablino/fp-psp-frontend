@@ -5,11 +5,13 @@ import FamiliesColecction from './collection';
 import OrganizationsModel from '../organizations/model';
 import CitiesModel from '../cities/model';
 import CountiesModel from '../countries/model';
+import FamiliesModel from '../families/model';
 import $ from 'jquery';
 import session from '../../common/session';
 import ModalService from '../modal/service';
 import FlashesService from '../flashes/service';
 import ItemView from './item/view';
+import env from '../env';
 
 
 export default Mn.View.extend({
@@ -18,6 +20,7 @@ export default Mn.View.extend({
   citiesCollection: new CitiesModel(),
   countiesCollection: new CountiesModel(),
   organizationsCollection: new OrganizationsModel(),
+  familiesModel: new FamiliesModel(),
   regions: {
     list: '#family-list'
   },
@@ -26,12 +29,9 @@ export default Mn.View.extend({
     'keypress #search': 'handleSubmit'
   },
   initialize(options) {
-    //const { add } = options;
     this.collection = new Backbone.Collection();
     this.collection.on('sync', this.render);
     this.collection.on('remove', this.render);
-    //this.props = {};
-    //this.props.add = add;
   },
   onRender() {
     setTimeout(() => {
@@ -100,7 +100,7 @@ export default Mn.View.extend({
 
       let itemView = new ItemView({
         model: item,
-        deleteSurvey: this.deleteSurvey.bind(this),
+        deleteFamily: this.deleteFamily.bind(this),
         itemViewOptions: {
           className: "col-md-4 col-xs-6"
         },
@@ -145,25 +145,49 @@ export default Mn.View.extend({
     }
   },
 
-  deleteSurvey(model) {
+  deleteFamily(model) {
     var self = this;
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
-      text: `Are you sure you want to delete all the information about the "${model.get('code')}" family?\n\n
+      text: `Are you sure you want to delete all the information about the "${model.get('familyId')}" family?\n\n
        Once you have deleted you will not able to go Cancel`
     }).then(confirmed => {
       if (!confirmed) {
         return;
       }
 
-      model.destroy({
-        success: () => self.handleDestroySuccess(),
-        error: (item, response) => {
-          self.render();
-          return self.handleDestroyError(response);
+      //
+      let url = `${
+        env.API
+      }/families/${model.get('familyId')}`;
+
+      $.ajax({
+        url,
+        type: 'DELETE',
+
+        success: data => {
+          self.handleDestroySuccess()
+          model.destroy();
         },
-        wait:true
-        });
+        error(xmlHttpRequest, textStatus) {
+          //self.render();
+          return self.handleDestroyError(textStatus);
+        },
+        complete: () => {
+          this.showList();
+        }
+      });
+
+      //
+
+      // model.destroy({
+      //   success: () => self.handleDestroySuccess(),
+      //   error: (item, response) => {
+      //     self.render();
+      //     return self.handleDestroyError(response);
+      //   },
+      //   wait:true
+      //   });
     });
   },
   handleDestroySuccess(model) {
