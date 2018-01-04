@@ -67,6 +67,7 @@ export default Mn.View.extend({
       error(xmlHttpRequest, textStatus) {
         if (xmlHttpRequest && xmlHttpRequest.status === 0) {
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'danger',
             title: 'No connection to server'
           });
@@ -74,6 +75,7 @@ export default Mn.View.extend({
         }
         if (textStatus === 'Unauthorized') {
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'warning',
             title: 'Not authorized'
           });
@@ -81,7 +83,7 @@ export default Mn.View.extend({
           FlashesService.request('add', {
             type: 'warning',
             title: 'Wrong credentials. Please try again.',
-            timeout: 3000
+            timeout: 2000
           });
           $('#login-username').val('');
           $('#login-password').val('');
