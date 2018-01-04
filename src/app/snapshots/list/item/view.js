@@ -116,7 +116,7 @@ export default Mn.View.extend({
         type: 'info',
         title: `The "${indicatorSelected}" indicator was previously selected`
       });
-      
+
     }
 
     if (indicatorSelectedValue.toUpperCase() === 'GREEN') {
@@ -125,7 +125,7 @@ export default Mn.View.extend({
         type: 'info',
         title: `The "${indicatorSelected}" indicator is really good`
       });
-      
+
     }
     this.showDialogPriority(indicatorSelected);
     this.priorityDialog.open();
@@ -153,12 +153,33 @@ export default Mn.View.extend({
 
   handleShowFamilyMap(e) {
     e.preventDefault();
-    Bn.history.navigate(
-      `families/${this.props.model.attributes.family_id}/snapshots/${
-        this.props.model.attributes.snapshot_economic_id
-      }`,
-      true
-    );
+    $('#check-privacity')
+    if($('#check-privacity').is(':checked')) {
+      console.log("checkeado")
+      ModalService.request('alert', {
+        title: 'information',
+        text: `Your personal information has not been saved in the platform`
+      }).then(confirmed => {
+        //not save snapshot
+        alert("OK")
+        // Bn.history.navigate(
+        //   `families/${this.props.model.attributes.family_id}/snapshots/${
+        //     this.props.model.attributes.snapshot_economic_id
+        //   }`,
+        //   true
+        // );
+
+      });
+    } else {
+        //save snapshot
+        console.log("no checkeado")
+    }
+    // Bn.history.navigate(
+    //   `families/${this.props.model.attributes.family_id}/snapshots/${
+    //     this.props.model.attributes.snapshot_economic_id
+    //   }`,
+    //   true
+    // );
   },
   printSnapshot(event) {
     var id = `#${event.target.value}`;
