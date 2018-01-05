@@ -1,4 +1,6 @@
 import Mn from 'backbone.marionette';
+import $ from 'jquery';
+import Bn from 'backbone';
 import Template from './layout-template.hbs';
 import utils from '../utils';
 import FamiliesColecction from './collection';
@@ -6,7 +8,7 @@ import OrganizationsModel from '../organizations/model';
 import CitiesModel from '../cities/model';
 import CountiesModel from '../countries/model';
 import FamiliesModel from '../families/model';
-import $ from 'jquery';
+
 import session from '../../common/session';
 import ModalService from '../modal/service';
 import FlashesService from '../flashes/service';
@@ -16,7 +18,7 @@ import env from '../env';
 
 export default Mn.View.extend({
   template: Template,
-  collection:  new Backbone.Collection(),
+  collection:  new Bn.Collection(),
   citiesCollection: new CitiesModel(),
   countiesCollection: new CountiesModel(),
   organizationsCollection: new OrganizationsModel(),
@@ -29,16 +31,17 @@ export default Mn.View.extend({
     'keypress #search': 'handleSubmit'
   },
   initialize(options) {
-    this.collection = new Backbone.Collection();
+    this.app = options.app;
     this.collection.on('sync', this.render);
     this.collection.on('remove', this.render);
+
   },
   onRender() {
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
-    var self = this;
+    let self = this;
 
     this.citiesCollection.fetch({
       success(response) {
@@ -76,8 +79,7 @@ export default Mn.View.extend({
               .text(element.name)
           );
         });
-        console.log(session.get('user').organization.id)
-        console.log(session.userHasRole('ROLE_HUB_ADMIN'))
+
         if ( session.userHasRole('ROLE_HUB_ADMIN') ) {
           $('#organization').attr('disabled', 'true');
           $('#organization').val(session.get('user').organization.id);
@@ -91,7 +93,7 @@ export default Mn.View.extend({
     //   new CollectionView({collection: this.collection})
     // );
 
-    var element = this.$el.find('#family-list');
+    let element = this.$el.find('#family-list');
     element.empty();
 
     this.collection.forEach(item => {
@@ -114,12 +116,9 @@ export default Mn.View.extend({
 
   },
   handleSubmit(event) {
-    if (event.which == 13 || event.which == 1) {
-      var organization_id = $('#organization').val();
-      var country_id = $('#country').val();
-      var city_id = $('#city').val();
-      var free_text = $('#search').val();
-      var self = this;
+    if (event.which === 13 || event.which === 1) {
+
+      let self = this;
       let container = this.$el.find('.list-container').eq(0);
       const section = utils.getLoadingSection(container);
 
@@ -127,14 +126,14 @@ export default Mn.View.extend({
       this.getRegion('list').empty();
       section.loading();
 
-      var params = {
-        organization_id: $('#organization').val(),
-        country_id: $('#country').val(),
-        city_id: $('#city').val(),
-        free_text: $('#search').val()
+      let params = {
+        organizationId: $('#organization').val(),
+        countryId: $('#country').val(),
+        cityId: $('#city').val(),
+        freeText: $('#search').val()
       };
 
-      var elements = new FamiliesColecction();
+      let elements = new FamiliesColecction();
       elements.fetch({
         data: params,
         success(response) {
@@ -147,7 +146,7 @@ export default Mn.View.extend({
   },
 
   deleteFamily(model) {
-    var self = this;
+    let self = this;
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
       text: `Are you sure you want to delete all the information about the "${model.get('code')}" family?\n\n
@@ -166,32 +165,20 @@ export default Mn.View.extend({
         url,
         type: 'DELETE',
 
-        success: data => {
+        success() {
           self.handleDestroySuccess()
           model.destroy();
         },
         error(xmlHttpRequest, textStatus) {
-          //self.render();
           return self.handleDestroyError(textStatus);
         },
         complete: () => {
           this.showList();
         }
       });
-
-      //
-
-      // model.destroy({
-      //   success: () => self.handleDestroySuccess(),
-      //   error: (item, response) => {
-      //     self.render();
-      //     return self.handleDestroyError(response);
-      //   },
-      //   wait:true
-      //   });
     });
   },
-  handleDestroySuccess(model) {
+  handleDestroySuccess() {
     this.showList();
     return FlashesService.request('add', {
       timeout: 2000,

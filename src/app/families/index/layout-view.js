@@ -34,7 +34,6 @@ export default Mn.View.extend({
     this.showList();
 
     const self = this;
-    //const session = this.app.getSession();
 
     this.citiesCollection.fetch({
       success(response) {

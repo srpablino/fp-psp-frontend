@@ -3,7 +3,6 @@ import _toLower from 'lodash/toLower';
 import _startCase from 'lodash/startCase';
 import $ from 'jquery';
 import Template from './template.hbs';
-import session from '../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -27,7 +26,7 @@ export default Mn.View.extend({
   },
   onRender() {
 
-    if (session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN')) {
+    if (this.app.getSession().userHasRole('ROLE_ROOT') || this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
       this.$el.find('#menu-manage').show()
     }
   },

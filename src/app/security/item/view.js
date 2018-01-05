@@ -1,6 +1,5 @@
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
-import Bn from 'backbone';
 
 export default Mn.View.extend({
   template: Template,
