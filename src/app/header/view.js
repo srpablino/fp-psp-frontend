@@ -3,6 +3,7 @@ import _toLower from 'lodash/toLower';
 import _startCase from 'lodash/startCase';
 import $ from 'jquery';
 import Template from './template.hbs';
+import session from '../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -22,7 +23,15 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
+
   },
+  onRender() {
+
+    if (session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN')) {
+      this.$el.find('#menu-manage').show()
+    }
+  },
+
   // FIXME Temporary function.
   // The full profile user name should
   // be retrieved from the server and not parsed from username.

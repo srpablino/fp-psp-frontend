@@ -76,8 +76,9 @@ export default Mn.View.extend({
               .text(element.name)
           );
         });
-
-        if (!(session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
+        console.log(session.get('user').organization.id)
+        console.log(session.userHasRole('ROLE_HUB_ADMIN'))
+        if ( session.userHasRole('ROLE_HUB_ADMIN') ) {
           $('#organization').attr('disabled', 'true');
           $('#organization').val(session.get('user').organization.id);
         }
@@ -149,7 +150,7 @@ export default Mn.View.extend({
     var self = this;
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
-      text: `Are you sure you want to delete all the information about the "${model.get('familyId')}" family?\n\n
+      text: `Are you sure you want to delete all the information about the "${model.get('code')}" family?\n\n
        Once you have deleted you will not able to go Cancel`
     }).then(confirmed => {
       if (!confirmed) {
