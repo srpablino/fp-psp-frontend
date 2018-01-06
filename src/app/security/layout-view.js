@@ -3,7 +3,7 @@ import $ from 'jquery';
 import Bn from 'backbone';
 import Template from './layout-template.hbs';
 import utils from '../utils';
-import FamiliesColecction from './collection';
+import FamiliesColecction from '../families/collection';
 import OrganizationsModel from '../organizations/model';
 import CitiesModel from '../cities/model';
 import CountiesModel from '../countries/model';
@@ -13,7 +13,7 @@ import session from '../../common/session';
 import ModalService from '../modal/service';
 import FlashesService from '../flashes/service';
 import ItemView from './item/view';
-import env from '../env';
+
 
 
 export default Mn.View.extend({
@@ -89,17 +89,10 @@ export default Mn.View.extend({
   },
   showList() {
 
-    // this.getRegion('list').show(
-    //   new CollectionView({collection: this.collection})
-    // );
-
     let element = this.$el.find('#family-list');
     element.empty();
 
     this.collection.forEach(item => {
-      item.bind('remove', function() {
-        this.destroy();
-      });
 
       let itemView = new ItemView({
         model: item,
@@ -156,26 +149,12 @@ export default Mn.View.extend({
         return;
       }
 
-      //
-      let url = `${
-        env.API
-      }/families/${model.get('familyId')}`;
-
-      $.ajax({
-        url,
-        type: 'DELETE',
-
-        success() {
-          self.handleDestroySuccess()
-          model.destroy();
-        },
-        error(xmlHttpRequest, textStatus) {
-          return self.handleDestroyError(textStatus);
-        },
-        complete: () => {
-          this.showList();
-        }
-      });
+      model.set("id", model.get('familyId'));
+      model.destroy({
+          success: () => self.handleDestroySuccess(),
+          error: (item, response) =>  self.handleDestroyError(response),
+          wait:true
+        });
     });
   },
   handleDestroySuccess() {
