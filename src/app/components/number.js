@@ -3,19 +3,18 @@ import React from 'react';
 class NumberFormat extends React.Component {
     constructor(props) {
       super(props);
-      
-      this.state = {
-        title: props.schema.title,
-        required: props.required ? '*' : '',
-        valueView:  this.prettyNumber(props.formData.toString(), props.formData)
-      };
-
+      this.setInitialValues(props);
       this._handleOnChange = this._handleOnChange.bind(this);
     }
 
     _handleOnChange(event){
-        
-        if(event.target.value===''){
+
+        if(event.target.value.length===0){
+            this.setState({valueView: 0});
+            
+            setImmediate(() =>
+                this.props.onChange(0)
+            );
             return;
         }
           
@@ -68,23 +67,39 @@ class NumberFormat extends React.Component {
         return count;
     }
 
+    setInitialValues(props){
+        let value = 0;
+        if (props.schema && props.schema.default) {
+          value = props.schema.default;
+        }else if(props.formData===undefined || props.formData.length===0){
+          value = 0;
+          setImmediate(() =>
+            props.onChange(0)
+          );
+        } else {
+          value = props.formData;
+        }
+        
+  
+        this.state = {
+          name: props.name,
+          title: props.schema.title,
+          required: props.required ? '*' : '',
+          valueView: this.prettyNumber(value.toString(), this.parseNumber(value.toString()))
+        };
+    }
+
     render() {
-       /* const { schema, formData } = this.props;
         
         if (this.props.name !== this.state.name) {
-          this.state = {
-            title: this.props.schema.title,
-            required: this.props.required ? '*' : '',
-            valueView:  this.prettyNumber(this.props.formData.toString(), this.props.formData)
-          };
-        } */
+          this.setInitialValues(this.props);
+        }
 
         return (
           <div className="form-group field field-number">
             <label className="control-label">
               {this.state.title} {this.state.required}
             </label>
-            <br />
             <br />
             <input className="form-control" type="text" value={this.state.valueView} onChange={this._handleOnChange} />
           </div>
