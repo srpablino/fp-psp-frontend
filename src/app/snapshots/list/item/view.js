@@ -8,6 +8,7 @@ import Template from './template.hbs';
 import PriorityView from './priority/view';
 import FlashesService from '../../../flashes/service';
 import PriorityModel from './priority/model';
+import SnapshotModel from '../../add/model';
 import ModalService from '../../../modal/service';
 
 export default Mn.View.extend({
@@ -23,6 +24,7 @@ export default Mn.View.extend({
     this.props = Object.assign({}, options);
     this.model = this.props.model;
     this.model.on('sync', this.render);
+
   },
 
   serializeData() {
@@ -153,33 +155,44 @@ export default Mn.View.extend({
 
   handleShowFamilyMap(e) {
     e.preventDefault();
-    $('#check-privacity')
     if($('#check-privacity').is(':checked')) {
-      console.log("checkeado")
       ModalService.request('alert', {
         title: 'information',
         text: `Your personal information has not been saved in the platform`
       }).then(confirmed => {
-        //not save snapshot
-        alert("OK")
+        if (!confirmed) {
+          return;
+        }
+        // delete snapshot
+        const model = new SnapshotModel();
+        model.set("id", `${this.props.model.attributes.snapshot_economic_id}`);
+        model.destroy();
+
+        this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
+             this.props.model.attributes.snapshot_economic_id
+           }`)
+
+      });
+    } else {
+      this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
+           this.props.model.attributes.snapshot_economic_id
+         }`)
+
+
         // Bn.history.navigate(
         //   `families/${this.props.model.attributes.family_id}/snapshots/${
         //     this.props.model.attributes.snapshot_economic_id
         //   }`,
         //   true
         // );
-
-      });
-    } else {
-        //save snapshot
-        console.log("no checkeado")
     }
-    // Bn.history.navigate(
-    //   `families/${this.props.model.attributes.family_id}/snapshots/${
-    //     this.props.model.attributes.snapshot_economic_id
-    //   }`,
-    //   true
-    // );
+
+  },
+  redirect(url){
+    Bn.history.navigate(
+      url,
+      true
+    );
   },
   printSnapshot(event) {
     var id = `#${event.target.value}`;
