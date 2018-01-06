@@ -503,11 +503,17 @@ article {
   //padding: 10px;
   text-align: center;
   //position: relative;
+  background-image: url('/static/images/icon_semaforo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: 10px;
+  height: 560px;
+
+  //width: 250px;
 
   img {
     //  position: relative;
-    height: 500px;
-    width: 250px;
+
     margin-top: -147%;
   }
 
