@@ -19,6 +19,7 @@ const snapshots = props => {
         app.showViewOnRoute(new SnapshotsView({ surveyId }));
       },
       answerSurvey(hash) {
+        console.log('answer');
         const surveyId = parseInt(hash, 10);
 
         const newSnapshotView = new NewSnapshot({
@@ -35,6 +36,8 @@ const snapshots = props => {
         app.showViewOnRoute(newSnapshotView);
       },
       showSnapshot(hash, hashSnapshot) {
+       
+        
         const snapshotId = parseInt(hashSnapshot, 10);
 
         const model = new SnapshotItemModel();
