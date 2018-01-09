@@ -626,16 +626,22 @@ article {
 .red {
   background: red !important;
   -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  printer-colors: exact;
 }
 
 .green {
   background: green !important;
   -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  printer-colors: exact;
 }
 
 .yellow {
   background: yellow !important;
   -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  printer-colors: exact;
 }
 
 .indicator-circle-snapshot > p {
