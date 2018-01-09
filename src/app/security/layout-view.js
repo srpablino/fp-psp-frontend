@@ -9,7 +9,6 @@ import CitiesModel from '../cities/model';
 import CountiesModel from '../countries/model';
 import FamiliesModel from '../families/model';
 
-import session from '../../common/session';
 import ModalService from '../modal/service';
 import FlashesService from '../flashes/service';
 import ItemView from './item/view';
@@ -35,6 +34,8 @@ export default Mn.View.extend({
     this.collection.on('sync', this.render);
     this.collection.on('remove', this.render);
 
+
+
   },
   onRender() {
     setTimeout(() => {
@@ -42,6 +43,7 @@ export default Mn.View.extend({
     }, 0);
     this.showList();
     let self = this;
+    console.log(this.app)
 
     this.citiesCollection.fetch({
       success(response) {
@@ -80,9 +82,9 @@ export default Mn.View.extend({
           );
         });
 
-        if ( session.userHasRole('ROLE_HUB_ADMIN') ) {
+        if ( self.app.getSession().userHasRole('ROLE_APP_ADMIN') ) {
           $('#organization').attr('disabled', 'true');
-          $('#organization').val(session.get('user').organization.id);
+          $('#organization').val(self.app.getSession().get('user').organization.id);
         }
       }
     });

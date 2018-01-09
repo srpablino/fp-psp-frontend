@@ -1,5 +1,4 @@
 import SecurityView from './layout-view';
-import session from '../../common/session';
 
 const security = props => {
   const { app } = props;
@@ -10,8 +9,8 @@ const security = props => {
     },
     controller: {
       showManageFamilies() {
-        if ((session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
-          app.showViewOnRoute(new SecurityView(app));
+        if ((app.getSession().userHasRole('ROLE_ROOT') || app.getSession().userHasRole('ROLE_HUB_ADMIN'))) {
+          app.showViewOnRoute(new SecurityView({app}));
         }
 
       }
