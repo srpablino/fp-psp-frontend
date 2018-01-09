@@ -34,7 +34,6 @@ export default Mn.View.extend({
     this.showList();
 
     const self = this;
-    const session = this.app.getSession();
 
     this.citiesCollection.fetch({
       success(response) {
@@ -73,10 +72,10 @@ export default Mn.View.extend({
           );
         });
 
-        if (!(session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
-          $('#organization').attr('disabled', 'true');
-          $('#organization').val(session.get('user').organization.id);
-        }
+        // if (!(session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
+        //   $('#organization').attr('disabled', 'true');
+        //   $('#organization').val(session.get('user').organization.id);
+        // }
       }
     });
   },
