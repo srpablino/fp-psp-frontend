@@ -168,23 +168,14 @@ export default Mn.View.extend({
         model.set("id", `${this.props.model.attributes.snapshot_economic_id}`);
         model.destroy();
 
-        this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
-             this.props.model.attributes.snapshot_economic_id
-           }`)
+        this.redirect(`surveys`)
+
 
       });
     } else {
       this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
            this.props.model.attributes.snapshot_economic_id
          }`)
-
-
-        // Bn.history.navigate(
-        //   `families/${this.props.model.attributes.family_id}/snapshots/${
-        //     this.props.model.attributes.snapshot_economic_id
-        //   }`,
-        //   true
-        // );
     }
 
   },
