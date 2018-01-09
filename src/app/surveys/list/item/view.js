@@ -41,7 +41,7 @@ export default Mn.View.extend({
 
   handlerTermsAndConditions(event){
     event.preventDefault();
-    Bn.history.navigate(`/termcondpol/TC`, true);
+    Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC`, true);
   },
 
   handleAnswer(event) {

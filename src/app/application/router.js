@@ -8,6 +8,7 @@ import logout from '../logout/routes';
 import initAuthorizer from './router-authorizer';
 import families from '../families/routes';
 import home from '../home/routes';
+import termcondpol from '../termcondpol/routes'
 
 const initRouter = props => {
   const { app, before, onAccessDenied } = props;
@@ -19,7 +20,8 @@ const initRouter = props => {
     snapshots(props),
     users(props),
     families(props),
-    home(props)
+    home(props),
+    termcondpol(props)
   );
   const authorizer = initAuthorizer({
     onAccessDenied,

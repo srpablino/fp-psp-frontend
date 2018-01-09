@@ -19,21 +19,29 @@ const snapshots = props => {
         app.showViewOnRoute(new SnapshotsView({ surveyId }));
       },
       answerSurvey(hash) {
-        console.log('answer');
-        const surveyId = parseInt(hash, 10);
+     
+      const surveyId = parseInt(hash, 10);
+        if(localStorage.termCond && localStorage.termCond>0 && localStorage.priv && localStorage.priv>0){
+          
 
-        const newSnapshotView = new NewSnapshot({
-          organizationId: app.getSession().get('user').organization
-            ? app.getSession().get('user').organization.id
-            : null,
-          surveyId,
-          handleCancel() {
-            Bn.history.navigate(`/surveys`, true);
-          },
-          app
-        });
+          const newSnapshotView = new NewSnapshot({
+            organizationId: app.getSession().get('user').organization
+              ? app.getSession().get('user').organization.id
+              : null,
+            surveyId,
+            handleCancel() {
+              Bn.history.navigate(`/surveys`, true);
+            },
+            app
+          });
 
-        app.showViewOnRoute(newSnapshotView);
+          app.showViewOnRoute(newSnapshotView);
+        } else if(!localStorage.termCond || localStorage.termCond<1){
+            Bn.history.navigate(`/survey/${surveyId}/termcondpol/TC`, true);
+        } else {
+          Bn.history.navigate(`/survey/${surveyId}/termcondpol/PRIV`, true);
+        }
+        
       },
       showSnapshot(hash, hashSnapshot) {
        
