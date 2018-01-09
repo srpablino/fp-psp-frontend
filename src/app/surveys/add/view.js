@@ -77,6 +77,7 @@ export default Mn.View.extend({
     if (errors) {
       errors.forEach(error => {
         FlashesService.request('add', {
+          timeout: 2000,
           type: 'warning',
           title: error
         });
@@ -93,6 +94,7 @@ export default Mn.View.extend({
       .then(
         () => {
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'info',
             title: 'The survey has been saved'
           });
@@ -100,6 +102,7 @@ export default Mn.View.extend({
         },
         error => {
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'warning',
             title: error.responseJSON.message
           });
