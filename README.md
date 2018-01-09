@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/FundacionParaguaya/fp-psp-frontend.svg?branch=master)](https://travis-ci.org/FundacionParaguaya/fp-psp-frontend)
+
 # Poverty Stoplight
 
 Fundación Paraguaya (FP from now on) has developed a methodology called “Poverty
@@ -87,7 +89,7 @@ Unit and integration tests are run with
 $ npm test
 ```
 
-To detect potential errors and bugs we use [JSHint](http://jshint.com/):
+To detect potential errors and bugs we use [ESLint](https://eslint.org/):
 
 ```shell
 $ npm run lint

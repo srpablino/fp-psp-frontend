@@ -18,6 +18,7 @@ class ErrorHandler {
       statusCode: {
         0: () => {
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'danger',
             title: 'No connection to server'
           });
@@ -33,7 +34,6 @@ class ErrorHandler {
         },
         500: error => {
           if (error.responseJSON && error.responseJSON.errorId) {
-            console.log(error.responseJSON);
             this._redirectToErrorPage(
               `error.html?id=${error.responseJSON.errorId}`
             );
