@@ -144,30 +144,24 @@ class Form extends Component {
   render() {
     return (
       <div>
-        <div>
-          <h4 className="progress-survey">
-            {' '}
-            {this.state.stepsSchema[this.state.step].description}
-            {this.counter[this.state.stepsSchema[this.state.step].counter]}
-          </h4>
-        </div>
-        <hr />
-        <br />
-        <br />
+        <label className="progress-survey">
+          {' '}
+          {this.state.stepsSchema[this.state.step].description}
+          {this.counter[this.state.stepsSchema[this.state.step].counter]}
+        </label>
+        <hr className="progress-rule"/>
         <JsonSchemaForm
           schema={this.state.stepsSchema[this.state.step]}
           uiSchema={this.state.stepsUISchema[this.state.step]}
           fields={{ gallery: Gallery, gmap: Gmap }}
           onSubmit={this.onSubmit}
           onError={log('errors')}
-          formData={this.state.formData}
-        >
+          formData={this.state.formData}>
           <div>
             <button
               type="button"
               onClick={() => this.onCancel(this.state.formData)}
-              className="btn btn-circle survey-previous"
-            >
+              className="btn btn-circle survey-previous">
               <i className="fa fa-chevron-left" />
             </button>
             <button type="submit" className="btn btn-circle survey-next">
