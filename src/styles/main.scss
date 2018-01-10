@@ -1029,7 +1029,8 @@ div.fp-form-container {
 }
 
 .field-string,
-.field-integer {
+.field-integer,
+.field-number {
   > input {
     font-family: 'Roboto';
     font-weight: 400;
