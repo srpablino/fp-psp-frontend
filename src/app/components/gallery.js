@@ -15,6 +15,7 @@ class Gallery extends React.Component {
         current = props.formData;
       }
     }
+
     this.state = {
       selected: current,
       isGoing: '',
@@ -47,17 +48,23 @@ class Gallery extends React.Component {
   }
 
   render() {
+
     const { schema, formData } = this.props;
     if (this.props.name !== this.state.name) {
+      let ban = false;
+      if(formData[0].value === "NONE"){
+        ban = true;
+      }
       this.state = {
         selected: formData[0].url,
         images: schema.items.enum,
         title: schema.title,
         required: this.props.required ? '*' : '',
         name: this.props.name,
-        isGoing: false
+        isGoing: ban
 
       };
+
     }
 
     let images = [];
@@ -76,7 +83,7 @@ class Gallery extends React.Component {
         <label className="control-label">
           {this.state.title} {this.state.required}
         </label>
-  
+
         <div className="gallery-no-answer text-center">
           <input
             type="checkbox"
@@ -103,9 +110,14 @@ class Gallery extends React.Component {
     this.setState({isGoing: value});
 
     if(value){
-      component.setState({selected: ''});
+      component.setState({
+        selected: '',
+        isGoing: true
+      });
       if (component.props.onChange) {
-          component.props.onChange(undefined);
+          component.props.onChange([
+            { url: "NONE", description: "NONE", value: "NONE" }
+          ]);
       }
 
     }

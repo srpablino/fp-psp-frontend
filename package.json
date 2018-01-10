@@ -93,9 +93,8 @@
     "react-jsonschema-form": "^0.50.1"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix --ignore-path .gitignore src/**/*.js", "git add"],
+    "*.js": ["eslint --fix --ignore-path .gitignore \"src/**/*.js\"", "git add"],
     "*.json": ["prettier --write", "git add"],
-    "*.md": ["prettier --write", "git add"],
     "*.scss": ["prettier --write", "git add"]
   },
   "scripts": {

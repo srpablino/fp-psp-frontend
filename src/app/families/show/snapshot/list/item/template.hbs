@@ -6,12 +6,15 @@
           <img class="pull-right" src="/static/images/icon_more.png" >
         </h4>
       </div>
-    <a href="#families/{{snapshot.family_id}}/snapshots/{{snapshot.snapshot_indicator_id}}">
-    <div class="" id="family-snapshot">
-        <img  class="center-block" src="/static/images/icon_semaforo.png">
+    <a href="#families/{{snapshot.family_id}}/snapshots/{{snapshot.snapshot_economic_id}}" style="text-decoration: none;">
+      <div id="snapshot-indicators">
+        <div class="luces">
+          <br>
         <span class="center-block" id="green">{{snapshot.count_green_indicators}}</span>
-        <span id="yellow">{{snapshot.count_yellow_indicators}}</span>
-        <span id="red">{{snapshot.count_red_indicators}}</span>
+        <span class="center-block" id="yellow">{{snapshot.count_yellow_indicators}}</span>
+        <span class="center-block" id="red">{{snapshot.count_red_indicators}}</span>
+      </div>
+      <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
     </div>
       </a>
   </article>

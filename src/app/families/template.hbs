@@ -2,7 +2,7 @@
   <img id="floating-survey" src="/static/images/icon_edit.png" >
 </a>
 <div class="row">
-  <div class="col-lg-9">
+  <div class="col-lg-9 col-sm-9">
     <article class="card animated fadeInLeft">
       <div class="card-block">
         <div class="card-title" >
@@ -12,12 +12,12 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-sm-2">
                 <!--<img class="img-responsive" src="static/images/BG_families.jpg">-->
                 <img class="img-responsive" src="/static/images/family-room.png">
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-sm-6">
                 <p>{{family.code}}</p>
                 <p class="text-blue">Contact:
                   <span class="text-gray">{{family.person.firstName}} {{family.person.lastName}}</span>
@@ -30,7 +30,7 @@
                 </p>
             </div>
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-sm-3">
               <img class="img-responsive pull-right" src="static/images/dummy_map.png">
             </div>
         </div>
@@ -58,7 +58,7 @@
     </article>
   </div>
 
-  <div class="col-lg-3">
+  <div class="col-lg-3 col-sm-3">
       <!-- Card -->
       <article class="card animated fadeInLeft">
         <div  class="card-block">
@@ -68,15 +68,14 @@
             </h4>
           </div>
 
-        <div id="snapshot-indicators">
+        <div class="" id="snapshot-indicators" >
           <div class="luces">
-
-          <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
-          <span class="center-block" id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
-          <span class="center-block" id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
-        </div>
-            <img  class="center-block" src="/static/images/icon_semaforo.png">
-
+            <br>
+            <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
+            <span class="center-block" id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+            <span class="center-block" id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+          </div>
+          <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
         </div>
       </article>
 

@@ -1,0 +1,66 @@
+<div class="col-md-4 col-xs-6">
+
+
+<div id="card-item">
+  <!-- <article class="card animated fadeInLeft">
+
+    <div class="card-block">
+      <div class="card-title">
+        <h4 >Cod: {{family.code}}
+          <img class="pull-right" src="/static/images/icon_more.png" >
+        </h4>
+      </div>
+      <br><br>
+      <a href="#families/{{family.familyId}}">
+        <img class="card-img-top img-responsive  img-card center-block" src="/static/images/family-room.png" alt="" />
+
+      </img>
+      </a>
+        <br><br>
+      <p class="organizarion-name text-center">Family {{family.person.lastName}}</p>
+
+    </div>
+  </article> -->
+
+  <article class="card animated fadeInLeft">
+    <div class="card-block">
+      <div class="card-title" >
+        <h4> {{family.code}}
+          <img class="pull-right" src="/static/images/icon_more.png" >
+        </h4>
+      </div>
+      <br/>
+      <div class="row">
+          <div class="col-lg-4">
+              <!--<img class="img-responsive" src="static/images/BG_families.jpg">-->
+              <img class="img-responsive" src="/static/images/family-room.png">
+          </div>
+
+          <div class="col-lg-8">
+              <!-- <p>{{family.code}}</p> -->
+              <p class="text-blue">Contact:
+                <span class="text-gray">{{family.person.firstName}} {{family.person.lastName}}</span>
+              </p>
+              <p class="text-blue">ID:
+                <span class="text-gray">{{family.person.identificationNumber}}</span>
+              </p>
+              <p class="text-blue">Celphone:
+                <span class="text-gray">{{family.person.phoneNumber}}</span>
+              </p>
+              <p class="text-blue">Place:
+                <span class="text-gray">{{family.city.city}}, {{family.country.country}}</span>
+              </p>
+          </div>
+
+          <a id="delete" class="btn btn-danger" href="#" style="float:right" data-toggle="tooltip" title="Delete this family">
+              <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+            </a>
+
+      </div>
+    </div>
+
+  </article>
+  <br/><br/><br/><br/>
+
+</div>
+</div>
