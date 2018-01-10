@@ -128,6 +128,7 @@ class Form extends Component {
     var newData = JSON.parse(JSON.stringify(this.state.formData));
     this.state.stepsSchema[this.state.step];
 
+
     if (this.state.step > 0) {
       this.setState({
         step: this.state.step - 1,
@@ -139,11 +140,12 @@ class Form extends Component {
       });
       this.props.handleCancel();
     }
+
   }
 
   render() {
     return (
-      <div className="survey-container">
+      <div>
         <label className="progress-survey">
           {' '}
           {this.state.stepsSchema[this.state.step].description}
