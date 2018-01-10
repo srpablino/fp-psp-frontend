@@ -8,11 +8,14 @@
           </h4>
         </div>
 
-        <div class="text-center" id="family-snapshot">
-            <img  class="center-block" src="/static/images/icon_semaforo.png">
+        <div  id="snapshot-indicators">
+          <div class="luces">
+            <br>
             <span class="center-block" id="green">{{snapshot.count_green_indicators}}</span>
-            <span id="yellow">{{snapshot.count_yellow_indicators}}</span>
-            <span id="red">{{snapshot.count_red_indicators}}</span>
+            <span class="center-block" id="yellow">{{snapshot.count_yellow_indicators}}</span>
+            <span class="center-block" id="red">{{snapshot.count_red_indicators}}</span>
+          </div>
+          <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
         </div>
       </div>
     </article>
@@ -54,7 +57,7 @@
           <div class="row">
             {{#each snapshotIndicators}}
             <div class="col-md-2 col-lg-1 col-sm-2 col-xs-4 col-xm-2 indicator-circle-snapshot">
-              <img class="center-block" src="{{ this.image }}" > 
+              <img class="center-block" src="{{ this.image }}" >
               <br> <p class="text-center article-title">{{ this.name }}</p>
             </div>
             {{/each}}
