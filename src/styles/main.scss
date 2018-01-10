@@ -665,6 +665,13 @@ article {
   printer-colors: exact;
 }
 
+.none {
+  background: gray !important;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  printer-colors: exact;
+}
+
 .yellow {
   background: yellow !important;
   -webkit-print-color-adjust: exact;
@@ -1002,19 +1009,23 @@ div.fp-form-container {
   line-height: 1.33;
 }
 
+.survey-container {
+  position: relative;
+}
+
 .survey-next {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
   top: 48%;
-  left: 90%;
+  left: 95%;
 }
 .survey-previous {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
   top: 48%;
-  left: 6%;
+  left: 2%;
 }
 
 .field-string,
@@ -1123,7 +1134,7 @@ div.fp-form-container {
   margin-bottom: 0%;
 }
 
-.progress-rule{
+.progress-rule {
   margin: 0%;
 }
 
@@ -1152,4 +1163,24 @@ div.fp-form-container {
 .faqHeader {
   font-size: 27px;
   margin: 20px;
+}
+
+.maintenance-watermark::before {
+  content: '';
+  background-image: url('/static/images/uc_website_maintenance.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.15;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+}
+
+.gallery-no-answer {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  color: #788c9a;
 }

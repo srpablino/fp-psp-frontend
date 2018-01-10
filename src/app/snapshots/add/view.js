@@ -122,7 +122,7 @@ export default Mn.View.extend({
   hadleSubmit(formResult) {
     // Convert from array to string, using property "value"
     this.fixedGalleryFieldValue(formResult);
-    
+
     const snapshot = {
       survey_id: this.props.surveyId,
       organization_id: this.props.organizationId,

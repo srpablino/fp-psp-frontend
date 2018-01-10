@@ -4,6 +4,8 @@ class Gallery extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleInputChange = this.handleInputChange.bind(this);
+
     let current = '';
 
     if (props.schema && props.schema.default) {
@@ -16,6 +18,7 @@ class Gallery extends React.Component {
 
     this.state = {
       selected: current,
+      isGoing: '',
       images: props.schema.items.enum,
       title: props.schema.title,
       required: props.required ? '*' : '',
@@ -45,15 +48,23 @@ class Gallery extends React.Component {
   }
 
   render() {
+
     const { schema, formData } = this.props;
     if (this.props.name !== this.state.name) {
+      let ban = false;
+      if(formData[0].value === "NONE"){
+        ban = true;
+      }
       this.state = {
         selected: formData[0].url,
         images: schema.items.enum,
         title: schema.title,
         required: this.props.required ? '*' : '',
-        name: this.props.name
+        name: this.props.name,
+        isGoing: ban
+
       };
+
     }
 
     let images = [];
@@ -64,6 +75,7 @@ class Gallery extends React.Component {
       let clazz = url === this.state.selected ? 'gallery-selected' : '';
       clazz += ' gallery-image gallery-image-div ';
       images.push(this.renderImage(url, description, value, i, clazz));
+
     }
 
     return (
@@ -71,6 +83,15 @@ class Gallery extends React.Component {
         <label className="control-label">
           {this.state.title} {this.state.required}
         </label>
+
+        <div className="gallery-no-answer text-center">
+          <input
+            type="checkbox"
+            checked={this.state.isGoing}
+            onChange={this.handleInputChange}
+          />
+             &#32;&#32;I&#39;d prefer not to answer
+        </div>
         <br />
         <br />
         <div className="row">
@@ -82,15 +103,40 @@ class Gallery extends React.Component {
     );
   }
 
+  handleInputChange(event) {
+    let component = this;
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({isGoing: value});
+
+    if(value){
+      component.setState({
+        selected: '',
+        isGoing: true
+      });
+      if (component.props.onChange) {
+          component.props.onChange([
+            { url: "NONE", description: "NONE", value: "NONE" }
+          ]);
+      }
+
+    }
+  }
+
   _handleClickOnImage(index, imageUrl, imageDescription, imageValue) {
     var component = this;
+
     return function() {
+
       if (component.props.onChange) {
         component.props.onChange(index, imageUrl, imageDescription, imageValue);
       }
       component.setState({
-        selected: imageUrl
+        selected: imageUrl,
+        isGoing: false
       });
+
+
       setImmediate(() =>
         component.props.onChange([
           { url: imageUrl, description: imageDescription, value: imageValue }
