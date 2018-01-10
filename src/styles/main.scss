@@ -665,6 +665,13 @@ article {
   printer-colors: exact;
 }
 
+.none {
+  background: gray !important;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  printer-colors: exact;
+}
+
 .yellow {
   background: yellow !important;
   -webkit-print-color-adjust: exact;
@@ -1146,4 +1153,11 @@ div.fp-form-container {
 .faqHeader {
   font-size: 27px;
   margin: 20px;
+}
+
+.gallery-no-answer {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  color: #788c9a;
 }

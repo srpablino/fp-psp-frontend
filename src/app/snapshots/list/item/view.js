@@ -40,7 +40,7 @@ export default Mn.View.extend({
         data: this.model.attributes // ,
       },
       data: this.model.attributes.indicators_survey_data.map(value => ({
-        clazz: value.value.toLowerCase(),
+        clazz: value.value !== null ? value.value.toLowerCase() : 'gray',
         value: value.value,
         name: value.name
       })),
@@ -127,6 +127,13 @@ export default Mn.View.extend({
         type: 'info',
         title: `The "${indicatorSelected}" indicator is really good`
       });
+
+    }else if (indicatorSelectedValue.toUpperCase() === 'NONE') {
+        return FlashesService.request('add', {
+          timeout: 2000,
+          type: 'info',
+          title: `You have chosen not to answer the question`
+        });
 
     }
     this.showDialogPriority(indicatorSelected);
