@@ -43,7 +43,6 @@ export default Mn.View.extend({
     }, 0);
     this.showList();
     let self = this;
-    console.log(this.app)
 
     this.citiesCollection.fetch({
       success(response) {
