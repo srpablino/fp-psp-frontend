@@ -128,6 +128,13 @@ export default Mn.View.extend({
         title: `The "${indicatorSelected}" indicator is really good`
       });
 
+    }else if (indicatorSelectedValue.toUpperCase() === 'NONE') {
+        return FlashesService.request('add', {
+          timeout: 2000,
+          type: 'info',
+          title: `You have chosen not to answer the question`
+        });
+
     }
     this.showDialogPriority(indicatorSelected);
     this.priorityDialog.open();
