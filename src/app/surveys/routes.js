@@ -8,6 +8,8 @@ const surveys = props => {
     },
     controller: {
       showSurveys() {
+        localStorage.termCond = 0;
+        localStorage.priv = 0;
         app.showViewOnRoute(new SurveysView(app));
       }
     }

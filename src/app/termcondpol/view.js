@@ -8,13 +8,14 @@ export default Mn.View.extend({
   template: Template,
   events: {
     'click #accept': 'handleNext',
-    'change #agree':'showNextButton'
+    'change #agree':'showNextButton',
+    'change #dontAgree':'showNextButton'
   },
 
   initialize(options) {
     this.model = options.model;
     this.app = options.app;
-    this.surveyId = options.surveyId;     
+    this.surveyId = options.surveyId;   
   },
 
   onRender(){
@@ -27,7 +28,7 @@ export default Mn.View.extend({
     if(checked){
       $('#accept').removeClass('disabled');
     }
-    return true;
+ 
   },
 
   handleNext(event){
@@ -40,6 +41,7 @@ export default Mn.View.extend({
       } else if(checked && checked==='Yes' && this.model.attributes.type_cod==='PRIV'){
 
         if(localStorage.termCond && localStorage.termCond>0){
+          localStorage.priv = this.model.attributes.id;
           Bn.history.navigate(`/survey/${this.surveyId}/answer`, true);
         } else {
           return FlashesService.request('add', {
