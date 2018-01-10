@@ -2,8 +2,8 @@ import Mn from 'backbone.marionette';
 import $ from 'jquery';
 
 import Template from './template.hbs';
-import UsersTemplate from './users-template.hbs';
-import IndicatorsTemplate from './indicators-template.hbs';
+// import UsersTemplate from './users-template.hbs';
+// import IndicatorsTemplate from './indicators-template.hbs';
 import FamiliesView from './families/index/layout-view';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 
@@ -43,11 +43,11 @@ export default Mn.View.extend({
       return this.$el.html('');
     }
     if (this.entity === 'users') {
-      //return UsersTemplate;
+      // return UsersTemplate;
       return UnderConstrucionTemplate;
     }
     if (this.entity === 'indicators') {
-      //return IndicatorsTemplate;
+      // return IndicatorsTemplate;
       return UnderConstrucionTemplate;
     }
 
