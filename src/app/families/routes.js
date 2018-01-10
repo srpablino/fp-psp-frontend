@@ -16,10 +16,10 @@ const families = props => {
     controller: {
       showFamilies() {
         // familiesStorage.findAll().then(collection => {
-        //   app.showViewOnRoute(new FamiliesView({ collection }));
+        //   app.showViewOnRoute(new FamiliesView({ collection ));
         // });
 
-        app.showViewOnRoute(new FamiliesView());
+        app.showViewOnRoute(new FamiliesView({ app }));
       },
       showFamily(familyId, entity) {
         familiesStorage.find(familyId).then(model => {
