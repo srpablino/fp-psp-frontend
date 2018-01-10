@@ -10,6 +10,7 @@ import FlashesService from '../../../flashes/service';
 import PriorityModel from './priority/model';
 import SnapshotModel from '../../add/model';
 import ModalService from '../../../modal/service';
+import Storage from './storage';
 
 export default Mn.View.extend({
   template: Template,
@@ -23,12 +24,17 @@ export default Mn.View.extend({
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model;
+    this.app = this.props.app;
     this.model.on('sync', this.render);
 
   },
 
   serializeData() {
     var self = this;
+    
+    const headerItems = Storage.getSubHeaderItems(this.model);
+    this.app.updateSubHeader(headerItems);
+
     this.props.model.attributes.indicators_priorities.forEach(value => {
       var date = self.formartterOnlyDate(value.estimated_date);
       value.estimated_date = date;

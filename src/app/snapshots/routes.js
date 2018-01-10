@@ -54,7 +54,7 @@ const snapshots = props => {
             }
           })
           .then(() => {
-            app.showViewOnRoute(new SnapshotView({ model }));
+            app.showViewOnRoute(new SnapshotView({ model, app }));
           });
       }
     }
