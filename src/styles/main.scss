@@ -1009,19 +1009,23 @@ div.fp-form-container {
   line-height: 1.33;
 }
 
+.survey-container {
+  position: relative;
+}
+
 .survey-next {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
   top: 48%;
-  left: 90%;
+  left: 95%;
 }
 .survey-previous {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
   top: 48%;
-  left: 6%;
+  left: 2%;
 }
 
 .field-string,
