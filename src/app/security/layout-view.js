@@ -41,35 +41,10 @@ export default Mn.View.extend({
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
+    $("#navbar1 ul li").removeClass('active');
+
     this.showList();
     let self = this;
-
-    this.citiesCollection.fetch({
-      success(response) {
-        self.citiesCollection = response.toJSON();
-        $.each(self.citiesCollection, (index, element) => {
-          $('#city').append(
-            $('<option></option>')
-              .attr('value', element.id)
-              .text(element.city)
-          );
-        });
-      }
-    });
-
-    this.countiesCollection.fetch({
-      success(response) {
-        self.countiesCollection = response.toJSON();
-        $.each(self.countiesCollection, (index, element) => {
-          $('#country').append(
-            $('<option></option>')
-              .attr('value', element.id)
-              .text(element.country)
-          );
-        });
-      }
-    });
-
     this.organizationsCollection.fetch({
       success(response) {
         self.organizationsCollection = response.get('list');
@@ -110,32 +85,40 @@ export default Mn.View.extend({
 
   },
   handleSubmit(event) {
+    let freeText = $('#search').val();
     if (event.which === 13 || event.which === 1) {
+      if(freeText !== ''){
+        $('#search').parent().removeClass('has-error');
+        let self = this;
+        let container = this.$el.find('.list-container').eq(0);
+        const section = utils.getLoadingSection(container);
 
-      let self = this;
-      let container = this.$el.find('.list-container').eq(0);
-      const section = utils.getLoadingSection(container);
+        self.collection.reset();
+        this.getRegion('list').empty();
+        section.loading();
 
-      self.collection.reset();
-      this.getRegion('list').empty();
-      section.loading();
-
-      let params = {
-        organizationId: $('#organization').val(),
-        countryId: $('#country').val(),
-        cityId: $('#city').val(),
-        freeText: $('#search').val()
-      };
-
-      let elements = new FamiliesColecction();
-      elements.fetch({
-        data: params,
-        success(response) {
-          self.collection = response;
-          self.showList();
-          section.reset();
+       let params = {
+         free_text: freeText
+       };
+        if(self.app.getSession().get('user').application != null){
+          params.applicationId = self.app.getSession().get('user').application.id
         }
-      });
+
+        let elements = new FamiliesColecction();
+        elements.fetch({
+          data: params,
+          success(response) {
+            self.collection = response;
+            self.showList();
+            section.reset();
+          }
+        });
+      }else {
+
+        $('#search').parent().addClass('has-error');
+      }
+
+
     }
   },
 
@@ -143,8 +126,8 @@ export default Mn.View.extend({
     let self = this;
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
-      text: `Are you sure you want to delete all the information about the "${model.get('code')}" family?\n\n
-       Once you have deleted you will not able to go Cancel`
+      text: `Are sure you want to delete all the information about your family?
+      Once you have deleted you will not able to go back.`
     }).then(confirmed => {
       if (!confirmed) {
         return;

@@ -1,7 +1,14 @@
 <!--div class="text-xs-right pull-right"     style="text-align: right;"-->
-    <button class="btn btn-primary" id="finish-snapshot" style="float: right;"> Finish this survey
+
+  <div class="pull-right">
+    <label class="checkbox-inline"><input type="checkbox" value="" id="check-privacity">I'd prefer not to share my family's situation   </label>
+    &nbsp;&nbsp;&nbsp;
+    <button class="btn btn-primary" id="finish-snapshot" > Finish this survey
     </button>
-    <button class="btn btn-secondary" id="print" value="{{ header.data.snapshot_indicator_id }}" > Print</button>
+
+  </div>
+  <button class="btn btn-secondary" id="print" value="{{ header.data.snapshot_indicator_id }}" > Print</button>
+
   <!--/div-->
 <li class="list-group-item" id="{{ header.data.snapshot_indicator_id }}">
 

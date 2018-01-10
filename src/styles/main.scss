@@ -665,6 +665,13 @@ article {
   printer-colors: exact;
 }
 
+.none {
+  background: gray !important;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  printer-colors: exact;
+}
+
 .yellow {
   background: yellow !important;
   -webkit-print-color-adjust: exact;
@@ -1120,6 +1127,11 @@ div.fp-form-container {
 
 .progress-survey {
   color: #788c9a !important;
+  margin-bottom: 0%;
+}
+
+.progress-rule {
+  margin: 0%;
 }
 
 .subActive {
@@ -1154,4 +1166,11 @@ div.fp-form-container {
   bottom: 0;
   right: 0;
   position: absolute;
+}
+
+.gallery-no-answer {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  color: #788c9a;
 }
