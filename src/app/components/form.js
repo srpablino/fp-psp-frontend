@@ -143,7 +143,7 @@ class Form extends Component {
 
   render() {
     return (
-      <div>
+      <div className="survey-container">
         <label className="progress-survey">
           {' '}
           {this.state.stepsSchema[this.state.step].description}
