@@ -8,6 +8,7 @@ import Template from './template.hbs';
 import PriorityView from './priority/view';
 import FlashesService from '../../../flashes/service';
 import PriorityModel from './priority/model';
+import SnapshotModel from '../../add/model';
 import ModalService from '../../../modal/service';
 
 export default Mn.View.extend({
@@ -23,6 +24,7 @@ export default Mn.View.extend({
     this.props = Object.assign({}, options);
     this.model = this.props.model;
     this.model.on('sync', this.render);
+
   },
 
   serializeData() {
@@ -116,7 +118,7 @@ export default Mn.View.extend({
         type: 'info',
         title: `The "${indicatorSelected}" indicator was previously selected`
       });
-      
+
     }
 
     if (indicatorSelectedValue.toUpperCase() === 'GREEN') {
@@ -125,7 +127,7 @@ export default Mn.View.extend({
         type: 'info',
         title: `The "${indicatorSelected}" indicator is really good`
       });
-      
+
     }
     this.showDialogPriority(indicatorSelected);
     this.priorityDialog.open();
@@ -153,10 +155,33 @@ export default Mn.View.extend({
 
   handleShowFamilyMap(e) {
     e.preventDefault();
+    if($('#check-privacity').is(':checked')) {
+      ModalService.request('alert', {
+        title: 'information',
+        text: `Your personal information has not been saved in the platform`
+      }).then(confirmed => {
+        if (!confirmed) {
+          return;
+        }
+        // delete snapshot
+        const model = new SnapshotModel();
+        model.set("id", `${this.props.model.attributes.snapshot_economic_id}`);
+        model.destroy();
+
+        this.redirect(`surveys`)
+
+
+      });
+    } else {
+      this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
+           this.props.model.attributes.snapshot_economic_id
+         }`)
+    }
+
+  },
+  redirect(url){
     Bn.history.navigate(
-      `families/${this.props.model.attributes.family_id}/snapshots/${
-        this.props.model.attributes.snapshot_economic_id
-      }`,
+      url,
       true
     );
   },
