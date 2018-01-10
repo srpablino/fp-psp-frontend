@@ -8,12 +8,14 @@
           </h4>
         </div>
 
-      <div class="text-center" id="family-snapshot">
-          <img  class="center-block" src="/static/images/icon_semaforo.png">
-          <span class="center-block" id="green">25</span>
-          <span id="yellow">19</span>
-          <span id="red">10</span>
-      </div>
+        <div class="" id="snapshot-indicators" >
+          <div class="luces">
+            <br>
+            <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
+            <span class="center-block" id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+            <span class="center-block" id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+          </div>
+        </div>
     </article>
 
   </div>

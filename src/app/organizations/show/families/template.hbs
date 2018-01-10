@@ -60,10 +60,13 @@
           </div>
 
         <div class="" id="snapshot-indicators">
-            <img  class="center-block" src="/static/images/icon_semaforo.png">
+            <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
+            <div class="luces">
+              <br>
             <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
-            <span id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
-            <span id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+            <span class="center-block" id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+            <span class="center-block" id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+            </div>
         </div>
       </article>
 

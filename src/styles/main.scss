@@ -500,10 +500,22 @@ article {
 }
 
 #snapshot-indicators {
-  padding: 10px;
-  position: relative;
-  height: auto;
-  width: 100%;
+  //padding: 10px;
+  text-align: center;
+  //position: relative;
+  background-image: url('/static/images/icon_semaforo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: 10px;
+  height: 560px;
+
+  //width: 250px;
+
+  img {
+    //  position: relative;
+
+    margin-top: -147%;
+  }
 
   .centered {
     position: absolute;
@@ -516,37 +528,53 @@ article {
     font-size: 20px;
   }
 
-  > span {
-    color: #ffffff;
-    font-family: 'Roboto';
-    font-weight: 400;
-  }
-  > #green {
-    background-color: #50aa47;
-    position: absolute;
-    top: 10%;
-    left: 31%;
-    border-radius: 50%;
-    padding: 33px;
-    font-size: 33px;
-  }
-  > #yellow {
-    background-color: #f0cc39;
-    position: absolute;
-    top: 32%;
-    left: 35%;
-    border-radius: 50%;
-    padding: 27px;
-    font-size: 27px;
-  }
-  > #red {
-    background-color: #e0504c;
-    position: absolute;
-    top: 52%;
-    left: 37%;
-    border-radius: 50%;
-    padding: 23px;
-    font-size: 23px;
+  .luces {
+    z-index: 100;
+    position: relative;
+
+    > span {
+      color: #ffffff;
+      font-family: 'Roboto';
+      font-weight: 400;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10%;
+      margin-top: 10%;
+    }
+    > #green {
+      background-color: #50aa47;
+      // position: relative;
+      // top: 70%;
+      // left: 31%;
+
+      border-radius: 50%;
+      //padding: 13px;
+      width: 100px;
+      height: 100px;
+      font-size: 33px;
+    }
+    > #yellow {
+      background-color: #f0cc39;
+      //position: absolute;
+      //top: 32%;
+      //left: 35%;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      font-size: 27px;
+    }
+    > #red {
+      //margin: 10px;
+      background-color: #e0504c;
+      //position: absolute;
+      //top: 52%;
+      //left: 37%;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      font-size: 23px;
+    }
   }
 }
 
@@ -866,60 +894,62 @@ div.fp-form-container {
 }
 
 // Family Snapshots -jdferreira
-#family-snapshot {
-  > img {
-    //  width: 100px;
-    height: 380px;
-  }
-  padding: 10px;
-  position: relative;
-  height: auto;
-  width: 100%;
-
-  .centered {
-    position: absolute;
-    top: 40%;
-    left: 3%;
-    transform: translate(-50%, -50%);
-    color: #ccccca;
-    font-family: 'Roboto';
-    font-weight: 700;
-    font-size: 20px;
-  }
-
-  > span {
-    color: #ffffff;
-    font-family: 'Roboto';
-    font-weight: 400;
-  }
-  > #green {
-    background-color: #50aa47;
-    position: absolute;
-    top: 8%;
-    left: 35%;
-    border-radius: 50%;
-    padding: 22px;
-    font-size: 32px;
-  }
-  > #yellow {
-    background-color: #f0cc39;
-    position: absolute;
-    top: 33%;
-    left: 37%;
-    border-radius: 50%;
-    padding: 20px;
-    font-size: 24px;
-  }
-  > #red {
-    background-color: #e0504c;
-    position: absolute;
-    top: 56%;
-    left: 40%;
-    border-radius: 50%;
-    padding: 15px;
-    font-size: 21px;
-  }
-}
+// #family-snapshot{
+//
+//   >img{
+//   //  width: 100px;
+//     height: 380px;
+//   }
+//     padding: 10px;
+//     position: relative;
+//     height: auto;
+//     width: 100%;
+//
+//     .centered {
+//         position: absolute;
+//         top: 40%;
+//         left: 3%;
+//         transform: translate(-50%, -50%);
+//         color: #ccccca;
+//         font-family: "Roboto";
+//         font-weight: 700;
+//         font-size: 20px;
+//     }
+//
+//   >span{
+//     color: #ffffff;
+//     font-family: "Roboto";
+//     font-weight: 400;
+//   }
+//   > #green{
+//     background-color: #50aa47;
+//     position: absolute;
+//     top: 8%;
+//     left: 35%;
+//     border-radius: 50%;
+//     padding: 22px;
+//     font-size: 32px;
+//   }
+//   >#yellow{
+//
+//     background-color: #f0cc39;
+//     position: absolute;
+//     top: 33%;
+//     left: 37%;
+//     border-radius: 50%;
+//     padding: 20px;
+//     font-size: 24px;
+//   }
+//   >#red{
+//     background-color: #e0504c;
+//     position: absolute;
+//     top: 56%;
+//     left: 40%;
+//     border-radius: 50%;
+//     padding: 15px;
+//     font-size: 21px;
+//   }
+// }
 /* ########## */
 
 // View snapshots - jdferreira
