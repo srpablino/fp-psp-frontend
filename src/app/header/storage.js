@@ -8,7 +8,7 @@ const allMenuItems = {
     { name: 'Reports', link: '#reports' },
     { name: 'Families', link: '#families' },
     { name: 'Surveys', link: '#surveys' },
-    { name: 'Faqs', link: '#faqs' }
+    { name: 'FAQs', link: '#faqs' }
     // { name: 'Users', link: '#users' }
   ]
 };

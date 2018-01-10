@@ -60,6 +60,7 @@
     "prettier": "^1.9.2",
     "prettier-eslint": "^8.2.0",
     "run-sequence": "^1.2.2",
+    "scottyjs": "^1.10.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
@@ -93,9 +94,8 @@
     "react-jsonschema-form": "^0.50.1"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix --ignore-path .gitignore src/**/*.js", "git add"],
+    "*.js": ["eslint --fix --ignore-path .gitignore \"src/**/*.js\"", "git add"],
     "*.json": ["prettier --write", "git add"],
-    "*.md": ["prettier --write", "git add"],
     "*.scss": ["prettier --write", "git add"]
   },
   "scripts": {
@@ -109,6 +109,7 @@
     "fix": "npm run fix:script && npm run fix:config && npm run fix:style && npm run fix:docs",
     "precommit": "lint-staged",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.js\"",
-    "test": "karma start && npm run lint"
+    "test": "karma start && npm run lint",
+    "deploy": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-w6fez --force --nocdn"
   }
 }
