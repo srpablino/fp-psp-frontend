@@ -500,10 +500,22 @@ article {
 }
 
 #snapshot-indicators {
-  padding: 10px;
-  position: relative;
-  height: auto;
-  width: 100%;
+  //padding: 10px;
+  text-align: center;
+  //position: relative;
+  background-image: url('/static/images/icon_semaforo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: 10px;
+  height: 560px;
+
+  //width: 250px;
+
+  img {
+    //  position: relative;
+
+    margin-top: -147%;
+  }
 
   .centered {
     position: absolute;
@@ -516,37 +528,53 @@ article {
     font-size: 20px;
   }
 
-  > span {
-    color: #ffffff;
-    font-family: 'Roboto';
-    font-weight: 400;
-  }
-  > #green {
-    background-color: #50aa47;
-    position: absolute;
-    top: 10%;
-    left: 31%;
-    border-radius: 50%;
-    padding: 33px;
-    font-size: 33px;
-  }
-  > #yellow {
-    background-color: #f0cc39;
-    position: absolute;
-    top: 32%;
-    left: 35%;
-    border-radius: 50%;
-    padding: 27px;
-    font-size: 27px;
-  }
-  > #red {
-    background-color: #e0504c;
-    position: absolute;
-    top: 52%;
-    left: 37%;
-    border-radius: 50%;
-    padding: 23px;
-    font-size: 23px;
+  .luces {
+    z-index: 100;
+    position: relative;
+
+    > span {
+      color: #ffffff;
+      font-family: 'Roboto';
+      font-weight: 400;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10%;
+      margin-top: 10%;
+    }
+    > #green {
+      background-color: #50aa47;
+      // position: relative;
+      // top: 70%;
+      // left: 31%;
+
+      border-radius: 50%;
+      //padding: 13px;
+      width: 100px;
+      height: 100px;
+      font-size: 33px;
+    }
+    > #yellow {
+      background-color: #f0cc39;
+      //position: absolute;
+      //top: 32%;
+      //left: 35%;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      font-size: 27px;
+    }
+    > #red {
+      //margin: 10px;
+      background-color: #e0504c;
+      //position: absolute;
+      //top: 52%;
+      //left: 37%;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      font-size: 23px;
+    }
   }
 }
 
@@ -632,6 +660,13 @@ article {
 
 .green {
   background: green !important;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
+  printer-colors: exact;
+}
+
+.none {
+  background: gray !important;
   -webkit-print-color-adjust: exact;
   color-adjust: exact;
   printer-colors: exact;
@@ -866,60 +901,62 @@ div.fp-form-container {
 }
 
 // Family Snapshots -jdferreira
-#family-snapshot {
-  > img {
-    //  width: 100px;
-    height: 380px;
-  }
-  padding: 10px;
-  position: relative;
-  height: auto;
-  width: 100%;
-
-  .centered {
-    position: absolute;
-    top: 40%;
-    left: 3%;
-    transform: translate(-50%, -50%);
-    color: #ccccca;
-    font-family: 'Roboto';
-    font-weight: 700;
-    font-size: 20px;
-  }
-
-  > span {
-    color: #ffffff;
-    font-family: 'Roboto';
-    font-weight: 400;
-  }
-  > #green {
-    background-color: #50aa47;
-    position: absolute;
-    top: 8%;
-    left: 35%;
-    border-radius: 50%;
-    padding: 22px;
-    font-size: 32px;
-  }
-  > #yellow {
-    background-color: #f0cc39;
-    position: absolute;
-    top: 33%;
-    left: 37%;
-    border-radius: 50%;
-    padding: 20px;
-    font-size: 24px;
-  }
-  > #red {
-    background-color: #e0504c;
-    position: absolute;
-    top: 56%;
-    left: 40%;
-    border-radius: 50%;
-    padding: 15px;
-    font-size: 21px;
-  }
-}
+// #family-snapshot{
+//
+//   >img{
+//   //  width: 100px;
+//     height: 380px;
+//   }
+//     padding: 10px;
+//     position: relative;
+//     height: auto;
+//     width: 100%;
+//
+//     .centered {
+//         position: absolute;
+//         top: 40%;
+//         left: 3%;
+//         transform: translate(-50%, -50%);
+//         color: #ccccca;
+//         font-family: "Roboto";
+//         font-weight: 700;
+//         font-size: 20px;
+//     }
+//
+//   >span{
+//     color: #ffffff;
+//     font-family: "Roboto";
+//     font-weight: 400;
+//   }
+//   > #green{
+//     background-color: #50aa47;
+//     position: absolute;
+//     top: 8%;
+//     left: 35%;
+//     border-radius: 50%;
+//     padding: 22px;
+//     font-size: 32px;
+//   }
+//   >#yellow{
+//
+//     background-color: #f0cc39;
+//     position: absolute;
+//     top: 33%;
+//     left: 37%;
+//     border-radius: 50%;
+//     padding: 20px;
+//     font-size: 24px;
+//   }
+//   >#red{
+//     background-color: #e0504c;
+//     position: absolute;
+//     top: 56%;
+//     left: 40%;
+//     border-radius: 50%;
+//     padding: 15px;
+//     font-size: 21px;
+//   }
+// }
 /* ########## */
 
 // View snapshots - jdferreira
@@ -972,19 +1009,23 @@ div.fp-form-container {
   line-height: 1.33;
 }
 
+.survey-container {
+  position: relative;
+}
+
 .survey-next {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
   top: 48%;
-  left: 90%;
+  left: 95%;
 }
 .survey-previous {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
   top: 48%;
-  left: 6%;
+  left: 2%;
 }
 
 .field-string,
@@ -1091,6 +1132,11 @@ div.fp-form-container {
 
 .progress-survey {
   color: #788c9a !important;
+  margin-bottom: 0%;
+}
+
+.progress-rule {
+  margin: 0%;
 }
 
 .subActive {
@@ -1112,4 +1158,24 @@ div.fp-form-container {
 .faqHeader {
   font-size: 27px;
   margin: 20px;
+}
+
+.maintenance-watermark::before {
+  content: '';
+  background-image: url('/static/images/uc_website_maintenance.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.15;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+}
+
+.gallery-no-answer {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  color: #788c9a;
 }
