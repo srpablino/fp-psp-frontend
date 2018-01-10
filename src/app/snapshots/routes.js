@@ -21,9 +21,7 @@ const snapshots = props => {
       answerSurvey(hash) {
      
       const surveyId = parseInt(hash, 10);
-        if(localStorage.termCond && localStorage.termCond>0 && localStorage.priv && localStorage.priv>0){
-          
-
+        if(app.getSession().get('termCond') && app.getSession().get('termCond')>0 && app.getSession().get('priv') && app.getSession().get('priv')>0){
           const newSnapshotView = new NewSnapshot({
             organizationId: app.getSession().get('user').organization
               ? app.getSession().get('user').organization.id
@@ -36,9 +34,9 @@ const snapshots = props => {
           });
 
           app.showViewOnRoute(newSnapshotView);
-        } else if(!localStorage.termCond || localStorage.termCond<1){
+        } else if(!app.getSession().get('termCond') || app.getSession().get('termCond')<1){
             Bn.history.navigate(`/survey/${surveyId}/termcondpol/TC`, true);
-        } else {
+        } else if(app.getSession().get('termCond') && app.getSession().get('termCond')>0){
           Bn.history.navigate(`/survey/${surveyId}/termcondpol/PRIV`, true);
         }
         

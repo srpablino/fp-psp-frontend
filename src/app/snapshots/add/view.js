@@ -130,8 +130,8 @@ export default Mn.View.extend({
       indicator_survey_data: this.getIndicators(formResult),
       economic_survey_data: this.getEconomics(formResult),
       user_name: this.app.getSession().get('user').username,
-      term_cond_id: localStorage.termCond,
-      priv_pol_id: localStorage.priv
+      term_cond_id: this.app.getSession().get('termCond'),
+      priv_pol_id: this.app.getSession().get('priv')
     };
 
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
@@ -143,7 +143,6 @@ export default Mn.View.extend({
       );
     });
 
-    localStorage.termCond = 0;
-    localStorage.priv = 0;
+    this.app.getSession().save({termCond: 0, priv: 0});
   }
 });

@@ -35,31 +35,33 @@ export default Mn.View.extend({
       event.preventDefault();
       let checked = $('#response input:radio:checked').val();   
 
-      if(checked && checked==='Yes'  && this.model.attributes.type_cod==='TC'){
-        localStorage.termCond = this.model.attributes.id;
-        Bn.history.navigate(`/survey/${this.surveyId}/termcondpol/PRIV`, true);
-      } else if(checked && checked==='Yes' && this.model.attributes.type_cod==='PRIV'){
-
-        if(localStorage.termCond && localStorage.termCond>0){
-          localStorage.priv = this.model.attributes.id;
-          Bn.history.navigate(`/survey/${this.surveyId}/answer`, true);
-        } else {
-          return FlashesService.request('add', {
-            timeout: 2000,
-            type: 'info',
-            title: `You must first accept the terms and conditions!`
-          });
-        }
-      } else if(checked && checked==='No'){
-        Bn.history.navigate(`/surveys`, true);
-      } else if(!checked){
+      if(!checked){
         return FlashesService.request('add', {
           timeout: 2000,
           type: 'info',
           title: `Select your answer!`
         });
-      }
-      
+      } else if(checked){
+        if(checked==='Yes'  && this.model.attributes.type_cod==='TC'){
+          this.app.getSession().save({termCond: this.model.attributes.id});
+          Bn.history.navigate(`/survey/${this.surveyId}/termcondpol/PRIV`, true);
+        } else if(checked==='Yes' && this.model.attributes.type_cod==='PRIV'){
+  
+          if(this.app.getSession().get('termCond') && this.app.getSession().get('termCond')>0){
+            this.app.getSession().save({priv: this.model.attributes.id});
+            Bn.history.navigate(`/survey/${this.surveyId}/answer`, true);
+          } else {
+            return FlashesService.request('add', {
+              timeout: 2000,
+              type: 'info',
+              title: `You must first accept the terms and conditions!`
+            });
+          }
+        } else if(checked==='No'){
+          Bn.history.navigate(`/surveys`, true);
+        }
+
+      }  
   }
 
 });
