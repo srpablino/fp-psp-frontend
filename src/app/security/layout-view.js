@@ -85,32 +85,40 @@ export default Mn.View.extend({
 
   },
   handleSubmit(event) {
+    let freeText = $('#search').val();
     if (event.which === 13 || event.which === 1) {
+      if(freeText !== ''){
+        $('#search').parent().removeClass('has-error');
+        let self = this;
+        let container = this.$el.find('.list-container').eq(0);
+        const section = utils.getLoadingSection(container);
 
-      let self = this;
-      let container = this.$el.find('.list-container').eq(0);
-      const section = utils.getLoadingSection(container);
+        self.collection.reset();
+        this.getRegion('list').empty();
+        section.loading();
 
-      self.collection.reset();
-      this.getRegion('list').empty();
-      section.loading();
+       let params = {
+         free_text: freeText
+       };
+        if(self.app.getSession().get('user').application != null){
+          params.applicationId = self.app.getSession().get('user').application.id
+        }
 
-     let params = {
-       free_text: $('#search').val()
-     };
-      if(self.app.getSession().get('user').application != null){
-        params.applicationId = self.app.getSession().get('user').application.id
+        let elements = new FamiliesColecction();
+        elements.fetch({
+          data: params,
+          success(response) {
+            self.collection = response;
+            self.showList();
+            section.reset();
+          }
+        });
+      }else {
+
+        $('#search').parent().addClass('has-error');
       }
 
-      let elements = new FamiliesColecction();
-      elements.fetch({
-        data: params,
-        success(response) {
-          self.collection = response;
-          self.showList();
-          section.reset();
-        }
-      });
+
     }
   },
 
