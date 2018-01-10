@@ -144,16 +144,12 @@ class Form extends Component {
   render() {
     return (
       <div>
-        <div>
-          <h4 className="progress-survey">
-            {' '}
-            {this.state.stepsSchema[this.state.step].description}
-            {this.counter[this.state.stepsSchema[this.state.step].counter]}
-          </h4>
-        </div>
-        <hr />
-        <br />
-        <br />
+        <label className="progress-survey">
+          {' '}
+          {this.state.stepsSchema[this.state.step].description}
+          {this.counter[this.state.stepsSchema[this.state.step].counter]}
+        </label>
+        <hr className="progress-rule" />
         <JsonSchemaForm
           schema={this.state.stepsSchema[this.state.step]}
           uiSchema={this.state.stepsUISchema[this.state.step]}
