@@ -21,8 +21,7 @@ class Gallery extends React.Component {
       isGoing: '',
       images: props.schema.items.enum,
       title: props.schema.title,
-      required: props.required ? '*' : '',
-      name: props.name
+      required: props.required ? '*' : ''
     };
   }
 
@@ -47,25 +46,25 @@ class Gallery extends React.Component {
     );
   }
 
-  render() {
+  componentWillReceiveProps(nextProps) {
 
-    const { schema, formData } = this.props;
-    if (this.props.name !== this.state.name) {
+    if (this.props.name !== nextProps.name) {
       let ban = false;
-      if(formData[0].value === "NONE"){
+      if(this.props.formData[0].value === "NONE"){
         ban = true;
       }
-      this.state = {
-        selected: formData[0].url,
-        images: schema.items.enum,
-        title: schema.title,
-        required: this.props.required ? '*' : '',
-        name: this.props.name,
+      this.setState ( {
+        selected: nextProps.formData[0].url,
+        images: nextProps.schema.items.enum,
+        title: nextProps.schema.title,
+        required: nextProps.required ? '*' : '',
         isGoing: ban
-
-      };
-
+      });
     }
+  }
+
+
+  render() {
 
     let images = [];
     for (let i = 0; i < this.state.images.length; i++) {
@@ -116,7 +115,7 @@ class Gallery extends React.Component {
       });
       if (component.props.onChange) {
           component.props.onChange([
-            { url: "NONE", description: "NONE", value: "NONE" }
+            { url: "NONE", description: "", value: "NONE" }
           ]);
       }
 
