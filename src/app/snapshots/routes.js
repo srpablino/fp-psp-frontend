@@ -19,22 +19,31 @@ const snapshots = props => {
         app.showViewOnRoute(new SnapshotsView({ surveyId }));
       },
       answerSurvey(hash) {
-        const surveyId = parseInt(hash, 10);
+     
+      const surveyId = parseInt(hash, 10);
+        if(app.getSession().get('termCond') && app.getSession().get('termCond')>0 && app.getSession().get('priv') && app.getSession().get('priv')>0){
+          const newSnapshotView = new NewSnapshot({
+            organizationId: app.getSession().get('user').organization
+              ? app.getSession().get('user').organization.id
+              : null,
+            surveyId,
+            handleCancel() {
+              Bn.history.navigate(`/surveys`, true);
+            },
+            app
+          });
 
-        const newSnapshotView = new NewSnapshot({
-          organizationId: app.getSession().get('user').organization
-            ? app.getSession().get('user').organization.id
-            : null,
-          surveyId,
-          handleCancel() {
-            Bn.history.navigate(`/surveys`, true);
-          },
-          app
-        });
-
-        app.showViewOnRoute(newSnapshotView);
+          app.showViewOnRoute(newSnapshotView);
+        } else if(!app.getSession().get('termCond') || app.getSession().get('termCond')<1){
+            Bn.history.navigate(`/survey/${surveyId}/termcondpol/TC`, true);
+        } else if(app.getSession().get('termCond') && app.getSession().get('termCond')>0){
+          Bn.history.navigate(`/survey/${surveyId}/termcondpol/PRIV`, true);
+        }
+        
       },
       showSnapshot(hash, hashSnapshot) {
+       
+        
         const snapshotId = parseInt(hashSnapshot, 10);
 
         const model = new SnapshotItemModel();

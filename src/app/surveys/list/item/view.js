@@ -8,7 +8,7 @@ export default Mn.View.extend({
     'click #edit': 'handleEdit',
     'click #delete': 'handleDelete',
     'click #show-snaps': 'handleShowSnapshots',
-    'click #answer': 'handleAnswer'
+    'click #answer': 'handlerTermsAndConditions'
   },
 
   initialize(options) {
@@ -38,6 +38,12 @@ export default Mn.View.extend({
     const route = event.target.getAttribute('href');
     Bn.history.navigate(route, true);
   },
+
+  handlerTermsAndConditions(event){
+    event.preventDefault();
+    Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC`, true);
+  },
+
   handleAnswer(event) {
     event.preventDefault();
     Bn.history.navigate(`/survey/${this.model.attributes.id}/answer`, true);

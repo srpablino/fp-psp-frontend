@@ -52,6 +52,7 @@ export default Mn.View.extend({
     return newSchema;
   },
   renderForm() {
+
     const parameters = {};
     parameters.survey_id = this.surveyModel.id;
     parameters.survey_name = this.surveyModel.attributes.title;
@@ -122,13 +123,15 @@ export default Mn.View.extend({
     // Convert from array to string, using property "value"
     this.fixedGalleryFieldValue(formResult);
 
-
     const snapshot = {
       survey_id: this.props.surveyId,
       organization_id: this.props.organizationId,
       personal_survey_data: this.getPersonal(formResult),
       indicator_survey_data: this.getIndicators(formResult),
-      economic_survey_data: this.getEconomics(formResult)
+      economic_survey_data: this.getEconomics(formResult),
+      user_name: this.app.getSession().get('user').username,
+      term_cond_id: this.app.getSession().get('termCond'),
+      priv_pol_id: this.app.getSession().get('priv')
     };
 
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
@@ -139,5 +142,7 @@ export default Mn.View.extend({
         true
       );
     });
+
+    this.app.getSession().save({termCond: 0, priv: 0});
   }
 });
