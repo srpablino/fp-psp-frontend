@@ -1,18 +1,12 @@
 <div id="top" class="search-container">
+  <input name="data[search]" class="form-control search" id="search" type="text" placeholder="Find a User">
   <a id="add-new" href="#users/new">
-    <img class="floating-organization" src="/static/images/icon_agregar_usuario.png" title="Add a new User">
+    <img class="floating-item" src="/static/images/icon_agregar_usuario.png" title="Add a new User">
   </a>
-</div>
-
-<div class="row">
-  <div class="col-lg-4">
-    <div id="user-list" class="list-container">
-<h2>Usuarios</h2>
-{{#each users}}
-<p>
-    <strong>{{attributes.username}}</strong><br>
-</p>
-{{/each}}
-    </div>
+  <div class="" style="margin-top:2%">
+    <img class="view-items" src="/static/images/icon_card_view.png">
+    <img class="view-items" src="/static/images/icon_list_view.png">
   </div>
+</div>
+<div id="user-list" class="has-spinner">
 </div>

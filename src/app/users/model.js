@@ -3,7 +3,6 @@ import env from '../env';
 
 export default Bn.Model.extend({
   urlRoot: `${env.API}/users`,
-
   validate(attrs = {}) {
     const errors = [];
 
