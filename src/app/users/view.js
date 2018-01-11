@@ -55,7 +55,7 @@ export default Mn.View.extend({
     this.getRegion('list').empty();
     setTimeout(() => {
       var filtered = this.collection.filter(function (user) {
-            return user.get("username").includes(userName);
+            return user.get("username").toLowerCase().includes(userName.toLowerCase());
       });
       this.collection = new Bn.Collection(filtered);
       this.showList();
