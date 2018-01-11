@@ -50,7 +50,7 @@ class Gallery extends React.Component {
 
     if (this.props.name !== nextProps.name) {
       let ban = false;
-      if(this.props.formData[0].value === "NONE"){
+      if(nextProps.formData[0].value === "NONE"){
         ban = true;
       }
       this.setState ( {
