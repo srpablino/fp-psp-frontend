@@ -50,6 +50,6 @@ export default Mn.View.extend({
     if (!createdAt) {
       return null;
     }
-    return moment(createdAt).format('YYYY-MM');
+    return moment(createdAt).format('YYYY-MM-DD');
   }
 });
