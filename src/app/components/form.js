@@ -3,6 +3,7 @@ import JsonSchemaForm from 'react-jsonschema-form';
 import Gallery from './gallery';
 import Gmap from './gmap';
 import NumberFormat from './number';
+import DatetimeFormat from './datetime';
 
 const log = type => console.log.bind(console, type);
 
@@ -156,7 +157,7 @@ class Form extends Component {
         <JsonSchemaForm
           schema={this.state.stepsSchema[this.state.step]}
           uiSchema={this.state.stepsUISchema[this.state.step]}
-          fields={{ gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat }}
+          fields={{ gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat, date:DatetimeFormat }}
           onSubmit={this.onSubmit}
           onError={log('errors')}
           formData={this.state.formData}
