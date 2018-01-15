@@ -225,7 +225,9 @@ div.fp-form-container {
   background-color: rgba(#333, 0.85);
   border-color: rgba(#333, 0.85);
 }
-
+.rdtPicker {
+  left: 40%;
+}
 .img-card {
   width: 100px;
   height: 100px;
@@ -1006,7 +1008,9 @@ div.fp-form-container {
   font-size: 18px;
   line-height: 1.33;
 }
-
+.rjsf {
+  min-height: 325px;
+}
 .survey-container {
   position: relative;
 }
@@ -1015,20 +1019,21 @@ div.fp-form-container {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
-  top: 48%;
+  top: 25%;
   left: 95%;
 }
 .survey-previous {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
-  top: 48%;
+  top: 25%;
   left: 2%;
 }
 
 .field-string,
 .field-integer,
-.field-number {
+.field-number,
+.rdt {
   > input {
     font-family: 'Roboto';
     font-weight: 400;
