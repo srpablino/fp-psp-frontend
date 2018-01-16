@@ -11,16 +11,10 @@ const users = props => {
       'users/new': 'newUser',
     },
     controller: {
-      //paginated users
       showUsers() {
-        if (app.getSession().userHasRole('ROLE_ROOT')
-          || app.getSession().userHasRole('ROLE_HUB_ADMIN')
-          || app.getSession().userHasRole('ROLE_APP_ADMIN')
-        ) {
-          usersStorage.find().then(model => {
-            app.showViewOnRoute(new UsersView({ model }));
-          });
-        }
+        usersStorage.find().then(model => {
+          app.showViewOnRoute(new UsersView({model}));
+        });
       },
       newUser() {
         app.showViewOnRoute(new NewUserView({app}));

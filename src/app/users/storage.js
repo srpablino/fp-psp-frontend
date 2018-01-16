@@ -4,15 +4,7 @@ import Collection from './collection';
 
 var UsersStorage = Storage.extend({
   model: Model,
-  collection: Collection,
-  getSubHeaderItems(model) {
-    return {
-      mainItem: {
-        name: model.get('name'),
-        link: `/#users/${model.get('id')}`
-      }
-    };
-  }
+  collection: Collection
 });
 
 export default new UsersStorage();

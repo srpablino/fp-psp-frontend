@@ -30,9 +30,7 @@ export default Bn.Model.extend({
 
     if (attrs.role === null) {
       errors.push('Missing "Role" field');
-    }
-
-    if (attrs.application === undefined && attrs.organization === undefined) {
+    } else if (attrs.application === undefined && attrs.organization === undefined) {
       errors.push('Missing "Organization" field');
     }
 
