@@ -716,8 +716,6 @@ article {
 
 .gallery-image > figure > img {
   opacity: 0.5;
-  //  min-height: 240px;
-  //  max-width: 360px;
 }
 
 .gallery-image > figure {
@@ -1199,4 +1197,17 @@ div.fp-form-container {
 
 .empty-widget {
   margin-bottom: 25%;
+}
+
+.list-group-with-watermark {
+  margin: 10px;
+  //position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  border: 1px solid #ddd;
+}
+
+#term-cond-pol {
+  margin: 24px;
 }

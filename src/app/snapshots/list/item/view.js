@@ -168,20 +168,38 @@ export default Mn.View.extend({
 
   handleShowFamilyMap(e) {
     e.preventDefault();
+
+    if(this.model.attributes.indicators_priorities.length<1){
+      
+      ModalService.request('confirm', {
+        title: 'Information',
+        text: `You have not set any priorities yet, are sure you want to finish the survey?`
+      }).then(confirmed => {
+        if (!confirmed) {
+          return;
+        }
+        this.finishSurvey();
+      });
+
+    } else {
+      this.finishSurvey();
+    }
+  },
+
+  finishSurvey(){
     if($('#check-privacity').is(':checked')) {
-      ModalService.request('alert', {
-        title: 'information',
+      ModalService.request('confirm', {
+        title: 'Information',
         text: `Your personal information has not been saved in the platform`
       }).then(confirmed => {
         if (!confirmed) {
           return;
         }
         // delete snapshot
-        const model = new SnapshotModel();
+       const model = new SnapshotModel();
         model.set("id", `${this.props.model.attributes.snapshot_economic_id}`);
         model.destroy();
-
-        this.redirect(`surveys`)
+        this.redirect(`surveys`);
 
 
       });
@@ -190,8 +208,8 @@ export default Mn.View.extend({
            this.props.model.attributes.snapshot_economic_id
          }`)
     }
-
   },
+
   redirect(url){
     Bn.history.navigate(
       url,
