@@ -127,6 +127,7 @@ class Form extends Component {
   }
 
   onCancel() {
+    // $('panel-danger').empty();
     var newData = JSON.parse(JSON.stringify(this.state.formData));
     this.state.stepsSchema[this.state.step];
 

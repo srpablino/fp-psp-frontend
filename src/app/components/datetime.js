@@ -38,16 +38,9 @@ class DatetimeFormat extends React.Component {
     }
 
     _handleOnChange(calendarEvent) {
-      let date = calendarEvent.format("YYYY-MM-DD");
-      if (!calendarEvent._isValid) {
-        componentRef.setState({
-          valueView: ""
-        });
-
-        setImmediate(() =>
-          componentRef.props.onChange("")
-        );
-        return;
+      let date = '';
+      if(typeof calendarEvent === 'object'){
+        date = calendarEvent.format("YYYY-MM-DD");
       }
       componentRef.setState({
         valueView: date
@@ -62,10 +55,10 @@ class DatetimeFormat extends React.Component {
         if (this.props.name !== this.state.name) {
           this.setInitialValues(this.props);
         }
-        return <Datetime dateFormat="MM/DD/YYYY" timeFormat={false} locale="es" renderInput={this.renderInput} onChange={this._handleOnChange} />;
+        return <Datetime dateFormat="MM/DD/YYYY" inputProps={{ disabled: true }} timeFormat={false} locale="es" disableOnClickOutside renderInput={this.renderInput} onChange={this._handleOnChange} />;
     }
 
-    renderInput( props ){
+    renderInput( props, openCalendar ){
       return (
         <div className="rdt form-group field field-number">
           <label className="control-label" >
@@ -74,6 +67,7 @@ class DatetimeFormat extends React.Component {
           <br />
           <div className="rdt">
             <input {...props} id={componentProps.idSchema.$id} required={componentProps.required}  className="form-control" type="text" />
+            <span id="calendar-buttom" className="glyphicon-calendar" onClick={openCalendar} />
           </div>
         </div>
       );

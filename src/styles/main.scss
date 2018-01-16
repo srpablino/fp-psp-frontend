@@ -213,7 +213,6 @@ div.fp-form-container {
 }
 
 .card {
-  overflow: hidden;
   @include BoxShadowHelper(1);
   transition: 0.25s box-shadow;
   &:focus,
@@ -1008,9 +1007,6 @@ div.fp-form-container {
   font-size: 18px;
   line-height: 1.33;
 }
-.rjsf {
-  min-height: 325px;
-}
 .survey-container {
   position: relative;
 }
@@ -1019,15 +1015,28 @@ div.fp-form-container {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
-  top: 25%;
+  top: 50%;
   left: 95%;
 }
 .survey-previous {
   position: absolute;
   background: #f15f5f;
   z-index: 10;
-  top: 25%;
+  top: 50%;
   left: 2%;
+}
+#calendar-buttom {
+  font-family: 'Glyphicons Halflings';
+  left: 50%;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #7cd071;
+  border-radius: 0%;
+  top: 91px;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  position: absolute;
 }
 
 .field-string,
