@@ -85,7 +85,7 @@ class Gallery extends React.Component {
     if(loading) { 
       setTimeout(() => this.setState({ loading: false }), 200);
       for (let i = 0; i < this.state.images.length-1; i++) {
-        images.push(this.renderImage('../../static/images/poverty_stoplight_256.png', 'Loading...', 'NONE', i, 'gallery-image gallery-image-div' ));
+        images.push(this.renderImage('../../static/images/image_default.png', 'Loading...', 'NONE', i, 'gallery-image gallery-image-div' ));
       }
     } else {
       images = this.imagesWillRender();
