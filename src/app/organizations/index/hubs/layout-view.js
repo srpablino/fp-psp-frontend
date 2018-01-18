@@ -5,9 +5,9 @@ import $ from 'jquery';
 import { debounce } from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
-import storage from '../storage';
-import utils from '../../utils';
-import OrganizationsModel from '../model';
+import storage from '../../storage';
+import utils from '../../../utils';
+import OrganizationsModel from '../../model';
 
 export default Mn.View.extend({
   template: Template,
