@@ -1,5 +1,6 @@
 import Mn from 'backbone.marionette';
 import CodeMirror from 'codemirror';
+import $ from 'jquery';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/comment/continuecomment';
 import 'codemirror/addon/comment/comment';
@@ -52,44 +53,46 @@ export default Mn.View.extend({
     };
   },
   handleSubmit(event) {
-    const button = utils.getLoadingButton(this.$el.find('#submit'));
-    event.preventDefault();
-    button.loading();
+    if(utils.requiredInput($("#title"))  && utils.requiredInput($("#description"))){
 
-    // We manually add form values to model,
-    // the form -> model binding should ideally
-    // be done automatically.
-    this.$el
+      const button = utils.getLoadingButton(this.$el.find('#submit'));
+      event.preventDefault();
+      button.loading();
+
+      // We manually add form values to model,
+      // the form -> model binding should ideally
+      // be done automatically.
+      this.$el
       .find('#form')
       .serializeArray()
       .forEach(element => {
         this.model.set(element.name, element.value);
       });
 
-    this.validate = {};
-    this.validate.title = this.model.title;
-    this.validate.description = this.model.description;
-    this.validate.survey_schema = this.schema.getValue();
-    this.validate.survey_ui_schema = this.schemaUI.getValue();
+      this.validate = {};
+      this.validate.title = this.model.title;
+      this.validate.description = this.model.description;
+      this.validate.survey_schema = this.schema.getValue();
+      this.validate.survey_ui_schema = this.schemaUI.getValue();
 
-    let errors = this.model.validate(this.validate);
+      let errors = this.model.validate(this.validate);
 
-    if (errors) {
-      errors.forEach(error => {
-        FlashesService.request('add', {
-          timeout: 2000,
-          type: 'warning',
-          title: error
+      if (errors) {
+        errors.forEach(error => {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'warning',
+            title: error
+          });
         });
-      });
-      button.reset();
-      return;
-    }
+        button.reset();
+        return;
+      }
 
-    this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
-    this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
+      this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
+      this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
 
-    this.model
+      this.model
       .save()
       .then(
         () => {
@@ -109,5 +112,6 @@ export default Mn.View.extend({
         }
       )
       .always(() => button.reset());
+    }
   }
 });
