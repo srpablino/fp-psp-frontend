@@ -2,10 +2,10 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import Template from './template.hbs';
-import env from '../env';
-import session from '../../common/session';
-import { getLoadingButton } from '../../common/utils';
-import FlashesService from '../../common/flashes/service';
+import env from '../../env';
+import session from '../../../common/session';
+import { getLoadingButton } from '../../../common/utils';
+import FlashesService from '../../../common/flashes/service';
 
 export default Mn.View.extend({
   template: Template,

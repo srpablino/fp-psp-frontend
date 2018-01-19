@@ -880,7 +880,7 @@ div.fp-form-container {
   margin-left: -2%;
   margin-top: -2%;
 }
-#btn-login {
+.btn-login {
   background: #7cd071;
   border-radius: 2px;
   font-family: 'Roboto';
@@ -1213,4 +1213,11 @@ div.fp-form-container {
 
 #term-cond-pol {
   margin: 24px;
+}
+
+.link-email {
+  font-family: 'Helvetica';
+  font-weight: 400;
+  font-size: 14px;
+  //color: #ffffff;
 }
