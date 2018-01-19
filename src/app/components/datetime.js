@@ -55,7 +55,15 @@ class DatetimeFormat extends React.Component {
         if (this.props.name !== this.state.name) {
           this.setInitialValues(this.props);
         }
-        return <Datetime dateFormat="MM/DD/YYYY" inputProps={{ disabled: true }} timeFormat={false} locale="es" disableOnClickOutside renderInput={this.renderInput} onChange={this._handleOnChange} />;
+        return (<Datetime 
+          dateFormat="MM/DD/YYYY" 
+          inputProps={{ disabled: true }} 
+          timeFormat={false} 
+          locale={navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage)} 
+          disableOnClickOutside 
+          renderInput={this.renderInput} 
+          onChange={this._handleOnChange} 
+        />);
     }
 
     renderInput( props, openCalendar ){
