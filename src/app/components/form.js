@@ -10,7 +10,7 @@ const log = type => console.log.bind(console, type);
 class Form extends Component {
   constructor(props) {
     super(props);
-
+    
     let order = props.uiSchema['ui:order'];
     let stepsSchema = [];
     let stepsUISchema = [];
@@ -146,36 +146,78 @@ class Form extends Component {
 
   }
 
+  onSaveDraft(){
+    this.props.handleSaveDraft(this.state);
+  }
+
+  checkShowSaveDraft(state){
+    let show = true;
+
+    if(this.props.uiSchema['ui:group:personal'].length === 0){
+      show = false;
+    }
+   
+    for(let i=0; i<this.props.uiSchema['ui:group:personal'].length; i++){
+      if(!state.formData){
+        show = false;
+      }
+
+      if(!state.formData[this.props.uiSchema['ui:group:personal'][i]]){
+        show = false;
+      }
+    }
+    
+    return show;
+  }
+
   render() {
+
+    let classButton = 'btn btn-primary pull-right';
+    if(!this.checkShowSaveDraft(this.state)){
+      classButton+= ' hidden';
+    }
+
     return (
-      <div className="survey-container">
-        <label className="progress-survey">
-          {' '}
-          {this.state.stepsSchema[this.state.step].description}
-          {this.counter[this.state.stepsSchema[this.state.step].counter]}
-        </label>
-        <hr className="progress-rule" />
-        <JsonSchemaForm
-          schema={this.state.stepsSchema[this.state.step]}
-          uiSchema={this.state.stepsUISchema[this.state.step]}
-          fields={{ gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat, date:DatetimeFormat }}
-          onSubmit={this.onSubmit}
-          onError={log('errors')}
-          formData={this.state.formData}
-        >
-          <div>
-            <button
-              type="button"
-              onClick={() => this.onCancel(this.state.formData)}
-              className="btn btn-circle survey-previous"
-            >
-              <i className="fa fa-chevron-left" />
-            </button>
-            <button type="submit" className="btn btn-circle survey-next">
-              <i className="fa fa-chevron-right" />
-            </button>
+      <div>
+        <button className={classButton} id="save-draft" onClick={() => this.onSaveDraft()}> Save Draft </button>
+        <br />
+        <br />
+      
+        <article className="card animated fadeInLeft">
+          <div className="card-block">
+            <div className="survey-container">
+              <label className="progress-survey">
+                {' '}
+                {this.state.stepsSchema[this.state.step].description}
+                {this.counter[this.state.stepsSchema[this.state.step].counter]}
+              </label>
+       
+              <hr className="progress-rule" />
+              <JsonSchemaForm
+                schema={this.state.stepsSchema[this.state.step]}
+                uiSchema={this.state.stepsUISchema[this.state.step]}
+                fields={{ gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat, date:DatetimeFormat }}
+                onSubmit={this.onSubmit}
+                onError={log('errors')}
+                formData={this.state.formData}
+              >
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => this.onCancel(this.state.formData)}
+                    className="btn btn-circle survey-previous"
+                  >
+                    <i className="fa fa-chevron-left" />
+                  </button>
+                  <button type="submit" className="btn btn-circle survey-next">
+                    <i className="fa fa-chevron-right" />
+                  </button>
+                </div>
+              </JsonSchemaForm>
+            </div>
           </div>
-        </JsonSchemaForm>
+          <br />
+        </article>
       </div>
     );
   }
