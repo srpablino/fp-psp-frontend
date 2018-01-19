@@ -26,6 +26,20 @@ var OrganizationsStorage = Storage.extend({
         }
       ]
     };
+  },
+  getMainSubHeaderItems() {
+    return {
+      navigationItems: [
+        {
+          name: 'Hubs',
+          link: `/#collaborators/hubs`
+        },
+        {
+          name: 'Partnes',
+          link: `/#collaborators/partnes`
+        }
+      ]
+    };
   }
 });
 

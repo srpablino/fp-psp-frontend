@@ -30,8 +30,7 @@ export default Mn.View.extend({
     this.search = debounce(this.search, 300);
   },
   onRender() {
-    const headerItems = storage.getMainSubHeaderItems();
-    this.app.updateSubHeader(headerItems);
+  
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);

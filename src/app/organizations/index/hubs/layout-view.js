@@ -5,7 +5,7 @@ import $ from 'jquery';
 import { debounce } from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
-import storage from '../../storage';
+import storage from './storage';
 import utils from '../../../utils';
 import OrganizationsModel from '../../model';
 
@@ -20,6 +20,7 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
+    this.entity = options.entity;
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
@@ -32,6 +33,11 @@ export default Mn.View.extend({
   onRender() {
     const headerItems = storage.getMainSubHeaderItems();
     this.app.updateSubHeader(headerItems);
+
+      $(`#subMenuItem > a[href$="collaborators/${this.entity}"]`)
+        .parent()
+        .addClass('subActive');
+
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);

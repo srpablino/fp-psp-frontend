@@ -9,17 +9,16 @@ const organizations = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
-      'hubs(/)': 'showHubs',
-      'partnes(/)': 'showHubs',
+      'collaborators(/:entity)': 'showHubs',
       'organizations(/)': 'showOrganizations',
       'organizations/new': 'newOrganization',
       'organizations/:id(/:entity)': 'showOrganization'
     },
     controller: {
       // paginated organizations
-      showHubs() {
+      showHubs(entity) {
         organizationsStorage.find().then(model => {
-          app.showViewOnRoute(new HubView({ model, app }));
+          app.showViewOnRoute(new HubView({ model, app, entity }));
         });
       },
       showOrganizations() {
