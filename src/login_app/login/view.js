@@ -125,7 +125,7 @@ export default Mn.View.extend({
     button.loading();
     $.ajax({
       url,
-      type: 'GET',
+      type: 'POST',
       success() {
         // if (data.error) {
         //   // If there is an error, show the error messages
