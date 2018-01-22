@@ -83,6 +83,7 @@ class Gallery extends React.Component {
     let images = [];
     if (loading) {
       setTimeout(() => this.setState({ loading: false }), 200);
+
       for (let i = 0; i < this.state.images.length - 1; i++) {
         images.push(
           this.renderImage(
