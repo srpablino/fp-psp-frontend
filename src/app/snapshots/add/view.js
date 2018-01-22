@@ -159,7 +159,7 @@ export default Mn.View.extend({
       user_name: this.app.getSession().get('user').username,
       term_cond_id: this.app.getSession().get('termCond'),
       priv_pol_id: this.app.getSession().get('priv'),
-      state: JSON.stringify(state),
+      state_draft: state,
       economic_response: this.getEconomics(state.formData),
       indicator_response: this.getIndicators(state.formData),
       personal_response: this.getPersonal(state.formData)

@@ -147,7 +147,11 @@ class Form extends Component {
   }
 
   onSaveDraft(){
-    this.props.handleSaveDraft(this.state);
+    if(this.checkShowSaveDraft(this.state)){
+      this.props.handleSaveDraft(this.state);
+    } else {
+      this.render();
+    }
   }
 
   checkShowSaveDraft(state){
@@ -156,7 +160,7 @@ class Form extends Component {
     if(this.props.uiSchema['ui:group:personal'].length === 0){
       show = false;
     }
-   
+
     for(let i=0; i<this.props.uiSchema['ui:group:personal'].length; i++){
       if(!state.formData){
         show = false;
@@ -166,7 +170,7 @@ class Form extends Component {
         show = false;
       }
     }
-    
+
     return show;
   }
 
