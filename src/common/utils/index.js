@@ -23,6 +23,18 @@ export function getLoadingButton(elem) {
   };
 }
 
+export function requiredInput(elem) {
+    let ban = true
+    if($(elem).val() === '' || $(elem).val() === null ){
+      $(elem).parent().addClass('has-error');
+      ban = false;
+    }else{
+      $(elem).parent().removeClass('has-error');
+
+    }
+    return ban;
+}
+
 export function getLoadingSection(elem) {
   return {
     loading: () => {
@@ -38,5 +50,6 @@ export function getLoadingSection(elem) {
 
 export default {
   getLoadingButton,
-  getLoadingSection
+  getLoadingSection,
+  requiredInput
 };

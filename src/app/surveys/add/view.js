@@ -1,5 +1,6 @@
 import Mn from 'backbone.marionette';
 import CodeMirror from 'codemirror';
+import Bn from 'backbone';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/comment/continuecomment';
 import 'codemirror/addon/comment/comment';
@@ -52,44 +53,59 @@ export default Mn.View.extend({
     };
   },
   handleSubmit(event) {
-    const button = utils.getLoadingButton(this.$el.find('#submit'));
-    event.preventDefault();
-    button.loading();
+      try {
+        event.preventDefault();
+        this.saveySurvey();
 
-    // We manually add form values to model,
-    // the form -> model binding should ideally
-    // be done automatically.
-    this.$el
+      } catch (e) {
+        FlashesService.request('add', {
+          timeout: 2000,
+          type: 'warning',
+          title: e
+        });
+      }
+    },
+
+    saveySurvey(){
+      const button = utils.getLoadingButton(this.$el.find('#submit'));
+      button.loading();
+
+      // We manually add form values to model,
+      // the form -> model binding should ideally
+      // be done automatically.
+      this.$el
       .find('#form')
       .serializeArray()
       .forEach(element => {
         this.model.set(element.name, element.value);
       });
 
-    this.validate = {};
-    this.validate.title = this.model.title;
-    this.validate.description = this.model.description;
-    this.validate.survey_schema = this.schema.getValue();
-    this.validate.survey_ui_schema = this.schemaUI.getValue();
+      let validate = {
+        title: this.model.get('title'),
+        description: this.model.get('description'),
+        survey_schema: this.schema.getValue(),
+        survey_ui_schema: this.schemaUI.getValue()
+      };
 
-    let errors = this.model.validate(this.validate);
+      let errors = this.model.validate(validate);
 
-    if (errors) {
-      errors.forEach(error => {
-        FlashesService.request('add', {
-          timeout: 2000,
-          type: 'warning',
-          title: error
+      if (errors) {
+        errors.forEach(error => {
+           if (error.required)  this.$el.find(`#${error.field}`).parent().addClass('has-error');
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'warning',
+            title: error.message
+          });
         });
-      });
-      button.reset();
-      return;
-    }
+        button.reset();
+        return;
+      }
 
-    this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
-    this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
+      this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
+      this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
 
-    this.model
+      this.model
       .save()
       .then(
         () => {
@@ -98,7 +114,10 @@ export default Mn.View.extend({
             type: 'info',
             title: 'The survey has been saved'
           });
-          this.props.listSurveys();
+          Bn.history.navigate(
+            `/surveys`,
+            true
+          );
         },
         error => {
           FlashesService.request('add', {
@@ -109,5 +128,7 @@ export default Mn.View.extend({
         }
       )
       .always(() => button.reset());
-  }
+
+    }
+
 });
