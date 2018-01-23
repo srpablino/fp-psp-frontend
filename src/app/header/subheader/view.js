@@ -6,7 +6,7 @@ import template from './template.hbs';
 export default Mn.View.extend({
   template,
   events: {
-    'click #subMenuItem': 'highlight'
+    'click .sub-menu-tiem': 'highlight'
   },
   highlight(e) {
     $(e.target)
