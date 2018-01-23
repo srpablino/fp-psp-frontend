@@ -20,19 +20,54 @@ class Form extends Component {
       countIndicator: 0,
       countPersonal: 0
     };
-
+    
     let component = this;
+
     for (let i = 0; i < order.length; i++) {
       stepsSchema.push(component.schemaNewEntry(props.schema, order[i]));
       stepsUISchema.push(component.uischemaNewEntry(props.uiSchema, order[i]));
     }
 
-    this.state = {
-      step: 0,
-      formData: {},
-      stepsSchema,
-      stepsUISchema
-    };
+    if(!props.stateDraft){
+      this.state = {
+        step: 0,
+        formData: {},
+        stepsSchema,
+        stepsUISchema
+      };
+    } else {
+
+      const stepKey = props.stateDraft.stepsSchema[props.stateDraft.step +1].key;
+      let indexActualKey = -1;
+      let firstIndexNotFound = -1;
+
+      for(let i=0; i < stepsSchema.length; i++){
+        if(stepsSchema[i].key === stepKey){
+          indexActualKey = i;
+        } 
+      
+       if(firstIndexNotFound===-1 && props.stateDraft.formData[stepsSchema[i].key]=== undefined){
+          firstIndexNotFound = i +1;
+        }
+      }
+      
+      if(indexActualKey!==-1)
+        if(props.stateDraft.step + 1 >= indexActualKey){
+          this.state = {
+            step: indexActualKey,
+            formData: props.stateDraft.formData,
+            stepsSchema,
+            stepsUISchema
+          };
+        } else {
+          this.state = {
+            step: firstIndexNotFound,
+            formData: props.stateDraft.formData,
+            stepsSchema,
+            stepsUISchema
+          };
+        }
+      }
 
     this.onSubmit = this.onSubmit.bind(this);
   }

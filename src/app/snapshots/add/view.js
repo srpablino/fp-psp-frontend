@@ -24,16 +24,17 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { organizationId, surveyId, handleCancel, app } = options;
+    const { organizationId, surveyId, handleCancel, app, state } = options;
+    
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
     this.surveyModel.fetch();
-
+        
     this.props = {};
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
     this.props.organizationId = organizationId;
-
+    this.props.state = state;
     this.app = app;
   },
 
@@ -73,7 +74,8 @@ export default Mn.View.extend({
       handleSubmit: this.hadleSubmit.bind(this),
       handleCancel: this.props.handleCancel,
       handleSaveDraft: this.handleSaveDraft.bind(this),
-      view: this
+      view: this,
+      stateDraft: this.props.state
     });
     ReactDOM.unmountComponentAtNode(placeHolder);
     ReactDOM.render(this.reactView, placeHolder);
