@@ -51,32 +51,7 @@ export default Mn.View.extend({
         'name'
       );
     } else if (session.userHasRole('ROLE_APP_ADMIN')) {
-      //  Get logged admin user App (Organization or Partner)
-      if (session.get('user').organization !== null) {
-        let userOrganization = session.get('user').organization;
-        let list = [];
-        list.push(userOrganization);
-
-        this.loadSelect(
-          list,
-          '#select-org',
-          'Select Organization',
-          'organization',
-          'name'
-        );
-      } else if (session.get('user').application !== null) {
-        let userPartner = session.get('user').application;
-        let list = [];
-        list.push(userPartner);
-
-        this.loadSelect(
-          list,
-          '#select-app',
-          'Select Partner',
-          'application',
-          'name'
-        );
-      }
+      this.loadRoles();
     }
   },
   loadRoles() {
@@ -144,6 +119,7 @@ export default Mn.View.extend({
   handleSubmit(event) {
     event.preventDefault();
     const button = utils.getLoadingButton(this.$el.find('#submit'));
+    const session = this.app.getSession();
 
     let userModel = new Model();
     this.$el
@@ -152,6 +128,16 @@ export default Mn.View.extend({
       .forEach(element => {
         userModel.set(element.name, element.value);
       });
+
+    if (session.userHasRole('ROLE_APP_ADMIN')) {
+        if (session.get('user').organization !== null) {
+          let userOrganization = session.get('user').organization;
+          userModel.set('organization', userOrganization.id);
+        } else if (session.get('user').application !== null) {
+          let userPartner = session.get('user').application;
+          userModel.set('application', userPartner.id);
+        }
+    }
 
     let errors = userModel.validate();
 
