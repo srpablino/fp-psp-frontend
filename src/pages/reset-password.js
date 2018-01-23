@@ -16,11 +16,10 @@ var API_PUBLIC =  "http://127.0.0.1:8080";
     }
 
   $("#btn-login" ).click(() => {
-    if($.required($("#temporalPassword")) && $.required($("#password")) && $.required($("#repeatPassword"))){
+    if( $.required($("#password")) && $.required($("#repeatPassword"))){
         let params = {
           token: $.urlParam('token'),
           userId: $.urlParam('id'),
-          temporalPassword: $('#temporalPassword').val(),
           password: $('#password').val(),
           repeatPassword: $('#repeatPassword').val()
         };

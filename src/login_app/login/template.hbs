@@ -12,7 +12,7 @@
         </div>
         <div class="panel-body">
           <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-          <form role="form" id="loginform" class="col-sm-8 col-sm-offset-2">
+          <form role="form" id="loginform" class="col-sm-9 col-sm-offset-2">
             <div class="form-group login">
               <input id="login-username" type="text" class="form-control " name="username" value="" placeholder="Username">
             </div>
@@ -20,19 +20,20 @@
               <input id="login-password" type="password" class="form-control " name="password" placeholder="Password">
             </div>
             <div class="form-group recovery" style="display:none;">
-              <label for="">Entry your email to reset your password</label>
+              <label for="">Please enter your email to reset your password</label>
+
               <input id="login-email" type="email" class="form-control" name="email" placeholder="Email">
             </div>
             <div class="has-spinner">
               <button id="btn-login" href="#" class="btn btn-login login">LOGIN </button>
-              <button id="btn-recovery" href="#" class="btn btn-login recovery" style="display:none;">Recovery Password </button>
+              <button id="btn-recovery" href="#" class="btn btn-login recovery" style="display:none;">Reset Password</button>
             </div>
 
           </form>
         </div>
         <br>
-      
-        <a id="link-email" class="pull-right link-email login"><u>I forgot my password</u></a>
+
+        <a id="link-email" class="pull-right link-email login"><u>Forgot password?</u></a>
         <a id="back-login" class="pull-right link-email recovery" style="display:none;"><u>Back to login</u></a>
       </div>
     </div>

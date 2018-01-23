@@ -30,13 +30,22 @@ export default Mn.View.extend({
     });
 
   },
+  onRender() {
+    setTimeout(() => {
+      this.$el.find('#login-username').focus();
+    }, 0);
+
+  },
   entryEmail(){
     $(".login").hide();
     $(".recovery").show();
+    this.$el.find('#login-email').focus();
+
   },
   backLogin(){
     $(".login").show();
     $(".recovery").hide();
+    this.$el.find('#login-username').focus();
   },
 
   doLogin(event) {
@@ -65,12 +74,10 @@ export default Mn.View.extend({
 
       success: data => {
         if (data.error) {
-          // If there is an error, show the error messages
           $('.alert-error')
             .text(data.error.text)
             .show();
         } else {
-          // If not, send them back to the home page
           const { access_token, refresh_token, user } = data;
           session.save({ access_token, refresh_token, user });
 
@@ -127,21 +134,13 @@ export default Mn.View.extend({
       url,
       type: 'POST',
       success() {
-        // if (data.error) {
-        //   // If there is an error, show the error messages
-        //   $('.alert-error')
-        //     .text(data.error.text)
-        //     .show();
-        // } else {
-          // If not, send them back to the home page
           FlashesService.request('add', {
             timeout: 2000,
             type: 'info',
-            title: 'Hemos enviado un correo. Favor verifique'
+            title: `Thanks! Please check ${email} for a link to reset your password`
           });
 
           self.backLogin();
-        // }
       },
       error(xmlHttpRequest, textStatus) {
         if (xmlHttpRequest && xmlHttpRequest.status === 0) {
