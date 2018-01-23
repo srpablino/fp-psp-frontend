@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
@@ -16,9 +17,10 @@ var entryPointsConfig = {
 
 (output = {
   path: __dirname,
-  filename: '[name].js'
+  //filename: '[name].js'
+  filename: 'js/[name].[chunkhash].js'
 }),
-(uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
+((uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({
   compressor: {
     screw_ie8: true,
     warnings: false
@@ -26,7 +28,23 @@ var entryPointsConfig = {
   output: {
     comments: false
   }
-}));
+})),
+  // move shared dependencies into the entry chunk
+  (chunksPlugin = new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    children: true,
+    filename: 'js/vendor.[chunkhash].js',
+    minChunks: 2
+  })),
+  // inject entry script into HTML file
+  (htmlPlugin = new HtmlWebpackPlugin({
+    template: './src/index.html',
+    chunks: ['main']
+  })),
+  (loginHtmlPlugin = new HtmlWebpackPlugin({
+    template: './src/login.html',
+    chunks: ['login_main']
+  })));
 
 module.exports.development = {
   entryPointsConfig,
@@ -49,7 +67,10 @@ module.exports.development = {
         ]
       },
       plugins: [
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /es|en/)
+        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /es|en/),
+        chunksPlugin,
+        htmlPlugin,
+        loginHtmlPlugin
       ]
     };
   }

@@ -9,7 +9,7 @@ const jetpack = require('fs-jetpack');
 
 const environment = $.util.env.type || 'development';
 const isProduction = environment === 'production';
-const webpackConfig = require('./webpack.config.js')[environment];
+const webpackConfig = require('./webpack/gulp.config.js')[environment];
 const merge = require('merge-stream');
 const rename = require('gulp-rename');
 const imagemin = require('gulp-imagemin');
@@ -32,17 +32,26 @@ const config = [
 ];
 
 gulp.task('scripts', () => {
-  let entryPoint = webpackConfig.entryPointsConfig.main;
-  gulp
-    .src([entryPoint.fullPath])
-    .pipe($.webpackStream(webpackConfig.getConfig(entryPoint.webpackEntry)))
+  //let entryPoint = webpackConfig.entryPointsConfig.main;
+  $.webpackStream(webpackConfig)
     .on('error', function(error) {
       $.util.log($.util.colors.red(error.message));
       this.emit('end');
     })
-    .pipe(gulp.dest(dist + 'js/'))
+    .pipe(gulp.dest(dist))
     .pipe($.size({ title: 'js' }))
     .pipe($.connect.reload());
+
+  // gulp
+  //   .src([entryPoint.fullPath])
+  //   .pipe($.webpackStream(webpackConfig.getConfig(entryPoint.webpackEntry)))
+  //   .on('error', function(error) {
+  //     $.util.log($.util.colors.red(error.message));
+  //     this.emit('end');
+  //   })
+  //   .pipe(gulp.dest(dist))
+  //   .pipe($.size({ title: 'js' }))
+  //   .pipe($.connect.reload());
 });
 
 gulp.task('scripts:login', () => {
@@ -80,14 +89,11 @@ gulp.task('html:pages', () => {
 });
 
 gulp.task('styles', () => {
-  var tasks = config.map(resource => {
-    return gulp
-      .src(src + 'styles/main.scss')
-      .pipe($.sass({ outputStyle: isProduction ? 'compressed' : 'expanded' }))
-      .pipe(gulp.dest(resource.dist + 'css/'))
-      .pipe($.connect.reload());
-  });
-  return merge(tasks);
+  return gulp
+    .src(src + 'styles/main.scss')
+    .pipe($.sass({ outputStyle: isProduction ? 'compressed' : 'expanded' }))
+    .pipe(gulp.dest(dist + 'css/'))
+    .pipe($.connect.reload());
 });
 
 gulp.task('serve', () => {
@@ -156,10 +162,10 @@ gulp.task('build', cb => {
       'clean',
       'environment',
       'static',
-      'html',
+      //'html',
       'html:pages',
       'scripts',
-      'scripts:login',
+      //'scripts:login',
       'styles',
       cb
     );
@@ -168,10 +174,10 @@ gulp.task('build', cb => {
       'clean',
       'environment',
       'static',
-      'html',
+      //'html',
       'html:pages',
       'scripts',
-      'scripts:login',
+      //'scripts:login',
       'styles',
       cb
     );
