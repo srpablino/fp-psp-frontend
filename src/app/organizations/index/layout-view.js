@@ -5,7 +5,6 @@ import $ from 'jquery';
 import { debounce } from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
-import storage from '../storage';
 import utils from '../../utils';
 import OrganizationsModel from '../model';
 
@@ -54,9 +53,7 @@ export default Mn.View.extend({
     section.loading();
     this.getRegion('list').empty();
     setTimeout(() => {
-      var filtered = this.collection.filter(function (organization) {
-            return organization.get("name").toLowerCase().includes(name.toLowerCase());
-      });
+      var filtered = this.collection.filter((organization) => organization.get("name").toLowerCase().includes(name.toLowerCase()));
       this.collection = new Bn.Collection(filtered);
       this.showList();
       section.reset();

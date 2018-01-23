@@ -3,11 +3,7 @@ import Bn from 'backbone';
 import $ from 'jquery';
 import { debounce } from 'lodash';
 import utils from '../utils';
-import storage from './storage';
-
-
 import Template from './template.hbs';
-import Collection from './collection';
 import CollectionView from './collection-view';
 import UsersModel from './model';
 
@@ -54,9 +50,7 @@ export default Mn.View.extend({
     section.loading();
     this.getRegion('list').empty();
     setTimeout(() => {
-      var filtered = this.collection.filter(function (user) {
-            return user.get("username").toLowerCase().includes(userName.toLowerCase());
-      });
+      var filtered = this.collection.filter((user) => user.get("username").toLowerCase().includes(userName.toLowerCase()));
       this.collection = new Bn.Collection(filtered);
       this.showList();
       section.reset();
