@@ -11,6 +11,7 @@ import home from '../home/routes';
 import termcondpol from '../termcondpol/routes'
 import security from '../security/routes';
 import faqs from '../faqs/routes';
+import snapshotsTmp from '../snapshots_tmp/routes';
 
 const initRouter = props => {
   const { app, before, onAccessDenied } = props;
@@ -25,7 +26,8 @@ const initRouter = props => {
     home(props),
     termcondpol(props),
     security(props),
-    faqs(props)
+    faqs(props),
+    snapshotsTmp(props)
   );
   const authorizer = initAuthorizer({
     onAccessDenied,

@@ -9,7 +9,8 @@ const adminCrudRoutes = {
   users: ['users(/)', 'users'],
   families: ['families(/)', 'families'],
   surveys: ['surveys(/)', 'surveys'],
-  reports: ['reports(/)', 'reports']
+  reports: ['reports(/)', 'reports'],
+  snapshotsTmp: ['snapshots(/)', 'snapshots']
 };
 
 // Cached regular expressions for matching named param parts and splatted
