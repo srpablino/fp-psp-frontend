@@ -17,9 +17,14 @@ const organizations = props => {
       //paginated organizations
       showOrganizations() {
         organizationsStorage.find()
-        .then(model => {
-          app.showViewOnRoute(new OrganizationsView({ model }));
-        });
+          .then(model => {
+            app.showViewOnRoute(
+              new OrganizationsView({
+                model,
+                app
+              })
+            );
+          });
       },
       showOrganization(organizationId, entity) {
         if(entity == null){
@@ -52,7 +57,7 @@ const organizations = props => {
         }
       },
       newOrganization() {
-        app.showViewOnRoute(new NewOrganizationView());
+        app.showViewOnRoute(new NewOrganizationView({app}));
       }
     }
   };

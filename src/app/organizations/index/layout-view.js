@@ -16,7 +16,8 @@ export default Mn.View.extend({
   events: {
     'keyup #search': 'handleSearch'
   },
-  initialize() {
+  initialize(options) {
+    this.app = options.app;
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
     $(window).scroll(this.loadMore);
@@ -30,6 +31,11 @@ export default Mn.View.extend({
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
+  },
+  onAttach() {
+    if (!this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
+      this.$el.find('#add-organization-button').hide();
+    }
   },
   getTemplate() {
 

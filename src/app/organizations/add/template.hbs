@@ -10,24 +10,11 @@
         </div>
         <br>
         <div class="" id="img-cam">
-          <img id="logo-image" class="card-img-top img-responsive center-block" src="/static/images/icon_camara.png" alt="" />
-          <p class="text-center">Upload logo</p>
+          <img id="image-logo" class="card-img-top img-responsive center-block" src="/static/images/icon_camara.png" alt="" />
+          <p id="image-logo-text" class="text-center">Click to upload a logo</p>
 
           <div class="form-group">
-            <input value="{{organization.image}}" id="image-file" type="file" class="form-control" name="image">
-
-            <script type="text/javascript">
-              var inputElement = document.getElementById("image-file");
-              inputElement.addEventListener("change", previewFile, false);
-
-              function previewFile() {
-                var reader = new FileReader();
-                reader.onload = function () {
-                  document.getElementById('logo-image').src = reader.result;
-                };
-                reader.readAsDataURL(document.getElementById('image-file').files[0]);
-              }
-            </script>
+            <input value="{{organization.image}}" id="input-image-file" type="file" class="form-control" name="image" style="display: none;" >
           </div>
 
         </div>

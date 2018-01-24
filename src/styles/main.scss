@@ -230,6 +230,7 @@ div.fp-form-container {
 .img-card {
   width: 100px;
   height: 100px;
+  object-fit: contain;
   background: white url("/static/images/image-loader.gif") no-repeat center;
 }
 
