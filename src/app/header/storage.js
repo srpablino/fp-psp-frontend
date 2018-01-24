@@ -22,7 +22,11 @@ var HeaderStorage = Storage.extend({
     }
 
     if (session.userHasRole('ROLE_ROOT')) {
-      return new Model(allMenuItems);
+      const items = {
+        navigationItems: allMenuItems.navigationItems
+            .filter(item => !(item.link === '#organizations'))
+      };
+      return new Model(items);
     }
 
     if (session.userHasRole('ROLE_HUB_ADMIN')) {
