@@ -183,6 +183,8 @@ class Form extends Component {
 
   onSaveDraft(){
     if(this.checkShowSaveDraft(this.state)){
+    // When a survey has not been completed and we want to save a draft
+    // , the method handleSaveDraft is called.
       this.props.handleSaveDraft(this.state);
     } else {
       this.render();
@@ -194,15 +196,13 @@ class Form extends Component {
 
     if(this.props.uiSchema['ui:group:personal'].length === 0){
       show = false;
-    }
-
-    for(let i=0; i<this.props.uiSchema['ui:group:personal'].length; i++){
-      if(!state.formData){
-        show = false;
-      }
-
-      if(!state.formData[this.props.uiSchema['ui:group:personal'][i]]){
-        show = false;
+    } else if(!state.formData){
+      show = false;
+    }else {
+      for(let i=0; i<this.props.uiSchema['ui:group:personal'].length; i++){
+        if(!state.formData[this.props.uiSchema['ui:group:personal'][i]]){
+          show = false;
+        }
       }
     }
 
@@ -211,14 +211,10 @@ class Form extends Component {
 
   render() {
 
-    let classButton = 'btn btn-primary pull-right';
-    if(!this.checkShowSaveDraft(this.state)){
-      classButton+= ' hidden';
-    }
-
     return (
       <div>
-        <button className={classButton} id="save-draft" onClick={() => this.onSaveDraft()}> Save Draft </button>
+        {this.checkShowSaveDraft(this.state)? 
+          <button className="btn btn-primary pull-right" id="save-draft" onClick={() => this.onSaveDraft()}> Save Draft </button> :'' }
         <br />
         <br />
       

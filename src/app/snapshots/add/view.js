@@ -12,7 +12,7 @@ import Template from './template.hbs';
 import Form from '../../components/form';
 import SurveyModel from '../../surveys/add/model';
 import SnapshotModel from './model';
-import SnapshotTmpModel from '../../snapshots_tmp/model';
+import SnapshotTmpModel from '../../snapshots_drafts/model';
 import FlashesService from '../../flashes/service';
 
 export default Mn.View.extend({
