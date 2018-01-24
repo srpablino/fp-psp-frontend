@@ -15,7 +15,11 @@ module.exports = merge(baseConfig, {
     loaders: [
       {
         test: /\.scss$/,
-        loaders: ['sass-loader?sourceMap']
+        loaders: [
+          'style-loader',
+          'css-loader?sourceMap',
+          'sass-loader?sourceMap'
+        ]
       }
     ]
   },
