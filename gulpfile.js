@@ -32,38 +32,12 @@ const config = [
 ];
 
 gulp.task('scripts', () => {
-  //let entryPoint = webpackConfig.entryPointsConfig.main;
   $.webpackStream(webpackConfig)
     .on('error', function(error) {
       $.util.log($.util.colors.red(error.message));
       this.emit('end');
     })
     .pipe(gulp.dest(dist))
-    .pipe($.size({ title: 'js' }))
-    .pipe($.connect.reload());
-
-  // gulp
-  //   .src([entryPoint.fullPath])
-  //   .pipe($.webpackStream(webpackConfig.getConfig(entryPoint.webpackEntry)))
-  //   .on('error', function(error) {
-  //     $.util.log($.util.colors.red(error.message));
-  //     this.emit('end');
-  //   })
-  //   .pipe(gulp.dest(dist))
-  //   .pipe($.size({ title: 'js' }))
-  //   .pipe($.connect.reload());
-});
-
-gulp.task('scripts:login', () => {
-  let entryPoint = webpackConfig.entryPointsConfig.login_main;
-  gulp
-    .src([entryPoint.fullPath])
-    .pipe($.webpackStream(webpackConfig.getConfig(entryPoint.webpackEntry)))
-    .on('error', function(error) {
-      $.util.log($.util.colors.red(error.message));
-      this.emit('end');
-    })
-    .pipe(gulp.dest(dist + 'login/js/'))
     .pipe($.size({ title: 'js' }))
     .pipe($.connect.reload());
 });
@@ -162,11 +136,8 @@ gulp.task('build', cb => {
       'clean',
       'environment',
       'static',
-      //'html',
       'html:pages',
       'scripts',
-      //'scripts:login',
-      'styles',
       cb
     );
   } else {
@@ -174,11 +145,8 @@ gulp.task('build', cb => {
       'clean',
       'environment',
       'static',
-      //'html',
       'html:pages',
       'scripts',
-      //'scripts:login',
-      'styles',
       cb
     );
   }
