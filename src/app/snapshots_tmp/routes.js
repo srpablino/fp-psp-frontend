@@ -27,7 +27,8 @@ const snapshotsTmp = props => {
               Bn.history.navigate(`/surveys`, true);
             },
             app,
-            state: model.attributes.state_draft
+            stateDraft: model.attributes.state_draft,
+            snapshotTmpId: model.attributes.id
           });
   
           app.showViewOnRoute(newSnapshotView);

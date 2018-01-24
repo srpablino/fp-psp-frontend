@@ -24,7 +24,7 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { organizationId, surveyId, handleCancel, app, state } = options;
+    const { organizationId, surveyId, handleCancel, app, stateDraft, snapshotTmpId } = options;
     
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
@@ -34,7 +34,8 @@ export default Mn.View.extend({
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
     this.props.organizationId = organizationId;
-    this.props.state = state;
+    this.props.stateDraft = stateDraft;
+    this.props.snapshotTmpId = snapshotTmpId;
     this.app = app;
   },
 
@@ -75,7 +76,7 @@ export default Mn.View.extend({
       handleCancel: this.props.handleCancel,
       handleSaveDraft: this.handleSaveDraft.bind(this),
       view: this,
-      stateDraft: this.props.state
+      stateDraft: this.props.stateDraft
     });
     ReactDOM.unmountComponentAtNode(placeHolder);
     ReactDOM.render(this.reactView, placeHolder);
@@ -153,6 +154,7 @@ export default Mn.View.extend({
   },
 
   handleSaveDraft(state){
+    const snapshotTmpModel = new SnapshotTmpModel();
 
     const snapshot = {
       survey_id: this.props.surveyId,
@@ -167,26 +169,53 @@ export default Mn.View.extend({
       personal_response: this.getPersonal(state.formData)
     }
 
-    new SnapshotTmpModel().save(snapshot).then(
+    if(this.props.snapshotTmpId){
+      console.log(`tenia id ${this.props.snapshotTmpId}`);
+      
+      snapshotTmpModel.save(this.props.snapshotTmpId, snapshot).then(
 
-      () => {
-        
-        FlashesService.request('add', {
-          timeout: 2000,
-          type: 'info',
-          title: 'The information has been saved'
-        });
+        () => {
+          
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'info',
+            title: 'The information has been saved'
+          });
 
-        Bn.history.navigate(`/surveys`, true);
-      },
-      error => {
-        FlashesService.request('add', {
-          timeout: 2000,
-          type: 'warning',
-          title: error.responseJSON.message
-        });
-      }
-    );
+          Bn.history.navigate(`/surveys`, true);
+        },
+        error => {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'warning',
+            title: error.responseJSON.message
+          });
+        }
+      );
+    } else {
+      console.log('no tenia id');
+      
+      snapshotTmpModel.save(snapshot).then(
+
+        () => {
+          
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'info',
+            title: 'The information has been saved'
+          });
+
+          Bn.history.navigate(`/surveys`, true);
+        },
+        error => {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'warning',
+            title: error.responseJSON.message
+          });
+        }
+      );
+    }
   }
 
 });
