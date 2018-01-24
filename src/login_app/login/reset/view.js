@@ -32,87 +32,101 @@ export default Mn.View.extend({
     }, 0);
 
   },
-  urlParam(name){
-    var results = new RegExp(`[\?&] + ${name} + =([^&#]*)`).exec(window.location.href);
-    try {
-      return results[1] || 0;
-    } catch (e) {
+
+urlParam(name){
+  try {
+    	let results = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`).exec(window.location.href);
+
+    	return results[2] || 0;
+  } catch (e) {
       FlashesService.request('add', {
         timeout: 2000,
         type: 'warning',
         title: 'Insufficient data'
       });
-    }
-  },
+  }
+},
+
+
 
   reset(event) {
     event.preventDefault();
 
     if(requiredInput($("#password")) && requiredInput($("#repeatPassword"))){
+      if($("#password").val() === $("#repeatPassword").val() ){
+        $("#password").parent().removeClass('has-error');
+        $("#repeatPassword").parent().removeClass('has-error');
 
-      const loginBtn = this.$el.find('#btn-login');
-      const button = getLoadingButton(loginBtn);
+        const loginBtn = this.$el.find('#btn-login');
+        const button = getLoadingButton(loginBtn);
 
-      let params = {
-        token: this.urlParam('token'),
-        userId: this.urlParam('id'),
-        password: $('#password').val(),
-        repeatPassword: $('#repeatPassword').val()
-      };
+        let params = {
+          token: this.urlParam('token'),
+          userId: this.urlParam('id'),
+          password: $('#password').val(),
+          repeatPassword: $('#repeatPassword').val()
+        };
+        console.log(params);
+        let url = `${
+          env.API_PUBLIC}/password/changePassword `;
 
-      let url = `${
-        env.API_PUBLIC}/password/changePassword `;
+          button.loading();
+          $.ajax({
+            url,
+            type: 'POST',
+            data: params,
 
-        button.loading();
-        $.ajax({
-          url,
-          type: 'POST',
-          data: params,
-
-          success: data => {
-            if (data.error) {
-              $('.alert-error')
-              .text(data.error.text)
-              .show();
-            } else {
+            success() {
               FlashesService.request('add', {
                 timeout: 2000,
                 type: 'info',
                 title: 'Password reset successfully'
               });
-              window.location.replace(`/`);
+              setTimeout(() => {
+                window.location.replace(`/`);
+              }, 2000);
+
+
+            },
+            error(xmlHttpRequest, textStatus) {
+              if (xmlHttpRequest && xmlHttpRequest.status === 0) {
+                FlashesService.request('add', {
+                  timeout: 2000,
+                  type: 'danger',
+                  title: 'No connection to server'
+                });
+                return;
+              }
+              if (textStatus === 'Unauthorized') {
+                FlashesService.request('add', {
+                  timeout: 2000,
+                  type: 'warning',
+                  title: 'Not authorized'
+                });
+              } else {
+                FlashesService.request('add', {
+                  type: 'warning',
+                  title: 'Wrong credentials. Please try again.',
+                  timeout: 2000
+                });
+                $('#password').val('');
+                $('#repeatPassword').val('');
+                $('#password').focus();
+              }
+            },
+            complete: () => {
+              button.reset();
             }
-          },
-          error(xmlHttpRequest, textStatus) {
-            if (xmlHttpRequest && xmlHttpRequest.status === 0) {
-              FlashesService.request('add', {
-                timeout: 2000,
-                type: 'danger',
-                title: 'No connection to server'
-              });
-              return;
-            }
-            if (textStatus === 'Unauthorized') {
-              FlashesService.request('add', {
-                timeout: 2000,
-                type: 'warning',
-                title: 'Not authorized'
-              });
-            } else {
-              FlashesService.request('add', {
-                type: 'warning',
-                title: 'Wrong credentials. Please try again.',
-                timeout: 2000
-              });
-              $('#password').val('');
-              $('#repeatPassword').val('');
-              $('#password').focus();
-            }
-          },
-          complete: () => {
-            button.reset();
-          }
+          });
+      }else{
+        $("#password").parent().addClass('has-error');
+        $("#repeatPassword").parent().addClass('has-error');
+        FlashesService.request('add', {
+          timeout: 2000,
+          type: 'danger',
+          title: 'Password does not match'
         });
+      }
     }
 
   },
