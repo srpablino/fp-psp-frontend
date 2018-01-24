@@ -1,7 +1,11 @@
 const merge = require('webpack-merge');
+const path = require('path');
 const baseConfig = require('./base.config.js');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const extractSass = new ExtractTextPlugin('css/main.[contenthash].css');
 
 module.exports = merge(baseConfig, {
   debug: false,
@@ -9,6 +13,14 @@ module.exports = merge(baseConfig, {
   output: {
     path: __dirname,
     filename: '[name].[chunkhash].js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.scss$/,
+        loader: extractSass.extract(['css', 'sass'])
+      }
+    ]
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
@@ -38,6 +50,7 @@ module.exports = merge(baseConfig, {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
-    })
+    }),
+    extractSass
   ]
 });

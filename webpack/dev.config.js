@@ -11,6 +11,14 @@ module.exports = merge(baseConfig, {
     path: __dirname,
     filename: '[name].js'
   },
+  module: {
+    loaders: [
+      {
+        test: /\.scss$/,
+        loaders: ['sass-loader?sourceMap']
+      }
+    ]
+  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
