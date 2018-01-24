@@ -14,7 +14,7 @@ const snapshotsTmp = props => {
         const model =  new SnapshotTmpModel();
         model.fetch({
           data: {
-            snapshot_tmp_id: 1
+            snapshot_draft_id: 1
           }
         }).then(() => {
          
