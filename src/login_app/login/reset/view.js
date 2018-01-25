@@ -78,20 +78,19 @@ urlParam(name){
 
             success() {
               FlashesService.request('add', {
-                timeout: 2000,
+                timeout: 4000,
                 type: 'info',
-                title: 'Password reset successfully'
+                title: 'Password reset successfully !'
               });
               setTimeout(() => {
                 window.location.replace(`/`);
-              }, 2000);
-
+              }, 3000);
 
             },
             error(xmlHttpRequest, textStatus) {
               if (xmlHttpRequest && xmlHttpRequest.status === 0) {
                 FlashesService.request('add', {
-                  timeout: 2000,
+                  timeout: 3000,
                   type: 'danger',
                   title: 'No connection to server'
                 });
@@ -107,7 +106,7 @@ urlParam(name){
                 FlashesService.request('add', {
                   type: 'warning',
                   title: 'Wrong credentials. Please try again.',
-                  timeout: 2000
+                  timeout: 3000
                 });
                 $('#password').val('');
                 $('#repeatPassword').val('');
@@ -122,8 +121,8 @@ urlParam(name){
         $("#password").parent().addClass('has-error');
         $("#repeatPassword").parent().addClass('has-error');
         FlashesService.request('add', {
-          timeout: 2000,
-          type: 'danger',
+          timeout: 3000,
+          type: 'warning',
           title: 'Password does not match'
         });
       }

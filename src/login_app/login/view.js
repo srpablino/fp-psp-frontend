@@ -101,6 +101,7 @@ export default Mn.View.extend({
             title: 'Not authorized'
           });
         } else {
+          console.log(textStatus);
           FlashesService.request('add', {
             type: 'warning',
             title: 'Wrong credentials. Please try again.',
@@ -135,35 +136,37 @@ export default Mn.View.extend({
       type: 'POST',
       success() {
           FlashesService.request('add', {
-            timeout: 2000,
+            timeout: 6000,
             type: 'info',
             title: `Thanks! Please check ${email} for a link to reset your password`
           });
 
           self.backLogin();
       },
-      error(xmlHttpRequest, textStatus) {
+      error(xmlHttpRequest, statusText) {
         if (xmlHttpRequest && xmlHttpRequest.status === 0) {
           FlashesService.request('add', {
-            timeout: 2000,
+            timeout: 4000,
             type: 'danger',
             title: 'No connection to server'
           });
           return;
         }
-        if (textStatus === 'Unauthorized') {
+
+        if (statusText === 'Unauthorized') {
           FlashesService.request('add', {
-            timeout: 2000,
+            timeout: 3000,
             type: 'warning',
             title: 'Not authorized'
           });
         } else {
+          let jsonResponse = JSON.parse(xmlHttpRequest.responseText);
+          let message = jsonResponse.message;
           FlashesService.request('add', {
             type: 'warning',
-            title: 'Enter your email. Please try again.',
-            timeout: 2000
+            title: message,
+            timeout: 3000
           });
-
         }
       },
       complete: () => {
