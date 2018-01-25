@@ -57,6 +57,7 @@ export default Mn.View.extend({
       if(self.app.getSession().get('user').organization !== null){
         params.organizationId = self.app.getSession().get('user').organization.id
       }
+      
 
       let moreElements = new OrganizationsCollection();
       moreElements.fetch({

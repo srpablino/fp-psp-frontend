@@ -148,7 +148,7 @@ class Form extends Component {
 
   render() {
     return (
-      <div className="survey-container">
+      <div className="col-md-12 survey-container">
         <label className="progress-survey">
           {' '}
           {this.state.stepsSchema[this.state.step].description}
@@ -163,18 +163,16 @@ class Form extends Component {
           onError={log('errors')}
           formData={this.state.formData}
         >
-          <div>
-            <button
-              type="button"
-              onClick={() => this.onCancel(this.state.formData)}
-              className="btn btn-circle survey-previous"
-            >
-              <i className="fa fa-chevron-left" />
-            </button>
-            <button type="submit" className="btn btn-circle survey-next">
-              <i className="fa fa-chevron-right" />
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => this.onCancel(this.state.formData)}
+            className="btn btn-circle survey-previous"
+          >
+            <i className="fa fa-chevron-left" />
+          </button>
+          <button type="submit" className="btn btn-circle survey-next">
+            <i className="fa fa-chevron-right" />
+          </button>
         </JsonSchemaForm>
       </div>
     );

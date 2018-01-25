@@ -12,7 +12,6 @@ export default Mn.View.extend({
   events: {
     'click #add-new': 'handleAddNew'
   },
-
   initialize(options) {
     const { add } = options;
     this.collection = new Collection();
@@ -49,8 +48,9 @@ export default Mn.View.extend({
       $('#add-new').show();
     }
   },
-  
-  handleAddNew() {
+
+  handleAddNew(e) {
+    e.preventDefault();
     this.props.add();
   },
 
@@ -63,16 +63,16 @@ export default Mn.View.extend({
       if (!confirmed) {
         return;
       }
-     
+
       model.destroy({
-         
+
         success: () => self.handleDestroySuccess(),
         error: (item, response) => {
           self.render();
           return self.handleDestroyError(response);
         },
         wait:true
-        });      
+        });
     });
   },
 

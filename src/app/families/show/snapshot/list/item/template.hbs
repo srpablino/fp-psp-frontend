@@ -1,21 +1,17 @@
-<div class="col-md-3 col-xs-6">
-  <article class="card animated fadeInLeft">
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+  <article class="card">
     <div  class="card-block">
-      <div class="card-title">
-        <h4 >Snapshot {{createdAt}}
-          <img class="pull-right" src="/static/images/icon_more.png" >
-        </h4>
+      <div class="card-title row">
+        <p class="text-left text-blue">Snapshot {{createdAt}}</p>
       </div>
-    <a href="#families/{{snapshot.family_id}}/snapshots/{{snapshot.snapshot_economic_id}}" style="text-decoration: none;">
-      <div id="snapshot-indicators">
-        <div class="luces">
-          <br>
-        <span class="center-block" id="green">{{snapshot.count_green_indicators}}</span>
-        <span class="center-block" id="yellow">{{snapshot.count_yellow_indicators}}</span>
-        <span class="center-block" id="red">{{snapshot.count_red_indicators}}</span>
-      </div>
-      <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
-    </div>
-      </a>
+      <a href="#families/{{snapshot.family_id}}/snapshots/{{snapshot.snapshot_economic_id}}" style="text-decoration: none;">
+        <div class="snapshot-indicators row">
+          <div class="light">
+            <span class="center-block light-green light-medium">{{snapshot.count_green_indicators}}</span>
+            <span class="center-block light-yellow light-medium">{{snapshot.count_yellow_indicators}}</span>
+            <span class="center-block light-red light-medium">{{snapshot.count_red_indicators}}</span>
+          </div>
+        </div>
+        </a>
   </article>
 </div>

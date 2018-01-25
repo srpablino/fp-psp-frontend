@@ -1,60 +1,54 @@
 <div class="row">
-  <div class="col-md-3 col-xs-6">
-    <article class="card animated fadeInLeft">
+  <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <article class="card">
       <div class="card-block">
-        <div class="card-title">
-          <h4 >Snapshot {{createdAt}}
-            <img class="pull-right" src="/static/images/icon_more.png" >
-          </h4>
+        <div class="card-title row">
+          <p class="text-left text-blue">Snapshot {{createdAt}}</p>
         </div>
-
-        <div  id="snapshot-indicators">
-          <div class="luces">
-            <br>
-            <span class="center-block" id="green">{{snapshot.count_green_indicators}}</span>
-            <span class="center-block" id="yellow">{{snapshot.count_yellow_indicators}}</span>
-            <span class="center-block" id="red">{{snapshot.count_red_indicators}}</span>
+        <div class="snapshot-indicators row">
+          <div class="light">
+            <span class="center-block light-green light-big">{{snapshot.count_green_indicators}}</span>
+            <span class="center-block light-yellow light-medium">{{snapshot.count_yellow_indicators}}</span>
+            <span class="center-block light-red light-medium">{{snapshot.count_red_indicators}}</span>
           </div>
-          <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
         </div>
       </div>
     </article>
   </div>
-
   <div class="col-md-9 col-xs-6 ">
-    <article class="card animated fadeInLeft">
+    <article class="card">
       <div class="card-block">
-        <div class="card-title" >
-          <h4 >Priorities
-            <img class="pull-right" src="/static/images/icon_more.png" >
-          </h4>
+        <div class="card-title row">
+          <p class="text-left text-blue">Priorities</p>
         </div>
-        <br/>
-        {{#each snapshot.indicators_priorities}}
-          <div class="list-priorities">
-            <span id="item-number" class="pull-left ">{{[../../../helpers/counter] @index}}</span>
-            <div class="">
-            <span>{{this.indicator}}</span><br>
-              <span class="text-muted">{{this.reason}}</span>
+        <div class="margin-tb-20px row">
+          <div class="col-md-12">
+            <div class="list-priorities">
+              {{#each snapshot.indicators_priorities}}
+              <div class="row margin-tb-10px">
+                <div class="col-md-12">
+                  <span id="item-number" class="pull-left ">{{[../../../helpers/counter] @index}}</span>
+                  <span>{{this.indicator}}</span><br>
+                  <span>{{this.reason}}</span>
+                </div>
+              </div>
+
+              {{/each}}
             </div>
           </div>
-        {{/each}}
+        </div>
     </article>
   </div>
 </div>
 <br/>
 <div class="row">
     <div class="col-lg-12">
-      <article class="card animated fadeInLeft">
+      <article class="card">
         <div  class="card-block">
-          <div class="card-title">
-            <h4 >Indicators
-              <img class="pull-right" src="/static/images/icon_more.png" >
-            </h4>
+          <div class="card-title row">
+            <p class="text-left text-blue">Indicators</p>
           </div>
-          <br/>
-          <div class="" >
-          <div class="row">
+          <div class="margin-tb-20px row">
             {{#each snapshotIndicators}}
             <div class="col-md-2 col-lg-1 col-sm-2 col-xs-4 col-xm-2 indicator-circle-snapshot">
               <img class="center-block" src="{{ this.image }}" >
