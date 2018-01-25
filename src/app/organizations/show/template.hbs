@@ -73,13 +73,16 @@
 
 <div class="col-lg-8">
   <div class="col-lg-6">
-      <article class="card">
+      <article class="card" style="min-height: 287px;">
         <div class="card-block">
           <div class="card-title">
             <h4>Families</h4>
           </div>
-          <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
+          <br><br>
+          <div class="">
+            <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
             <p class="strike-text centered">in Total</p>
+          </div>
         </div>
       </article>
   </div>
@@ -91,7 +94,6 @@
             <h4 >Indicators
             </h4>
           </div>
-          <h6 class="text-muted"></h6>
           <div class="text-center">
           <div id="bar-indicators"></div>
         </div>
@@ -107,48 +109,55 @@
           <h4 >Top of Indicators
           </h4>
         </div>
-        <br/>
-        <table class="table maintenance-watermark" id="table-top-indicators">
-          <thead>
-            <th>Indicator</th>
-            <th><img src="/static/images/icon_elipse_verde_01.png"></th>
-            <th><img src="/static/images/icon_elipse_amarillo_01.png"></th>
-            <th><img src="/static/images/icon_elipse_rojo_01.png"></th>
-          </thead>
-          <tbody>
-          <tr>
-            <td>Income above the poverty line</td>
-            <td>52</td>
-            <td>110</td>
-            <td>294</td>
-          </tr>
-          <tr>
-            <td>Family savings</td>
-            <td>112</td>
-            <td>240</td>
-            <td>154</td>
-          </tr>
-          <tr>
-            <td>Violence against women</td>
-            <td>127</td>
-            <td>201</td>
-            <td>165</td>
-          </tr>
-          <tr>
-            <td>Stable income</td>
-            <td>112</td>
-            <td>210</td>
-            <td>194</td>
-          </tr>
-          <tr>
-            <td>Safe home</td>
-            <td>312</td>
-            <td>136</td>
-            <td>54</td>
-          </tr>
-        </tbody>
+        <div class="" style="margin: 20px;">
+          <table class="table" id="table-top-indicators">
+            <thead>
+              <th>Indicator</th>
+              <th><img src="/static/images/icon_elipse_verde_01.png"></th>
+              <th><img src="/static/images/icon_elipse_amarillo_01.png"></th>
+              <th><img src="/static/images/icon_elipse_rojo_01.png"></th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Income above the poverty line</td>
+                <td>52</td>
+                <td>110</td>
+                <td>294</td>
+              </tr>
+              <tr>
+                <td>Family savings</td>
+                <td>112</td>
+                <td>240</td>
+                <td>154</td>
+              </tr>
+              <tr>
+                <td>Family savings</td>
+                <td>112</td>
+                <td>240</td>
+                <td>156</td>
+              </tr>
+              <tr>
+                <td>Violence against women</td>
+                <td>127</td>
+                <td>201</td>
+                <td>165</td>
+              </tr>
+              <tr>
+                <td>Stable income</td>
+                <td>112</td>
+                <td>210</td>
+                <td>194</td>
+              </tr>
+              <tr>
+                <td>Safe home</td>
+                <td>312</td>
+                <td>136</td>
+                <td>54</td>
+              </tr>
+            </tbody>
 
-        </table>
+          </table>
+        </div>
       </div>
     </article>
 </div>

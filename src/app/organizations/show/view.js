@@ -1,6 +1,7 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import c3 from 'c3';
+import 'datatables.net-bs';
 import Template from './template.hbs';
 // import UsersTemplate from './users-template.hbs';
 // import IndicatorsTemplate from './indicators-template.hbs';
@@ -31,7 +32,20 @@ export default Mn.View.extend({
     }
     setTimeout(() => {
       this.chart();
+      this.dataTables();
     }, 0);
+  },
+
+  dataTables(){
+      $('#table-top-indicators').dataTable({
+        "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
+        "searching": false,
+        "paging" : false,
+        "lengthChange": false,
+        "info": false,
+        "order": [[ 1, "desc" ], [ 2, "desc" ], [ 3, "desc" ]]
+
+      });
   },
 
   chart(){
