@@ -10,6 +10,6 @@ export default Mn.Application.extend({
     const rootView = new LoginView();
     this.showView(rootView);
     this.Router = new Router({controller: rootView});
-    Bn.history.start({pushState: true})
+     Bn.history.start({ root: window.location.pathname });
   }
 });
