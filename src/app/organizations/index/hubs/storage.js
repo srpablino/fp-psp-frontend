@@ -33,10 +33,6 @@ var OrganizationsStorage = Storage.extend({
         {
           name: 'Hubs',
           link: `/#collaborators/hubs`
-        },
-        {
-          name: 'Partners',
-          link: `/#collaborators/partnes`
         }
       ]
     };
