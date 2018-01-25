@@ -1,5 +1,6 @@
 import SurveysView from './view';
 import NewSurvey from './add/view';
+import Drafts from './drafts/layout-view';
 
 const surveys = props => {
   const { app } = props;
@@ -7,6 +8,7 @@ const surveys = props => {
     appRoutes: {
       surveys: 'showSurveys',
       'surveys/new': 'newSurvey',
+      'surveys/drafts': 'drafts',
     },
     controller: {
       showSurveys() {
@@ -15,6 +17,9 @@ const surveys = props => {
       },
       newSurvey() {
         app.showViewOnRoute(new NewSurvey(app));
+      },
+      drafts() {
+        app.showViewOnRoute(new Drafts(app));
       }
     }
   };
