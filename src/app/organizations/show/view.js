@@ -1,6 +1,6 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
-
+import c3 from 'c3';
 import Template from './template.hbs';
 // import UsersTemplate from './users-template.hbs';
 // import IndicatorsTemplate from './indicators-template.hbs';
@@ -29,6 +29,39 @@ export default Mn.View.extend({
         .parent()
         .addClass('subActive');
     }
+    setTimeout(() => {
+      this.chart();
+    }, 0);
+  },
+
+  chart(){
+    c3.generate({
+        bindto: '#bar-indicators',
+        data: {
+          columns: [
+            ['Red', 10],
+            ['Yellow', 5],
+            ['Green', 15]
+          ],
+          colors:{
+                Red: 'rgba(255, 0, 0, 0.8)',
+                Yellow: 'rgba(255, 255, 0, 0.7)',
+                Green: 'rgba(0, 128, 0, 0.7)'
+              },
+              names: {
+                    Red: 'Red: 10',
+                    Yellow: 'Yellow: 5',
+                    Green: 'Green: 15'
+                  },
+          type: 'donut'
+        },
+        donut: {
+          width: 50
+        },
+        size: {
+            height: 250
+          }
+    });
   },
 
   getTemplate() {
@@ -50,6 +83,7 @@ export default Mn.View.extend({
       // return IndicatorsTemplate;
       return UnderConstrucionTemplate;
     }
+
 
     return Template;
   },
