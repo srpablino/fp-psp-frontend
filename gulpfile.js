@@ -31,8 +31,25 @@ const config = [
   }
 ];
 
+let webpackChangeHandler = function(err, stats) {
+  // $.util.log(stats.toString({
+  //     colors: $.util.colors.supportsColor,
+  //     chunks: false,
+  //     hash: false,
+  //     version: false
+  // }));
+
+  // browserSync.reload();
+
+  // firstBuildReady = true;
+
+  // TODO implement here the reload of
+  // the browser
+  console.log('changes happened');
+};
+
 gulp.task('scripts', () => {
-  $.webpackStream(webpackConfig)
+  $.webpackStream(webpackConfig, null, webpackChangeHandler)
     .on('error', function(error) {
       $.util.log($.util.colors.red(error.message));
       this.emit('end');
