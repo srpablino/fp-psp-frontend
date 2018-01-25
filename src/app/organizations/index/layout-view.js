@@ -37,7 +37,7 @@ export default Mn.View.extend({
   },
   onAttach() {
     if (!this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
-      this.$el.find('#add-organization-button').hide();
+      this.$el.find('#add-new').hide();
     }
   },
   getTemplate() {
