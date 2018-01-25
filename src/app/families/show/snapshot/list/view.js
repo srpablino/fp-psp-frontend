@@ -21,7 +21,7 @@ export default Mn.View.extend({
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
 
-    $('#subMenuItem > a[href$="snapshots"]')
+    $('.sub-menu-tiem > a[href$="snapshots"]')
       .parent()
       .addClass('subActive');
 

@@ -1,22 +1,20 @@
 
-<div id="card-item">
-  <article class="card animated fadeInLeft">
-
+<div class="card-item">
+  <article class="card">
     <div class="card-block">
-      <div class="card-title">
-        <h4 >Cod: {{family.code}}
-          <img class="pull-right" src="/static/images/icon_more.png" >
-        </h4>
+      <div class="row card-title">
+        <p class="text-left text-blue">Cod: {{family.code}}</p>
       </div>
-      <br><br>
-      <a href="#families/{{family.familyId}}">
-        <img class="card-img-top img-responsive  img-card center-block" src="/static/images/family-room.png" alt="" />
-  
-      </img>
-      </a>
-        <br><br>
-      <p class="organizarion-name text-center">Family {{family.person.lastName}}</p>
-
+      <div class="row card-image">
+        <div class="col-md-12">
+          <a href="#families/{{family.familyId}}">
+            <img class="card-img-top img-responsive  img-card center-block" src="/static/images/family-room.png" alt="" />
+          </a>
+        </div>
+      </div>
+      <div class="row card-title">
+        <p class="text-center">Family {{family.person.lastName}}</p>
+      </div>
     </div>
   </article>
 

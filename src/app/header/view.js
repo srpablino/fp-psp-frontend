@@ -8,7 +8,8 @@ export default Mn.View.extend({
   template: Template,
 
   events: {
-    'click #menuItem': 'highlight'
+    'click #menu-left .menu-item': 'highlight',
+    'click #menu-left img': 'highlightFirstElement'
   },
 
   highlight(e) {
@@ -19,6 +20,15 @@ export default Mn.View.extend({
     $(e.target)
       .parent()
       .addClass('active');
+  },
+
+  highlightFirstElement(){
+    $("#menu-left:first-child a")
+      .parent()
+      .addClass('active');
+   let $list = $("#menu-left a:not(:first)");
+   $list.parent()
+    .removeClass('active');
   },
   initialize(options) {
     this.app = options.app;

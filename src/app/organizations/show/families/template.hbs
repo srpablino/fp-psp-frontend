@@ -1,8 +1,12 @@
-<img id="floating-survey"  src="/static/images/icon_edit.png" >
+<a id="floating-survey" class="floating-edit floating-buttom" href="#surveys/new">
+</a>
+<!--
+<img   src="/static/images/icon_edit.png" >
+-->
 <div class="row">
   <div class="col-lg-9">
-    
-    <article class="card animated fadeInLeft">
+
+    <article class="card">
       <div class="card-block">
         <div class="card-title" >
           <h4>File
@@ -29,7 +33,7 @@
       </div>
       <br/><br/><br/>
     </article>
-    <article class="card animated fadeInLeft">
+    <article class="card">
       <div class="card-block">
         <div class="card-title" >
           <h4 >Priorities / Snapshot {{createdAt}}
@@ -37,22 +41,24 @@
           </h4>
         </div>
         <br/>
-        {{#each family.snapshot_indicators.indicators_priorities}}
-          <div class="list-priorities">
-            <span id="item-number" class="pull-left ">{{[helpers/counter] @index}}</span>
-            <div class="">
-            <span>{{this.indicator}}</span><br>
-              <span class="text-muted">{{this.reason}}</span>
-            </div>
-          </div>
-        {{/each}}
+        <div class="list-priorities">
+          {{#each family.snapshot_indicators.indicators_priorities}}
+              <div class="row margin-tb-10px">
+                <div class="col-md-12">
+                  <span id="item-number" class="pull-left ">{{[helpers/counter] @index}}</span>
+                  <span>{{this.indicator}}</span><br>
+                  <span class="text-gray card-text">{{this.reason}}</span>
+                </div>
+              </div>
+          {{/each}}
+        </div>
       </div>
     </article>
   </div>
 
   <div class="col-lg-3">
       <!-- Card -->
-      <article class="card animated fadeInLeft">
+      <article class="card">
         <div  class="card-block">
           <div class="card-title">
             <h4 >Indicators / Snapshot
@@ -60,7 +66,7 @@
             </h4>
           </div>
 
-        <div class="" id="snapshot-indicators">
+        <div class="snapshot-indicators">
             <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
             <div class="luces">
               <br>
@@ -70,15 +76,13 @@
             </div>
         </div>
       </article>
-
-      <article class="card animated fadeInLeft">
+      <article class="card">
         <div class="card-block" id="card-interventions">
           <div class="card-title" >
             <h4 >Interventions
               <img class="pull-right" src="/static/images/icon_more.png" >
             </h4>
           </div>
-
             <ul class="list-group">
                 <li class="list-group-item">
                   <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
