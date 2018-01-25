@@ -36,40 +36,68 @@ class Form extends Component {
         stepsUISchema
       };
     } else {
-
-      const stepKey = props.stateDraft.stepsSchema[props.stateDraft.step +1].key;
-      let indexActualKey = -1;
-      let firstIndexNotFound = -1;
-
-      for(let i=0; i < stepsSchema.length; i++){
-        if(stepsSchema[i].key === stepKey){
-          indexActualKey = i;
-        } 
-      
-       if(firstIndexNotFound===-1 && props.stateDraft.formData[stepsSchema[i].key]=== undefined){
-          firstIndexNotFound = i +1;
-        }
-      }
-      
-      if(indexActualKey!==-1)
-        if(props.stateDraft.step + 1 >= indexActualKey){
-          this.state = {
-            step: indexActualKey,
-            formData: props.stateDraft.formData,
-            stepsSchema,
-            stepsUISchema
-          };
-        } else {
-          this.state = {
-            step: firstIndexNotFound,
-            formData: props.stateDraft.formData,
-            stepsSchema,
-            stepsUISchema
-          };
-        }
-      }
+      this.updateState(stepsSchema, stepsUISchema);
+     
+    }
 
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  updateState(stepsSchema, stepsUISchema){
+
+    // Case 2: one o more fields were removed.
+
+    const index = this.props.uiSchema['ui:group:economics'].indexOf('activityMain');
+    this.props.uiSchema['ui:group:economics'].splice(index, 1);
+    
+    const formDataCopy = this.props.stateDraft.formData;
+
+
+    Object.keys(formDataCopy).forEach(function(field) {
+      if(!this.existInSchemaGroup(field)){
+        delete this.props.stateDraft.formData[field];
+      }
+    });
+    
+    const stepKey = this.props.stateDraft.stepsSchema[this.props.stateDraft.step +1].key;
+    let indexActualKey = -1;
+    let firstIndexNotFound = -1;
+
+    // Case 1: the fields order were changed.
+
+    for(let i=0; i < stepsSchema.length; i++){
+      if(stepsSchema[i].key === stepKey){
+        indexActualKey = i;
+      } 
+    
+     if(firstIndexNotFound===-1 && this.props.stateDraft.formData[stepsSchema[i].key]=== undefined){
+        firstIndexNotFound = i +1;
+      }
+    }
+    
+    if(indexActualKey!==-1){
+      if(this.props.stateDraft.step + 1 >= indexActualKey){
+        this.state = {
+          step: indexActualKey,
+          formData: this.props.stateDraft.formData,
+          stepsSchema,
+          stepsUISchema
+        };
+      } else {
+        this.state = {
+          step: firstIndexNotFound,
+          formData: this.props.stateDraft.formData,
+          stepsSchema,
+          stepsUISchema
+        };
+      }
+    }
+  }
+
+  existInSchemaGroup(field){
+    return this.props.uiSchema['ui:group:personal'].includes(field) ||
+            this.props.uiSchema['ui:group:economics'].includes(field) ||
+            this.props.uiSchema['ui:group:indicators'].includes(field);
   }
 
   uischemaNewEntry(uischema, key) {
