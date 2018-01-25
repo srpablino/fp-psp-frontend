@@ -1,14 +1,15 @@
 import Mn from 'backbone.marionette';
+import Bb from 'backbone';
 import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
-  initialize(options) {
-    this.totalFamilies = options.totalFamilies;
-  },
   serializeData() {
+    if (!this.model) {
+      this.model = new Bb.Model();
+    }
     return {
-      totalFamilies: this.totalFamilies
+      home: this.model.attributes
     };
   }
 });

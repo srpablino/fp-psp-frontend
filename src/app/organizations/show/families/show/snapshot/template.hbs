@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-md-3 col-xs-6">
-    <article class="card animated fadeInLeft">
+  <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <article class="card">
       <div  class="card-block">
         <div class="card-title">
           <h4 >Snapshot 2015-01
@@ -8,18 +8,20 @@
           </h4>
         </div>
 
-      <div class="text-center" id="family-snapshot">
-          <img  class="center-block" src="/static/images/icon_semaforo.png">
-          <span class="center-block" id="green">25</span>
-          <span id="yellow">19</span>
-          <span id="red">10</span>
-      </div>
+        <div class="snapshot-indicators" >
+          <div class="luces">
+            <br>
+            <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
+            <span class="center-block" id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+            <span class="center-block" id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
+          </div>
+        </div>
     </article>
 
   </div>
 
   <div class="col-md-9 col-xs-6 ">
-    <article class="card animated fadeInLeft">
+    <article class="card">
       <div class="card-block">
         <div class="card-title" >
           <h4 >Prioriades
@@ -73,7 +75,7 @@
 <br/>
 <div class="row">
     <div class="col-lg-12">
-      <article class="card animated fadeInLeft">
+      <article class="card">
         <div  class="card-block">
           <div class="card-title">
             <h4 >Indicadores

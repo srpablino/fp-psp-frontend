@@ -1,15 +1,16 @@
 import Mn from 'backbone.marionette';
+import CodeMirror from 'codemirror';
+import Bn from 'backbone';
+import 'codemirror/addon/edit/matchbrackets';
+import 'codemirror/addon/comment/continuecomment';
+import 'codemirror/addon/comment/comment';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/addon/lint/json-lint';
+
 import Template from './template.hbs';
 import Model from './model';
-import CodeMirror from 'codemirror';
 import utils from '../../utils';
 import FlashesService from '../../flashes/service';
-
-import MatchBrackets from '../../../../node_modules/codemirror/addon/edit/matchbrackets';
-import ContinueComment from '../../../../node_modules/codemirror/addon/comment/continuecomment';
-import Comment from '../../../../node_modules/codemirror/addon/comment/comment';
-import JavaScriptMode from '../../../../node_modules/codemirror/mode/javascript/javascript';
-import JsonLint from '../../../../node_modules/codemirror/addon/lint/json-lint';
 
 export default Mn.View.extend({
   template: Template,
@@ -52,63 +53,82 @@ export default Mn.View.extend({
     };
   },
   handleSubmit(event) {
-    const button = utils.getLoadingButton(this.$el.find('#submit'));
-    event.preventDefault();
-    button.loading();
+      try {
+        event.preventDefault();
+        this.saveySurvey();
 
-    // We manually add form values to model,
-    // the form -> model binding should ideally
-    // be done automatically.
-    this.$el
+      } catch (e) {
+        FlashesService.request('add', {
+          timeout: 2000,
+          type: 'warning',
+          title: e
+        });
+      }
+    },
+
+    saveySurvey(){
+      const button = utils.getLoadingButton(this.$el.find('#submit'));
+      button.loading();
+
+      // We manually add form values to model,
+      // the form -> model binding should ideally
+      // be done automatically.
+      this.$el
       .find('#form')
       .serializeArray()
       .forEach(element => {
         this.model.set(element.name, element.value);
       });
 
-      this.validate = {};
-      this.validate.title = this.model.title;
-      this.validate.description = this.model.description;
-      this.validate.survey_schema = this.schema.getValue();
-      this.validate.survey_ui_schema = this.schemaUI.getValue();
-     
-      var errors = [];
-      var errors = this.model.validate(this.validate);
+      let validate = {
+        title: this.model.get('title'),
+        description: this.model.get('description'),
+        survey_schema: this.schema.getValue(),
+        survey_ui_schema: this.schemaUI.getValue()
+      };
+
+      let errors = this.model.validate(validate);
 
       if (errors) {
-        errors.forEach(error =>{
+        errors.forEach(error => {
+           if (error.required)  this.$el.find(`#${error.field}`).parent().addClass('has-error');
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'warning',
-            title: error
-          })
+            title: error.message
+          });
         });
         button.reset();
         return;
+      }
 
-      } else {
+      this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
+      this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
 
-   
-        this.model.set('survey_schema', JSON.parse(this.schema.getValue()));
-        this.model.set('survey_ui_schema', JSON.parse(this.schemaUI.getValue()));
-    
-
-    this.model
+      this.model
       .save()
-      .then(result => {
-        FlashesService.request('add', {
-          type: 'info',
-          title: 'The survey has been saved'
-        });
-        this.props.listSurveys();
-      } 
-      , error => {
-        
-        FlashesService.request('add', {
-          type: 'warning',
-          title: error.responseJSON.message
-        });
-      })
+      .then(
+        () => {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'info',
+            title: 'The survey has been saved'
+          });
+          Bn.history.navigate(
+            `/surveys`,
+            true
+          );
+        },
+        error => {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'warning',
+            title: error.responseJSON.message
+          });
+        }
+      )
       .always(() => button.reset());
-  }
-}
+
+    }
+
 });

@@ -1,9 +1,10 @@
 import Mn from 'backbone.marionette';
+import $ from 'jquery';
+
 import Template from './template.hbs';
 import storage from '../../../storage';
 import CollectionView from './collection-view';
 import Collection from './collection';
-import $ from 'jquery';
 
 export default Mn.View.extend({
   template: Template,
@@ -20,19 +21,21 @@ export default Mn.View.extend({
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
 
-    $('#subMenuItem > a[href$="snapshots"]').parent().addClass('subActive');
+    $('.sub-menu-tiem > a[href$="snapshots"]')
+      .parent()
+      .addClass('subActive');
 
     this.showList();
   },
   showList() {
     var self = this;
     var collection = new Collection();
-    collection.fetch({
-      data: { family_id: this.model.attributes.id }
-    }).done(function(){
-      self.getRegion('list').show(
-        new CollectionView({ collection: collection})
-      );
-    });
+    collection
+      .fetch({
+        data: { family_id: this.model.attributes.id }
+      })
+      .done(() => {
+        self.getRegion('list').show(new CollectionView({ collection }));
+      });
   }
 });

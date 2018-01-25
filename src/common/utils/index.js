@@ -1,4 +1,3 @@
-import BackboneRadio from 'backbone.radio';
 import $ from 'jquery';
 
 const SPINNER_OVERLAY_BTN =
@@ -7,10 +6,8 @@ const SPINNER_OVERLAY_BTN =
 const SPINNER_OVERLAY_SECTION =
   '<div class="loading-overlay-section"><img src="/static/images/small-spinner.gif"></div>';
 
-export const APP_MESSAGE_CHANNEL = BackboneRadio.channel('global');
-
 export function getLoadingButton(elem) {
-  //const previous = window.$(elem).html();
+  // const previous = window.$(elem).html();
   return {
     loading: () => {
       $(elem).attr('disabled', true);
@@ -24,6 +21,18 @@ export function getLoadingButton(elem) {
         .remove();
     }
   };
+}
+
+export function requiredInput(elem) {
+    let ban = true
+    if($(elem).val() === '' || $(elem).val() === null ){
+      $(elem).parent().addClass('has-error');
+      ban = false;
+    }else{
+      $(elem).parent().removeClass('has-error');
+
+    }
+    return ban;
 }
 
 export function getLoadingSection(elem) {
@@ -41,5 +50,6 @@ export function getLoadingSection(elem) {
 
 export default {
   getLoadingButton,
-  getLoadingSection
+  getLoadingSection,
+  requiredInput
 };

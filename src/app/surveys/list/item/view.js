@@ -1,14 +1,14 @@
 import Mn from 'backbone.marionette';
-import Template from './template.hbs';
 import Bn from 'backbone';
+import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
   events: {
-    'click #edit': 'handleEdit',
-    'click #delete': 'handleDelete',
+    'click .card-menu-edit': 'handleEdit',
+    'click .card-menu-delete': 'handleDelete',
     'click #show-snaps': 'handleShowSnapshots',
-    'click #answer': 'handleAnswer'
+    'click .answer-area': 'handlerTermsAndConditions'
   },
 
   initialize(options) {
@@ -24,7 +24,8 @@ export default Mn.View.extend({
 
   handleEdit(event) {
     event.preventDefault();
-    this.props.addSurvey(this.model);
+    // @fhermosilla FIXME: this line doesn't work
+    // this.props.addSurvey(this.model);
   },
   handleDelete(event) {
     event.preventDefault();
@@ -37,10 +38,15 @@ export default Mn.View.extend({
     event.preventDefault();
     const route = event.target.getAttribute('href');
     Bn.history.navigate(route, true);
-  }, 
+  },
+
+  handlerTermsAndConditions(event){
+    event.preventDefault();
+    Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC`, true);
+  },
+
   handleAnswer(event) {
     event.preventDefault();
     Bn.history.navigate(`/survey/${this.model.attributes.id}/answer`, true);
   }
-
 });

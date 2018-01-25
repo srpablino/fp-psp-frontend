@@ -1,8 +1,8 @@
 import HomeView from './view';
-import FamilyCounterModel from '../families/counter/model';
+import ApplicationModel from '../application/model';
 
 const home = props => {
-  const {app} = props;
+  const { app } = props;
   const routes = {
     appRoutes: {
       '': 'showHome',
@@ -10,17 +10,14 @@ const home = props => {
     },
     controller: {
       showHome() {
-        // FIXME: Temporal fix, to
-        // avoid calling counter when
-        // not allowed.
         if (app.getSession().userHasRole('ROLE_SURVEY_USER')) {
-          app.showHomeForUser(new HomeView({totalFamilies: null}));
-          return;
+          app.showHomeForUser(new HomeView());
+        } else {
+          const applicationModel = new ApplicationModel();
+          applicationModel.fetch().then(() => {
+            app.showHomeForUser(new HomeView({ model: applicationModel }));
+          });
         }
-        const familyModel = new FamilyCounterModel();
-        familyModel.fetch().then(data => {
-          app.showHomeForUser(new HomeView({totalFamilies: data}));
-        });
       }
     }
   };

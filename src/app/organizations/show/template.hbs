@@ -4,15 +4,14 @@
 
 <div class="col-lg-4">
   <div class="col-lg-12">
-  <article class="card animated fadeInLeft">
+  <article class="card">
     <div class="card-block">
       <div class="card-title" >
         <h4 >Activity Feed
-            <img class="pull-right" src="/static/images/icon_more.png" >
         </h4>
       </div>
       <h6 class="text-muted"></h6>
-      <ol class="activity-feed">
+      <ol class="activity-feed maintenance-watermark">
         <li class="feed-item">
           <span class="text">Form created <a href="single-need.php">The family "Páez Mercado" make first form</a>
           <time class="pull-right" >30 min</time>
@@ -74,33 +73,27 @@
 
 <div class="col-lg-8">
   <div class="col-lg-6">
-      <article class="card animated fadeInLeft">
+      <article class="card">
         <div class="card-block">
           <div class="card-title">
-            <h4 >Families
-              <img class="pull-right" src="/static/images/icon_more.png" >
-            </h4>
+            <h4>Families</h4>
           </div>
-          <h6 class="text-muted"></h6>
-          <p class="card-text strike">{{totalFamilies}}
-          </p>
+          <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
             <p class="strike-text centered">in Total</p>
-            <br/>
         </div>
       </article>
   </div>
 
   <div class="col-lg-6">
-      <article class="card animated fadeInLeft">
+      <article class="card">
         <div class="card-block">
           <div class="card-title">
             <h4 >Indicators
-              <img class="pull-right" src="/static/images/icon_more.png" >
             </h4>
           </div>
           <h6 class="text-muted"></h6>
           <div class="text-center">
-          <img src="/static/images/dummy_piechart.png" style="width: 73%;  height: auto;">
+          <img src="/static/images/uc_dummy_piechart.png" style="width: 73%;  height: auto;">
         </div>
         </div>
       </article>
@@ -108,15 +101,14 @@
   </div>
 
 <div class="col-lg-12">
-    <article class="card animated fadeInLeft">
+    <article class="card">
       <div class="card-block">
         <div class="card-title">
           <h4 >Top of Indicators
-            <img class="pull-right" src="/static/images/icon_more.png" >
           </h4>
         </div>
         <br/>
-        <table class="table" id="table-top-indicators">
+        <table class="table maintenance-watermark" id="table-top-indicators">
           <thead>
             <th>Indicator</th>
             <th><img src="/static/images/icon_elipse_verde_01.png"></th>

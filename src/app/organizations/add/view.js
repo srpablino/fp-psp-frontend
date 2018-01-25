@@ -1,8 +1,8 @@
 import Mn from 'backbone.marionette';
+import { history } from 'backbone';
 import Template from './template.hbs';
 import Model from '../model';
 import storage from '../storage';
-import { history } from 'backbone';
 import utils from '../../utils';
 
 export default Mn.View.extend({

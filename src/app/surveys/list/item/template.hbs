@@ -1,12 +1,28 @@
-<div class="list-group-item">
- 
-    {{survey.title}}
 
-  
-  <a id="delete" href="#" class="icon " style="float:right" data-toggle="tooltip" title="Remove this survey" >
-    <span class="glyphicon glyphicon-trash"></span>
-  </a>
-  <a id="answer" class="icon " href="#" style="float:right; margin-right: 5px;  vertical-align: middle;" data-toggle="tooltip" title="Take this survey">
-    <span class="glyphicon glyphicon-share-alt"></span>
-  </a>
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+  <div class="card-item">
+    <article class="card">
+      <div class="card-block">
+        <div class="row card-title">
+          <p class="text-left text-blue">{{survey.title}}</p>
+        </div>
+        <a class="answer-area" href="#">
+          <div class="row card-description">
+                <p class="card-text">{{survey.description}}</p>
+                <h5 class="card-text-sub-title text-blue">Contains:</h5>
+                <p class="card-text">50 indicators</p>
+                <p class="card-text-small"><span class="text-blue">Created at: </span><span >{{surveys.created_at}}</span></p>
+          </div>
+        </a>
+        <div class="row card-menu">
+          <div class="col-md-6 col-xs-6">
+            <a class="card-menu-item card-menu-edit" href="#"></a>
+          </div>
+          <div class="col-md-6 col-xs-6">
+            <a class="card-menu-item card-menu-delete" href="#"></a>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
 </div>

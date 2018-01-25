@@ -1,14 +1,14 @@
 import Mn from 'backbone.marionette';
+import Bn from 'backbone';
+import $ from 'jquery';
+
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
-import storage from '../storage';
 import FamiliesColecction from '../collection';
 import OrganizationsModel from '../../organizations/model';
 import CitiesModel from '../../cities/model';
 import CountiesModel from '../../countries/model';
-import $ from 'jquery';
-import session from '../../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -23,15 +23,17 @@ export default Mn.View.extend({
     'click #submit': 'handleSubmit',
     'keypress #search': 'handleSubmit'
   },
-  initialize() {
-    this.collection = new Backbone.Collection();
+  initialize(options) {
+    this.collection = new Bn.Collection();
+    this.app = options.app;
   },
   onRender() {
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
-    var self = this;
+
+    const self = this;
 
     this.citiesCollection.fetch({
       success(response) {
@@ -70,46 +72,36 @@ export default Mn.View.extend({
           );
         });
 
-        if (
-          session.userHasRole('ROLE_ROOT') ||
-          session.userHasRole('ROLE_HUB_ADMIN')
-        ) {
-          // nothing
-        } else {
-          $('#organization').attr('disabled', 'true');
-          $('#organization').val(session.get('user').organization.id);
-        }
+        // if (!(session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
+        //   $('#organization').attr('disabled', 'true');
+        //   $('#organization').val(session.get('user').organization.id);
+        // }
       }
     });
   },
   showList() {
     this.getRegion('list').show(
-      new CollectionView({collection: this.collection})
+      new CollectionView({ collection: this.collection })
     );
   },
   handleSubmit(event) {
-    if (event.which == 13 || event.which == 1) {
-      var organization_id = $('#organization').val();
-      var country_id = $('#country').val();
-      var city_id = $('#city').val();
-      var free_text = $('#search').val();
-      var self = this;
-      let container = this.$el.find('.list-container').eq(0);
+    if (event.which === 13 || event.which === 1) {
+      const self = this;
+      const container = this.$el.find('.list-container').eq(0);
       const section = utils.getLoadingSection(container);
 
-      //  if(organization_id != null && country_id != null && city_id != null ){
       self.collection.reset();
       this.getRegion('list').empty();
       section.loading();
 
-      var params = {
+      const params = {
         organization_id: $('#organization').val(),
         country_id: $('#country').val(),
         city_id: $('#city').val(),
         free_text: $('#search').val()
       };
 
-      var elements = new FamiliesColecction();
+      const elements = new FamiliesColecction();
       elements.fetch({
         data: params,
         success(response) {
@@ -118,10 +110,6 @@ export default Mn.View.extend({
           section.reset();
         }
       });
-
-      //  }else{
-      //    alert("Choose an option")
-      //  }
     }
   }
 });
