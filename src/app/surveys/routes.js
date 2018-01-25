@@ -1,14 +1,20 @@
 import SurveysView from './view';
+import NewSurvey from './add/view';
 
 const surveys = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
-      surveys: 'showSurveys'
+      surveys: 'showSurveys',
+      'surveys/new': 'newSurvey',
     },
     controller: {
       showSurveys() {
-        app.showViewOnRoute(new SurveysView());
+        app.getSession().save({termCond: 0, priv: 0});
+        app.showViewOnRoute(new SurveysView(app));
+      },
+      newSurvey() {
+        app.showViewOnRoute(new NewSurvey(app));
       }
     }
   };

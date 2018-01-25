@@ -1,13 +1,14 @@
 import Mn from 'backbone.marionette';
+import Bn from 'backbone';
+import $ from 'jquery';
+
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
-import storage from '../storage';
 import FamiliesColecction from '../collection';
 import OrganizationsModel from '../../organizations/model';
 import CitiesModel from '../../cities/model';
 import CountiesModel from '../../countries/model';
-import $ from 'jquery';
 
 export default Mn.View.extend({
   template: Template,
@@ -19,57 +20,64 @@ export default Mn.View.extend({
     list: '#family-list'
   },
   events: {
-    'click #submit': 'handleSubmit'
+    'click #submit': 'handleSubmit',
+    'keypress #search': 'handleSubmit'
   },
-  initialize() {
-    this.collection = new Backbone.Collection();
-
-
+  initialize(options) {
+    this.collection = new Bn.Collection();
+    this.app = options.app;
   },
   onRender() {
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
-    var self = this;
+
+    const self = this;
 
     this.citiesCollection.fetch({
-      success:function(response){
-        self.citiesCollection =response.toJSON();
-        $.each(self.citiesCollection, function(index, element) {
-         $('#city')
-             .append($("<option></option>")
-             .attr("value", element.id)
-             .text(element.city));
-           })
+      success(response) {
+        self.citiesCollection = response.toJSON();
+        $.each(self.citiesCollection, (index, element) => {
+          $('#city').append(
+            $('<option></option>')
+              .attr('value', element.id)
+              .text(element.city)
+          );
+        });
       }
     });
 
     this.countiesCollection.fetch({
-      success:function(response){
-        self.countiesCollection =response.toJSON();
-        $.each(self.countiesCollection, function(index, element) {
-         $('#country')
-             .append($("<option></option>")
-             .attr("value", element.id)
-             .text(element.country));
-           })
+      success(response) {
+        self.countiesCollection = response.toJSON();
+        $.each(self.countiesCollection, (index, element) => {
+          $('#country').append(
+            $('<option></option>')
+              .attr('value', element.id)
+              .text(element.country)
+          );
+        });
       }
     });
 
     this.organizationsCollection.fetch({
-      success:function(response){
-        self.organizationsCollection =response.get('list');
-        $.each(self.organizationsCollection, function(index, element) {
-         $('#organization')
-             .append($("<option></option>")
-             .attr("value", element.id)
-             .text(element.name));
-           })
+      success(response) {
+        self.organizationsCollection = response.get('list');
+        $.each(self.organizationsCollection, (index, element) => {
+          $('#organization').append(
+            $('<option></option>')
+              .attr('value', element.id)
+              .text(element.name)
+          );
+        });
+
+        // if (!(session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
+        //   $('#organization').attr('disabled', 'true');
+        //   $('#organization').val(session.get('user').organization.id);
+        // }
       }
     });
-
-
   },
   showList() {
     this.getRegion('list').show(
@@ -77,42 +85,31 @@ export default Mn.View.extend({
     );
   },
   handleSubmit(event) {
-    var organization_id = $("#organization").val();
-    var country_id = $("#country").val();
-    var city_id = $("#city").val();
-    var free_text = $("#search").val();
-    var self = this;
-    let container = this.$el.find('.list-container').eq(0);
-    const section = utils.getLoadingSection(container);
+    if (event.which === 13 || event.which === 1) {
+      const self = this;
+      const container = this.$el.find('.list-container').eq(0);
+      const section = utils.getLoadingSection(container);
 
-  //  if(organization_id != null && country_id != null && city_id != null ){
       self.collection.reset();
       this.getRegion('list').empty();
       section.loading();
 
+      const params = {
+        organization_id: $('#organization').val(),
+        country_id: $('#country').val(),
+        city_id: $('#city').val(),
+        free_text: $('#search').val()
+      };
 
-        var params = {
-          organization_id: $("#organization").val(),
-          country_id: $("#country").val(),
-          city_id: $("#city").val(),
-          free_text: $("#search").val()
-        };
-
-        var elements = new FamiliesColecction();
-        elements.fetch({
-          data: params,
-          success:function(response){
-            self.collection =response ;
-            self.showList();
-            section.reset();
-
-
-          }
-        });
-
-  //  }else{
-  //    alert("Choose an option")
-  //  }
-
+      const elements = new FamiliesColecction();
+      elements.fetch({
+        data: params,
+        success(response) {
+          self.collection = response;
+          self.showList();
+          section.reset();
+        }
+      });
+    }
   }
 });

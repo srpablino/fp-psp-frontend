@@ -1,7 +1,7 @@
 import Bb from 'backbone';
-import { LocalStorage } from 'backbone.localstorage';
-import env from './env';
+import {LocalStorage} from 'backbone.localstorage';
 import _includes from 'lodash/includes';
+import env from './env';
 
 /**
  * Saves user session info in browser localStorage,
@@ -17,16 +17,16 @@ var SessionModel = Bb.Model.extend({
     user: {},
     returnFragment: ''
   },
-  isAuthenticationEnabled: function() {
+  isAuthenticationEnabled() {
     return env.authenticationEnabled;
   },
-  isAuthenticated: function() {
+  isAuthenticated() {
     if (!env.authenticationEnabled) {
       return true;
     }
     return this.get('access_token') && this.get('access_token').length > 0;
   },
-  getLoggedUserHomeRoute: function() {
+  getLoggedUserHomeRoute() {
     // Se if there are any previously stored
     // route.
     let route = this.get('returnFragment') || 'home';
@@ -64,7 +64,7 @@ var SessionModel = Bb.Model.extend({
 var instance = null;
 SessionModel.getInstance = function() {
   if (instance === null) {
-    instance = new SessionModel({ id: 1 });
+    instance = new SessionModel({id: 1});
   }
   return instance;
 };

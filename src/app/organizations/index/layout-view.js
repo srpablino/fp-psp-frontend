@@ -1,11 +1,13 @@
 import Mn from 'backbone.marionette';
+import Bn from 'backbone';
+import $ from 'jquery';
+
+import { debounce } from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import storage from '../storage';
 import utils from '../../utils';
-import { debounce, includes } from 'lodash';
 import OrganizationsModel from '../model';
-import $ from 'jquery';
 
 export default Mn.View.extend({
   template: Template,
@@ -17,11 +19,12 @@ export default Mn.View.extend({
     'keyup #search': 'handleSearch'
   },
   initialize() {
+    // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
     $(window).scroll(this.loadMore);
 
-    this.collection = new Backbone.Collection(this.model.get('list'));
+    this.collection = new Bn.Collection(this.model.get('list'));
     this.collection.on('remove', this.render);
     this.search = debounce(this.search, 300);
   },
@@ -31,14 +34,16 @@ export default Mn.View.extend({
     }, 0);
     this.showList();
   },
+  getTemplate() {
+    return Template;
+  },
   showList() {
     this.getRegion('list').show(
       new CollectionView({ collection: this.collection })
     );
   },
-  handleSearch(event) {
-    let term = event.target.value;
-    let container = this.$el.find('.list-container').eq(0);
+  handleSearch() {
+    const container = this.$el.find('.list-container').eq(0);
     const section = utils.getLoadingSection(container);
     section.loading();
     this.getRegion('list').empty();
@@ -54,7 +59,7 @@ export default Mn.View.extend({
     if (!term) {
       return null;
     }
-    let filtered = this.collection.filterByValue(term);
+    const filtered = this.collection.filterByValue(term);
 
     if (filtered && filtered.length > 0) {
       return filtered;
@@ -64,34 +69,33 @@ export default Mn.View.extend({
   },
   loadMore(e) {
     e.preventDefault();
-    
-    var scrollHeight = $(document).height();
-    var scrollPosition = $(window).height() + $(window).scrollTop();
-    var margin = 150; //margin to scroll from the bottom
+
+    let scrollHeight = $(document).height();
+    let scrollPosition = $(window).height() + $(window).scrollTop();
+    let margin = 150; // margin to scroll from the bottom
 
     // if we are closer than 'margin' to the end of the content, load more books
     if (scrollPosition + margin >= scrollHeight) {
       this.searchMore();
     }
-
   },
   searchMore() {
     var self = this;
 
-    //if not all organizations have been loaded
-    if(self.model.get('currentPage') < self.model.get('totalPages')){
-      var params = { 
+    // if not all organizations have been loaded
+    if (self.model.get('currentPage') < self.model.get('totalPages')) {
+      let params = {
         page: self.model.get('currentPage') + 1,
         per_page: 12
       };
 
-      var moreElements = new OrganizationsModel();
+      let moreElements = new OrganizationsModel();
       moreElements.fetch({
         data: params,
-        success:function(response){
+        success(response) {
           self.collection.add(response.get('list'));
           self.model.set('currentPage', response.get('currentPage'));
-        } 
+        }
       });
     }
   }

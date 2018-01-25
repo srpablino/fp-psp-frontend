@@ -1,14 +1,15 @@
 import Storage from 'backbone.storage';
 import Model from './model';
 
-let allMenuItems = {
+const allMenuItems = {
   mainItem: { link: '#' },
   navigationItems: [
     { name: 'Organizations', link: '#organizations' },
     { name: 'Reports', link: '#reports' },
     { name: 'Families', link: '#families' },
-    { name: 'Surveys', link: '#surveys' }
-    //{ name: 'Users', link: '#users' }
+    { name: 'Surveys', link: '#surveys' },
+    { name: 'FAQs', link: '#faqs' }
+    // { name: 'Users', link: '#users' }
   ]
 };
 
@@ -35,7 +36,7 @@ var HeaderStorage = Storage.extend({
         mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
         navigationItems: allMenuItems.navigationItems
           .filter(item => !(item.link === '#organizations'))
-          //.filter(item => !(item.link === '#users'))
+          // .filter(item => !(item.link === '#users'))
           .filter(item => !(item.link === '#families'))
       };
       return new Model(items);
@@ -46,7 +47,7 @@ var HeaderStorage = Storage.extend({
       mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
       navigationItems: allMenuItems.navigationItems
         .filter(item => !(item.link === '#organizations'))
-        //.filter(item => !(item.link === '#users'))
+        // .filter(item => !(item.link === '#users'))
         .filter(item => !(item.link === '#families'))
     };
     return new Model(items);

@@ -1,131 +1,61 @@
 <div class="row">
-  <div class="col-md-3 col-xs-6">
-    <article class="card animated fadeInLeft">
-      <div  class="card-block">
-        <div class="card-title">
-          <h4 >Snapshot 2015-01
-            <img class="pull-right" src="/static/images/icon_more.png" >
-          </h4>
+  <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+    <article class="card">
+      <div class="card-block">
+        <div class="card-title row">
+          <p class="text-left text-blue">Snapshot {{createdAt}}</p>
         </div>
-
-      <div class="text-center" id="family-snapshot">
-          <img  class="center-block" src="/static/images/icon_semaforo.png">
-          <span class="center-block" id="green">25</span>
-          <span id="yellow">19</span>
-          <span id="red">10</span>
+        <div class="snapshot-indicators row">
+          <div class="light">
+            <span class="center-block light-green light-big">{{snapshot.count_green_indicators}}</span>
+            <span class="center-block light-yellow light-medium">{{snapshot.count_yellow_indicators}}</span>
+            <span class="center-block light-red light-medium">{{snapshot.count_red_indicators}}</span>
+          </div>
+        </div>
       </div>
     </article>
-
   </div>
-
   <div class="col-md-9 col-xs-6 ">
-    <article class="card animated fadeInLeft">
+    <article class="card">
       <div class="card-block">
-        <div class="card-title" >
-          <h4 >Prioriades
-            <img class="pull-right" src="/static/images/icon_more.png" >
-          </h4>
+        <div class="card-title row">
+          <p class="text-left text-blue">Priorities</p>
         </div>
-        <br/>
-        <div class="list-priorities">
-            <span id="item-number" class="pull-left "> 1 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
+        <div class="margin-tb-20px row">
+          <div class="col-md-12">
+            <div class="list-priorities">
+              {{#each snapshot.indicators_priorities}}
+              <div class="row margin-tb-10px">
+                <div class="col-md-12">
+                  <span id="item-number" class="pull-left ">{{[../../../helpers/counter] @index}}</span>
+                  <span>{{this.indicator}}</span><br>
+                  <span>{{this.reason}}</span>
+                </div>
+              </div>
+
+              {{/each}}
             </div>
+          </div>
         </div>
-        <br/>
-        <div class="list-priorities">
-            <span id="item-number" class="pull-left "> 2 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-        <br/>
-        <div class="list-priorities">
-            <span id="item-number" class="pull-left "> 3 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-        <br/>
-        <div class="list-priorities">
-            <span id="item-number" class="pull-left "> 4 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-        <br/>
-        <div class="list-priorities">
-            <span id="item-number" class="pull-left "> 5 </span>
-            <div class="">
-            <span> Lorem ipsum dolor  </span><br>
-              <span class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod </span>
-            </div>
-        </div>
-      </div>
     </article>
   </div>
 </div>
 <br/>
 <div class="row">
     <div class="col-lg-12">
-      <article class="card animated fadeInLeft">
+      <article class="card">
         <div  class="card-block">
-          <div class="card-title">
-            <h4 >Indicadores
-              <img class="pull-right" src="/static/images/icon_more.png" >
-            </h4>
+          <div class="card-title row">
+            <p class="text-left text-blue">Indicators</p>
           </div>
-          <br/>
-            <div class="" >
-          <table class="table table-bordered" id="table">
- 		            <tbody>
-                   <tr>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 1</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_amarillo_02.png" > <br> <p class="text-center article-title">Indicador 2</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_rojo_02.png" > <br> <p class="text-center article-title">Indicador 3</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_amarillo_02.png" > <br> <p class="text-center article-title">Indicador 4</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 5</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 6</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 7</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_amarillo_02.png" > <br> <p class="text-center article-title">Indicador 8</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 9</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_rojo_02.png" > <br> <p class="text-center article-title">Indicador 10</p></td>
-
-                   </tr>
-                   <tr>
-                     <td><img class="center-block" src="/static/images/icon_elipse_rojo_02.png" > <br> <p class="text-center article-title">Indicador 11</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_amarillo_02.png" > <br> <p class="text-center article-title">Indicador 12</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 13</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 14</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 15</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 16</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 17</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_amarillo_02.png" > <br> <p class="text-center article-title">Indicador 18</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 19</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_rojo_02.png" > <br> <p class="text-center article-title">Indicador 20</p></td>
-
-                   </tr>
-                   <tr>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 21</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 22</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 23</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_rojo_02.png" > <br> <p class="text-center article-title">Indicador 24</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 25</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_amarillo_02.png" > <br> <p class="text-center article-title">Indicador 26</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 27</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_amarillo_02.png" > <br> <p class="text-center article-title">Indicador 28</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 29</p></td>
-                     <td><img class="center-block" src="/static/images/icon_elipse_verde_02.png" > <br> <p class="text-center article-title">Indicador 30</p></td>
-
-                   </tr>
-
- 		           </tbody>
- 		     </table>
+          <div class="margin-tb-20px row">
+            {{#each snapshotIndicators}}
+            <div class="col-md-2 col-lg-1 col-sm-2 col-xs-4 col-xm-2 indicator-circle-snapshot">
+              <img class="center-block" src="{{ this.image }}" >
+              <br> <p class="text-center article-title">{{ this.name }}</p>
+            </div>
+            {{/each}}
+          </div>
        </div>
 
       </article>

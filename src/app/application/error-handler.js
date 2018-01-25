@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import FlashesService from '../flashes/service';
 import nprogress from 'nprogress';
+import FlashesService from '../flashes/service';
 
 class ErrorHandler {
   setup(options) {
@@ -18,6 +18,7 @@ class ErrorHandler {
       statusCode: {
         0: () => {
           FlashesService.request('add', {
+            timeout: 2000,
             type: 'danger',
             title: 'No connection to server'
           });
@@ -25,15 +26,14 @@ class ErrorHandler {
         401: () => {
           this.redirectToLoginAfterError();
         },
-        403: error => {
+        403: () => {
           this.redirectToErrorPage('denied');
         },
-        404: error => {
+        404: () => {
           this.redirectToErrorPage('notfound');
         },
         500: error => {
           if (error.responseJSON && error.responseJSON.errorId) {
-            console.log(error.responseJSON);
             this._redirectToErrorPage(
               `error.html?id=${error.responseJSON.errorId}`
             );

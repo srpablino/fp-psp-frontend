@@ -5,6 +5,13 @@ const expect = chai.expect;
 const view = new UsersView();
 
 describe('UsersView', () => {
+  // Workaround to avoid PhantomJS error:
+  // 'Some of your tests did a full page reload'
+  // source: https://stackoverflow.com/questions/29352578/some-of-your-tests-did-a-full-page-reload-error-when-running-jasmine-tests
+  beforeEach(() => {
+    window.onbeforeunload = () => 'Oh no!';
+  });
+
   it('should have properties', () => {
     expect(view.template).to.exist;
     expect(view.collection).to.exist;

@@ -1,9 +1,11 @@
 import Mn from 'backbone.marionette';
-import Template from '../template.hbs';
-import InterventionsTemplate from './interventions-template.hbs';
-import SnapshotsTemplate from './snapshots-template.hbs';
-import storage from '../storage';
 import moment from 'moment';
+import $ from 'jquery';
+
+import Template from '../template.hbs';
+import SnapshotsTemplate from '../show/snapshot/template.hbs';
+import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
+import storage from '../storage';
 
 export default Mn.View.extend({
   template: Template,
@@ -15,12 +17,20 @@ export default Mn.View.extend({
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
+
+    if (this.entity == null) {
+      $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
+    } else {
+      $(`.sub-menu-tiem > a[href$="${this.entity}"]`)
+        .parent()
+        .addClass('subActive');
+    }
   },
 
   getTemplate() {
-
     if (this.entity === 'interventions') {
-      return InterventionsTemplate;
+      // return InterventionsTemplate;
+      return UnderConstrucionTemplate;
     }
     if (this.entity === 'snapshots') {
       return SnapshotsTemplate;
@@ -40,6 +50,6 @@ export default Mn.View.extend({
     if (!createdAt) {
       return null;
     }
-    return moment(createdAt).format('YYYY-MM');
+    return moment(createdAt).format('YYYY-MM-DD');
   }
 });

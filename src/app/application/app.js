@@ -1,19 +1,20 @@
 import Bb from 'backbone';
 import Mn from 'backbone.marionette';
+import nprogress from 'nprogress';
 import initRouter from './router';
 import LayoutView from './layout-view';
 import sessionMgr from './session-manager';
 import FlashesService from '../flashes/service';
 import ModalService from '../modal/service';
 import errorHandler from './error-handler';
-import nprogress from 'nprogress';
 
 export default Mn.Application.extend({
   region: '#main',
 
   initialize() {
     this.sessionMgr = sessionMgr;
-    this.layoutView = new LayoutView({ app: this });
+    this.layoutView = new LayoutView({app: this});
+    this.router = {};
   },
 
   onStart() {
@@ -44,7 +45,7 @@ export default Mn.Application.extend({
     });
 
     errorHandler.setup({
-      sessionMgr: sessionMgr
+      sessionMgr
     });
 
     ModalService.setup({
@@ -64,7 +65,7 @@ export default Mn.Application.extend({
   showHomeForUser(dashboardView) {
     const homeRoute = this.getSession().getLoggedUserHomeRoute();
     if (homeRoute.indexOf('organizations') >= 0) {
-      Bb.history.navigate(homeRoute, { trigger: true });
+      Bb.history.navigate(homeRoute, {trigger: true});
       return;
     }
     this.showViewOnRoute(dashboardView);

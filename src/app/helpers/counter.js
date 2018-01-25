@@ -1,3 +1,3 @@
-module.exports = function (index) {
-    return index+1;
+module.exports = function funcCount(index) {
+  return index + 1;
 };

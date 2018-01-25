@@ -11,24 +11,28 @@ export default Mn.AppRouter.extend({
   before() {},
   after() {},
   route(route, name, callback) {
-    if (!_isRegExp(route)) route = this._routeToRegExp(route);
+    if (!_isRegExp(route)) {
+      route = this._routeToRegExp(route);
+    }
 
     if (_isFunction(name)) {
       callback = name;
       name = '';
     }
-    if (!callback) callback = this[name];
+    if (!callback) {
+      callback = this[name];
+    }
 
-    var router = this;
+    let router = this;
 
     Bn.history.route(route, function(fragment) {
       var args = router._extractParameters(route, fragment);
 
-      router.before.apply(router, arguments);
+      router.before(...arguments);
       callback && callback.apply(router, args);
-      router.after.apply(router, arguments);
+      router.after(...arguments);
 
-      router.trigger.apply(router, ['route:' + name].concat(args));
+      router.trigger(...[`route:${name}`].concat(args));
       router.trigger('route', name, args);
       Bn.history.trigger('route', router, name, args);
     });

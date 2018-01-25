@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const path = require('path');
 const del = require('del');
 const history = require('connect-history-api-fallback');
 const $ = require('gulp-load-plugins')({
@@ -8,6 +7,7 @@ const $ = require('gulp-load-plugins')({
 const jetpack = require('fs-jetpack');
 
 const environment = $.util.env.type || 'development';
+const region = $.util.env.region || 'US';
 const isProduction = environment === 'production';
 const webpackConfig = require('./webpack/gulp.config.js')[environment];
 const merge = require('merge-stream');
@@ -45,37 +45,35 @@ gulp.task('webpack', () => {
     .pipe($.connect.reload());
 });
 
-gulp.task('pages', () => {
-  return gulp
-    .src(src + 'pages/*')
+gulp.task('pages', () =>
+  gulp
+    .src(`${src}pages/*`)
     .pipe(gulp.dest(dist))
     .pipe($.size({ title: 'pages' }))
-    .pipe($.connect.reload());
-});
+    .pipe($.connect.reload())
+);
 
 gulp.task('serve', () => {
   $.connect.server({
     root: dist,
-    port: port,
+    port,
     livereload: {
       port: 35728
     },
-    middleware: (connect, opt) => {
-      return [history()];
-    }
+    middleware: () => [history()]
   });
 });
 
 gulp.task('static', () => {
   let fonts = gulp
-    .src(src + 'static/fonts/*')
+    .src(`${src}static/fonts/*`)
     .pipe($.size({ title: 'static/fonts' }))
-    .pipe(gulp.dest(dist + 'static/fonts/'));
+    .pipe(gulp.dest(`${dist}static/fonts/`));
   let images = gulp
-    .src(src + 'static/images/*')
+    .src(`${src}static/images/*`)
     .pipe($.size({ title: 'static/images' }))
     .pipe(isProduction ? imagemin() : noop())
-    .pipe(gulp.dest(dist + 'static/images/'));
+    .pipe(gulp.dest(`${dist}static/images/`));
 
   return merge(fonts, images);
 });
@@ -86,8 +84,11 @@ gulp.task('clean', cb => {
 
 gulp.task('environment', () => {
   const projectDir = jetpack;
-  const commonDir = jetpack.cwd('./' + src + 'common');
-  const configFile = './config/env_' + environment + '.json';
+  const commonDir = jetpack.cwd(`./${src}common`);
+  let configFile = `./config/env_${environment}.json`;
+  if (isProduction) {
+    configFile = `./config/env_${environment}_${region}.json`;
+  }
 
   projectDir.copy(configFile, commonDir.path('env.json'), { overwrite: true });
 });

@@ -1,13 +1,17 @@
-import Mn from 'backbone.marionette';
-import Template from './template.hbs';
-import Form from '../../components/form';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import SurveyModel from '../../surveys/add/model';
-import SnapshotModel from './model';
+/* eslint no-prototype-builtins: 0 */
+/* eslint camelcase: 0 */
+
 import _ from 'lodash';
 import $ from 'jquery';
 import Bn from 'backbone';
+import Mn from 'backbone.marionette';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import storage from '../storage';
+import Template from './template.hbs';
+import Form from '../../components/form';
+import SurveyModel from '../../surveys/add/model';
+import SnapshotModel from './model';
 
 export default Mn.View.extend({
   template: Template,
@@ -18,7 +22,7 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { organizationId, surveyId, handleCancel } = options;
+    const { organizationId, surveyId, handleCancel, app } = options;
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
     this.surveyModel.fetch();
@@ -27,33 +31,34 @@ export default Mn.View.extend({
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
     this.props.organizationId = organizationId;
+
+    this.app = app;
   },
 
   getLocalizedSchema(unlocalizedSchema) {
     const newSchema = Object.assign({}, unlocalizedSchema);
-    // schema = {
-    //   properties: {
-    //    XYZ:
-    //        { title: { es : value},
-    //          type: string
-    //        }
-    //   }
-    // transformar a:
-    // newSchema.properties.XYZ.title = value;
-    const newProps = _.mapValues(newSchema.properties, obj => {
-      // obj = XYZ
-      return _.mapValues(obj, obj2 => {
-        // obj2 = title
+
+    const newProps = _.mapValues(newSchema.properties, obj =>
+      _.mapValues(obj, obj2 => {
         if (_.isObject(obj2) && obj2.hasOwnProperty('es')) {
           return obj2.es;
+        } else if (_.isObject(obj2) && obj2.hasOwnProperty('en')) {
+          return obj2.en;
         }
         return obj2;
-      });
-    });
+      })
+    );
     newSchema.properties = newProps;
     return newSchema;
   },
   renderForm() {
+
+    const parameters = {};
+    parameters.survey_id = this.surveyModel.id;
+    parameters.survey_name = this.surveyModel.attributes.title;
+    const headerItems = storage.getSubHeaderItems(parameters);
+    this.app.updateSubHeader(headerItems);
+
     const placeHolder = this.$el.find('#new-survey')[0];
     const { survey_schema } = this.surveyModel.attributes;
     const localizedSchema = this.getLocalizedSchema(survey_schema);
@@ -61,7 +66,7 @@ export default Mn.View.extend({
 
     this.reactView = React.createElement(Form, {
       schema: localizedSchema,
-      uiSchema: uiSchema,
+      uiSchema,
       handleSubmit: this.hadleSubmit.bind(this),
       handleCancel: this.props.handleCancel,
       view: this
@@ -95,40 +100,49 @@ export default Mn.View.extend({
     );
   },
 
-  fixedGalleryFieldValue(formData){
-      var self = this;
-      var galleryFields = [];
-      var customFields = this.surveyModel.attributes.survey_ui_schema['ui:custom:fields'];
+  fixedGalleryFieldValue(formData) {
+    var customFields = this.surveyModel.attributes.survey_ui_schema[
+      'ui:custom:fields'
+    ];
 
-      $.each(customFields, function(i, item) {
-        if(item['ui:field'] && item['ui:field']==='gallery'){
-          var itemSelected = formData[i];
-          if(itemSelected && itemSelected!==undefined && Array.isArray(itemSelected)){
-            formData[i] = itemSelected[0]['value'];
-          }
-          self.surveyModel.attributes.survey_schema.properties[i]['type'] = 'string';
-
+    $.each(customFields, (i, item) => {
+      if (item['ui:field'] && item['ui:field'] === 'gallery') {
+        const itemSelected = formData[i];
+        if (
+          itemSelected &&
+          itemSelected !== undefined &&
+          Array.isArray(itemSelected)
+        ) {
+          formData[i] = itemSelected[0].value;
         }
-        self.surveyModel.attributes.survey_schema.properties[i]['type'] =
-          'string';
-
+      }
     });
   },
 
   hadleSubmit(formResult) {
-    //Convert from array to string, using property "value"
+    // Convert from array to string, using property "value"
     this.fixedGalleryFieldValue(formResult);
 
     const snapshot = {
       survey_id: this.props.surveyId,
-      organization_id : this.props.organizationId,
+      organization_id: this.props.organizationId,
       personal_survey_data: this.getPersonal(formResult),
       indicator_survey_data: this.getIndicators(formResult),
-      economic_survey_data: this.getEconomics(formResult)
+      economic_survey_data: this.getEconomics(formResult),
+      user_name: this.app.getSession().get('user').username,
+      term_cond_id: this.app.getSession().get('termCond'),
+      priv_pol_id: this.app.getSession().get('priv')
     };
 
-    new SnapshotModel().save(snapshot).then(snapshot => {
-      Bn.history.navigate(`/survey/${snapshot.survey_id}/snapshot/${snapshot.snapshot_economic_id}`, true);      
+    new SnapshotModel().save(snapshot).then(savedSnapshot => {
+      Bn.history.navigate(
+        `/survey/${savedSnapshot.survey_id}/snapshot/${
+          savedSnapshot.snapshot_economic_id
+        }`,
+        true
+      );
     });
+
+    this.app.getSession().save({termCond: 0, priv: 0});
   }
 });

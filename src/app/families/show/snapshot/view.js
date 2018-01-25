@@ -1,36 +1,51 @@
 import Mn from 'backbone.marionette';
+import moment from 'moment';
+
 import Template from './template.hbs';
-import SnapshotsTemplate from '../snapshots-template.hbs';
 import storage from '../../storage';
-import CollectionView from './collection-view';
-import SnapshotCollection from './collection';
 
 export default Mn.View.extend({
-  template: SnapshotsTemplate,
-  collection: CollectionView,
-  regions: {
-    list: '#family-snapshots'
-  },
+  template: Template,
+
   initialize(options) {
     this.app = options.app;
     this.snapshotId = options.snapshotId;
-    this.collection = options.collection;
+    this.model = options.model;
+    this.snapshotModel = options.snapshotModel;
   },
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
-    this.showList();
   },
-  showList() {
-    var self = this;
-    var collection = new SnapshotCollection();
-    collection.fetch({
-      data: { family_id: this.model.attributes.id }
-    }).done(function(){
-      self.getRegion('list').show(
-        new CollectionView({ collection: collection})
-      );
-    });
+  serializeData() {
+    return {
+      snapshot: this.snapshotModel.attributes,
+      createdAt: this.formatCreatedDate(),
+      snapshotIndicators: this.snapshotModel.attributes.indicators_survey_data.map(
+        set => ({
+          image: this.stoplightImage(set.value),
+          value: set.value,
+          name: set.name
+        })
+      )
+    };
   },
-
+  formatCreatedDate() {
+    const createdAt = this.snapshotModel.attributes.created_at;
+    if (!createdAt) {
+      return null;
+    }
+    return moment(createdAt).format('YYYY-MM-DD');
+  },
+  stoplightImage(color) {
+    if (color === 'GREEN') {
+      return '/static/images/icon_elipse_verde_02.png';
+    } else if (color === 'YELLOW') {
+      return '/static/images/icon_elipse_amarillo_02.png';
+    } else if (color === 'RED') {
+      return '/static/images/icon_elipse_rojo_02.png';
+    }else if (color === 'NONE') {
+      return '/static/images/icon_elipse_gris_02.png';
+    }
+  }
 });

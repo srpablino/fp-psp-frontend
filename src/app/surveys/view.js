@@ -2,14 +2,19 @@ import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 import ListView from './list/view';
 import AddView from './add/view';
+import storage from './storage';
 
 export default Mn.View.extend({
   template: Template,
   regions: {
     surveysContent: '#surveys-content'
   },
-  initialize() {},
+  initialize(app) {
+    this.app = app;
+  },
   onRender() {
+    const headerItems = storage.getSubHeaderItems();
+    this.app.updateSubHeader(headerItems);
     this.list();
   },
   list() {
@@ -20,7 +25,7 @@ export default Mn.View.extend({
   },
   add(model) {
     const addView = new AddView({
-      model: model,
+      model,
       listSurveys: this.list.bind(this)
     });
     this.getRegion('surveysContent').show(addView);

@@ -23,14 +23,17 @@ export default Mn.View.extend({
     this.app = options.app;
     this.showHeader();
     this.showFooter();
-    this.showView(new HomeView());
+    this.showHome();
   },
   showHeader() {
     const model = headerStorage.getByRolesInSession(this.app.getSession());
-    this.getRegion('header').show(new HeaderView({ model, app: this.app }));
+    this.getRegion('header').show(new HeaderView({model, app: this.app}));
   },
   showFooter() {
     this.getRegion('footer').show(new FooterView());
+  },
+  showHome() {
+    this.getRegion('content').show(new HomeView());
   },
   updateSubHeader(headerItems) {
     this.getRegion('subheader').empty();
@@ -42,7 +45,7 @@ export default Mn.View.extend({
       headerItems,
       this.app.getSession()
     );
-    this.getRegion('subheader').show(new SubMenuView({ model }));
+    this.getRegion('subheader').show(new SubMenuView({model}));
   },
   showView(view) {
     this.getRegion('content').show(view);
