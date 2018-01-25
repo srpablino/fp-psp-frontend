@@ -154,7 +154,7 @@ export default Mn.View.extend({
   },
 
   handleSaveDraft(state){
-    const snapshotTmpModel = new SnapshotTmpModel();
+    let snapshotTmpModel = new SnapshotTmpModel();
 
     const snapshot = {
       survey_id: this.props.surveyId,
@@ -170,52 +170,28 @@ export default Mn.View.extend({
     }
 
     if(this.props.snapshotTmpId){
-      console.log(`tenia id ${this.props.snapshotTmpId}`);
-      
-      snapshotTmpModel.save(this.props.snapshotTmpId, snapshot).then(
-
-        () => {
-          
-          FlashesService.request('add', {
-            timeout: 2000,
-            type: 'info',
-            title: 'The information has been saved'
-          });
-
-          Bn.history.navigate(`/surveys`, true);
-        },
-        error => {
-          FlashesService.request('add', {
-            timeout: 2000,
-            type: 'warning',
-            title: error.responseJSON.message
-          });
-        }
-      );
-    } else {
-      console.log('no tenia id');
-      
-      snapshotTmpModel.save(snapshot).then(
-
-        () => {
-          
-          FlashesService.request('add', {
-            timeout: 2000,
-            type: 'info',
-            title: 'The information has been saved'
-          });
-
-          Bn.history.navigate(`/surveys`, true);
-        },
-        error => {
-          FlashesService.request('add', {
-            timeout: 2000,
-            type: 'warning',
-            title: error.responseJSON.message
-          });
-        }
-      );
+      snapshotTmpModel.set('id', this.props.snapshotTmpId);
     }
-  }
 
+    snapshotTmpModel.save(snapshot).then(
+
+      () => {
+          
+        FlashesService.request('add', {
+          timeout: 2000,
+          type: 'info',
+          title: 'The information has been saved'
+        });
+
+        Bn.history.navigate(`/surveys`, true);
+      },
+      error => {
+        FlashesService.request('add', {
+          timeout: 2000,
+          type: 'warning',
+           title: error.responseJSON.message
+        });
+      }
+    );
+  }
 });
