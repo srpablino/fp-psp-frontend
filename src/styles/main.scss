@@ -328,8 +328,8 @@ div.fp-form-container {
 .img-card {
   max-height: 100px;
   height: 100px;
+  width: 100px;
   object-fit: contain;
-  //background: white url('/static/images/image-loader.gif') no-repeat center;
 }
 .list-common-content {
   padding-left: 15px;
@@ -1110,7 +1110,7 @@ article {
     font-size: 14px;
     color: #dddddd;
     margin-top: 10%;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
   }
   > img {
     margin-top: 20%;
