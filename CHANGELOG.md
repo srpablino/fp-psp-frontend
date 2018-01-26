@@ -2,4 +2,8 @@
 
 All major changes will be listed here
 
-### v0.0.1 (In Development)
+### v0.1.1
+- Includes improvements and major changes in the CSS layout
+
+### v0.0.1
+- First release
