@@ -7,7 +7,7 @@ export default Bn.Model.extend({
     const errors = [];
 
     if (this.attributes.name === '') {
-      errors.push('Missing "Organization name" field');
+      errors.push('Missing "Organisation name" field');
       return errors;
     }
 
@@ -22,7 +22,7 @@ export default Bn.Model.extend({
     }
 
     if (this.attributes.application === undefined) {
-      errors.push('Missing "Organization\'s Application"');
+      errors.push('Missing "Organisation\'s Application"');
       return errors;
     }
 

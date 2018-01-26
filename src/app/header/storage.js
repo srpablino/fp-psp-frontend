@@ -4,7 +4,7 @@ import Model from './model';
 const allMenuItems = {
   mainItem: { link: '#' },
   navigationItems: [
-    { name: 'Organizations', link: '#organizations' },
+    { name: 'Organisations', link: '#organizations' },
     { name: 'Reports', link: '#reports' },
     { name: 'Families', link: '#families' },
     { name: 'Surveys', link: '#surveys' },
