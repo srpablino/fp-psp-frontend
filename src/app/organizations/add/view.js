@@ -4,6 +4,7 @@ import Template from './template.hbs';
 import Model from '../model';
 import storage from '../storage';
 import utils from '../../utils';
+import FlashesService from '../../flashes/service';
 
 export default Mn.View.extend({
   template: Template,
@@ -55,9 +56,23 @@ export default Mn.View.extend({
       this.model.set('application', application);
     }
 
-    var file = this.$el.find('#input-image-file').prop('files')[0];
+    let errors = this.model.validate();
+
+    if (errors) {
+      errors.forEach(error => {
+        FlashesService.request('add', {
+          timeout: 3000,
+          type: 'warning',
+          title: error
+        });
+      });
+      button.reset();
+      return;
+    }
+
+    let file = this.$el.find('#input-image-file').prop('files')[0];
     if (file !== undefined) {
-      var reader = new FileReader();
+      let reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.onload = () => {
