@@ -1,3 +1,4 @@
+import '../styles/main.scss';
 import '../common/plugins';
 import App from './application/app';
 
