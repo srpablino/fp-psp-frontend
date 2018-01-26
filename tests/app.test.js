@@ -1,3 +1,5 @@
+/* eslint no-undef:0 */
+
 import chai from 'chai';
 import App from '../src/app/application/app';
 
