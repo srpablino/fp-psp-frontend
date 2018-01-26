@@ -1,6 +1,6 @@
 {
   "name": "fp-psp-frentend",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Frontend para el FP-PSP-SERVER del semáforo de la pobreza",
   "main": "main.js",
   "devDependencies": {
