@@ -25,7 +25,7 @@ export default Mn.View.extend({
     if (this.entity == null) {
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
     } else {
-      $(`#subMenuItem > a[href$="${this.entity}"]`)
+      $(`.sub-menu-tiem > a[href$="${this.entity}"]`)
         .parent()
         .addClass('subActive');
     }

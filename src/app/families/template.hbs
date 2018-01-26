@@ -1,123 +1,122 @@
-<a href="#survey/{{family.snapshot_indicators.survey_id}}/answer">
-  <img id="floating-survey" src="/static/images/icon_edit.png" >
-</a>
 <div class="row">
-  <div class="col-lg-9 col-sm-9">
-    <article class="card animated fadeInLeft">
+  <div class="col-md-12">
+    <a href="#survey/{{family.snapshot_indicators.survey_id}}/answer" class="floating-edit floating-buttom" href="#surveys/new">
+    </a>
+  </div>
+  <div class="col-md-8">
+    <article class="card mg-bottom-25px">
       <div class="card-block">
-        <div class="card-title" >
-          <h4>File
-            <img class="pull-right" src="/static/images/icon_more.png" >
-          </h4>
+        <div class="card-title row">
+          <p class="text-left text-blue">File</p>
         </div>
-
-        <div class="row">
-            <div class="col-lg-2 col-sm-2">
-                <!--<img class="img-responsive" src="static/images/BG_families.jpg">-->
-                <img class="img-responsive" src="/static/images/family-room.png">
-            </div>
-
-            <div class="col-lg-6 col-sm-6">
-                <p>{{family.code}}</p>
-                <p class="text-blue">Contact:
-                  <span class="text-gray">{{family.person.firstName}} {{family.person.lastName}}</span>
-                </p>
-                <p class="text-blue">Cell phone:
-                  <span class="text-gray">{{family.person.phoneNumber}}</span>
-                </p>
-                <p class="text-blue">Place:
-                  <span class="text-gray">{{family.city.city}}, {{family.country.country}}</span>
-                </p>
-            </div>
-
-            <div class="col-lg-3 col-sm-3">
-              <img class="img-responsive pull-right" src="static/images/dummy_ubication.png">
-            </div>
+        <div class="margin-tb-20px row">
+          <div class="col-md-2 col-xs-12 col-sm-2">
+            <img class="card-img-top img-responsive  img-card" src="/static/images/family-room.png">
+          </div>
+          <div class="col-md-7 col-xs-12 col-sm-7">
+            <p>{{family.code}}</p>
+            <p class="text-blue">Contact:
+              <span class="text-gray">{{family.person.firstName}} {{family.person.lastName}}</span>
+            </p>
+            <p class="text-blue">Cell phone:
+              <span class="text-gray">{{family.person.phoneNumber}}</span>
+            </p>
+            <p class="text-blue">Place:
+              <span class="text-gray">{{family.city.city}}, {{family.country.country}}</span>
+            </p>
+          </div>
+          <div class="col-md-3 col-xs-12 col-sm-3">
+            <img class="img-responsive" src="static/images/dummy_ubication.png">
+          </div>
         </div>
       </div>
-      <br/><br/><br/>
     </article>
-    <article class="card animated fadeInLeft ">
-      <div class="card-block ">
-        <div class="card-title" >
-          <h4 >Priorities / Snapshot {{createdAt}}
-            <img class="pull-right" src="/static/images/icon_more.png" >
-          </h4>
+    <article class="card mg-bottom-25px">
+      <div class="card-block">
+        <div class="card-title row">
+          <p class="text-left text-blue">Priorities / Snapshot {{createdAt}}</p>
         </div>
-        <br/>
-        {{#each family.snapshot_indicators.indicators_priorities}}
-          <div class="list-priorities">
-            <span id="item-number" class="pull-left ">{{[helpers/counter] @index}}</span>
-            <div class="">
-            <span>{{this.indicator}}</span><br>
-              <span class="text-muted">{{this.reason}}</span>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="list-priorities">
+              {{#each family.snapshot_indicators.indicators_priorities}}
+                  <div class="row margin-tb-10px">
+                    <div class="col-md-12">
+                      <span id="item-number" class="pull-left ">{{[helpers/counter] @index}}</span>
+                      <span>{{this.indicator}}</span><br>
+                      <span class="text-gray card-text">{{this.reason}}</span>
+                    </div>
+
+                  </div>
+              {{/each}}
             </div>
           </div>
-        {{/each}}
+        </div>
       </div>
     </article>
   </div>
-
-  <div class="col-lg-3 col-sm-3">
-      <!-- Card -->
-     
-      <article class="card animated fadeInLeft ">
-        <div  class="card-block">
-          <div class="card-title">
-            <h4 >Indicators / Snapshot
-              <img class="pull-right" src="/static/images/icon_more.png" >
-            </h4>
-          </div>
-
-        <div class="" id="snapshot-indicators" >
-          <div class="luces">
-            <br>
-            <span class="center-block" id="green">{{family.snapshot_indicators.count_green_indicators}}</span>
-            <span class="center-block" id="yellow">{{family.snapshot_indicators.count_yellow_indicators}}</span>
-            <span class="center-block" id="red">{{family.snapshot_indicators.count_red_indicators}}</span>
-          </div>
-          <!-- <img  class="center-block" src="/static/images/icon_semaforo.png"> -->
+  <div class="col-md-4 col-sm-6">
+    <!-- Card -->
+    <article class="card mg-bottom-25px">
+      <div class="card-block">
+        <div class="card-title row">
+          <p class="text-left text-blue">Indicators / Snapshot</p>
         </div>
-      </article>
-     
-       </div>
-       <div class="col-lg-3 col-sm-3 pull-right">
-     
-      <article class="card animated fadeInLeft">
-        <div class="card-block" id="card-interventions">
-          <div class="card-title" >
-            <h4 >Interventions
-              <img class="pull-right" src="/static/images/icon_more.png" >
-            </h4>
+        <div class="snapshot-indicators row">
+          <div class="light">
+            <span class="center-block light-green light-big">{{family.snapshot_indicators.count_green_indicators}}</span>
+            <span class="center-block light-yellow light-medium">{{family.snapshot_indicators.count_yellow_indicators}}</span>
+            <span class="center-block light-red light-small">{{family.snapshot_indicators.count_red_indicators}}</span>
           </div>
-           <table class="maintenance-watermark "></table>
-            <ul class="list-group">
-                
-                <li class="list-group-with-watermark">
-                  <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
-                  <img class="pull-right" src="/static/images/icon_interv_conseguido.png" >
-                  <p>Security: </p>
-                  <span class="text-muted">It refers to acts of physical violence against the family or against their property, occurring
-                     in their residence environment</span>
-                </li>
-                <li class="list-group-with-watermark">
-                  <img class="pull-left" src="/static/images/icon_elipse_amarillo_01.png" >
-                  <img class="pull-right" src="/static/images/icon_interv_noconseguido.png" >
-                  <p>Read and Write: </p>
-                  <span class="text-muted">It allows the family to communicate better to achieve greater economic opportunities, at the same
-                     time it allows to promote personal growth.</span>
-                </li>
-                <li class="list-group-with-watermark">
-                  <img class="pull-left" src="/static/images/icon_elipse_rojo_01.png" >
-                  <img class="pull-right" src="/static/images/icon_interv_proceso.png" >
-                  <p>Phone: </p>
-                  <span class="text-muted">Having telephony service puts the family in easy and fast connection with the world.</span>
-                </li>
-            </ul>
-
-       </div>
-      </article>
-    </div>
-    </div>
-</div>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="card-block" id="card-interventions">
+        <div class="card-title row">
+          <p class="text-left text-blue">Interventions</p>
+        </div>
+        <div class="row">
+          <div id="interventions-list" class="col-md-12 maintenance-watermark">
+            <div class="intervenion-item clearfix">
+              <div class="col-md-2 col-xs-2 col-sm-2">
+                <span class="circle-small circle-red-small"><p class="circle-small-text">D</p></span>
+              </div>
+              <div class="intervenion-text-content col-md-8 col-xs-8 col-sm-8">
+                <p class="text-blue text-left">Security:</p>
+                <p class="text-left card-text">It refers to acts of physical violence against the family or against their property, occurringin their residence environment</p>
+              </div>
+              <div class="col-md-2 col-xs-2 col-sm-2">
+                <span class="circle-small circle-success-small mg-top-50"></span>
+              </div>
+            </div>
+            <div class="intervenion-item clearfix">
+              <div class="col-md-2 col-xs-2 col-sm-2">
+                <span class="circle-small circle-yellow-small"><p class="circle-small-text">D</p></span>
+              </div>
+              <div class="intervenion-text-content col-md-8 col-xs-8 col-sm-8">
+                <p class="text-blue text-left">Read and Write</p>
+                <p class="text-left card-text">It allows the family to communicate better to achieve greater economic opportunities, at the same time it allows to promote personal growth.</p>
+              </div>
+              <div class="intervenion-text-content col-md-2 col-xs-2 col-sm-2">
+                <span class="circle-small circle-inprogress-small mg-top-50"></span>
+              </div>
+            </div>
+            <div class="intervenion-item clearfix">
+              <div class="col-md-2 col-xs-2 col-sm-2">
+                <span class="circle-small circle-red-small"><p class="circle-small-text">A</p></span>
+              </div>
+              <div class="intervenion-text-content col-md-8 col-xs-8 col-sm-8">
+                <p class="text-blue text-left">Phone:</p>
+                <p class="text-left card-text">Having telephony service puts the family in easy and fast connection with the world</p>
+              </div>
+              <div class="col-md-2 col-xs-2 col-sm-2">
+                <span class="circle-small circle-failed-small mg-top-50"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
 </div>
