@@ -1,14 +1,23 @@
-<div id="top" class="search-container">
-  <input name="data[search]" class="form-control search" id="search" type="text" placeholder="Find a Company">
-  <a id="add-new" href="#organizations/new">
-    <img class="floating-organization" src="/static/images/icon_agregar_empresa.png" title="Add a new Company">
-  </a>
-  <div class="" style="margin-top:2%">
-    <img class="view-items" src="/static/images/icon_card_view.png">
-    <img class="view-items" src="/static/images/icon_list_view.png">
+<div class="row">
+  <div class="col-md-12">
+    <div class="list-common-content">
+      <div id="top" class="search-container">
+        <div class="row">
+          <div class="col-md-3">
+            <input name="data[search]" class="form-control search" id="search" type="text" placeholder="Find a Company">
+          </div>
+          <div class="col-md-9">
+            <span class="view-items-left-content" style="display:none">
+            </span>
+            <span class="view-items-right-content" style="display:none">
+            </span>
+            <a id="add-new" class="floating-organization floating-buttom" href="#organizations/new">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div id="organization-list" class="has-spinner">
+      </div>
+    </div>
   </div>
-</div>
-
-
-<div id="organization-list" class="has-spinner">
 </div>
