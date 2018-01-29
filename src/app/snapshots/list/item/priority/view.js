@@ -41,7 +41,8 @@ export default Marionette.View.extend({
     let $fecha = this.$el.find('#datetimepicker');
     $fecha.datetimepicker({
       format: 'DD/MM/YYYY',
-      minDate: moment()
+      minDate: moment(),
+      locale: 'en'
     });
 
     return this;

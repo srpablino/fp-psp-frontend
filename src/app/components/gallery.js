@@ -28,7 +28,7 @@ class Gallery extends React.Component {
 
   renderImage(imageUrl, imageDescription, imageValue, index, className) {
     return (
-      <div className="col-md-4" key={index}>
+      <div className="col-md-4 col-sm-4" key={index}>
         <div
           onClick={this._handleClickOnImage(
             index,
@@ -100,8 +100,8 @@ class Gallery extends React.Component {
     }
 
     return (
-      <div className="form-group field field-gallery">
-        <label className="control-label">
+      <div className="field field-gallery">
+        <label className="progress-survey">
           {this.state.title} {this.state.required}
         </label>
 
@@ -111,14 +111,10 @@ class Gallery extends React.Component {
             checked={this.state.isGoing}
             onChange={this.handleInputChange}
           />
-          &#32;&#32;I&#39;d prefer not to answer
+          &#32;&#32; I&#39;d prefer not to answer
         </div>
-        <br />
-        <br />
-        <div className="row">
-          <div className="images col-sm-8 col-md-offset-2">
-            <div className="row">{images}</div>
-          </div>
+        <div className="images col-md-10 col-md-offset-1">
+          <div className="row">{images}</div>
         </div>
       </div>
     );

@@ -64,7 +64,7 @@ class ErrorHandler {
   }
   redirectToLoginAfterError() {
     // TODO Show a friendly message to the user
-    window.location.replace('/login/index.html');
+    window.location.replace('/login.html');
   }
 }
 

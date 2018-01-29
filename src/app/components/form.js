@@ -239,31 +239,30 @@ class Form extends Component {
   render() {
 
     return (
-      <div>
+      <div className="col-md-12">
         {this.checkShowSaveDraft(this.state)? 
           <button className="btn btn-primary pull-right" id="save-draft" onClick={() => this.onSaveDraft()}> Save Draft </button> :'' }
-        <br />
-        <br />
-      
-        <article className="card animated fadeInLeft">
+        {this.checkShowSaveDraft(this.state)? <br /> : '' }
+        {this.checkShowSaveDraft(this.state)? <br /> : '' }
+
+        <article className="card">
           <div className="card-block">
-            <div className="survey-container">
-              <label className="progress-survey">
-                {' '}
-                {this.state.stepsSchema[this.state.step].description}
-                {this.counter[this.state.stepsSchema[this.state.step].counter]}
-              </label>
-       
-              <hr className="progress-rule" />
-              <JsonSchemaForm
-                schema={this.state.stepsSchema[this.state.step]}
-                uiSchema={this.state.stepsUISchema[this.state.step]}
-                fields={{ gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat, date:DatetimeFormat }}
-                onSubmit={this.onSubmit}
-                onError={log('errors')}
-                formData={this.state.formData}
-              >
-                <div>
+            <div id="new-survey-2" className="row">
+              <div className="col-md-12 survey-container">
+                <label className="progress-survey">
+                  {' '}
+                  {this.state.stepsSchema[this.state.step].description}
+                  {this.counter[this.state.stepsSchema[this.state.step].counter]}
+                </label>
+                <hr className="progress-rule" />
+                <JsonSchemaForm
+                  schema={this.state.stepsSchema[this.state.step]}
+                  uiSchema={this.state.stepsUISchema[this.state.step]}
+                  fields={{ gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat, date:DatetimeFormat }}
+                  onSubmit={this.onSubmit}
+                  onError={log('errors')}
+                  formData={this.state.formData}
+                >
                   <button
                     type="button"
                     onClick={() => this.onCancel(this.state.formData)}
@@ -274,13 +273,13 @@ class Form extends Component {
                   <button type="submit" className="btn btn-circle survey-next">
                     <i className="fa fa-chevron-right" />
                   </button>
-                </div>
-              </JsonSchemaForm>
+                </JsonSchemaForm>
+              </div>
             </div>
           </div>
-          <br />
         </article>
       </div>
+
     );
   }
 }
