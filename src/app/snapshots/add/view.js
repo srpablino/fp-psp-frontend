@@ -12,7 +12,7 @@ import Template from './template.hbs';
 import Form from '../../components/form';
 import SurveyModel from '../../surveys/add/model';
 import SnapshotModel from './model';
-import SnapshotTmpModel from '../../snapshots_drafts/model';
+import SnapshotDraftModel from '../../snapshots_drafts/model';
 import FlashesService from '../../flashes/service';
 
 export default Mn.View.extend({
@@ -76,7 +76,8 @@ export default Mn.View.extend({
       handleCancel: this.props.handleCancel,
       handleSaveDraft: this.handleSaveDraft.bind(this),
       view: this,
-      stateDraft: this.props.stateDraft
+      stateDraft: this.props.stateDraft,
+      draftId: this.props.snapshotTmpId
     });
     ReactDOM.unmountComponentAtNode(placeHolder);
     ReactDOM.render(this.reactView, placeHolder);
@@ -126,7 +127,7 @@ export default Mn.View.extend({
     });
   },
 
-  hadleSubmit(formResult) {
+  hadleSubmit(formResult, draftId) {
     // Convert from array to string, using property "value"
     this.fixedGalleryFieldValue(formResult);
 
@@ -142,19 +143,43 @@ export default Mn.View.extend({
     };
 
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
-      Bn.history.navigate(
-        `/survey/${savedSnapshot.survey_id}/snapshot/${
-          savedSnapshot.snapshot_economic_id
-        }`,
-        true
-      );
+    
+      if(draftId){
+        let snapshotDraftModel = new SnapshotDraftModel();
+        snapshotDraftModel.set('id', draftId);
+        snapshotDraftModel.destroy().then(
+          () => {
+            this.redirectSummary(savedSnapshot.survey_id, savedSnapshot.snapshot_economic_id);
+          },
+
+          error => {
+            FlashesService.request('add', {
+              timeout: 2000,
+              type: 'warning',
+               title: error.responseJSON.message
+            });
+          }
+
+        );
+      } else {
+        this.redirectSummary(savedSnapshot.survey_id, savedSnapshot.snapshot_economic_id);
+      }
     });
 
     this.app.getSession().save({termCond: 0, priv: 0});
   },
 
+  redirectSummary(surveyId, snapshotEconomicId){
+    Bn.history.navigate(
+      `/survey/${surveyId}/snapshot/${
+        snapshotEconomicId
+      }`,
+      true
+    );
+  },
+
   handleSaveDraft(state){
-    let snapshotTmpModel = new SnapshotTmpModel();
+    let snapshotDraftModel = new SnapshotDraftModel();
 
     const snapshot = {
       survey_id: this.props.surveyId,
@@ -170,10 +195,10 @@ export default Mn.View.extend({
     }
 
     if(this.props.snapshotTmpId){
-      snapshotTmpModel.set('id', this.props.snapshotTmpId);
+      snapshotDraftModel.set('id', this.props.snapshotTmpId);
     }
 
-    snapshotTmpModel.save(snapshot).then(
+    snapshotDraftModel.save(snapshot).then(
 
       () => {
           

@@ -36,42 +36,40 @@ class Form extends Component {
         stepsUISchema
       };
     } else {
-      this.updateState(stepsSchema, stepsUISchema);
-     
+       // If the survey definition was changed, we should update this.state.
+      this.updateState(stepsSchema, stepsUISchema);   
     }
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   updateState(stepsSchema, stepsUISchema){
-
-    // Case 2: one o more fields were removed.
-
-    const index = this.props.uiSchema['ui:group:economics'].indexOf('activityMain');
-    this.props.uiSchema['ui:group:economics'].splice(index, 1);
+   
+    // Case 1: one o more fields were removed.
     
     const formDataCopy = this.props.stateDraft.formData;
 
-
-    Object.keys(formDataCopy).forEach(function(field) {
+    Object.keys(formDataCopy).forEach(field => {
       if(!this.existInSchemaGroup(field)){
         delete this.props.stateDraft.formData[field];
       }
     });
     
-    const stepKey = this.props.stateDraft.stepsSchema[this.props.stateDraft.step +1].key;
+    const stepKey = this.props.stateDraft.stepsSchema[this.props.stateDraft.step].key;
     let indexActualKey = -1;
     let firstIndexNotFound = -1;
 
-    // Case 1: the fields order were changed.
-
+    // Case2: the fields order were changed.
+    
     for(let i=0; i < stepsSchema.length; i++){
       if(stepsSchema[i].key === stepKey){
         indexActualKey = i;
       } 
     
-     if(firstIndexNotFound===-1 && this.props.stateDraft.formData[stepsSchema[i].key]=== undefined){
-        firstIndexNotFound = i +1;
+    // Case 3: the field change from optional to required.
+
+     if(stepsSchema[i].required.length>0 && firstIndexNotFound===-1 && this.props.stateDraft.formData[stepsSchema[i].key] === undefined){
+        firstIndexNotFound = i;
       }
     }
     
@@ -91,7 +89,8 @@ class Form extends Component {
           stepsUISchema
         };
       }
-    }
+    }  
+    
   }
 
   existInSchemaGroup(field){
@@ -185,7 +184,7 @@ class Form extends Component {
       this.setState({
         formData: newData
       });
-      this.onSubmit = this.props.handleSubmit(newData);
+      this.onSubmit = this.props.handleSubmit(newData, this.props.draftId);
     }
   }
 
