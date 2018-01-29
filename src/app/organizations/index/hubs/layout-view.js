@@ -7,13 +7,13 @@ import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import storage from './storage';
 import utils from '../../../utils';
-import OrganizationsModel from './model';
+import HubModel from './model';
 
 export default Mn.View.extend({
   template: Template,
   collection: new CollectionView(),
   regions: {
-    list: '#organization-list'
+    list: '#hub-list'
   },
   events: {
     'keyup #search': 'handleSearch'
@@ -98,7 +98,7 @@ export default Mn.View.extend({
         per_page: 12
       };
 
-      let moreElements = new OrganizationsModel();
+      let moreElements = new HubModel();
       moreElements.fetch({
         data: params,
         success(response) {

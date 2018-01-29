@@ -8,7 +8,7 @@ export default Mn.View.extend({
   },
   serializeData() {
     return {
-      organization: this.model.attributes
+      hub: this.model.attributes
     };
   },
   handleDelete(event) {
