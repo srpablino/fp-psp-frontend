@@ -17,6 +17,7 @@ export default Mn.View.extend({
     this.app = options.app;
     this.entity = options.entity;
     this.organizationId = options.organizationId;
+    this.organization = this.model.attributes;
   },
 
   onRender() {
@@ -33,7 +34,9 @@ export default Mn.View.extend({
     setTimeout(() => {
       this.chart();
       this.dataTables();
+
     }, 0);
+    console.log(this.organization );
   },
 
   dataTables(){
@@ -53,7 +56,7 @@ export default Mn.View.extend({
         bindto: '#bar-indicators',
         data: {
           columns: [
-            ['Red', 10],
+            ['Red', this.organization.id],
             ['Yellow', 5],
             ['Green', 15]
           ],
@@ -63,7 +66,7 @@ export default Mn.View.extend({
                 Green: 'rgba(0, 128, 0, 0.7)'
               },
               names: {
-                    Red: 'Red: 10',
+                    Red: `Red:  ${this.organization.id}`,
                     Yellow: 'Yellow: 5',
                     Green: 'Green: 15'
                   },
