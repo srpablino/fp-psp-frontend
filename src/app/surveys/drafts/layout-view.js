@@ -48,6 +48,7 @@ export default Mn.View.extend({
 
     this.collection.forEach(item => {
       let itemView = new ItemView({
+        app: this.app,
         model: item,
         itemViewOptions: {
           className: "col-md-4 col-xs-6"

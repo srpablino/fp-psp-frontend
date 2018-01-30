@@ -1,22 +1,22 @@
 import Bn from 'backbone';
-import SnapshotTmpModel from './model';
+import SnapshotDraftModel from './model';
 import SnapshotView from '../snapshots/add/view';
 
-const snapshotsTmp = props => {
+const snapshotsDraft = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
-      'snapshots': 'showSnapshotTmp'
+      'snapshot/draft/:id/edit': 'showSnapshotDraft'
     },
     controller: {
-      showSnapshotTmp() {
+      showSnapshotDraft(hash) {
+        
+        const draftId = parseInt(hash, 10);
 
-        const model =  new SnapshotTmpModel();
-        model.fetch({
-          data: {
-            snapshot_draft_id: 1
-          }
-        }).then(() => {
+        let model =  new SnapshotDraftModel();
+        model.set('id', draftId);
+
+        model.fetch().then(() => {
          
           const newSnapshotView = new SnapshotView({
             organizationId: app.getSession().get('user').organization
@@ -28,7 +28,7 @@ const snapshotsTmp = props => {
             },
             app,
             stateDraft: model.attributes.state_draft,
-            snapshotTmpId: model.attributes.id
+            snapshotDraftId: model.attributes.id
           });
   
           app.showViewOnRoute(newSnapshotView);
@@ -40,4 +40,4 @@ const snapshotsTmp = props => {
   return routes;
 };
 
-export default snapshotsTmp; 
+export default snapshotsDraft; 
