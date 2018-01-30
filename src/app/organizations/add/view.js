@@ -9,8 +9,7 @@ import FlashesService from '../../flashes/service';
 export default Mn.View.extend({
   template: Template,
   events: {
-    'click #image-logo': 'selectFile',
-    'click #image-logo-text': 'selectFile',
+    'click .select-file': 'selectFile',
     'change #input-image-file': 'previewFile',
     'click #submit': 'handleSubmit'
   },
