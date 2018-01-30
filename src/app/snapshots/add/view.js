@@ -24,7 +24,7 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { organizationId, surveyId, handleCancel, app, stateDraft, snapshotTmpId } = options;
+    const { organizationId, surveyId, handleCancel, app, stateDraft, snapshotDraftId } = options;
     
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
@@ -35,7 +35,7 @@ export default Mn.View.extend({
     this.props.surveyId = surveyId;
     this.props.organizationId = organizationId;
     this.props.stateDraft = stateDraft;
-    this.props.snapshotTmpId = snapshotTmpId;
+    this.props.snapshotDraftId = snapshotDraftId;
     this.app = app;
   },
 
@@ -77,7 +77,7 @@ export default Mn.View.extend({
       handleSaveDraft: this.handleSaveDraft.bind(this),
       view: this,
       stateDraft: this.props.stateDraft,
-      draftId: this.props.snapshotTmpId
+      draftId: this.props.snapshotDraftId
     });
     ReactDOM.unmountComponentAtNode(placeHolder);
     ReactDOM.render(this.reactView, placeHolder);
@@ -188,14 +188,11 @@ export default Mn.View.extend({
       user_name: this.app.getSession().get('user').username,
       term_cond_id: this.app.getSession().get('termCond'),
       priv_pol_id: this.app.getSession().get('priv'),
-      state_draft: state,
-      economic_response: this.getEconomics(state.formData),
-      indicator_response: this.getIndicators(state.formData),
-      personal_response: this.getPersonal(state.formData)
+      state_draft: state
     }
 
-    if(this.props.snapshotTmpId){
-      snapshotDraftModel.set('id', this.props.snapshotTmpId);
+    if(this.props.snapshotDraftId){
+      snapshotDraftModel.set('id', this.props.snapshotDraftId);
     }
 
     snapshotDraftModel.save(snapshot).then(
