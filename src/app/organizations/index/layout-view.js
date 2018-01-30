@@ -36,8 +36,8 @@ export default Mn.View.extend({
     this.showList();
   },
   onAttach() {
-    if (!this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
-      this.$el.find('#add-new').hide();
+    if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
+      this.$el.find('#add-new').show();
     }
   },
   getTemplate() {
