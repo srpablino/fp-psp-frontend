@@ -8,7 +8,8 @@ export default Mn.View.extend({
   template: Template,
 
   events: {
-    'click #menuItem': 'highlight'
+    'click #menu-left .menu-item': 'highlight',
+    'click #menu-left img': 'highlightFirstElement'
   },
 
   highlight(e) {
@@ -20,14 +21,23 @@ export default Mn.View.extend({
       .parent()
       .addClass('active');
   },
+
+  highlightFirstElement() {
+    $('#menu-left:first-child a')
+      .parent()
+      .addClass('active');
+    let $list = $('#menu-left a:not(:first)');
+    $list.parent().removeClass('active');
+  },
   initialize(options) {
     this.app = options.app;
-
   },
   onRender() {
-
-    if (this.app.getSession().userHasRole('ROLE_ROOT') || this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
-      this.$el.find('#menu-manage').show()
+    if (
+      this.app.getSession().userHasRole('ROLE_ROOT') ||
+      this.app.getSession().userHasRole('ROLE_HUB_ADMIN')
+    ) {
+      this.$el.find('#menu-manage').show();
     }
   },
 
@@ -38,6 +48,9 @@ export default Mn.View.extend({
     const { username } = this.app.getSession().get('user');
     if (!username) {
       return 'Anonymous';
+    }
+    if (username.indexOf('@') > 0) {
+      return username;
     }
     if (username.indexOf('_') > 0) {
       return _startCase(_toLower(username.split('_').join(' ')));
