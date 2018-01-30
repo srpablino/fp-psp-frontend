@@ -14,7 +14,7 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-      family: this.model.attributes
+      snapshotDraft: this.model.attributes
     };
   },
 

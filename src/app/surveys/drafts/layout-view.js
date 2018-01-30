@@ -3,8 +3,7 @@ import $ from 'jquery';
 import Bn from 'backbone';
 import Template from './layout-template.hbs';
 import utils from '../../utils';
-import SnapshotColecction from './collection';
-import SnapshotModel from './model';
+import SnapshotDraftColecction from '../../snapshots_drafts/collection';
 import ItemView from './item/view';
 import storage from '../storage';
 
@@ -13,9 +12,8 @@ import storage from '../storage';
 export default Mn.View.extend({
   template: Template,
   collection:  new Bn.Collection(),
-  familiesModel: new SnapshotModel(),
   regions: {
-    list: '#family-list'
+    list: '#Snapshot-list'
   },
   events: {
     'click #submit': 'handleSubmit',
@@ -40,18 +38,17 @@ export default Mn.View.extend({
     }, 0);
 
     this.showList();
+
   },
 
   showList() {
 
-    let element = this.$el.find('#family-list');
+    let element = this.$el.find('#Snapshot-list');
     element.empty();
 
     this.collection.forEach(item => {
-
       let itemView = new ItemView({
         model: item,
-      //  deleteFamily: this.deleteFamily.bind(this),
         itemViewOptions: {
           className: "col-md-4 col-xs-6"
         },
@@ -77,10 +74,10 @@ export default Mn.View.extend({
         section.loading();
 
        let params = {
-         free_text: freeText
+         description: freeText
        };
 
-        let elements = new SnapshotColecction();
+        let elements = new SnapshotDraftColecction();
         elements.fetch({
           data: params,
           success(response) {
