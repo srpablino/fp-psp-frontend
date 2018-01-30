@@ -10,7 +10,7 @@ export default Mn.View.extend({
     'click #show-snaps': 'handleShowSnapshots',
     'click .answer-area': 'handlerTermsAndConditions'
   },
-
+  className: 'col-lg-2 col-md-4 col-sm-6 col-xs-12',
   initialize(options) {
     this.deleteSurvey = options.deleteSurvey;
     this.model = options.model;
