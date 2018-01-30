@@ -4,14 +4,12 @@
     <article class="card">
       <div class="card-block">
         <div class="row card-title">
-          <p class="text-left text-blue">{{survey.title}}</p>
+          <p class="text-left text-blue">{{snapshotDraft.first_name}} {{snapshotDraft.last_name}}</p>
         </div>
         <a class="answer-area" href="#">
           <div class="row card-description">
-                <p class="card-text">{{survey.description}}</p>
-                <h5 class="card-text-sub-title text-blue">Contains:</h5>
-                <p class="card-text">50 indicators</p>
-                <p class="card-text-small"><span class="text-blue">Created at: </span><span >{{surveys.created_at}}</span></p>
+                <h5 class="card-text-sub-title text-blue">Created at:</h5>
+                <p class="card-text">{{snapshotDraft.created_at}}</p>
           </div>
         </a>
       </div>
