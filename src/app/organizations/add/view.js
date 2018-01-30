@@ -99,8 +99,20 @@ export default Mn.View.extend({
         .then(() => {
           button.reset();
           history.navigate('organizations', {trigger: true});
+          FlashesService.request('add', {
+            timeout: 3000,
+            type: 'Info',
+            title: "Organisation created successfully"
+          });
         })
-        .always(() => {
+        .catch(response => {
+          if (response.status === 400) {
+            FlashesService.request('add', {
+              timeout: 3000,
+              type: 'warning',
+              title: response.responseJSON.message
+            });
+          }
           button.reset();
         });
     }
