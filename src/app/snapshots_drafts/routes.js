@@ -18,6 +18,8 @@ const snapshotsDraft = props => {
 
         model.fetch().then(() => {
          
+          app.getSession().save({termCond: model.term_cond_id, priv: model.priv_pol_id});
+
           const newSnapshotView = new SnapshotView({
             organizationId: app.getSession().get('user').organization
               ? app.getSession().get('user').organization.id

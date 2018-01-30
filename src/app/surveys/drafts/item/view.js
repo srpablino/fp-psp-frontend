@@ -14,7 +14,6 @@ export default Mn.View.extend({
     this.model = options.model;
   },
 
-
   serializeData() {
     return {
       snapshotDraft: this.model.attributes
@@ -28,6 +27,8 @@ export default Mn.View.extend({
   handleEdit(event){
     event.preventDefault();
     
+    this.app.getSession().save({termCond: this.model.attributes.term_cond_id, priv: this.model.attributes.priv_pol_id});
+
     const newSnapshotView = new SnapshotView({
       organizationId: this.app.getSession().get('user').organization
         ? this.app.getSession().get('user').organization.id
@@ -43,7 +44,7 @@ export default Mn.View.extend({
 
     this.app.showViewOnRoute(newSnapshotView);
 
-    // Bn.history.navigate(`/snapshot/draft/${this.model.attributes.id}/edit`, true);
+     Bn.history.navigate(`/snapshot/draft/${this.model.attributes.id}/edit`, { replace: true });
   }
 
 });
