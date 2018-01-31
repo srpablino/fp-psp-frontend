@@ -2,6 +2,8 @@ import Bn from 'backbone';
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 import SnapshotView from '../../../snapshots/add/view';
+import ModalService from '../../../modal/service';
+import FlashesService from '../../../flashes/service';
 
 export default Mn.View.extend({
   template: Template,
@@ -12,6 +14,7 @@ export default Mn.View.extend({
   initialize(options) {
     this.app = options.app;
     this.model = options.model;
+    this.showList = options.showList;
   },
 
   serializeData() {
@@ -21,7 +24,38 @@ export default Mn.View.extend({
   },
 
   handleDelete(event) {
+    var self = this;
     event.preventDefault();
+    ModalService.request('confirm', {
+      title: 'Confirm Deletion',
+      text: `Are you sure you want to delete the draft"?`
+    }).then(confirmed => {
+      if (!confirmed) {
+        return;
+      }
+
+      this.model.destroy().then(
+        () => {
+          self.showList();
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'info',
+             title: 'The draft has been deleted!'
+          });
+    
+         
+        },
+
+        error => {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'warning',
+             title: error.responseJSON.message
+          });
+        }
+
+      );
+    });
   },
 
   handleEdit(event){
