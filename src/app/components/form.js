@@ -33,7 +33,8 @@ class Form extends Component {
         step: 0,
         formData: {},
         stepsSchema,
-        stepsUISchema
+        stepsUISchema,
+        lastValue: {}
       };
     } else {
        // If the survey definition was changed, we should update this.state.
@@ -52,6 +53,7 @@ class Form extends Component {
     Object.keys(formDataCopy).forEach(field => {
       if(!this.existInSchemaGroup(field)){
         delete this.props.stateDraft.formData[field];
+        this.props.stateDraft.step = this.props.stateDraft.step -1;
       }
     });
     
@@ -63,12 +65,12 @@ class Form extends Component {
     
     for(let i=0; i < stepsSchema.length; i++){
       if(stepsSchema[i].key === stepKey){
-        indexActualKey = i;
+        indexActualKey = i + 1;
       } 
     
-    // Case 3: the field change from optional to required.
-
-     if(stepsSchema[i].required.length>0 && firstIndexNotFound===-1 && this.props.stateDraft.formData[stepsSchema[i].key] === undefined){
+    // Case 3: the field wasn't answered (for example, changed from optional to required).
+    // stepsSchema[i].required.length>0 && 
+     if(firstIndexNotFound===-1 && this.props.stateDraft.formData[stepsSchema[i].key] === undefined){
         firstIndexNotFound = i;
       }
     }
@@ -79,14 +81,16 @@ class Form extends Component {
           step: indexActualKey,
           formData: this.props.stateDraft.formData,
           stepsSchema,
-          stepsUISchema
+          stepsUISchema,
+          lastValue: this.props.stateDraft.formData
         };
       } else {
         this.state = {
           step: firstIndexNotFound,
           formData: this.props.stateDraft.formData,
           stepsSchema,
-          stepsUISchema
+          stepsUISchema,
+          lastValue: this.props.stateDraft.formData
         };
       }
     }  
@@ -178,11 +182,13 @@ class Form extends Component {
     if (this.state.step < this.state.stepsSchema.length - 1) {
       this.setState({
         step: this.state.step + 1,
-        formData: newData
+        formData: newData,
+        lastValue: newData
       });
     } else {
       this.setState({
-        formData: newData
+        formData: newData,
+        lastValue: newData
       });
       this.onSubmit = this.props.handleSubmit(newData, this.props.draftId);
     }
@@ -197,11 +203,13 @@ class Form extends Component {
     if (this.state.step > 0) {
       this.setState({
         step: this.state.step - 1,
-        formData: newData
+        formData: newData,
+        lastValue: newData
       });
     } else {
       this.setState({
-        formData: {}
+        formData: {},
+        lastValue: {}
       });
       this.props.handleCancel();
     }
@@ -209,10 +217,27 @@ class Form extends Component {
   }
 
   onSaveDraft(){
-    if(this.checkShowSaveDraft(this.state)){
     // When a survey has not been completed and we want to save a draft
     // , the method handleSaveDraft is called.
+
+    if(this.checkShowSaveDraft(this.state)){
+
+      let newData = JSON.parse(JSON.stringify(this.state.formData));
+      let currentStep = this.state.stepsSchema[this.state.step];
+
+      if(this.state.lastValue !== this.state.formData){
+        
+        newData[currentStep.key] = this.state.lastValue[currentStep.key];
+        this.state.formData = newData;
+      
+      } else if(this.state.lastValue === this.state.formData && currentStep.properties[currentStep.key].default){
+        
+        newData[currentStep.key] = currentStep.properties[currentStep.key].default;
+        this.state.formData = newData;
+
+      }
       this.props.handleSaveDraft(this.state);
+    
     } else {
       this.render();
     }
@@ -234,6 +259,10 @@ class Form extends Component {
     }
 
     return show;
+  }
+
+  onChange(data){
+    this.state.lastValue = data.formData;
   }
 
   render() {
@@ -262,6 +291,7 @@ class Form extends Component {
                   onSubmit={this.onSubmit}
                   onError={log('errors')}
                   formData={this.state.formData}
+                  onChange={(event) => {this.onChange(event)}}
                 >
                   <button
                     type="button"
