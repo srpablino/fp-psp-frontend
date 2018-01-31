@@ -12,6 +12,8 @@ import Template from './template.hbs';
 import Form from '../../components/form';
 import SurveyModel from '../../surveys/add/model';
 import SnapshotModel from './model';
+import SnapshotTmpModel from '../../snapshots_drafts/model';
+import FlashesService from '../../flashes/service';
 
 export default Mn.View.extend({
   template: Template,
@@ -51,6 +53,7 @@ export default Mn.View.extend({
     newSchema.properties = newProps;
     return newSchema;
   },
+
   renderForm() {
 
     const parameters = {};
@@ -69,6 +72,7 @@ export default Mn.View.extend({
       uiSchema,
       handleSubmit: this.hadleSubmit.bind(this),
       handleCancel: this.props.handleCancel,
+      handleSaveDraft: this.handleSaveDraft.bind(this),
       view: this
     });
     ReactDOM.unmountComponentAtNode(placeHolder);
@@ -144,5 +148,43 @@ export default Mn.View.extend({
     });
 
     this.app.getSession().save({termCond: 0, priv: 0});
+  },
+
+  handleSaveDraft(state){
+
+    const snapshot = {
+      survey_id: this.props.surveyId,
+      last_name: state.formData.lastName,
+      first_name: state.formData.firstName,
+      user_name: this.app.getSession().get('user').username,
+      term_cond_id: this.app.getSession().get('termCond'),
+      priv_pol_id: this.app.getSession().get('priv'),
+      state_draft: state,
+      economic_response: this.getEconomics(state.formData),
+      indicator_response: this.getIndicators(state.formData),
+      personal_response: this.getPersonal(state.formData)
+    }
+
+    new SnapshotTmpModel().save(snapshot).then(
+
+      () => {
+        
+        FlashesService.request('add', {
+          timeout: 2000,
+          type: 'info',
+          title: 'The information has been saved'
+        });
+
+        Bn.history.navigate(`/surveys`, true);
+      },
+      error => {
+        FlashesService.request('add', {
+          timeout: 2000,
+          type: 'warning',
+          title: error.responseJSON.message
+        });
+      }
+    );
   }
+
 });
