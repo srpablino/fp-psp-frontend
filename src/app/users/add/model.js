@@ -16,6 +16,13 @@ export default Bn.Model.extend({
       return errors;
     }
 
+    const emailRegExp = /^[a-zA-Z0-9._-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+
+    if (!emailRegExp.test(this.attributes.email)) {
+      errors.push('Email is not valid');
+      return errors;
+    }
+
     if (this.attributes.pass === '') {
       errors.push('Missing "Password" field');
       return errors;

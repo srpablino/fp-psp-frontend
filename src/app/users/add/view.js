@@ -145,7 +145,7 @@ export default Mn.View.extend({
       errors.forEach(error => {
         FlashesService.request('add', {
           timeout: 3000,
-          type: 'warning',
+          type: 'danger',
           title: error
         });
       });
@@ -170,7 +170,7 @@ export default Mn.View.extend({
         if (response.status === 400) {
           FlashesService.request('add', {
             timeout: 3000,
-            type: 'warning',
+            type: 'danger',
             title: response.responseJSON.message
           });
         }
