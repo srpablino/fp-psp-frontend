@@ -180,8 +180,8 @@ class Form extends Component {
       <div className="col-md-12">
         {this.checkShowSaveDraft(this.state)?
           <button className="btn btn-primary pull-right" onClick={() => this.onSaveDraft()}> Save Draft </button> :'' }
-        {this.checkShowSaveDraft(this.state)? <br /> : '' }
-        {this.checkShowSaveDraft(this.state)? <br /> : '' }
+        {this.checkShowSaveDraft(this.state)? <div className="marginDraft" /> : '' }
+        {this.checkShowSaveDraft(this.state)? <div className="marginDraft" /> : '' }
 
         <article className="card">
           <div className="card-block">
