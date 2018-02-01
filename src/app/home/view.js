@@ -8,21 +8,23 @@ export default Mn.View.extend({
   template: Template,
 
   initialize() {
-    this.months = ["","January", "February", "March", "April", "May", "June","July",
-     "August","September","October","November","December"]
+
     if (this.model) {
-      this.home = this.model.attributes;
-      console.log(this.home);
+      this.organization = this.model.attributes;
       setTimeout(() => {
         this.chart();
-
       }, 0);
     }
   },
 
+  onRender() {
+    this.months = ["","January", "February", "March", "April", "May", "June","July",
+     "August","September","October","November","December"]
+  },
+
   getTakenData(idx){
     let data = {};
-    let o = JSON.parse(`${this.home.dashboard.snapshotTaken}`)
+    let o = JSON.parse(`${this.organization.dashboard.snapshotTaken}`)
     let key = Object.keys(o)[idx];
     data.key = key;
     let value = o[key]
@@ -82,7 +84,7 @@ export default Mn.View.extend({
       this.model = new Bb.Model();
     }
     return {
-      home: this.model.attributes
+      organization: this.model.attributes
     };
 
   }
