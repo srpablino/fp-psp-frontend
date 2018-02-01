@@ -52,7 +52,7 @@ class Authorizer {
     if (this.session.userHasRole('ROLE_APP_ADMIN')) {
       return routesKeys
         .filter(route => !_includes(adminCrudRoutes.organizations, route))
-        .filter(route => !_includes(adminCrudRoutes.users, route))
+        // .filter(route => !_includes(adminCrudRoutes.users, route))
         .filter(route => !_includes(adminCrudRoutes.families, route));
     }
 

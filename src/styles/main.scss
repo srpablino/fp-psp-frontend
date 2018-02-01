@@ -862,6 +862,10 @@ article {
   border-radius: 30px;
   cursor: pointer;
 }
+.card-user{
+  border-radius: 50%;
+  background-color: #95e78b;
+}
 
 .circle-header {
   width: 20px;
@@ -1053,6 +1057,14 @@ article {
 .floating-edit:hover {
   background: url('/static/images/icon_edit_hover.png') no-repeat scroll 0px 0px;
   background-size: 45px;
+}
+.floating-item{
+  position: absolute;
+  z-index: 10;
+  top: 8%;
+  width: 4%;
+  height: auto;
+  left: 92%;
 }
 .view-items {
   padding-top: 8px;

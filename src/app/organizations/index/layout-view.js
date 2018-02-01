@@ -5,7 +5,6 @@ import $ from 'jquery';
 import { debounce } from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
-import storage from '../storage';
 import utils from '../../utils';
 import OrganizationsModel from '../model';
 
@@ -49,16 +48,21 @@ export default Mn.View.extend({
     );
   },
   handleSearch() {
+    var name = this.$el.find('#search').val();
+    this.collection = new Bn.Collection(this.model.get('list'));
+    if(!name){
+      this.showList();
+      return;
+    }
     const container = this.$el.find('.list-container').eq(0);
     const section = utils.getLoadingSection(container);
     section.loading();
     this.getRegion('list').empty();
     setTimeout(() => {
-      storage.findAll().then(collection => {
-        this.collection = collection;
-        this.showList();
-        section.reset();
-      });
+      var filtered = this.collection.filter((organization) => organization.get("name").toLowerCase().includes(name.toLowerCase()));
+      this.collection = new Bn.Collection(filtered);
+      this.showList();
+      section.reset();
     }, 1000);
   },
   search(term) {
