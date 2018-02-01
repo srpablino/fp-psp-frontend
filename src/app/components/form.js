@@ -222,6 +222,9 @@ class Form extends Component {
 
     if(this.checkShowSaveDraft(this.state)){
 
+      // We should obtain an actual data in the form for 
+      // store in the draft
+
       let newData = JSON.parse(JSON.stringify(this.state.formData));
       let currentStep = this.state.stepsSchema[this.state.step];
 

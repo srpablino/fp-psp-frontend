@@ -180,6 +180,7 @@ export default Mn.View.extend({
 
   handleSaveDraft(state){
     let snapshotDraftModel = new SnapshotDraftModel();
+    let url = `/surveys`;
 
     const snapshot = {
       survey_id: this.props.surveyId,
@@ -193,6 +194,7 @@ export default Mn.View.extend({
 
     if(this.props.snapshotDraftId){
       snapshotDraftModel.set('id', this.props.snapshotDraftId);
+      url = `/surveys/drafts`;
     }
 
     snapshotDraftModel.save(snapshot).then(
@@ -204,8 +206,8 @@ export default Mn.View.extend({
           type: 'info',
           title: 'The information has been saved'
         });
-
-        Bn.history.navigate(`/surveys`, true);
+        
+        Bn.history.navigate(url, true);
       },
       error => {
         FlashesService.request('add', {
