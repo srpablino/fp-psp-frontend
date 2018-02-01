@@ -20,7 +20,7 @@ export default Mn.View.extend({
     'keypress #search': 'handleSubmit'
   },
   initialize(app) {
-    this.app = app;
+    this.app=app.app
 
   },
   onRender() {
