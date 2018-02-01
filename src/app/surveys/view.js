@@ -10,7 +10,7 @@ export default Mn.View.extend({
     surveysContent: '#surveys-content'
   },
   initialize(app) {
-    this.app = app;
+    this.app=app.app
   },
   onRender() {
     const headerItems = storage.getSubHeaderItems();
