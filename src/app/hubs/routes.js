@@ -1,11 +1,13 @@
 import ApplicationsView from './index/layout-view';
 import applicationsStorage from './storage';
+import NewApplicationView from './add/view';
 
 const applications = props => {
   const {app} = props;
   const routes = {
     appRoutes: {
-      'applications(/)': 'showApplications'
+      'applications(/)': 'showApplications',
+      'applications/new': 'newApplication'
     },
     controller: {
       showApplications() {
@@ -17,6 +19,9 @@ const applications = props => {
             })
           );
         });
+      },
+      newApplication() {
+        app.showViewOnRoute(new NewApplicationView({app}));
       }
     }
   };
