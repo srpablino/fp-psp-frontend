@@ -7,11 +7,28 @@ import Template from './template.hbs';
 export default Mn.View.extend({
   template: Template,
 
-  onRender() {
-    setTimeout(() => {
-      this.chart();
+  initialize() {
+    this.months = ["","January", "February", "March", "April", "May", "June","July",
+     "August","September","October","November","December"]
+    if (this.model) {
+      this.home = this.model.attributes;
+      console.log(this.home);
+      setTimeout(() => {
+        this.chart();
 
-    }, 0);
+      }, 0);
+    }
+  },
+
+  getTakenData(idx){
+    let data = {};
+    let o = JSON.parse(`${this.home.dashboard.snapshotTaken}`)
+    let key = Object.keys(o)[idx];
+    data.key = key;
+    let value = o[key]
+    data.value = value;
+    return data;
+
   },
 
   chart(){
@@ -20,8 +37,8 @@ export default Mn.View.extend({
         data: {
            x: 'x',
           columns: [
-            ['x', 'NOVIEMBRE', 'DICIEMBRE', 'HOY'],
-            ['data1', 30, 200, 100,],
+            ['x', this.months[this.getTakenData(1).key], this.months[this.getTakenData(0).key], this.getTakenData(2).key],
+            ['data1', this.getTakenData(1).value, this.getTakenData(0).value, this.getTakenData(2).value],
           ],
           names: {
             data1: 'Snapshots Taken',
@@ -40,7 +57,7 @@ export default Mn.View.extend({
         },
         axis: {
             x: {
-                type: 'category' 
+                type: 'category'
             },
             y: {
                show: false
@@ -67,5 +84,6 @@ export default Mn.View.extend({
     return {
       home: this.model.attributes
     };
+
   }
 });

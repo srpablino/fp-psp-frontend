@@ -36,7 +36,7 @@ export default Mn.View.extend({
       this.dataTables();
 
     }, 0);
-    console.log(this.organization );
+
   },
 
   dataTables(){
@@ -56,9 +56,9 @@ export default Mn.View.extend({
         bindto: '#bar-indicators',
         data: {
           columns: [
-            ['Red', this.organization.id],
-            ['Yellow', 5],
-            ['Green', 15]
+            ['Red', `${this.organization.dashboard.snapshotIndicators.count_red_indicators}`],
+            ['Yellow', `${this.organization.dashboard.snapshotIndicators.count_yellow_indicators}`],
+            ['Green', `${this.organization.dashboard.snapshotIndicators.count_green_indicators}`]
           ],
           colors:{
                 Red: 'rgba(255, 0, 0, 0.8)',
@@ -66,9 +66,9 @@ export default Mn.View.extend({
                 Green: 'rgba(0, 128, 0, 0.7)'
               },
               names: {
-                    Red: `Red:  ${this.organization.id}`,
-                    Yellow: 'Yellow: 5',
-                    Green: 'Green: 15'
+                    Red: `Red:  ${this.organization.dashboard.snapshotIndicators.count_red_indicators}`,
+                    Yellow: `Yellow: ${this.organization.dashboard.snapshotIndicators.count_yellow_indicators}`,
+                    Green: `Green: ${this.organization.dashboard.snapshotIndicators.count_green_indicators}`
                   },
           type: 'donut'
         },

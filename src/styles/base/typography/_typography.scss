@@ -1,14 +1,14 @@
-@import "open-color";
+@import 'open-color';
 
 @font-face {
-  font-family: "Roboto";
-  src: url("/static/fonts/Roboto-Medium.woff") format("woff");
+  font-family: 'Roboto';
+  src: url('/static/fonts/Roboto-Medium.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: "Helvetica";
-  src: url("/static/fonts/HelveticaNeue.otf") format("otf");
+  font-family: 'Helvetica';
+  src: url('/static/fonts/HelveticaNeue.otf') format('otf');
 }
 
 body {

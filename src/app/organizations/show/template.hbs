@@ -1,141 +1,152 @@
-<!-- <img id="floating-organization"  src="/static/images/icon_agregar_encuesta.png" >
-<img id="floating-user"  src="/static/images/icon_agregar_usuario.png" > -->
+
 <div class="row">
+  <div class="col-lg-4">
+    <div class="row">
+      <div class="col-lg-12">
+        <article class="card">
+          <div class="card-block">
+            <div class="card-title">
+              <h4>Activity Feed
+              </h4>
+            </div>
+            <h6 class="text-muted"></h6>
+            <ol class="activity-feed maintenance-watermark">
+              <li class="feed-item">
+                <span class="text">Form created
+                  <a href="single-need.php">The family "Páez Mercado" make first form</a>
+                  <time class="pull-right">30 min</time>
+                </span>
 
-<div class="col-lg-4">
-  <div class="col-lg-12">
-  <article class="card">
-    <div class="card-block">
-      <div class="card-title" >
-        <h4 >Activity Feed
-        </h4>
+              </li>
+              <li class="feed-item">
+                <span class="text">Report request
+                  <a href="single-need.php">Jaime Ferreria requested the snapshot report of families</a>
+                  <time class="pull-right">45 min</time>
+                </span>
+              </li>
+              <li class="feed-item">
+                <span class="text">Form created
+                  <a href="single-need.php">The family "Riveros Gonzalez" made first form</a>
+                  <time class="pull-right">1 hour ago</time>
+                </span>
+
+              </li>
+              <li class="feed-item">
+
+                <span class="text">Survey
+                  <a href="single-need.php">“Martin Burt make 10 form in Lambare”</a>
+                  <time class="pull-right">1 hour ago</time>
+                </span>
+              </li>
+              <li class="feed-item">
+                <span class="text">Form created
+                  <a href="single-need.php">The family "Páez Mercado" make first form</a>
+                  <time class="pull-right">1 hour ago</time>
+                </span>
+
+              </li>
+              <li class="feed-item">
+                <span class="text">Report request
+                  <a href="single-need.php">Jaime Ferreria requested the snapshot report of families</a>
+                  <time class="pull-right">2 hour ago</time>
+                </span>
+              </li>
+              <li class="feed-item">
+                <span class="text">Form created
+                  <a href="single-need.php">The family "Riveros Gonzalez" made first form</a>
+                  <time class="pull-right">1 day ago</time>
+                </span>
+
+              </li>
+              <li class="feed-item">
+
+                <span class="text">Survey
+                  <a href="single-need.php">“Martin Burt make 5 form in Asuncion”</a>
+                  <time class="pull-right">3 day ago</time>
+                </span>
+              </li>
+              <li class="feed-item">
+
+                <span class="text">Survey
+                  <a href="single-need.php">“Guillermo Zacur make 15 form in Asuncion”</a>
+                  <time class="pull-right">3 day ago</time>
+                </span>
+              </li>
+
+            </ol>
+          </div>
+        </article>
       </div>
-      <h6 class="text-muted"></h6>
-      <ol class="activity-feed maintenance-watermark">
-        <li class="feed-item">
-          <span class="text">Form created <a href="single-need.php">The family "Páez Mercado" make first form</a>
-          <time class="pull-right" >30 min</time>
-          </span>
-
-        </li>
-        <li class="feed-item">
-          <span class="text">Report request <a href="single-need.php">Jaime Ferreria requested the snapshot report of families</a>
-            <time class="pull-right" >45 min</time>
-          </span>
-        </li>
-        <li class="feed-item">
-          <span class="text">Form created <a href="single-need.php">The family "Riveros Gonzalez" made first form</a>
-          <time class="pull-right" >1 hour ago</time>
-          </span>
-
-        </li>
-        <li class="feed-item">
-
-          <span class="text">Survey <a href="single-need.php">“Martin Burt make 10 form in Lambare”</a>
-            <time class="pull-right" >1 hour ago</time>
-          </span>
-        </li>
-        <li class="feed-item">
-          <span class="text">Form created <a href="single-need.php">The family "Páez Mercado" make first form</a>
-          <time class="pull-right" >1 hour ago</time>
-          </span>
-
-        </li>
-        <li class="feed-item">
-          <span class="text">Report request <a href="single-need.php">Jaime Ferreria requested the snapshot report of families</a>
-            <time class="pull-right" >2 hour ago</time>
-          </span>
-        </li>
-        <li class="feed-item">
-          <span class="text">Form created <a href="single-need.php">The family "Riveros Gonzalez" made first form</a>
-          <time class="pull-right" >1 day ago</time>
-          </span>
-
-        </li>
-        <li class="feed-item">
-
-          <span class="text">Survey <a href="single-need.php">“Martin Burt make 5 form in Asuncion”</a>
-          <time class="pull-right" >3 day ago</time>
-          </span>
-        </li>
-        <li class="feed-item">
-
-          <span class="text">Survey <a href="single-need.php">“Guillermo Zacur make 15 form in Asuncion”</a>
-          <time class="pull-right" >3 day ago</time>
-          </span>
-        </li>
-
-      </ol>
     </div>
-  </article>
-</div>
-</div>
-
-<div class="col-lg-8">
-  <div class="col-lg-6">
-      <article class="card" style="min-height: 287px;">
-        <div class="card-block">
-          <div class="card-title">
-            <h4>Families</h4>
-          </div>
-          <br><br>
-          <div class="">
-            <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
-            <p class="strike-text centered">in Total</p>
-          </div>
-        </div>
-      </article>
-  </div>
-
-  <div class="col-lg-6">
-      <article class="card">
-        <div class="card-block">
-          <div class="card-title">
-            <h4 >Indicators
-            </h4>
-          </div>
-          <div class="text-center">
-          <div id="bar-indicators"></div>
-        </div>
-        </div>
-      </article>
 
   </div>
 
-<div class="col-lg-12">
-    <article class="card">
-      <div class="card-block">
-        <div class="card-title">
-          <h4 >Top of Indicators
-          </h4>
-        </div>
-        <div class="" style="margin: 20px;">
-          <table class="table" id="table-top-indicators">
-            <thead>
-              <th>Indicator</th>
-              <th><img src="/static/images/icon_elipse_rojo_01.png"></th>
-              <th><img src="/static/images/icon_elipse_amarillo_01.png"></th>
-              <th><img src="/static/images/icon_elipse_verde_01.png"></th>
-            </thead>
-            <tbody>
+  <div class="col-lg-8">
+    <div class="row">
+      <div class="col-lg-6 col-md-4 col-sm-8">
+            <article class="card">
+              <div class="card-block" style="height: 286px;">
+                <div class="card-title">
+                  <h4>Families</h4>
+                </div>
+                <br><br>
+                <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
+                <p class="strike-text centered">in Total</p>
+              </div>
 
-              {{#each organization.dashboard.topOfIndicators}}
-              <tr>
-                <td>{{this.indicatorName}}</td>
-                <td>{{this.totalRed}}</td>
-                <td>{{this.totalYellow}}</td>
-                <td>{{this.totalGreen}}</td>
-              </tr>
-              {{/each}}
-
-            </tbody>
-
-          </table>
-        </div>
+          </article>
       </div>
-    </article>
-</div>
+      <div class="col-lg-6 col-md-4 col-sm-8">
+        <article class="card">
+          <div class="card-block">
+            <div class="card-title">
+              <h4>Indicators
+              </h4>
+            </div>
+            <h6 class="text-muted"></h6>
+            <div class="text-center">
+              <div id="bar-indicators"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+          <article class="card">
+            <div class="card-block">
+              <div class="card-title">
+                <h4 >Top of Indicators
+                </h4>
+              </div>
+              <div class="" style="margin: 20px;">
+                <table class="table" id="table-top-indicators">
+                  <thead>
+                    <th>Indicator</th>
+                    <th><img src="/static/images/icon_elipse_rojo_01.png"></th>
+                    <th><img src="/static/images/icon_elipse_amarillo_01.png"></th>
+                    <th><img src="/static/images/icon_elipse_verde_01.png"></th>
+                  </thead>
+                  <tbody>
 
-</div>
+                    {{#each organization.dashboard.topOfIndicators}}
+                    <tr>
+                      <td>{{this.indicatorName}}</td>
+                      <td>{{this.totalRed}}</td>
+                      <td>{{this.totalYellow}}</td>
+                      <td>{{this.totalGreen}}</td>
+                    </tr>
+                    {{/each}}
 
+                  </tbody>
+
+                </table>
+              </div>
+              </article>
+
+            </div>
+
+          </div>
+    </div>
+  </div>
 </div>

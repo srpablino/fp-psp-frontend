@@ -27,6 +27,7 @@ export default Mn.View.extend({
     element.empty();
 
     this.collection.forEach(item => {
+      
       item.bind('remove', function() {
         this.destroy();
       });
@@ -41,11 +42,14 @@ export default Mn.View.extend({
       // to the list/table
       element.append(itemView.render().el);
     });
-
+    
     if (session.userHasRole('ROLE_SURVEY_USER')) {
       $('#add-new').hide();
+      $('.delete-survey-btn').hide();
+      $('.take-survey-btn').show();
     }else{
       $('#add-new').show();
+      $('.take-survey-btn').hide();
     }
   },
 
