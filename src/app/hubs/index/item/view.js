@@ -11,7 +11,8 @@ export default Mn.View.extend({
   },
   serializeData() {
     return {
-      application: this.model.attributes
+      application: this.model.attributes,
+      logoUrl: this.model.get('logoUrl') || '/static/images/icon_logo_hub.png'
     };
   },
   editApplication(e) {
