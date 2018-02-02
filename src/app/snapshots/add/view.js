@@ -200,7 +200,7 @@ export default Mn.View.extend({
     snapshotDraftModel.save(snapshot).then(
 
       () => {
-          
+
         FlashesService.request('add', {
           timeout: 2000,
           type: 'info',

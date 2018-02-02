@@ -13,13 +13,13 @@ const surveys = props => {
     controller: {
       showSurveys() {
         app.getSession().save({termCond: 0, priv: 0});
-        app.showViewOnRoute(new SurveysView(app));
+        app.showViewOnRoute(new SurveysView({app}));
       },
       newSurvey() {
-        app.showViewOnRoute(new NewSurvey(app));
+        app.showViewOnRoute(new NewSurvey({app}));
       },
       drafts() {
-        app.showViewOnRoute(new Drafts(app));
+        app.showViewOnRoute(new Drafts({app}));
       }
     }
   };

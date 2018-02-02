@@ -13,14 +13,14 @@ export default Mn.View.extend({
   template: Template,
   collection:  new Bn.Collection(),
   regions: {
-    list: '#Snapshot-list'
+    list: '#snapshot-list'
   },
   events: {
     'click #submit': 'handleSubmit',
     'keypress #search': 'handleSubmit'
   },
   initialize(app) {
-    this.app = app;
+    this.app=app.app
 
   },
   onRender() {
@@ -43,7 +43,7 @@ export default Mn.View.extend({
 
   showList() {
 
-    let element = this.$el.find('#Snapshot-list');
+    let element = this.$el.find('#snapshot-list');
     element.empty();
 
     if(this.collection){
