@@ -24,7 +24,7 @@ export default Mn.View.extend({
 
   getTakenData(idx){
     let data = {};
-    let o = JSON.parse(`${this.organization.dashboard.snapshotTaken}`)
+    let o = this.organization.dashboard.snapshotTaken.byMonth;
     let key = Object.keys(o)[idx];
     data.key = key;
     let value = o[key]
