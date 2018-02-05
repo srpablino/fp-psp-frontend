@@ -1,14 +1,10 @@
+[![Build Status](https://travis-ci.org/FundacionParaguaya/fp-psp-frontend.svg?branch=master)](https://travis-ci.org/FundacionParaguaya/fp-psp-frontend)
 
 # Poverty Stoplight
-Fundación Paraguaya (FP from now on) has developed a methodology called 
-“Poverty Stoplight”. The Poverty Stoplight seeks to eliminate the 
-multidimensional poverty that affects many families. It allows families to 
-trace their own poverty map and develop and implement a clear plan to 
-overcome it.
 
-Through a visual survey that shows photographs, families self-assess their 
-level of poverty with 50 indicators. These indicators are in turn grouped 
-into 6 different dimensions of poverty.
+Fundación Paraguaya (FP from now on) has developed a methodology called “Poverty Stoplight”. The Poverty Stoplight seeks to eliminate the multidimensional poverty that affects many families. It allows families to trace their own poverty map and develop and implement a clear plan to overcome it.
+
+Through a visual survey that shows photographs, families self-assess their level of poverty with 50 indicators. These indicators are in turn grouped into 6 different dimensions of poverty.
 
 ## Poverty Stoplight Frontend
 
@@ -20,7 +16,7 @@ This project has been built with [Joko Starter Kit](https://github.com/jokoframe
 
 ## Requirements
 
-  * [Node.js](https://nodejs.org/) v5.0.0 or above
+* [Node.js](https://nodejs.org/) v5.0.0 or above
 
 ## Getting Started
 
@@ -43,13 +39,26 @@ npm run start
 This will create the bundle from the sources in `/src` and output it to `/dist`.
 
 Finally, open up your browser in:
+
 > [http://localhost:9000/](http://localhost:9000/)
 
 ### Environment
 
-If you need to, change the `API` value in `config/env_develpment.json` to point to the FP-SERVER running in your local machine. By default this should work without any modification. 
+If you need to, change the `API` value in `config/env_develpment.json` to point to the FP-SERVER running in your local machine. By default this should work without any modification.
 
 Use `config/env_production.json` in production environments.
+
+#### OAuth Configuration
+
+When the authentication security is enabled in the server, the parameter en the `config/env_XXX.json` file should be set to `true`:
+
+```json
+  "authenticationEnabled": true
+```
+
+### Users and roles
+
+To see a list of default users and roles check the [backend documentation](https://github.com/FundacionParaguaya/FP-PSP-SERVER/blob/develop/docs/OAUTH.md#default-roles-and-users).
 
 ### Build for production
 
@@ -67,7 +76,7 @@ Unit and integration tests are run with [Karma](http://karma-runner.github.io/0.
 $ npm test
 ```
 
-To detect potential errors and bugs we use [JSHint](http://jshint.com/):
+To detect potential errors and bugs we use [ESLint](https://eslint.org/):
 
 ```shell
 $ npm run lint

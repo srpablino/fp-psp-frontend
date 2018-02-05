@@ -1,8 +1,21 @@
-import Bn from 'backbone'
-import env from '../env'
+import Bn from 'backbone';
+import { includes } from 'lodash';
+import env from '../env';
 
-export default Bn.Collection.extend({
-    
-    url: `${env.API}/organizations`
-    
-})
+const Collection = Bn.Collection.extend({
+  url: `${env.API}/organizations`,
+  filterByValue(term) {
+    const filtered = this.filter(m => this.includesAny(term, m));
+
+    return new Collection(filtered);
+  },
+  includesAny(term, model) {
+    return (
+      includes(model.get('name'), term) ||
+      includes(model.get('code'), term) ||
+      includes(model.get('decription'), term)
+    );
+  }
+});
+
+export default Collection;

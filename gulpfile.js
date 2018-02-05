@@ -1,102 +1,104 @@
-const gulp = require('gulp')
-const path = require('path')
-const del = require('del')
-const history = require('connect-history-api-fallback')
+const gulp = require('gulp');
+const del = require('del');
+const history = require('connect-history-api-fallback');
 const $ = require('gulp-load-plugins')({
-    pattern: ['*', '!jshint', '!connect-history-api-fallback']
+  pattern: ['*', '!jshint', '!connect-history-api-fallback']
 });
 const jetpack = require('fs-jetpack');
 
-const environment = $.util.env.type || 'development'
-const isProduction = environment === 'production'
-const webpackConfig = require('./webpack.config.js')[environment]
+const environment = $.util.env.type || 'development';
+const region = $.util.env.region || 'US';
+const isProduction = environment === 'production';
+const webpackConfig = require('./webpack/gulp.config.js')[environment];
+const merge = require('merge-stream');
+const imagemin = require('gulp-imagemin');
+const noop = require('gulp-noop');
 
-const port = $.util.env.port || 9000
-const src = 'src/'
-const dist = 'dist/'
-const tests = 'tests/'
+const port = $.util.env.port || 9000;
+const src = 'src/';
+const dist = 'dist/';
 
-gulp.task('scripts', () => {
-    return gulp.src([
-        webpackConfig.entry.main,
-        webpackConfig.entry.login_main,
-    ])
-    .pipe($.webpackStream(webpackConfig))
-    .on('error', function(error) {
-        $.util.log($.util.colors.red(error.message))
-        this.emit('end')
+let webpackChangeHandler = function(err, stats) {
+  if (err) {
+    $.util.log('[Webpack] Error:', err);
+  }
+  $.util.log(
+    stats.toString({
+      colors: $.util.colors.supportsColor,
+      chunks: false,
+      hash: false,
+      version: false
     })
-    .pipe(gulp.dest(dist + 'js/'))
-    .pipe($.size({ title : 'js' }))
-    .pipe($.connect.reload())
-})
+  );
 
-gulp.task('html', () => {
-    return gulp.src(src + 'index.html')
+  $.connect.reload();
+};
+
+gulp.task('webpack', () => {
+  $.webpackStream(webpackConfig, null, webpackChangeHandler)
+    .on('error', function(error) {
+      $.util.log($.util.colors.red(error.message));
+      this.emit('end');
+    })
     .pipe(gulp.dest(dist))
-    .pipe($.size({ title : 'html' }))
-    .pipe($.connect.reload())
-})
+    .pipe($.size({ title: 'webpack' }))
+    .pipe($.connect.reload());
+});
 
-gulp.task('styles', () => {
-    return gulp.src(src + 'styles/main.scss')
-    .pipe($.sass({ outputStyle: isProduction ? 'compressed' : 'expanded' }))
-    .pipe(gulp.dest(dist + 'css/'))
+gulp.task('pages', () =>
+  gulp
+    .src(`${src}pages/*`)
+    .pipe(gulp.dest(dist))
+    .pipe($.size({ title: 'pages' }))
     .pipe($.connect.reload())
-})
+);
 
 gulp.task('serve', () => {
-    $.connect.server({
-        root: dist,
-        port: port,
-        livereload: {
-            port: 35728
-        },
-        middleware: (connect, opt) => {
-            return [ history() ]
-        }
-    })
-})
-
-gulp.task('static', (cb) => {
-    return gulp.src(src + 'static/**/*')
-    .pipe($.size({ title : 'static' }))
-    .pipe(gulp.dest(dist + 'static/'))
-})
-
-gulp.task('watch', () => {
-    gulp.watch(src + 'styles/**/*.scss', ['styles'])
-    gulp.watch(src + 'index.html', ['html'])
-    gulp.watch([src + 'app/**/*.js', src + 'app/**/*.hbs'], ['scripts'])
-})
-
-gulp.task('lint', () => {
-    return gulp.src([src + 'app/**/*.js', tests + '**/*.js'])
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('default'))
-})
-
-gulp.task('test', $.shell.task('npm test'))
-
-gulp.task('clean', (cb) => {
-    del([dist], cb)
+  $.connect.server({
+    root: dist,
+    port,
+    livereload: {
+      port: 35728
+    },
+    middleware: () => [history()]
+  });
 });
 
+gulp.task('static', () => {
+  let fonts = gulp
+    .src(`${src}static/fonts/*`)
+    .pipe($.size({ title: 'static/fonts' }))
+    .pipe(gulp.dest(`${dist}static/fonts/`));
+  let images = gulp
+    .src(`${src}static/images/*`)
+    .pipe($.size({ title: 'static/images' }))
+    .pipe(isProduction ? imagemin() : noop())
+    .pipe(gulp.dest(`${dist}static/images/`));
+
+  return merge(fonts, images);
+});
+
+gulp.task('clean', cb => {
+  del([dist], cb);
+});
 
 gulp.task('environment', () => {
-    const projectDir = jetpack;
-    const appDir = jetpack.cwd('./' + src + 'app');
-    const configFile = "./config/env_"+ environment + ".json";
+  const projectDir = jetpack;
+  const commonDir = jetpack.cwd(`./${src}common`);
+  let configFile = `./config/env_${environment}.json`;
+  if (isProduction) {
+    configFile = `./config/env_${environment}_${region}.json`;
+  }
 
-    projectDir.copy(configFile, appDir.path('env.json'), { overwrite: true });
+  projectDir.copy(configFile, commonDir.path('env.json'), { overwrite: true });
 });
 
-gulp.task('default', ['build', 'serve', 'watch'])
+gulp.task('default', ['build', 'serve']);
 
-gulp.task('build', (cb) => {
-    if (isProduction) {
-        $.runSequence('clean', 'environment', 'lint', 'test', 'static', 'html', 'scripts', 'styles', cb)
-    } else {
-        $.runSequence('clean', 'environment', 'lint', 'static', 'html', 'scripts', 'styles', cb)
-    }
-})
+gulp.task('build', cb => {
+  if (isProduction) {
+    $.runSequence('clean', 'environment', 'static', 'pages', 'webpack', cb);
+  } else {
+    $.runSequence('clean', 'environment', 'static', 'pages', 'webpack', cb);
+  }
+});

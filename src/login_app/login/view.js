@@ -1,62 +1,98 @@
-/**
- * 
- * @type Module marionette|Module marionette
- */
-import Mn from 'backbone.marionette'
-import Template from './template.hbs'
+/* eslint camelcase: 0 */
+import Mn from 'backbone.marionette';
+import $ from 'jquery';
+import Template from './template.hbs';
+import env from '../env';
+import session from '../../common/session';
+import { getLoadingButton } from '../../common/utils';
+import FlashesService from '../../common/flashes/service';
 
-require('parsleyjs');
-// TODO Esto funciona mágicamente y 
-// no se ni como. Investigar mejor
-// y documentar
-require('parsleyjs/dist/i18n/es');
+export default Mn.View.extend({
+  template: Template,
+  regions: {
+    container: '#container',
+    flashes: '#flashes'
+  },
+  events: {
+    'click #btn-login': 'doLogin'
+  },
 
-var ENTER_KEY = 13;
+  initialize(options) {
+    this.app = options.app;
+    session.fetch();
 
-export default Mn.ItemView.extend({
-    template: Template,
-    events: {
-        'click #login-btn': 'onLoginAttempt',
-        'keyup #login-password-input': 'onPasswordKeyup'
-    },
-    onPasswordKeyup: function (event) {
-        var k = event.keyCode || event.which;
+    FlashesService.setup({
+      container: this.getRegion('flashes')
+    });
+  },
+  doLogin(event) {
+    event.preventDefault();
 
-        if (k === ENTER_KEY && $('#login-password-input').val() === '') {
-            event.preventDefault();
-        } else if (k === ENTER_KEY) {
-            event.preventDefault();
-            this.onLoginAttempt();
-            return false;
+    const loginBtn = this.$el.find('#btn-login');
+    const button = getLoadingButton(loginBtn);
+
+    let username = $('#login-username').val();
+    let password = $('#login-password').val();
+
+    let url = `${
+      env.API_AUTH
+    }/token?username=${username}&password=${password}&grant_type=password`;
+
+    let clientid = 'barClientIdPassword';
+    let clientsecret = 'secret';
+    button.loading();
+    $.ajax({
+      url,
+      type: 'POST',
+      dataType: 'json',
+      headers: {
+        Authorization: `Basic ${btoa(`${clientid}:${clientsecret}`)}`
+      },
+
+      success: data => {
+        if (data.error) {
+          // If there is an error, show the error messages
+          $('.alert-error')
+            .text(data.error.text)
+            .show();
+        } else {
+          // If not, send them back to the home page
+          const { access_token, refresh_token, user } = data;
+          session.save({ access_token, refresh_token, user });
+
+          const fragment = session.getLoggedUserHomeRoute();
+          window.location.replace(`/#${fragment}`);
         }
-    },
-    onLoginAttempt: function (event) {
-        var self = this, userData;
-        if (event) {
-            event.preventDefault();
+      },
+      error(xmlHttpRequest, textStatus) {
+        if (xmlHttpRequest && xmlHttpRequest.status === 0) {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'danger',
+            title: 'No connection to server'
+          });
+          return;
         }
-        var valid = this.$('#login-form').parsley().validate();
-        
-        if (valid) {
-            userData = {
-                email: this.$('#login-mail-input').val(),
-                password: this.$('#login-password-input').val()
-            };
-
-            this.$('#login-btn').loading(true);
-
-            window.App.session.login(userData, {
-                success: function (res) {
-                    window.App.showMainContent();
-                },
-                error: function (jqXHR, textStatus) {
-                    // no hacemos nada, el errorHandler
-                    // se va a encargar de hacer todo
-                },
-                complete: function () {
-                    self.$('#login-btn').loading(false);
-                }
-            });
+        if (textStatus === 'Unauthorized') {
+          FlashesService.request('add', {
+            timeout: 2000,
+            type: 'warning',
+            title: 'Not authorized'
+          });
+        } else {
+          FlashesService.request('add', {
+            type: 'warning',
+            title: 'Wrong credentials. Please try again.',
+            timeout: 2000
+          });
+          $('#login-username').val('');
+          $('#login-password').val('');
+          $('#login-username').focus();
         }
-    }
+      },
+      complete: () => {
+        button.reset();
+      }
+    });
+  }
 });
