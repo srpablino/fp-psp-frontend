@@ -1,0 +1,4 @@
+{
+  "release_message": true,
+  "pre_commit_commands": ["npm run auto-changelog"]
+}
