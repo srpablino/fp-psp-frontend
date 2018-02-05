@@ -122,6 +122,6 @@
     "deploy": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-w6fez --force --nocdn",
     "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
     "release": "generate-release",
-    "auto-changelog": "auto-changelog"
+    "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
 }
