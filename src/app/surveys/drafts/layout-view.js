@@ -46,25 +46,20 @@ export default Mn.View.extend({
     let element = this.$el.find('#snapshot-list');
     element.empty();
 
-    if(this.collection){
-
-      this.collection.forEach(item => {
-        let itemView = new ItemView({
-          app: this.app,
-          model: item,
-          showList:  this.showList.bind(this),
-          itemViewOptions: {
-            className: "col-md-4 col-xs-6"
-          },
-        });
-
-        // Render the view, and append its element
-        // to the list/table
-        element.append(itemView.render().el);
+    this.collection.forEach(item => {
+      let itemView = new ItemView({
+        model: item,
+        itemViewOptions: {
+          className: "col-md-4 col-xs-6"
+        },
       });
-    }
 
+      // Render the view, and append its element
+      // to the list/table
+      element.append(itemView.render().el);
+    });
   },
+
   handleSubmit(event) {
     let freeText = $('#search').val();
     if (event.which === 13 || event.which === 1) {
