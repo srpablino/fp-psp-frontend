@@ -1,9 +1,10 @@
 {
   "name": "fp-psp-frentend",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Frontend para el FP-PSP-SERVER del semáforo de la pobreza",
   "main": "main.js",
   "devDependencies": {
+    "auto-changelog": "^1.4.1",
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.1.2",
     "babel-eslint": "^8.0.1",
@@ -120,6 +121,7 @@
     "test": "karma start && npm run lint",
     "deploy": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-w6fez --force --nocdn",
     "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
-    "release": "generate-release"
+    "release": "generate-release",
+    "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
 }
