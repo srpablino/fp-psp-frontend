@@ -11,7 +11,7 @@ import storage from '../storage';
 import Template from './template.hbs';
 import Form from '../../components/form';
 import SurveyModel from '../../surveys/add/model';
-import SnapshotModel from './model';
+import SnapshotDraftModel from './model';
 import SnapshotTmpModel from '../../snapshots_drafts/model';
 import FlashesService from '../../flashes/service';
 
@@ -138,7 +138,7 @@ export default Mn.View.extend({
       priv_pol_id: this.app.getSession().get('priv')
     };
 
-    new SnapshotModel().save(snapshot).then(savedSnapshot => {
+    new SnapshotDraftModel().save(snapshot).then(savedSnapshot => {
       Bn.history.navigate(
         `/survey/${savedSnapshot.survey_id}/snapshot/${
           savedSnapshot.snapshot_economic_id
@@ -168,7 +168,7 @@ export default Mn.View.extend({
     new SnapshotTmpModel().save(snapshot).then(
 
       () => {
-        
+
         FlashesService.request('add', {
           timeout: 2000,
           type: 'info',

@@ -10,7 +10,7 @@ const log = type => console.log.bind(console, type);
 class Form extends Component {
   constructor(props) {
     super(props);
-    
+
     let order = props.uiSchema['ui:order'];
     let stepsSchema = [];
     let stepsUISchema = [];
@@ -178,10 +178,9 @@ class Form extends Component {
 
     return (
       <div className="col-md-12">
-        {this.checkShowSaveDraft(this.state)? 
-          <button className="btn btn-primary pull-right" id="save-draft" onClick={() => this.onSaveDraft()}> Save Draft </button> :'' }
-        {this.checkShowSaveDraft(this.state)? <br /> : '' }
-        {this.checkShowSaveDraft(this.state)? <br /> : '' }
+        {this.checkShowSaveDraft(this.state)?
+          <button className="btn btn-primary pull-right marginDraft" onClick={() => this.onSaveDraft()}> Save Draft </button> :'' }
+  
 
         <article className="card">
           <div className="card-block">
