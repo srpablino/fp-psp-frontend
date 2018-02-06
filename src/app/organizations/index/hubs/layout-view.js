@@ -13,7 +13,7 @@ export default Mn.View.extend({
   template: Template,
   collection: new CollectionView(),
   regions: {
-    list: '#organization-list'
+    list: '#hub-list'
   },
   events: {
     'keyup #search': 'handleSearch'

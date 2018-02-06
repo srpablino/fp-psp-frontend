@@ -3,16 +3,23 @@ import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
-  triggers: {
-    'click #delete': 'delete:item'
+  events: {
+    'click #delete': 'handleDelete',
   },
+  initialize(options) {
+    this.app = options.app;
+    this.model = options.model;
+  },
+
+
   serializeData() {
     return {
-      hub: this.model.attributes
+      snapshotDraft: this.model.attributes
     };
   },
+
   handleDelete(event) {
     event.preventDefault();
-    this.trigger('delete:model', this.model);
-  }
+  },
+
 });

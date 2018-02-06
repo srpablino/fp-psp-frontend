@@ -1,14 +1,15 @@
 import Mn from 'backbone.marionette';
 import Bb from 'backbone';
 import c3 from 'c3';
+import moment from 'moment';
 import Template from './template.hbs';
+
 
 
 export default Mn.View.extend({
   template: Template,
 
   initialize() {
-
     if (this.model) {
       this.organization = this.model.attributes;
       setTimeout(() => {
@@ -26,7 +27,11 @@ export default Mn.View.extend({
     let data = {};
     let o = this.organization.dashboard.snapshotTaken.byMonth;
     let key = Object.keys(o)[idx];
-    data.key = key;
+    if (moment(key).format('MM') === moment().format('MM')) {
+      data.key = 'Today'
+    }else{
+      data.key = moment(key).locale('en').format('MMMM');
+    }
     let value = o[key]
     data.value = value;
     return data;
@@ -39,8 +44,8 @@ export default Mn.View.extend({
         data: {
            x: 'x',
           columns: [
-            ['x', this.months[this.getTakenData(1).key], this.months[this.getTakenData(0).key], this.getTakenData(2).key],
-            ['data1', this.getTakenData(1).value, this.getTakenData(0).value, this.getTakenData(2).value],
+            ['x', this.getTakenData(0).key,this.getTakenData(1).key, this.getTakenData(2).key],
+            ['data1', this.getTakenData(0).value, this.getTakenData(1).value, this.getTakenData(2).value],
           ],
           names: {
             data1: 'Snapshots Taken',
