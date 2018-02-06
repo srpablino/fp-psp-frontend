@@ -50,6 +50,7 @@ export default Mn.View.extend({
       let itemView = new ItemView({
         app: this.app,
         model: item,
+        showList:  this.showList.bind(this),
         itemViewOptions: {
           className: "col-md-4 col-xs-6"
         },
