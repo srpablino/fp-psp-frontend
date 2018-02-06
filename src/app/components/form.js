@@ -57,6 +57,16 @@ class Form extends Component {
       }
     });
     
+    this.state = {
+      step: this.getSavedDraftStep(stepsSchema),
+      formData: this.props.stateDraft.formData,
+      stepsSchema,
+      stepsUISchema,
+      lastValue: this.props.stateDraft.formData
+    };    
+  }
+
+  getSavedDraftStep(stepsSchema){
     const stepKey = this.props.stateDraft.stepsSchema[this.props.stateDraft.step].key;
     let indexActualKey = -1;
     let firstIndexNotFound = -1;
@@ -77,23 +87,11 @@ class Form extends Component {
     
     if(indexActualKey!==-1){
       if(this.props.stateDraft.step + 1 >= indexActualKey){
-        this.state = {
-          step: indexActualKey,
-          formData: this.props.stateDraft.formData,
-          stepsSchema,
-          stepsUISchema,
-          lastValue: this.props.stateDraft.formData
-        };
-      } else {
-        this.state = {
-          step: firstIndexNotFound,
-          formData: this.props.stateDraft.formData,
-          stepsSchema,
-          stepsUISchema,
-          lastValue: this.props.stateDraft.formData
-        };
+        return indexActualKey;
       }
-    }  
+      return firstIndexNotFound;
+    } 
+    return this.props.stateDraft.step;
     
   }
 
@@ -229,16 +227,12 @@ class Form extends Component {
       let currentStep = this.state.stepsSchema[this.state.step];
 
       if(this.state.lastValue !== this.state.formData){
-        
         newData[currentStep.key] = this.state.lastValue[currentStep.key];
-        this.state.formData = newData;
-      
-      } else if(this.state.lastValue === this.state.formData && currentStep.properties[currentStep.key].default){
-        
+      } else if(currentStep.properties[currentStep.key].default){
         newData[currentStep.key] = currentStep.properties[currentStep.key].default;
-        this.state.formData = newData;
-
       }
+
+      this.state.formData = newData;
       this.props.handleSaveDraft(this.state);
     
     } else {
