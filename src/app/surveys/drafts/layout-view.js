@@ -1,6 +1,7 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import Bn from 'backbone';
+import dateFormat from 'dateformat';
 import Template from './layout-template.hbs';
 import utils from '../../utils';
 import SnapshotDraftColecction from '../../snapshots_drafts/collection';
@@ -24,7 +25,7 @@ export default Mn.View.extend({
 
   },
   onRender() {
-    const headerItems = storage.getSubHeaderItems();
+    const headerItems = storage.getUserSubHeaderItems();
     this.app.updateSubHeader(headerItems);
 
 
@@ -47,6 +48,7 @@ export default Mn.View.extend({
     element.empty();
 
     this.collection.forEach(item => {
+      item.attributes.created_at = dateFormat(item.attributes.created_at, "isoDate")
       let itemView = new ItemView({
         model: item,
         itemViewOptions: {
@@ -63,7 +65,6 @@ export default Mn.View.extend({
   handleSubmit(event) {
     let freeText = $('#search').val();
     if (event.which === 13 || event.which === 1) {
-      if(freeText !== ''){
         $('#search').parent().removeClass('has-error');
         let self = this;
         let container = this.$el.find('.list-container').eq(0);
@@ -86,14 +87,9 @@ export default Mn.View.extend({
             section.reset();
           }
         });
-      }else {
-        $('#search').parent().addClass('has-error');
-      }
-
 
     }
   }
-
 
 
 });
