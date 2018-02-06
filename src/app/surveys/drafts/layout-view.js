@@ -1,7 +1,7 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import Bn from 'backbone';
-import dateFormat from 'dateformat';
+import moment from 'moment';
 import Template from './layout-template.hbs';
 import utils from '../../utils';
 import SnapshotDraftColecction from '../../snapshots_drafts/collection';
@@ -48,7 +48,7 @@ export default Mn.View.extend({
     element.empty();
 
     this.collection.forEach(item => {
-      item.attributes.created_at = dateFormat(item.attributes.created_at, "isoDate")
+      item.attributes.created_at = moment(item.attributes.created_at).format('YYYY-MM-DD');
       let itemView = new ItemView({
         model: item,
         itemViewOptions: {
