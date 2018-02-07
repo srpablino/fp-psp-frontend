@@ -1,0 +1,3 @@
+{
+  "pre_commit_commands": ["npm run auto-changelog"]
+}

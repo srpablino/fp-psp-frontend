@@ -1,5 +1,6 @@
+/* eslint import/no-extraneous-dependencies:0 */
+
 var webpack = require('webpack');
-var path = require('path');
 
 module.exports = {
   entry: {
@@ -19,6 +20,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /es|en/)
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /es|en/),
+    new webpack.DefinePlugin({
+      APP_VERSION: JSON.stringify(require('../package.json').version)
+    })
   ]
 };
