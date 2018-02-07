@@ -13,7 +13,7 @@ export default Mn.Application.extend({
 
   initialize() {
     this.sessionMgr = sessionMgr;
-    this.layoutView = new LayoutView({app: this});
+    this.layoutView = new LayoutView({ app: this });
     this.router = {};
   },
 
@@ -65,7 +65,7 @@ export default Mn.Application.extend({
   showHomeForUser(dashboardView) {
     const homeRoute = this.getSession().getLoggedUserHomeRoute();
     if (homeRoute.indexOf('organizations') >= 0) {
-      Bb.history.navigate(homeRoute, {trigger: true});
+      Bb.history.navigate(homeRoute, { trigger: true });
       return;
     }
     this.showViewOnRoute(dashboardView);
