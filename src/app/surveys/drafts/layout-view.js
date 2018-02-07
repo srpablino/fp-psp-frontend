@@ -48,7 +48,9 @@ export default Mn.View.extend({
 
     this.collection.forEach(item => {
       let itemView = new ItemView({
+        app: this.app,
         model: item,
+        showList:  this.showList.bind(this),
         itemViewOptions: {
           className: "col-md-4 col-xs-6"
         },
@@ -58,8 +60,8 @@ export default Mn.View.extend({
       // to the list/table
       element.append(itemView.render().el);
     });
-
   },
+
   handleSubmit(event) {
     let freeText = $('#search').val();
     if (event.which === 13 || event.which === 1) {
