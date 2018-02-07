@@ -1,6 +1,7 @@
 import Mn from 'backbone.marionette';
 import Bb from 'backbone';
 import c3 from 'c3';
+import $ from 'jquery';
 import moment from 'moment';
 import Template from './template.hbs';
 
@@ -13,7 +14,10 @@ export default Mn.View.extend({
     if (this.model) {
       this.organization = this.model.attributes;
       setTimeout(() => {
-        this.chart();
+      if(!$.isEmptyObject(this.organization.dashboard.snapshotTaken.byMonth)){
+          $('.no-data').hide();
+          this.chart();
+        }
       }, 0);
     }
   },
