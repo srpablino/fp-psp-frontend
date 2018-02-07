@@ -18,13 +18,12 @@ export default Mn.View.extend({
     this.entity = options.entity;
     this.organizationId = options.organizationId;
     this.organization = this.model.attributes;
+
   },
 
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
-
-    console.log(this.organization);
 
     if (this.entity == null) {
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
@@ -43,10 +42,10 @@ export default Mn.View.extend({
 
   dataTables(){
       $('#table-top-indicators').dataTable({
-        "lengthMenu": [[5, 25, 50, -1], [5, 25, 50, "All"]],
+        "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
         "searching": false,
-        "paging" : false,
-        "lengthChange": false,
+        "paging" : true,
+        "lengthChange": true,
         "info": false,
         "order": [[ 1, "desc" ], [ 2, "desc" ], [ 3, "desc" ]]
 
