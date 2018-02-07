@@ -6,11 +6,11 @@ var SurveysStorage = Storage.extend({
       return {
         navigationItems: [
           {
-            name: `List of available surveys`,
+            name: `Available Surveys`,
             link: `/#surveys`
           },
           {
-            name: `List of incomplete snapshots`,
+            name: `Drafts`,
             link: `/#surveys/drafts`
           }
         ]
