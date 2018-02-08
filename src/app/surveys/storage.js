@@ -8,6 +8,16 @@ var SurveysStorage = Storage.extend({
           {
             name: `Available Surveys`,
             link: `/#surveys`
+          }
+        ]
+      };
+    },
+    getUserSubHeaderItems() {
+      return {
+        navigationItems: [
+          {
+            name: `Available Surveys`,
+            link: `/#surveys`
           },
           {
             name: `Drafts`,
