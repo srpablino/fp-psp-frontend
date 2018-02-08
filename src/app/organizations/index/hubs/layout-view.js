@@ -5,21 +5,22 @@ import $ from 'jquery';
 import { debounce } from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
-import utils from '../../utils';
-import OrganizationsModel from '../model';
-import OrganizationsCollection from '../collection';
+import storage from './storage';
+import utils from '../../../utils';
+import HubModel from './model';
 
 export default Mn.View.extend({
   template: Template,
   collection: new CollectionView(),
   regions: {
-    list: '#organization-list'
+    list: '#hub-list'
   },
   events: {
     'keyup #search': 'handleSearch'
   },
   initialize(options) {
     this.app = options.app;
+    this.entity = options.entity;
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
@@ -30,16 +31,17 @@ export default Mn.View.extend({
     this.search = debounce(this.search, 300);
   },
   onRender() {
+    const headerItems = storage.getMainSubHeaderItems();
+    this.app.updateSubHeader(headerItems);
+
+      $(`#subMenuItem > a[href$="collaborators/${this.entity}"]`)
+        .parent()
+        .addClass('subActive');
 
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
-  },
-  onAttach() {
-    if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
-      this.$el.find('#add-new').show();
-    }
   },
   getTemplate() {
     return Template;
@@ -54,26 +56,13 @@ export default Mn.View.extend({
     const section = utils.getLoadingSection(container);
     section.loading();
     this.getRegion('list').empty();
-    let self = this;
     setTimeout(() => {
-
-      let params = {};
-      params.applicationId = self.app.getSession().get('user').application.id;
-      if(self.app.getSession().get('user').organization !== null){
-        params.organizationId = self.app.getSession().get('user').organization.id
-      }
-      
-
-      let moreElements = new OrganizationsCollection();
-      moreElements.fetch({
-        data: params,
-        success(response) {
-          self.collection.set(response.get('list'));
-          self.showList();
-          section.reset();
-        }
+      storage.findAll().then(collection => {
+        this.collection = collection;
+        this.showList();
+        section.reset();
       });
-    }, 500);
+    }, 1000);
   },
   search(term) {
     if (!term) {
@@ -106,12 +95,10 @@ export default Mn.View.extend({
     if (self.model.get('currentPage') < self.model.get('totalPages')) {
       let params = {
         page: self.model.get('currentPage') + 1,
-        per_page: 12,
-        applicationId: self.app.getSession().get('user').application.id ,
-        organizationId: self.app.getSession().get('user').organization.id,
+        per_page: 12
       };
 
-      let moreElements = new OrganizationsModel();
+      let moreElements = new HubModel();
       moreElements.fetch({
         data: params,
         success(response) {

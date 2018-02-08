@@ -12,7 +12,7 @@ import Template from './template.hbs';
 import Form from '../../components/form';
 import SurveyModel from '../../surveys/add/model';
 import SnapshotModel from './model';
-import SnapshotTmpModel from '../../snapshots_drafts/model';
+import SnapshotDraftModel from '../../snapshots_drafts/model';
 import FlashesService from '../../flashes/service';
 
 export default Mn.View.extend({
@@ -24,16 +24,18 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { organizationId, surveyId, handleCancel, app } = options;
+    const { organizationId, surveyId, handleCancel, app, stateDraft, snapshotDraftId } = options;
+    
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
     this.surveyModel.fetch();
-
+        
     this.props = {};
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
     this.props.organizationId = organizationId;
-
+    this.props.stateDraft = stateDraft;
+    this.props.snapshotDraftId = snapshotDraftId;
     this.app = app;
   },
 
@@ -73,7 +75,9 @@ export default Mn.View.extend({
       handleSubmit: this.hadleSubmit.bind(this),
       handleCancel: this.props.handleCancel,
       handleSaveDraft: this.handleSaveDraft.bind(this),
-      view: this
+      view: this,
+      stateDraft: this.props.stateDraft,
+      draftId: this.props.snapshotDraftId
     });
     ReactDOM.unmountComponentAtNode(placeHolder);
     ReactDOM.render(this.reactView, placeHolder);
@@ -123,7 +127,7 @@ export default Mn.View.extend({
     });
   },
 
-  hadleSubmit(formResult) {
+  hadleSubmit(formResult, draftId) {
     // Convert from array to string, using property "value"
     this.fixedGalleryFieldValue(formResult);
 
@@ -139,18 +143,44 @@ export default Mn.View.extend({
     };
 
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
-      Bn.history.navigate(
-        `/survey/${savedSnapshot.survey_id}/snapshot/${
-          savedSnapshot.snapshot_economic_id
-        }`,
-        true
-      );
+    
+      if(draftId){
+        let snapshotDraftModel = new SnapshotDraftModel();
+        snapshotDraftModel.set('id', draftId);
+        snapshotDraftModel.destroy().then(
+          () => {
+            this.redirectSummary(savedSnapshot.survey_id, savedSnapshot.snapshot_economic_id);
+          },
+
+          error => {
+            FlashesService.request('add', {
+              timeout: 2000,
+              type: 'warning',
+               title: error.responseJSON.message
+            });
+          }
+
+        );
+      } else {
+        this.redirectSummary(savedSnapshot.survey_id, savedSnapshot.snapshot_economic_id);
+      }
     });
 
     this.app.getSession().save({termCond: 0, priv: 0});
   },
 
+  redirectSummary(surveyId, snapshotEconomicId){
+    Bn.history.navigate(
+      `/survey/${surveyId}/snapshot/${
+        snapshotEconomicId
+      }`,
+      true
+    );
+  },
+
   handleSaveDraft(state){
+    let snapshotDraftModel = new SnapshotDraftModel();
+    let url = `/surveys`;
 
     const snapshot = {
       survey_id: this.props.surveyId,
@@ -159,32 +189,33 @@ export default Mn.View.extend({
       user_name: this.app.getSession().get('user').username,
       term_cond_id: this.app.getSession().get('termCond'),
       priv_pol_id: this.app.getSession().get('priv'),
-      state_draft: state,
-      economic_response: this.getEconomics(state.formData),
-      indicator_response: this.getIndicators(state.formData),
-      personal_response: this.getPersonal(state.formData)
+      state_draft: state
     }
 
-    new SnapshotTmpModel().save(snapshot).then(
+    if(this.props.snapshotDraftId){
+      snapshotDraftModel.set('id', this.props.snapshotDraftId);
+      url = `/surveys/drafts`;
+    }
+
+    snapshotDraftModel.save(snapshot).then(
 
       () => {
-        
+
         FlashesService.request('add', {
           timeout: 2000,
           type: 'info',
           title: 'The information has been saved'
         });
-
-        Bn.history.navigate(`/surveys`, true);
+        
+        Bn.history.navigate(url, true);
       },
       error => {
         FlashesService.request('add', {
           timeout: 2000,
           type: 'warning',
-          title: error.responseJSON.message
+           title: error.responseJSON.message
         });
       }
     );
   }
-
 });

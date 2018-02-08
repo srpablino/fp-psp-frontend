@@ -10,10 +10,15 @@ export default Mn.View.extend({
     surveysContent: '#surveys-content'
   },
   initialize(app) {
-    this.app = app;
+    this.app=app.app
   },
   onRender() {
-    const headerItems = storage.getSubHeaderItems();
+    let headerItems;
+    if(this.app.getSession().userHasRole('ROLE_SURVEY_USER')){
+      headerItems = storage.getUserSubHeaderItems();
+    }else{
+      headerItems = storage.getSubHeaderItems();
+    }
     this.app.updateSubHeader(headerItems);
     this.list();
   },

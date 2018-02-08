@@ -1,6 +1,7 @@
 import Mn from 'backbone.marionette';
 import Bn from 'backbone';
 import Template from './template.hbs';
+import session from '../../../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -42,6 +43,9 @@ export default Mn.View.extend({
 
   handlerTermsAndConditions(event){
     event.preventDefault();
+      if (!session.userHasRole('ROLE_USER') && !session.userHasRole('ROLE_SURVEY_USER')) {
+        return;
+      }
     Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC`, true);
   },
 
