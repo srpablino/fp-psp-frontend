@@ -1,6 +1,7 @@
 import Mn from 'backbone.marionette';
 import Bn from 'backbone';
 import Template from './template.hbs';
+import session from '../../../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -10,7 +11,7 @@ export default Mn.View.extend({
     'click #show-snaps': 'handleShowSnapshots',
     'click .answer-area': 'handlerTermsAndConditions'
   },
-
+  className: 'col-lg-2 col-md-4 col-sm-6 col-xs-12',
   initialize(options) {
     this.deleteSurvey = options.deleteSurvey;
     this.model = options.model;
@@ -42,6 +43,9 @@ export default Mn.View.extend({
 
   handlerTermsAndConditions(event){
     event.preventDefault();
+      if (!session.userHasRole('ROLE_USER') && !session.userHasRole('ROLE_SURVEY_USER')) {
+        return;
+      }
     Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC`, true);
   },
 

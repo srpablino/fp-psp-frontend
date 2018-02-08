@@ -4,16 +4,16 @@ import ItemView from './item/view';
 export default Mn.CollectionView.extend({
   childView: ItemView,
   childViewOptions: {
-    className: 'col-lg-2 col-md-4 col-sm-6 col-xs-12'
+    className: 'col-md-3 col-xs-6'
   },
   className: 'list-container row',
-  childViewEvents: {
-    'delete:model': 'onChildDeleteModel'
+  childEvents: {
+    'delete:model': 'handleDelete'
   },
   onRender() {
     this.$el.find('#search').focus();
   },
-  // TODO: implement method to delete model
-  onChildDeleteModel() {
+  onChildviewDeleteItem(childView) {
+    this.collection.remove(childView.model);
   }
 });

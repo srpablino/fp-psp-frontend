@@ -4,18 +4,15 @@ import Template from './template.hbs';
 export default Mn.View.extend({
   template: Template,
   triggers: {
-    'click .card-menu-delete':'delete:model'
-  },
-  events: {
-    'click .card-menu-edit':'editOrg'
+    'click #delete': 'delete:item'
   },
   serializeData() {
     return {
-      organization: this.model.attributes
+      hub: this.model.attributes
     };
   },
-  // TODO: implementar
-  editOrg(e){
-    e.preventDefault();
+  handleDelete(event) {
+    event.preventDefault();
+    this.trigger('delete:model', this.model);
   }
 });
