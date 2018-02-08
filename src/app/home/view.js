@@ -5,8 +5,6 @@ import $ from 'jquery';
 import moment from 'moment';
 import Template from './template.hbs';
 
-
-
 export default Mn.View.extend({
   template: Template,
 
@@ -27,29 +25,44 @@ export default Mn.View.extend({
      "August","September","October","November","December"]
   },
 
-  getTakenData(idx){
+  getTakenData(key){
     let data = {};
     let o = this.organization.dashboard.snapshotTaken.byMonth;
-    let key = Object.keys(o)[idx];
+
+    // let key = Object.keys(o)[idx];
     if (moment(key).format('MM') === moment().format('MM')) {
       data.key = 'Today'
     }else{
       data.key = moment(key).locale('en').format('MMMM');
     }
-    let value = o[key]
-    data.value = value;
+    data.value = o[key];
     return data;
+  },
 
+  generateData(){
+    let snapshotTaken = this.organization.dashboard.snapshotTaken.byMonth;
+    let data={};
+    let keys=['x'];
+    let values=['data1'];
+    $.each(snapshotTaken, (i) => {
+       let aux = this.getTakenData(i);
+       keys.push(aux.key);
+       values.push(aux.value);
+    });
+    data.x = keys;
+    data.data1 = values;
+    return data;
   },
 
   chart(){
+    const data = this.generateData();
     c3.generate({
         bindto: '#bar-snapshots-taken',
         data: {
            x: 'x',
           columns: [
-            ['x', this.getTakenData(0).key,this.getTakenData(1).key, this.getTakenData(2).key],
-            ['data1', this.getTakenData(0).value, this.getTakenData(1).value, this.getTakenData(2).value],
+            data.x,
+            data.data1,
           ],
           names: {
             data1: 'Snapshots Taken',
@@ -57,7 +70,6 @@ export default Mn.View.extend({
           colors:{
                 data1: '#60b4ef',
               },
-
           type: 'bar',
           labels: true,
           empty: {
@@ -95,6 +107,5 @@ export default Mn.View.extend({
     return {
       organization: this.model.attributes
     };
-
   }
 });
