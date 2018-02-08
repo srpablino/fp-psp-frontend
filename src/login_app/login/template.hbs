@@ -8,27 +8,35 @@
     <div class="panel">
       <div class="panel-heading">
         <div class="alert alert-error" style="display:none;">
-          <div class="panel-title">Ingrese</div>
+          <div class="panel-title">Entry</div>
         </div>
         <div class="panel-body">
           <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-          <form role="form" id="loginform" class="col-sm-8 col-sm-offset-2">
-            <div class="form-group">
-              <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Username">
+          <form role="form" id="loginform" class="col-sm-9 col-sm-offset-2">
+            <div class="form-group login">
+              <input id="login-username" type="text" class="form-control " name="username" value="" placeholder="Username">
             </div>
-            <div class="form-group">
-              <input id="login-password" type="password" class="form-control" name="password" placeholder="Password">
+            <div class="form-group login">
+              <input id="login-password" type="password" class="form-control " name="password" placeholder="Password">
+            </div>
+            <div class="form-group recovery" style="display:none;">
+              <label for="">Please enter your email to reset your password</label>
+              <input id="login-email" type="email" class="form-control" name="email" placeholder="Email">
             </div>
             <div class="has-spinner">
-              <button id="btn-login" href="#" class="btn">LOGIN </button>
+              <button id="btn-login" href="#" class="btn btn-login login">LOGIN </button>
+              <button id="btn-recovery" href="#" class="btn btn-login recovery" style="display:none;">Reset Password</button>
             </div>
           </form>
         </div>
+        <br>
+        <a id="link-email">
+           <div class="pull-right link-email login" style="margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">Forgot password?</div>
+        </a>​
+        <a id="back-login" >
+            <div class="pull-right link-email recovery" style="display:none;margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">Back to login</div>
+        </a>​
       </div>
     </div>
-
-
-
-
   </div>
   <div id="flashes"></div>
