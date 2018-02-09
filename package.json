@@ -1,9 +1,10 @@
 {
   "name": "fp-psp-frentend",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Frontend para el FP-PSP-SERVER del semáforo de la pobreza",
   "main": "main.js",
   "devDependencies": {
+    "auto-changelog": "^1.4.1",
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.1.2",
     "babel-eslint": "^8.0.1",
@@ -26,6 +27,7 @@
     "express": "^4.11.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "fs-jetpack": "^1.2.0",
+    "generate-release": "^0.14.0",
     "gulp": "^3.8.11",
     "gulp-connect": "^5.0.0",
     "gulp-imagemin": "^4.0.0",
@@ -60,12 +62,12 @@
     "mocha": "^3.2.0",
     "morgan": "^1.5.1",
     "node-sass": "^4.7.2",
+    "prettier": "^1.9.2",
     "prettier-eslint": "^8.2.0",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.1.1",
-    "style-loader": "^0.19.1",
-    "prettier": "^1.9.2",
     "scottyjs": "^1.10.0",
+    "style-loader": "^0.19.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
@@ -122,6 +124,8 @@
     "lint": "eslint --ignore-path .gitignore \"src/**/*.js\"",
     "test": "karma start && npm run lint",
     "deploy": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-w6fez --force --nocdn",
-    "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn"
+    "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
+    "release": "generate-release",
+    "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
 }
