@@ -376,6 +376,8 @@ div.fp-form-container {
   bottom: 0;
   width: 100%;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
 }
 .card-title,
 .card-description,
