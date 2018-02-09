@@ -2,6 +2,7 @@ import Mn from 'backbone.marionette';
 import Bb from 'backbone';
 import c3 from 'c3';
 import $ from 'jquery';
+import _ from 'lodash';
 import moment from 'moment';
 import Template from './template.hbs';
 
@@ -25,32 +26,24 @@ export default Mn.View.extend({
      "August","September","October","November","December"]
   },
 
-  getTakenData(key){
-    let data = {};
-    let o = this.organization.dashboard.snapshotTaken.byMonth;
-
-    // let key = Object.keys(o)[idx];
-    if (moment(key).format('MM') === moment().format('MM')) {
-      data.key = 'Today'
-    }else{
-      data.key = moment(key).locale('en').format('MMMM');
+  formatDate(key){
+    if(moment(key).isSame(moment(), 'month')){
+      return 'Today';
     }
-    data.value = o[key];
-    return data;
+    return moment(key).locale('en').format('MMMM');    
   },
 
   generateData(){
-    let snapshotTaken = this.organization.dashboard.snapshotTaken.byMonth;
-    let data={};
-    let keys=['x'];
-    let values=['data1'];
-    $.each(snapshotTaken, (i) => {
-       let aux = this.getTakenData(i);
-       keys.push(aux.key);
-       values.push(aux.value);
-    });
-    data.x = keys;
-    data.data1 = values;
+     let snapshots = this.organization.dashboard.snapshotTaken.byMonth;
+     let data={};
+     data.x = [ 
+      'x', 
+       ... _.keys(snapshots).map(key => this.formatDate(key))
+    ]; 
+    data.data1 = [ 
+        'data1',
+        ... _.values(snapshots)
+    ];
     return data;
   },
 

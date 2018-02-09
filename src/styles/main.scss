@@ -1174,7 +1174,7 @@ div.fp-form-container {
   margin-left: -2%;
   margin-top: -2%;
 }
-#btn-login {
+.btn-login {
   background: #7cd071;
   border-radius: 2px;
   font-family: 'Roboto';
@@ -1621,9 +1621,16 @@ div.fp-form-container {
   margin-top: 20px;
   margin-right: 10px;
 }
+
 #table-top-indicators_paginate {
   display: none;
 }
 .no-data {
   margin-top: 50px;
+}
+
+.link-email {
+  font-family: 'Helvetica';
+  font-weight: 400;
+  font-size: 14px;
 }
