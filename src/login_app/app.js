@@ -1,5 +1,7 @@
 import Mn from 'backbone.marionette';
-import LoginView from './login/view';
+import Bn from 'backbone'
+import LoginView from './view';
+import Router from './routes'
 
 export default Mn.Application.extend({
   region: '#main',
@@ -7,5 +9,7 @@ export default Mn.Application.extend({
   onStart() {
     const rootView = new LoginView();
     this.showView(rootView);
+    this.Router = new Router({controller: rootView});
+     Bn.history.start({ root: window.location.pathname });
   }
 });

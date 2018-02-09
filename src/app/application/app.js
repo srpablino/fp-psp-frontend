@@ -86,7 +86,6 @@ export default Mn.Application.extend({
   },
   toLoginPage() {
     this.sessionMgr.rememberRoute();
-
     // Redirects to the login page.
     // FIXME: Ideally this should be only '/login'
     window.location.replace('/login.html');
