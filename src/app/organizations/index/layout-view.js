@@ -36,6 +36,11 @@ export default Mn.View.extend({
     }, 0);
     this.showList();
   },
+  onAttach() {
+    if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
+      this.$el.find('#add-new').show();
+    }
+  },
   getTemplate() {
     return Template;
   },
