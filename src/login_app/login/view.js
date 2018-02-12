@@ -14,7 +14,11 @@ export default Mn.View.extend({
     flashes: '#flashes'
   },
   events: {
-    'click #btn-login': 'doLogin'
+    'click #btn-login': 'doLogin',
+    'click #link-email': 'entryEmail',
+    'click #back-login': 'backLogin',
+    'click #btn-recovery': 'sendEmail'
+
   },
 
   initialize(options) {
@@ -24,7 +28,26 @@ export default Mn.View.extend({
     FlashesService.setup({
       container: this.getRegion('flashes')
     });
+
   },
+  onRender() {
+    setTimeout(() => {
+      this.$el.find('#login-username').focus();
+    }, 0);
+
+  },
+  entryEmail(){
+    $(".login").hide();
+    $(".recovery").show();
+    this.$el.find('#login-email').focus();
+
+  },
+  backLogin(){
+    $(".login").show();
+    $(".recovery").hide();
+    this.$el.find('#login-username').focus();
+  },
+
   doLogin(event) {
     event.preventDefault();
 
@@ -51,12 +74,10 @@ export default Mn.View.extend({
 
       success: data => {
         if (data.error) {
-          // If there is an error, show the error messages
           $('.alert-error')
             .text(data.error.text)
             .show();
         } else {
-          // If not, send them back to the home page
           const { access_token, refresh_token, user } = data;
           session.save({ access_token, refresh_token, user });
 
@@ -80,6 +101,7 @@ export default Mn.View.extend({
             title: 'Not authorized'
           });
         } else {
+          console.log(textStatus);
           FlashesService.request('add', {
             type: 'warning',
             title: 'Wrong credentials. Please try again.',
@@ -91,6 +113,64 @@ export default Mn.View.extend({
         }
       },
       complete: () => {
+        button.reset();
+      }
+    });
+  },
+
+  sendEmail(event) {
+    event.preventDefault();
+    let self = this;
+    const rcoveryBtn = this.$el.find('#btn-recovery');
+    const button = getLoadingButton(rcoveryBtn);
+
+    let email = $('#login-email').val();
+
+    let url = `${
+      env.API_PUBLIC
+    }/password/resetPassword?email=${email}`;
+
+    button.loading();
+    $.ajax({
+      url,
+      type: 'POST',
+      success() {
+          FlashesService.request('add', {
+            timeout: 6000,
+            type: 'info',
+            title: `Thanks! Please check ${email} for a link to reset your password`
+          });
+
+          self.backLogin();
+      },
+      error(xmlHttpRequest, statusText) {
+        if (xmlHttpRequest && xmlHttpRequest.status === 0) {
+          FlashesService.request('add', {
+            timeout: 4000,
+            type: 'danger',
+            title: 'No connection to server'
+          });
+          return;
+        }
+
+        if (statusText === 'Unauthorized') {
+          FlashesService.request('add', {
+            timeout: 3000,
+            type: 'warning',
+            title: 'Not authorized'
+          });
+        } else {
+          let jsonResponse = JSON.parse(xmlHttpRequest.responseText);
+          let message = jsonResponse.message;
+          FlashesService.request('add', {
+            type: 'warning',
+            title: message,
+            timeout: 3000
+          });
+        }
+      },
+      complete: () => {
+        $('#login-email').val('');
         button.reset();
       }
     });
