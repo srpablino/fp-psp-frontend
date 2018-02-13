@@ -51,7 +51,7 @@
           <div class="indicator-list margin-tb-20px row">
             {{#each snapshotIndicators}}
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 indicator-circle-snapshot">
-              <img class="center-block" src="{{ this.image }}" >
+              <div id="circle" class="circle-content {{ this.clazz }}" />
               <br> <p class="text-center article-title">{{ this.name }}</p>
             </div>
             {{/each}}

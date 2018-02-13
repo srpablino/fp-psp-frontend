@@ -23,7 +23,7 @@ export default Mn.View.extend({
       createdAt: this.formatCreatedDate(),
       snapshotIndicators: this.snapshotModel.attributes.indicators_survey_data.map(
         set => ({
-          image: this.stoplightImage(set.value),
+          clazz: set.value !== null ? set.value.toLowerCase() : 'gray',
           value: set.value,
           name: set.name
         })
