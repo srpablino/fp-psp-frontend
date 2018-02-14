@@ -327,7 +327,9 @@ div.fp-form-container {
 }
 .img-card {
   max-height: 100px;
-  background: white url('/static/images/image-loader.gif') no-repeat center;
+  height: 100px;
+  width: 100px;
+  object-fit: contain;
 }
 .list-common-content {
   padding-left: 15px;
@@ -374,6 +376,8 @@ div.fp-form-container {
   bottom: 0;
   width: 100%;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
 }
 .card-title,
 .card-description,
@@ -860,7 +864,7 @@ article {
   border-radius: 30px;
   cursor: pointer;
 }
-.card-user{
+.card-user {
   border-radius: 50%;
   background-color: #95e78b;
 }
@@ -1056,7 +1060,7 @@ article {
   background: url('/static/images/icon_edit_hover.png') no-repeat scroll 0px 0px;
   background-size: 45px;
 }
-.floating-item{
+.floating-item {
   position: absolute;
   z-index: 10;
   top: 8%;
@@ -1127,7 +1131,7 @@ article {
     font-size: 14px;
     color: #dddddd;
     margin-top: 10%;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
   }
   > img {
     margin-top: 20%;
@@ -1181,7 +1185,7 @@ div.fp-form-container {
   margin-left: -2%;
   margin-top: -2%;
 }
-#btn-login {
+.btn-login {
   background: #7cd071;
   border-radius: 2px;
   font-family: 'Roboto';
@@ -1623,4 +1627,15 @@ div.fp-form-container {
   .list-container-large > div:nth-child(4n + 1) {
     clear: both;
   }
+}
+.marginDraft {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+.link-email {
+  font-family: 'Helvetica';
+  font-weight: 400;
+  font-size: 14px;
+  //color: #ffffff;
 }

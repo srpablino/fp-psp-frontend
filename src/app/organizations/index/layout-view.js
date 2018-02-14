@@ -7,6 +7,7 @@ import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
 import OrganizationsModel from '../model';
+import OrganizationsCollection from '../collection';
 
 export default Mn.View.extend({
   template: Template,
@@ -17,7 +18,8 @@ export default Mn.View.extend({
   events: {
     'keyup #search': 'handleSearch'
   },
-  initialize() {
+  initialize(options) {
+    this.app = options.app;
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
@@ -28,10 +30,16 @@ export default Mn.View.extend({
     this.search = debounce(this.search, 300);
   },
   onRender() {
+
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
+  },
+  onAttach() {
+    if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
+      this.$el.find('#add-new').show();
+    }
   },
   getTemplate() {
     return Template;
@@ -48,16 +56,31 @@ export default Mn.View.extend({
       this.showList();
       return;
     }
+
     const container = this.$el.find('.list-container').eq(0);
     const section = utils.getLoadingSection(container);
     section.loading();
     this.getRegion('list').empty();
+    let self = this;
     setTimeout(() => {
-      var filtered = this.collection.filter((organization) => organization.get("name").toLowerCase().includes(name.toLowerCase()));
-      this.collection = new Bn.Collection(filtered);
-      this.showList();
-      section.reset();
-    }, 1000);
+
+      let params = {};
+      params.applicationId = self.app.getSession().get('user').application.id;
+      if(self.app.getSession().get('user').organization !== null){
+        params.organizationId = self.app.getSession().get('user').organization.id
+      }
+
+
+      let moreElements = new OrganizationsCollection();
+      moreElements.fetch({
+        data: params,
+        success(response) {
+          self.collection.set(response.get('list'));
+          self.showList();
+          section.reset();
+        }
+      });
+    }, 500);
   },
   search(term) {
     if (!term) {
@@ -90,7 +113,9 @@ export default Mn.View.extend({
     if (self.model.get('currentPage') < self.model.get('totalPages')) {
       let params = {
         page: self.model.get('currentPage') + 1,
-        per_page: 12
+        per_page: 12,
+        applicationId: self.app.getSession().get('user').application.id ,
+        organizationId: self.app.getSession().get('user').organization.id,
       };
 
       let moreElements = new OrganizationsModel();

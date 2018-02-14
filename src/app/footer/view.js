@@ -1,6 +1,10 @@
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
+import env from '../env';
 
 export default Mn.View.extend({
-  template: Template
+  template: Template,
+  serializeData() {
+    return { appVersion: env.appVersion };
+  }
 });

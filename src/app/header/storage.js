@@ -4,7 +4,8 @@ import Model from './model';
 const allMenuItems = {
   mainItem: { link: '#' },
   navigationItems: [
-    { name: 'Organizations', link: '#organizations' },
+    { name: 'Collaborators', link: '#collaborators/hubs' },
+    { name: 'Organisations', link: '#organizations' },
     { name: 'Reports', link: '#reports' },
     { name: 'Families', link: '#families' },
     { name: 'Surveys', link: '#surveys' },
@@ -21,11 +22,19 @@ var HeaderStorage = Storage.extend({
     }
 
     if (session.userHasRole('ROLE_ROOT')) {
-      return new Model(allMenuItems);
+      const items = {
+        navigationItems: allMenuItems.navigationItems
+            .filter(item => !(item.link === '#organizations'))
+      };
+      return new Model(items);
     }
 
     if (session.userHasRole('ROLE_HUB_ADMIN')) {
-      return new Model(allMenuItems);
+      const items = {
+        navigationItems: allMenuItems.navigationItems
+          .filter(item => !(item.link.indexOf('#collaborators') !== -1))
+      };
+      return new Model(items);
     }
 
     // APP_ADMIN is a member and admin
@@ -38,6 +47,7 @@ var HeaderStorage = Storage.extend({
           .filter(item => !(item.link === '#organizations'))
           // .filter(item => !(item.link === '#users'))
           .filter(item => !(item.link === '#families'))
+          .filter(item => !(item.link.indexOf('#collaborators') !== -1))
       };
       return new Model(items);
     }
@@ -49,6 +59,7 @@ var HeaderStorage = Storage.extend({
         .filter(item => !(item.link === '#organizations'))
         .filter(item => !(item.link === '#users'))
         .filter(item => !(item.link === '#families'))
+        .filter(item => !(item.link.indexOf('#collaborators') !== -1))
     };
     return new Model(items);
   }
