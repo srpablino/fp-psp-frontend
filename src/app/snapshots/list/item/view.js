@@ -46,30 +46,24 @@ export default Mn.View.extend({
         data: this.model.attributes // ,
       },
       data: this.model.attributes.indicators_survey_data.map(value => ({
-        clazz: value.value !== null ? value.value.toLowerCase() : 'none ',
+        classNames: this.getClassNames(value.value),
         value: value.value,
         name: value.name,
-        priority: this.isPriority(value.name)
+        priority: this.getPriorityClass(value.name)
 
       })),
       priorities: this.props.model.attributes.indicators_priorities,
-      clazz:
+      classNames:
         this.props.model.attributes.indicators_priorities <= 0 ? 'hidden' : ''
     };
   },
 
-  isPriority(name){
-    let priorities = this.model.attributes.indicators_priorities
-    let clazz;
-    if(priorities.length > 0 ){
-      priorities.forEach(value => {
-        if(value.indicator === name){
-
-          clazz = 'priority-indicator'
-        }
-      });
-    }
-    return clazz;
+  getPriorityClass(name){
+    const isPriority = this.model.attributes.indicators_priorities.find(value => value.indicator === name);
+    return isPriority && 'priority-indicator';
+  },
+  getClassNames(value) {
+    return value !== null ? value.toLowerCase() : 'none ' ;
   },
 
   handleOnDeletePriority(event) {
