@@ -36,7 +36,7 @@
   <div class="row indicator-list">
     {{#each data}}
     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 indicator-circle-snapshot">
-      <div id="circle" class="circle-content {{ this.clazz }}" data-toggle="tooltip" title="Set priority for this indicator" />
+      <div id="circle" class="circle-content {{ this.clazz }} {{this.priority.clazz}}" data-toggle="tooltip" title="Set priority for this indicator" />
       <p id="indicator-name">{{ this.name }}</p>
       <p hidden id="indicator-value">{{ this.value }}</p>
     </div>
