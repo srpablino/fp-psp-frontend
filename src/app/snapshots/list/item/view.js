@@ -40,15 +40,6 @@ export default Mn.View.extend({
       value.estimated_date = date;
     });
 
-
-    // let data = this.props.model.attributes.indicators_survey_data.map(value => ({
-    //   clazz: value.value !== null ? value.value.toLowerCase() : 'none ',
-    //   value: value.value,
-    //   name: value.name,
-    //   priority: ""
-    //
-    // }))
-  //  console.log(data);
     return {
       header: {
         date: this.formartterWithTime(this.model.attributes.created_at),
@@ -58,12 +49,27 @@ export default Mn.View.extend({
         clazz: value.value !== null ? value.value.toLowerCase() : 'none ',
         value: value.value,
         name: value.name,
+        priority: this.isPriority(value.name)
 
       })),
       priorities: this.props.model.attributes.indicators_priorities,
       clazz:
         this.props.model.attributes.indicators_priorities <= 0 ? 'hidden' : ''
     };
+  },
+
+  isPriority(name){
+    let priorities = this.model.attributes.indicators_priorities
+    let clazz;
+    if(priorities.length > 0 ){
+      priorities.forEach(value => {
+        if(value.indicator === name){
+
+          clazz = 'priority-indicator'
+        }
+      });
+    }
+    return clazz;
   },
 
   handleOnDeletePriority(event) {
