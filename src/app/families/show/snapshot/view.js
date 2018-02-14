@@ -36,16 +36,5 @@ export default Mn.View.extend({
       return null;
     }
     return moment(createdAt).format('YYYY-MM-DD');
-  },
-  stoplightImage(color) {
-    if (color === 'GREEN') {
-      return '/static/images/icon_elipse_verde_02.png';
-    } else if (color === 'YELLOW') {
-      return '/static/images/icon_elipse_amarillo_02.png';
-    } else if (color === 'RED') {
-      return '/static/images/icon_elipse_rojo_02.png';
-    }else if (color === 'NONE') {
-      return '/static/images/icon_elipse_gris_02.png';
-    }
   }
 });
