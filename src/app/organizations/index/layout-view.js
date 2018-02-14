@@ -110,14 +110,9 @@ export default Mn.View.extend({
       let params = {
         page: self.model.get('currentPage') + 1,
         per_page: 12,
+        applicationId: self.app.getSession().get('user').application.id ,
+        organizationId: self.app.getSession().get('user').organization.id,
       };
-
-      if(self.app.getSession().get('user').application !== null){
-        params.applicationId = self.app.getSession().get('user').application.id;
-      }
-      if(self.app.getSession().get('user').organization !== null){
-        params.organizationId = self.app.getSession().get('user').organization.id
-      }
 
       let moreElements = new OrganizationsModel();
       moreElements.fetch({
