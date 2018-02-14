@@ -1639,6 +1639,11 @@ div.fp-form-container {
   font-size: 14px;
 }
 
-.priority-indicator {
-  box-shadow: 0 0 30px #06c0de;
+.priority-indicator-red {
+  box-shadow: 0 0 30px red;
+  border: 2px solid #d40505;
+}
+.priority-indicator-yellow {
+  box-shadow: 0 0 30px yellow;
+  border: 2px solid #e0d11d;
 }

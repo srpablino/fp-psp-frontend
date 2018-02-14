@@ -49,7 +49,7 @@ export default Mn.View.extend({
         classNames: this.getClassNames(value.value),
         value: value.value,
         name: value.name,
-        priority: this.getPriorityClass(value.name)
+        priority: this.getPriorityClass(value.name, value.value)
 
       })),
       priorities: this.props.model.attributes.indicators_priorities,
@@ -58,9 +58,9 @@ export default Mn.View.extend({
     };
   },
 
-  getPriorityClass(name){
-    const isPriority = this.model.attributes.indicators_priorities.find(value => value.indicator === name);
-    return isPriority && 'priority-indicator';
+  getPriorityClass(name, value){
+    const isPriority = this.model.attributes.indicators_priorities.find(data => data.indicator === name);
+    return isPriority && `priority-indicator-${value.toLowerCase()}`;
   },
   getClassNames(value) {
     return value !== null ? value.toLowerCase() : 'none ' ;
