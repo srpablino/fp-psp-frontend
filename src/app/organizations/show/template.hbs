@@ -1,4 +1,6 @@
+
 <div class="row">
+
   <div class="col-lg-4 col-md-4 col-sm-8 ">
     <article class="card">
       <div class="card-block">
@@ -68,11 +70,12 @@
   <div class="col-lg-8 col-md-8 col-sm-8">
     <div class="row">
       <div class="col-lg-6 col-md-6">
-        <article class="card">
+        <article class="card" style="height: 297px;">
           <div class="card-block">
             <div class="card-title">
               <h4>Families</h4>
             </div>
+            <br>
             <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
             <p class="strike-text centered">in Total</p>
           </div>
@@ -88,7 +91,7 @@
             </div>
             <h6 class="text-muted"></h6>
             <div class="text-center">
-              <img src="/static/images/uc_dummy_piechart.png" style="width: 73%;  height: auto;">
+              <div id="bar-indicators"></div>
             </div>
           </div>
         </article>
@@ -101,49 +104,36 @@
             <div class="card-title">
               <h4>Top of Indicators</h4>
             </div>
-            <table class="table maintenance-watermark" id="table-top-indicators">
-              <thead>
-                <th>Indicator</th>
-                <th><span class="circle-small circle-green-small" style="margin-left:0"></span></th>
-                <th><span class="circle-small circle-yellow-small" style="margin-left:0"></span></th>
-                <th><span class="circle-small circle-red-small" style="margin-left:0"></span></th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Income above the poverty line</td>
-                  <td>52</td>
-                  <td>110</td>
-                  <td>294</td>
-                </tr>
-                <tr>
-                  <td>Family savings</td>
-                  <td>112</td>
-                  <td>240</td>
-                  <td>154</td>
-                </tr>
-                <tr>
-                  <td>Violence against women</td>
-                  <td>127</td>
-                  <td>201</td>
-                  <td>165</td>
-                </tr>
-                <tr>
-                  <td>Stable income</td>
-                  <td>112</td>
-                  <td>210</td>
-                  <td>194</td>
-                </tr>
-                <tr>
-                  <td>Safe home</td>
-                  <td>312</td>
-                  <td>136</td>
-                  <td>54</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="" style="margin: 20px;">
+              <table class="table" id="table-top-indicators">
+                <thead>
+                  <th>Indicator</th>
+                  <th><img src="/static/images/icon_elipse_rojo_01.png"></th>
+                  <th><img src="/static/images/icon_elipse_amarillo_01.png"></th>
+                  <th><img src="/static/images/icon_elipse_verde_01.png"></th>
+                </thead>
+                <tbody>
+
+                  {{#each organization.dashboard.topOfIndicators}}
+                  <tr>
+                    <td>{{this.indicatorName}}</td>
+                    <td>{{this.totalRed}}</td>
+                    <td>{{this.totalYellow}}</td>
+                    <td>{{this.totalGreen}}</td>
+                  </tr>
+                  {{/each}}
+
+                </tbody>
+
+              </table>
+            </div>
           </div>
         </article>
       </div>
     </div>
   </div>
+
+
+  <!--  -->
+
 </div>

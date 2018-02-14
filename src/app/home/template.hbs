@@ -84,26 +84,27 @@
     <div class="row">
       <div class="col-lg-6">
         <article class="card">
-          <div class="card-block">
+          <div class="card-block" style="height: 227px;">
             <div class="card-title">
               <h4>Number of families
               </h4>
             </div>
-            <h3 class="strike">{{home.dashboard.numberOfFamilies}}</h3>
+            <br>
+            <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
             <p class="strike-text centered">in total</p>
           </div>
         </article>
       </div>
       <div class="col-lg-6">
         <article class="card">
-          <div class="card-block">
+          <div class="card-block" style="height: 227px;">
             <div class="card-title">
               <h4>Snapshots Taken
               </h4>
             </div>
-            <h6 class="text-muted"></h6>
-            <div class="text-center">
-              <img src="/static/images/uc_dummy_barchart.png" style="height: 185px;">
+            <div class="">
+                <div id="bar-snapshots-taken"></div>
+                <p class="strike-text centered no-data">No Data</p>
             </div>
           </div>
         </article>

@@ -638,6 +638,11 @@ article {
 .table > thead > tr > th {
   border-top: none;
 }
+table.dataTable thead th,
+table.dataTable thead td,
+table.dataTable.no-footer {
+  border: none;
+}
 
 //Home de family - mcespedes
 .mg-top-50 {
@@ -1621,9 +1626,15 @@ div.fp-form-container {
   margin-right: 10px;
 }
 
+#table-top-indicators_paginate {
+  display: none;
+}
+.no-data {
+  margin-top: 50px;
+}
+
 .link-email {
   font-family: 'Helvetica';
   font-weight: 400;
   font-size: 14px;
-  //color: #ffffff;
 }

@@ -7,7 +7,7 @@ import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import storage from './storage';
 import utils from '../../../utils';
-import HubModel from './model';
+import HubsModel from './model';
 
 export default Mn.View.extend({
   template: Template,
@@ -98,7 +98,7 @@ export default Mn.View.extend({
         per_page: 12
       };
 
-      let moreElements = new HubModel();
+      let moreElements = new HubsModel();
       moreElements.fetch({
         data: params,
         success(response) {
