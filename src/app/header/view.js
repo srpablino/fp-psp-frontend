@@ -68,6 +68,9 @@ export default Mn.View.extend({
 
   languageSelected(event){
     event.preventDefault(); 
-    this.app.getSession().save({language: $('#locales').val()});
+    
+    this.app.changeLocale($('#locales').val());
+
+
   }
 });
