@@ -263,9 +263,10 @@ class Form extends Component {
   }
 
   mapErrors(errors){
+        
     return errors.map(error => {
       if (t(`schemaForm.errors.${error.name}`) !== `schemaForm.errors.${error.name}`) {
-        error.message = t(`schemaForm.errors.${error.name}`)
+        error.message = t(`schemaForm.errors.${error.name}`, {argument: error.argument.toString()});
       }
       return error;
     });
@@ -299,6 +300,7 @@ class Form extends Component {
                   onChange={(event) => {this.onChange(event)}}
                   transformErrors={this.mapErrors}
                   noHtml5Validate
+                  showErrorList={false}
                 >
                   <button
                     type="button"
