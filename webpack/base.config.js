@@ -1,5 +1,5 @@
 /* eslint import/no-extraneous-dependencies:0 */
-
+var path = require("path");
 var webpack = require('webpack');
 
 module.exports = {
@@ -7,6 +7,9 @@ module.exports = {
     'js/main': './src/app/main',
     'js/login_main': './src/login_app/login_main',
     vendor: ['jquery', 'bootstrap', 'backbone', 'backbone.marionette', 'lodash']
+  },
+  resolve: {
+    fallback: path.join(__dirname, "helpers")
   },
   module: {
     loaders: [
