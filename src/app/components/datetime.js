@@ -1,5 +1,6 @@
 import React from 'react';
 import Datetime from 'react-datetime';
+import session from '../../common/session';
 
 require('moment/locale/es');
 
@@ -56,7 +57,7 @@ class DatetimeFormat extends React.Component {
         dateFormat="MM/DD/YYYY"
         inputProps={{ disabled: true }}
         timeFormat={false}
-        locale='en'
+        locale={session.get('language')?session.get('language'):'es'}
         disableOnClickOutside
         renderInput={this.renderInput}
         onChange={this._handleOnChange}
