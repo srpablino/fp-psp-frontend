@@ -1,6 +1,7 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import c3 from 'c3';
+import 'datatables.net-bs';
 import Template from './template.hbs';
 // import UsersTemplate from './users-template.hbs';
 // import IndicatorsTemplate from './indicators-template.hbs';
@@ -16,6 +17,8 @@ export default Mn.View.extend({
     this.app = options.app;
     this.entity = options.entity;
     this.organizationId = options.organizationId;
+    this.organization = this.model.attributes;
+
   },
 
   onRender() {
@@ -31,7 +34,22 @@ export default Mn.View.extend({
     }
     setTimeout(() => {
       this.chart();
+      this.dataTables();
+
     }, 0);
+
+  },
+
+  dataTables(){
+      $('#table-top-indicators').dataTable({
+        "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
+        "searching": false,
+        "paging" : true,
+        "lengthChange": true,
+        "info": false,
+        "order": [[ 1, "desc" ], [ 2, "desc" ], [ 3, "desc" ]]
+
+      });
   },
 
   chart(){
@@ -39,9 +57,9 @@ export default Mn.View.extend({
         bindto: '#bar-indicators',
         data: {
           columns: [
-            ['Red', 10],
-            ['Yellow', 5],
-            ['Green', 15]
+            ['Red', `${this.organization.dashboard.snapshotIndicators.count_red_indicators}`],
+            ['Yellow', `${this.organization.dashboard.snapshotIndicators.count_yellow_indicators}`],
+            ['Green', `${this.organization.dashboard.snapshotIndicators.count_green_indicators}`]
           ],
           colors:{
                 Red: 'rgba(255, 0, 0, 0.8)',
@@ -49,9 +67,9 @@ export default Mn.View.extend({
                 Green: 'rgba(0, 128, 0, 0.7)'
               },
               names: {
-                    Red: 'Red: 10',
-                    Yellow: 'Yellow: 5',
-                    Green: 'Green: 15'
+                    Red: `Red:  ${this.organization.dashboard.snapshotIndicators.count_red_indicators}`,
+                    Yellow: `Yellow: ${this.organization.dashboard.snapshotIndicators.count_yellow_indicators}`,
+                    Green: `Green: ${this.organization.dashboard.snapshotIndicators.count_green_indicators}`
                   },
           type: 'donut'
         },

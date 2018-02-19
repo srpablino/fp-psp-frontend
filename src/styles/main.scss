@@ -327,7 +327,9 @@ div.fp-form-container {
 }
 .img-card {
   max-height: 100px;
-  background: white url('/static/images/image-loader.gif') no-repeat center;
+  height: 100px;
+  width: 100px;
+  object-fit: contain;
 }
 .list-common-content {
   padding-left: 15px;
@@ -635,6 +637,11 @@ article {
 .table > thead > tr > td,
 .table > thead > tr > th {
   border-top: none;
+}
+table.dataTable thead th,
+table.dataTable thead td,
+table.dataTable.no-footer {
+  border: none;
 }
 
 //Home de family - mcespedes
@@ -1117,7 +1124,7 @@ article {
     font-size: 14px;
     color: #dddddd;
     margin-top: 10%;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
   }
   > img {
     margin-top: 20%;
@@ -1619,9 +1626,15 @@ div.fp-form-container {
   margin-right: 10px;
 }
 
+#table-top-indicators_paginate {
+  display: none;
+}
+.no-data {
+  margin-top: 50px;
+}
+
 .link-email {
   font-family: 'Helvetica';
   font-weight: 400;
   font-size: 14px;
-  //color: #ffffff;
 }

@@ -2,16 +2,18 @@ import OrganizationsView from './index/layout-view';
 import HubView from './index/hubs/layout-view';
 import OrganizationView from './show/view';
 import NewOrganizationView from './add/view';
+// import organizationsStorage from './storage';
 import hubStorage from './index/hubs/storage';
 import OrganizationDashboard from './dashboard/model';
 import Model from './model';
+import env from "../env";
 
 const organizations = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
       'collaborators(/:entity)': 'showHubs',
-      'collaborators(/:entity)/:id': 'showOrganizations2',
+      'collaborators(/:entity)/:id': 'showOrganizationsByApplication',
       'organizations(/)': 'showOrganizations',
       'organizations/new': 'newOrganization',
       'organizations/:id(/:entity)': 'showOrganization'
@@ -27,6 +29,7 @@ const organizations = props => {
         // organizationsStorage.find().then(model => {
         //   app.showViewOnRoute(new OrganizationsView({ model, app }));
         // });
+
         const model = new Model();
         let params = {};
         params.applicationId = app.getSession().get('user').application.id;
@@ -34,6 +37,7 @@ const organizations = props => {
           params.organizationId = app.getSession().get('user').organization.id
         }
 
+        model.urlRoot = `${env.API}/organizations/application`;
         model
           .fetch({
             data: params
@@ -48,13 +52,11 @@ const organizations = props => {
           });
 
       },
-      showOrganizations2(entity, applicationId) {
+      showOrganizationsByApplication(entity, applicationId) {
         const model = new Model();
-        let params = {};
-        params.applicationId = applicationId;
         model
           .fetch({
-            data: params
+            data: {applicationId}
           })
           .then(() => {
             app.showViewOnRoute(
@@ -87,7 +89,7 @@ const organizations = props => {
           });
       },
       newOrganization() {
-        app.showViewOnRoute(new NewOrganizationView());
+        app.showViewOnRoute(new NewOrganizationView({app}));
       }
     }
   };
