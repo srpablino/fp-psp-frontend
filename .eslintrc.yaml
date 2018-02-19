@@ -10,6 +10,9 @@ extends:
   - airbnb
   - prettier
 
+globals:
+  polyglot: true
+  t: true
 
 # parserOptions:
 #   ecmaVersion: 6

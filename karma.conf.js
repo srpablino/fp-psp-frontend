@@ -45,7 +45,7 @@ module.exports = function(config) {
 
     colors: true,
 
-    logLevel: config.TRACE,
+    logLevel: config.LOG_DISABLE,
 
     captureConsole: true,
 
