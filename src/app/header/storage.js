@@ -58,7 +58,7 @@ var HeaderStorage = Storage.extend({
       navigationItems: allMenuItems.navigationItems
         .filter(item => !(item.link === '#organizations'))
         // .filter(item => !(item.link === '#users'))
-        .filter(item => !(item.link === '#families'))
+        // .filter(item => !(item.link === '#families'))
         .filter(item => !(item.link.indexOf('#collaborators') !== -1))
     };
     return new Model(items);
