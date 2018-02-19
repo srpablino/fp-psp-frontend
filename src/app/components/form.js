@@ -262,6 +262,15 @@ class Form extends Component {
     this.state.lastValue = data.formData;
   }
 
+  mapErrors(errors){
+    return errors.map(error => {
+      if (t(`schemaForm.errors.${error.name}`) !== `schemaForm.errors.${error.name}`) {
+        error.message = t(`schemaForm.errors.${error.name}`)
+      }
+      return error;
+    });
+  }
+
   render() {
 
     return (
@@ -288,6 +297,8 @@ class Form extends Component {
                   onError={log('errors')}
                   formData={this.state.formData}
                   onChange={(event) => {this.onChange(event)}}
+                  transformErrors={this.mapErrors}
+                  noHtml5Validate
                 >
                   <button
                     type="button"
