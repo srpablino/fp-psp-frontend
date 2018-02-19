@@ -13,7 +13,7 @@ const organizations = props => {
   const routes = {
     appRoutes: {
       'collaborators(/:entity)': 'showHubs',
-      'collaborators(/:entity)/:id': 'showOrganizations2',
+      'collaborators(/:entity)/:id': 'showOrganizationsByApplication',
       'organizations(/)': 'showOrganizations',
       'organizations/new': 'newOrganization',
       'organizations/:id(/:entity)': 'showOrganization'
@@ -52,13 +52,11 @@ const organizations = props => {
           });
 
       },
-      showOrganizations2(entity, applicationId) {
+      showOrganizationsByApplication(entity, applicationId) {
         const model = new Model();
-        let params = {};
-        params.applicationId = applicationId;
         model
           .fetch({
-            data: params
+            data: {applicationId}
           })
           .then(() => {
             app.showViewOnRoute(

@@ -87,7 +87,6 @@ class Gmap extends React.Component {
             <Marker
               lat={this.state.point.lat}
               lng={this.state.point.lng}
-              draggable
             />
           </Gmaps>
         </div>
