@@ -192,17 +192,25 @@ export default Mn.View.extend({
         if (!confirmed) {
           return;
         }
+        this.savedNotification();
         this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
           this.props.model.attributes.snapshot_economic_id
         }`);
       });
 
     } else {
-
+      this.savedNotification();
       this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
         this.props.model.attributes.snapshot_economic_id
       }`);
     }
+  },
+  savedNotification(){
+    FlashesService.request('add', {
+      timeout: 4000,
+      type: 'info',
+      title: `Your snapshot was completed successfully. The family's code is ${this.props.model.attributes.family.code}`
+    });
   },
 
   finishSurvey(e){
@@ -232,12 +240,6 @@ export default Mn.View.extend({
   },
 
   redirect(url){
-    console.log(this.props.model.attributes);
-    FlashesService.request('add', {
-      timeout: 4000,
-      type: 'info',
-      title: `Your snapshot was completed successfully. The family's code is ${this.props.model.attributes.family.code}`
-    });
     Bn.history.navigate(
       url,
       true
