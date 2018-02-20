@@ -36,15 +36,15 @@
   <div class="row indicator-list">
     {{#each data}}
     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 indicator-circle-snapshot">
-      <div id="circle" class="circle-content {{ this.clazz }}" data-toggle="tooltip" title="Set priority for this indicator" />
+      <div id="circle" class="circle-content {{ this.classNames }} {{this.priority}}" data-toggle="tooltip" title="Set priority for this indicator" />
       <p id="indicator-name">{{ this.name }}</p>
       <p hidden id="indicator-value">{{ this.value }}</p>
     </div>
     {{/each}}
   </div>
 
-  <h3 class="{{this.clazz}}" style="font-weight: bold" >My Priorities </h3>
-  <table class="table table-hover margin bottom center {{this.clazz}}" id="prioritiesTable">
+  <h3 class="{{this.classNames}}" style="font-weight: bold" >My Priorities </h3>
+  <table class="table table-hover margin bottom center {{this.classNames}}" id="prioritiesTable">
     <thead class="thead-light">
       <tr>
         <th>Indicator</th>

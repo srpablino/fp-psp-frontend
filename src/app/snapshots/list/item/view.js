@@ -46,14 +46,24 @@ export default Mn.View.extend({
         data: this.model.attributes // ,
       },
       data: this.model.attributes.indicators_survey_data.map(value => ({
-        clazz: value.value !== null ? value.value.toLowerCase() : 'gray',
+        classNames: this.getClassNames(value.value),
         value: value.value,
-        name: value.name
+        name: value.name,
+        priority: this.getPriorityClass(value.name, value.value)
+
       })),
       priorities: this.props.model.attributes.indicators_priorities,
-      clazz:
+      classNames:
         this.props.model.attributes.indicators_priorities <= 0 ? 'hidden' : ''
     };
+  },
+
+  getPriorityClass(name, value){
+    const isPriority = this.model.attributes.indicators_priorities.find(data => data.indicator === name);
+    return isPriority && `priority-indicator-${value.toLowerCase()}`;
+  },
+  getClassNames(value) {
+    return value !== null ? value.toLowerCase() : 'none ' ;
   },
 
   handleOnDeletePriority(event) {
@@ -116,6 +126,7 @@ export default Mn.View.extend({
 
     var exists = [];
 
+
     exists = this.props.model.attributes.indicators_priorities.filter(
       priority => priority.indicator === indicatorSelected
     );
@@ -148,9 +159,11 @@ export default Mn.View.extend({
     this.priorityDialog.open();
     this.priorityDialog.on('change', data => {
       this.props.model.attributes.indicators_priorities.push(data);
+
       setTimeout(() => {
         this.render();
       }, 300);
+
       this.priorityDialog.close();
     });
   },
