@@ -14,9 +14,9 @@
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> Why I don't have it? * </p>
-                                <textarea value="{{indicatorPriority.reason}}" 
-                                          class="form-control" 
+                                <p id="reasonTitle"> Why I don't have it? * </p>
+                                <textarea value="{{indicatorPriority.reason}}"
+                                          class="form-control"
                                           name="reason"
                                           id="reason"
                                           rows="5"
@@ -25,24 +25,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row forPriority">
                         <div class='col-sm-12'>
                             <div class="form-group">
                                 <p> What do I do to attain it? * </p>
-                                <textarea value="{{indicatorPriority.action}}"  
-                                          class="form-control" 
-                                          name="action" 
-                                          placeholder="Description" 
+                                <textarea value="{{indicatorPriority.action}}"
+                                          class="form-control"
+                                          name="action"
+                                          placeholder="Description"
                                           maxlength="500"
                                           rows="5"/>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row forPriority">
                         <div class='col-sm-12'>
                             <div class="form-group">
                                 <p> When will I have it? * </p>
-                                <div class='input-group date' id='datetimepicker'>
+                                <div class='input-group date ' id='datetimepicker'>
                                     <input id="fecha" value={{indicatorPriority.estimatedDate}} type='text' class="form-control" placeholder="DD/MM/YYYY" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>

@@ -53,8 +53,8 @@ export default Mn.View.extend({
 
       })),
       priorities: this.props.model.attributes.indicators_priorities,
-      classNames:
-        this.props.model.attributes.indicators_priorities <= 0 ? 'hidden' : ''
+      tablePriorityClassNames: this.getTableClass(false),
+      tableAchievedClassNames: this.getTableClass(true)
     };
   },
 
@@ -64,6 +64,10 @@ export default Mn.View.extend({
   },
   getClassNames(value) {
     return value !== null ? value.toLowerCase() : 'none ' ;
+  },
+  getTableClass(ban){
+    const isPriority = this.model.attributes.indicators_priorities.find(data => data.is_success === ban);
+    return isPriority ? '' : 'hidden';
   },
 
   handleOnDeletePriority(event) {
@@ -76,7 +80,7 @@ export default Mn.View.extend({
 
     ModalService.request('confirm', {
       title: 'Confirm Deletion',
-      text: `Are you sure you want to delete this priority?`
+      text: `Are you sure you want to delete this information?`
     }).then(confirmed => {
       if (!confirmed) {
         return;
@@ -96,7 +100,7 @@ export default Mn.View.extend({
       return FlashesService.request('add', {
         timeout: 2000,
         type: 'info',
-        title: `The priority has been deleted!`
+        title: `The information has been deleted!`
       });
 
     });
@@ -124,6 +128,7 @@ export default Mn.View.extend({
     const indicatorSelectedValue =
       e.target.parentNode.children['indicator-value'].innerHTML;
 
+    let success = false;
     var exists = [];
 
 
@@ -140,14 +145,7 @@ export default Mn.View.extend({
 
     }
 
-    if (indicatorSelectedValue.toUpperCase() === 'GREEN') {
-      return FlashesService.request('add', {
-        timeout: 2000,
-        type: 'info',
-        title: `The "${indicatorSelected}" indicator is really good`
-      });
-
-    }else if (indicatorSelectedValue.toUpperCase() === 'NONE') {
+    if (indicatorSelectedValue.toUpperCase() === 'NONE') {
         return FlashesService.request('add', {
           timeout: 2000,
           type: 'info',
@@ -155,7 +153,10 @@ export default Mn.View.extend({
         });
 
     }
-    this.showDialogPriority(indicatorSelected);
+
+    success = indicatorSelectedValue.toUpperCase() === 'GREEN' ;
+
+    this.showDialogPriority(indicatorSelected, success );
     this.priorityDialog.open();
     this.priorityDialog.on('change', data => {
       this.props.model.attributes.indicators_priorities.push(data);
@@ -168,12 +169,13 @@ export default Mn.View.extend({
     });
   },
 
-  showDialogPriority(indicator) {
+  showDialogPriority(indicator, success) {
     const dataIdConfirmOperacion = Math.random();
 
     this.priorityDialog = new PriorityView({
       dataId: dataIdConfirmOperacion,
       indicatorName: indicator,
+      isSuccess: success,
       snapshotIndicatorId: this.model.attributes.snapshot_indicator_id,
       obj: this
     });

@@ -44,7 +44,10 @@ export default Marionette.View.extend({
       minDate: moment(),
       locale: 'en'
     });
-
+    if (this.options.isSuccess) {
+      this.$el.find('.forPriority').hide();
+      this.$el.find('#reasonTitle').text('Comments');
+    }
     return this;
   },
 
@@ -70,8 +73,10 @@ export default Marionette.View.extend({
       .forEach(element => {
         this.indicatorPriority[element.name] = element.value;
       });
-    this.indicatorPriority.estimated_date = this.$el.find('#fecha').val();
+    this.indicatorPriority.estimated_date = this.$el.find('#fecha').val() === '' ? null : this.$el.find('#fecha').val();
     this.indicatorPriority.snapshot_indicator_id = this.options.snapshotIndicatorId;
+    this.indicatorPriority.is_success = this.options.isSuccess;
+
 
     let errors = this.model.validate(this.indicatorPriority);
 
