@@ -1,11 +1,33 @@
 {
   "organization": "Organizacion",
+  "general": {
+    "buttons": {
+      "accept": "Aceptar",
+      "cancel": "Cancelar"
+    },
+    "messages": {
+      "information": "Información"
+    }
+  },
   "schemaForm": {
     "errors": {
       "pattern": "Wrong pattern",
       "format": "No se ajusta  al formato de \"fecha\" requerido",
       "required": "El campo es requerido",
       "type": "Debe ser del tipo \"%{argument}\""
+    },
+    "personal-info": "Información Personal",
+    "economic-info": "Información Socioeconómica",
+    "indicators": "Indicadores",
+    "not-answer": "Prefiero no responder",
+    "buttons": {
+      "save-draft": "Guardar Borrador"
+    },
+    "loading": "Cargando"
+  },
+  "drafts": {
+    "messages": {
+      "save-draft": "La información ha sido guardada"
     }
   },
   "header": {
@@ -18,10 +40,57 @@
     "logout": "Cerrar sesión",
     "organizations": "Organizaciones"
   },
+  "subheader": {
+    "surveys": {
+      "list-surveys": "Encuestas Disponibles",
+      "list-drafts": "Borradores",
+      "priority": "Selecciona tus prioridades"
+    }
+  },
   "home": {
     "activity": "Actividades Recientes",
     "number-families": "Número de Familias",
     "snapshots-taken": "Semáforos tomados",
     "map-results": "Mapa de resultados"
+  },
+  "survey": {
+    "contains": "Contiene",
+    "indicators": "indicadores",
+    "created": "Creado el",
+    "survey": "Encuesta",
+    "summary": {
+      "buttons": {
+        "finish": "Finalizar esta encuesta",
+        "print": "Imprimir"
+      },
+      "family": "Familia",
+      "snapshot": "Semáforo",
+      "not-share": "Prefiero no compartir la situación de mi familia",
+      "messages": {
+        "not-save": "Su información personal no ha sido guardada en la plataforma"
+      }
+    },
+    "priority": {
+      "title": "My priorities",
+      "messages": {
+        "select": "Agregar prioridad para este indicador",
+        "select-green": "El indicador \"%{indicator}\" es realmente bueno",
+        "previous-selected": "El indicador \"%{indicator}\" ya fue previamente seleccionado",
+        "wihout-priorities": "Aún no ha agregado ninguna prioridad, ¿Está seguro de que desea finalizar la encuesta?"
+      },
+      "add": {
+        "indicator": "Indicador",
+        "reason": "¿Por qué no lo tengo?",
+        "action": "¿Qué debo hacer para lograrlo?",
+        "estimated-date": "¿Cuándo lo tendré?"
+      }
+    }
+  },
+  "termcondpol": {
+    "agree": "Estoy de acuerdo",
+    "disagree": "No estoy de acuerdo",
+    "buttons": {
+      "next": "Siguiente"
+    }
   }
 }

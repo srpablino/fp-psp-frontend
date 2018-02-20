@@ -88,7 +88,7 @@ class Gallery extends React.Component {
         images.push(
           this.renderImage(
             '/static/images/image_default.png',
-            'Loading...',
+            t('schemaForm.loading'),
             'NONE',
             i,
             'gallery-image gallery-image-div'
@@ -111,7 +111,7 @@ class Gallery extends React.Component {
             checked={this.state.isGoing}
             onChange={this.handleInputChange}
           />
-          &#32;&#32; I&#39;d prefer not to answer
+          &#32;&#32; {t('schemaForm.not-answer')}
         </div>
         <div className="images col-md-10 col-md-offset-1">
           <div className="row">{images}</div>

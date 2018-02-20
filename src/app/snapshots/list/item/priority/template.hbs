@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> Why I don't have it? * </p>
+                                <p> {{$t 'survey.priority.add.reason'}} * </p>
                                 <textarea value="{{indicatorPriority.reason}}" 
                                           class="form-control" 
                                           name="reason"
@@ -28,7 +28,7 @@
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> What do I do to attain it? * </p>
+                                <p> {{$t 'survey.priority.add.action'}} * </p>
                                 <textarea value="{{indicatorPriority.action}}"  
                                           class="form-control" 
                                           name="action" 
@@ -41,7 +41,7 @@
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> When will I have it? * </p>
+                                <p> {{$t 'survey.priority.add.estimated-date'}} * </p>
                                 <div class='input-group date' id='datetimepicker'>
                                     <input id="fecha" value={{indicatorPriority.estimatedDate}} type='text' class="form-control" placeholder="DD/MM/YYYY" />
                                     <span class="input-group-addon">
@@ -58,8 +58,8 @@
                 <div class="row">
                     <div class="modal-footer-button-content">
                         <div class="modal-footer-button form-item-right col-xs-6 col-xs-offset-6">
-                            <button type="button" id="cancel-priority" class="btn btn-danger form-button btn-primary margin-left-30">Cancel</button>
-                            <button type="button" type="submit" id="add-priority" class="btn form-button btn-primary">Accept</button>
+                            <button type="button" id="cancel-priority" class="btn btn-danger form-button btn-primary margin-left-30">{{$t 'general.buttons.cancel'}}</button>
+                            <button type="button" type="submit" id="add-priority" class="btn form-button btn-primary">{{$t 'general.buttons.accept'}}</button>
                         </div>
                     </div>
                 </div>

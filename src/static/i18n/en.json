@@ -1,11 +1,33 @@
 {
   "organization": "Organization",
+  "general": {
+    "buttons": {
+      "accept": "Accept",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "information": "Information"
+    }
+  },
   "schemaForm": {
     "errors": {
       "pattern": "Wrong pattern",
       "format": "Does not conform to the \"date\" format",
       "required": "Requires property \"%{argument}\"",
       "type": "Is not of a type(s) \"%{argument}\""
+    },
+    "personal-info": "Personal Information",
+    "economic-info": "Socio-economic Information",
+    "indicators": "Indicators",
+    "not-answer": "I'd prefer not to answer",
+    "buttons": {
+      "save-draft": "Save Draft"
+    },
+    "loading": "Loading"
+  },
+  "drafts": {
+    "messages": {
+      "save-draft": "The information has been saved"
     }
   },
   "header": {
@@ -18,10 +40,57 @@
     "logout": "Logout",
     "organizations": "Organizations"
   },
+  "subheader": {
+    "surveys": {
+      "list-surveys": "Available Surveys",
+      "list-drafts": "Drafts",
+      "priority": "Select your priorities"
+    }
+  },
   "home": {
     "activity": "Activity Feed",
     "number-families": "Number of Families",
     "snapshots-taken": "Snapshots taken",
     "map-results": "Map results"
+  },
+  "survey": {
+    "contains": "Contains",
+    "indicators": "indicators",
+    "created": "Created at",
+    "survey": "Survey",
+    "summary": {
+      "buttons": {
+        "finish": "Finish this survey",
+        "print": "Print"
+      },
+      "family": "Family",
+      "snapshot": "Snapshot",
+      "not-share": "I'd prefer not to share my family's situation",
+      "messages": {
+        "not-save": "Your personal information has not been saved in the platform"
+      }
+    },
+    "priority": {
+      "title": "My priorities",
+      "messages": {
+        "select": "Set priority for this indicator",
+        "select-green": "The \"%{indicator}\" indicator is really good",
+        "previous-selected": "The \"%{indicator}\" indicator was previously selected",
+        "wihout-priorities": "You have not set any priorities yet, are sure you want to finish the survey?"
+      },
+      "add": {
+        "indicator": "Indicator",
+        "reason": "Why I don't have it?",
+        "action": "What do I do to attain it?",
+        "estimated-date": "When will I have it?"
+      }
+    }
+  },
+  "termcondpol": {
+    "agree": "I agree",
+    "disagree": "I don't agree",
+    "buttons": {
+      "next": "Next"
+    }
   }
 }

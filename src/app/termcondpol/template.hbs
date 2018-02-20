@@ -6,15 +6,15 @@
         <div>
           <form id="response">
             <div class="radio">
-              <label class="textTermCond text-gray"><input type="radio" name="radio" id="agree" value="Yes"> I agree</label>
+              <label class="textTermCond text-gray"><input type="radio" name="radio" id="agree" value="Yes"> {{$t 'termcondpol.agree'}}</label>
             </div>
             <div class="radio">
-              <label class="textTermCond text-gray"><input type="radio" name="radio" id="dontAgree" value="No"> I don't agree</label>
+              <label class="textTermCond text-gray"><input type="radio" name="radio" id="dontAgree" value="No"> {{$t 'termcondpol.disagree'}}</label>
             </div>
           </form>
 
           <div class="pull-right">
-            <button type="button" type="submit" id="accept" class="btn form-button btn-primary disabled">Next</button>
+            <button type="button" type="submit" id="accept" class="btn form-button btn-primary disabled">{{$t 'termcondpol.buttons.next'}}</button>
           </div>
         </div>
         <br/>

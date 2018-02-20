@@ -159,6 +159,7 @@ export default Mn.View.extend({
     const dataIdConfirmOperacion = Math.random();
 
     this.priorityDialog = new PriorityView({
+      app: this.app,
       dataId: dataIdConfirmOperacion,
       indicatorName: indicator,
       snapshotIndicatorId: this.model.attributes.snapshot_indicator_id,

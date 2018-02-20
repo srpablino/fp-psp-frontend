@@ -10,6 +10,7 @@ import FlashesService from '../../../../flashes/service';
 export default Marionette.View.extend({
   initialize(options) {
     this.options = options;
+    this.app = options.app;
     this.model = new PriorityModel();
     this.collection = new PriorityCollection();
     this.collection.fetch({
@@ -42,7 +43,7 @@ export default Marionette.View.extend({
     $fecha.datetimepicker({
       format: 'DD/MM/YYYY',
       minDate: moment(),
-      locale: 'en'
+      locale: this.app.getSession().get('language')?this.app.getSession().get('language'):'es'
     });
 
     return this;
