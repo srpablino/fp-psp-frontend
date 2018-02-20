@@ -7,7 +7,14 @@
     },
     "messages": {
       "information": "Información"
-    }
+    },
+    "flashes": {
+      "close": "Cerrar"
+    },
+    "today": "Hoy",
+    "yellow": "Amarillo",
+    "green": "Verde",
+    "red": "Rojo"
   },
   "schemaForm": {
     "errors": {
@@ -25,10 +32,16 @@
     },
     "loading": "Cargando"
   },
-  "drafts": {
+  "draft": {
     "messages": {
-      "save-draft": "La información ha sido guardada"
-    }
+      "save-draft": "La información ha sido guardada",
+      "delete-confirm": "¿Está seguro de que desea eliminar el borrador?",
+      "delete-confirm-title": "Confirmación de Eliminación",
+      "delete-done": "El borrador ha sido eliminado"
+    },
+    "search-parameter": "Nombre o Apellido",
+    "search": "Buscar",
+    "created": "Creado el"
   },
   "header": {
     "reports": "Reportes",
@@ -44,14 +57,22 @@
     "surveys": {
       "list-surveys": "Encuestas Disponibles",
       "list-drafts": "Borradores",
-      "priority": "Selecciona tus prioridades"
-    }
+      "priority": "Seleccione sus prioridades"
+    },
+    "family": "Familia",
+    "interventions": "Intervenciones",
+    "snapshots": "Semáforos tomados"
   },
   "home": {
     "activity": "Actividades Recientes",
     "number-families": "Número de Familias",
     "snapshots-taken": "Semáforos tomados",
-    "map-results": "Mapa de resultados"
+    "map-results": "Mapa de resultados",
+    "total": "en total",
+    "indicators": "Indicadores",
+    "top-indicators": "Top de indicadores",
+    "indicator": "Indicador",
+    "no-data": "Sin datos"
   },
   "survey": {
     "contains": "Contiene",
@@ -64,19 +85,26 @@
         "print": "Imprimir"
       },
       "family": "Familia",
-      "snapshot": "Semáforo",
+      "snapshot": "Semáforo tomado",
       "not-share": "Prefiero no compartir la situación de mi familia",
+      "print-header": "Resultados de la Encuesta",
       "messages": {
-        "not-save": "Su información personal no ha sido guardada en la plataforma"
+        "not-save": "Su información personal no será guardada en la plataforma"
       }
     },
     "priority": {
-      "title": "My priorities",
+      "title": "Mis prioridades",
       "messages": {
         "select": "Agregar prioridad para este indicador",
         "select-green": "El indicador \"%{indicator}\" es realmente bueno",
         "previous-selected": "El indicador \"%{indicator}\" ya fue previamente seleccionado",
-        "wihout-priorities": "Aún no ha agregado ninguna prioridad, ¿Está seguro de que desea finalizar la encuesta?"
+        "without-priorities": "Aún no ha agregado ninguna prioridad, ¿Está seguro de que desea finalizar la encuesta?",
+        "delete-done": "La prioridad ha sido eliminada",
+        "add-done": "La información ha sido guardada",
+        "delete-confirm": "¿Está seguro de que desea eliminar esta prioridad?",
+        "delete-confirm-title": "Confirmación de eliminación",
+        "indicator-not-answered": "Durante la encuesta, has elegido no responder la pregunta",
+        "select-delete": "Eliminar esta prioridad"
       },
       "add": {
         "indicator": "Indicador",
@@ -91,6 +119,29 @@
     "disagree": "No estoy de acuerdo",
     "buttons": {
       "next": "Siguiente"
+    }
+  },
+  "family": {
+    "search": {
+      "search": "Buscar",
+      "city": "Ciudad",
+      "country": "País",
+      "organization": "Organización",
+      "name-code": "Apellido/Código",
+      "name-code-parameter": "Apellido o código",
+      "choose": "Seleccione"
+    },
+    "family": "Familia",
+    "code": "Cód",
+    "map": {
+      "snapshot": "Semáforo tomado",
+      "priorities": "Prioridades",
+      "indicators": "Indicadores",
+      "file": "Ficha",
+      "interventions": "Intervenciones",
+      "contact": "Contacto",
+      "cell": "Celular",
+      "place": "Lugar"
     }
   }
 }

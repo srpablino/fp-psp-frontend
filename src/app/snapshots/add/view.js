@@ -204,7 +204,7 @@ export default Mn.View.extend({
         FlashesService.request('add', {
           timeout: 2000,
           type: 'info',
-          title: t('drafts.messages.save-draft')
+          title: t('draft.messages.save-draft')
         });
         
         Bn.history.navigate(url, true);

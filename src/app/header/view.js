@@ -68,8 +68,6 @@ export default Mn.View.extend({
 
   languageSelected(event){
     event.preventDefault(); 
-    console.log($('#locales').val());
-    
     this.app.changeLocale($('#locales').val());
 
 

@@ -91,7 +91,7 @@ export default Marionette.View.extend({
           FlashesService.request('add', {
             timeout: 2000,
             type: 'info',
-            title: 'The information has been saved'
+            title: t('survey.priority.messages.add-done')
           });
         },
         error => {

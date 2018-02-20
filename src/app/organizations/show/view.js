@@ -67,9 +67,9 @@ export default Mn.View.extend({
                 Green: 'rgba(0, 128, 0, 0.7)'
               },
               names: {
-                    Red: `Red:  ${this.organization.dashboard.snapshotIndicators.count_red_indicators}`,
-                    Yellow: `Yellow: ${this.organization.dashboard.snapshotIndicators.count_yellow_indicators}`,
-                    Green: `Green: ${this.organization.dashboard.snapshotIndicators.count_green_indicators}`
+                  Red: `${t('general.red')}:  ${this.organization.dashboard.snapshotIndicators.count_red_indicators}`,
+                  Yellow: `${t('general.yellow')}: ${this.organization.dashboard.snapshotIndicators.count_yellow_indicators}`,
+                  Green: `${t('general.green')}: ${this.organization.dashboard.snapshotIndicators.count_green_indicators}`
                   },
           type: 'donut'
         },

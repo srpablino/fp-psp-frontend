@@ -5,6 +5,7 @@ import $ from 'jquery';
 import _ from 'lodash';
 import moment from 'moment';
 import Template from './template.hbs';
+import session from '../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -28,9 +29,9 @@ export default Mn.View.extend({
 
   formatDate(key){
     if(moment(key).isSame(moment(), 'month')){
-      return 'Today';
+      return t('general.today');
     }
-    return moment(key).locale('en').format('MMMM');    
+    return moment(key).locale(session.get('language')?session.get('language'):'es').format('MMMM');    
   },
 
   generateData(){
@@ -58,7 +59,7 @@ export default Mn.View.extend({
             data.data1,
           ],
           names: {
-            data1: 'Snapshots Taken',
+            data1: t('home.snapshots-taken'),
           },
           colors:{
                 data1: '#60b4ef',
@@ -67,7 +68,7 @@ export default Mn.View.extend({
           labels: true,
           empty: {
             label: {
-              text: "No Data"
+              text: t('home.no-data')
             }
           }
         },

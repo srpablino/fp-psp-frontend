@@ -65,8 +65,8 @@ export default Mn.View.extend({
     });
 
     ModalService.request('confirm', {
-      title: 'Confirm Deletion',
-      text: `Are you sure you want to delete this priority?`
+      title: t('survey.priority.messages.delete-confirm-title'),
+      text: t('survey.priority.messages.delete-confirm')
     }).then(confirmed => {
       if (!confirmed) {
         return;
@@ -86,7 +86,7 @@ export default Mn.View.extend({
       return FlashesService.request('add', {
         timeout: 2000,
         type: 'info',
-        title: `The priority has been deleted!`
+        title: t('survey.priority.messages.delete-done')
       });
 
     });
@@ -124,7 +124,7 @@ export default Mn.View.extend({
       return FlashesService.request('add', {
         timeout: 2000,
         type: 'info',
-        title: `The "${indicatorSelected}" indicator was previously selected`
+        title: t('survey.priority.messages.previous-selected', {indicator: indicatorSelected})
       });
 
     }
@@ -133,14 +133,14 @@ export default Mn.View.extend({
       return FlashesService.request('add', {
         timeout: 2000,
         type: 'info',
-        title: `The "${indicatorSelected}" indicator is really good`
+        title: t('survey.priority.messages.select-green', {indicator: indicatorSelected})
       });
 
     }else if (indicatorSelectedValue.toUpperCase() === 'NONE') {
         return FlashesService.request('add', {
           timeout: 2000,
           type: 'info',
-          title: `You have chosen not to answer the question`
+          title: t('survey.priority.messages.indicator-not-answered')
         });
 
     }
@@ -174,8 +174,8 @@ export default Mn.View.extend({
     if(this.model.attributes.indicators_priorities.length<1 && (this.model.attributes.count_red_indicators>0 || this.model.attributes.count_yellow_indicators>0)){
 
       ModalService.request('confirm', {
-        title: 'Information',
-        text: `You have not set any priorities yet, are sure you want to finish the survey?`
+        title: t('general.messages.information'),
+        text: t('survey.priority.messages.without-priorities')
       }).then(confirmed => {
         if (!confirmed) {
           return;
@@ -198,8 +198,8 @@ export default Mn.View.extend({
 
     if($('#check-privacity').is(':checked')) {
       ModalService.request('confirm', {
-        title: 'Information',
-        text: `Your personal information has not been saved in the platform`
+        title: t('general.messages.information'),
+        text: t('survey.summary.messages.not-save')
       }).then(confirmed => {
         if (!confirmed) {
           return;
@@ -232,7 +232,7 @@ export default Mn.View.extend({
       debug: false,
       importStyle: true,
       pageTitle: '',
-      header: '<h3>Survey Results</h3>',
+      header: `<h3>${t('survey.summary.print-header')}</h3>`,
       footer: null,
       base: false,
       removeScripts: true,

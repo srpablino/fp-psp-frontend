@@ -73,11 +73,11 @@
         <article class="card" style="height: 297px;">
           <div class="card-block">
             <div class="card-title">
-              <h4>Families</h4>
+              <h4>{{$t 'home.number-families'}}</h4>
             </div>
             <br>
             <h3 class="strike">{{organization.dashboard.numberOfFamilies}}</h3>
-            <p class="strike-text centered">in Total</p>
+            <p class="strike-text centered">{{$t 'home.total'}}</p>
           </div>
 
         </article>
@@ -86,7 +86,7 @@
         <article class="card">
           <div class="card-block">
             <div class="card-title">
-              <h4>Indicators
+              <h4>{{$t 'home.indicators'}}
               </h4>
             </div>
             <h6 class="text-muted"></h6>
@@ -102,12 +102,12 @@
         <article class="card">
           <div class="card-block">
             <div class="card-title">
-              <h4>Top of Indicators</h4>
+              <h4>{{$t 'home.top-indicators'}}</h4>
             </div>
             <div class="" style="margin: 20px;">
               <table class="table" id="table-top-indicators">
                 <thead>
-                  <th>Indicator</th>
+                  <th>{{$t 'home.indicator'}}</th>
                   <th><img src="/static/images/icon_elipse_rojo_01.png"></th>
                   <th><img src="/static/images/icon_elipse_amarillo_01.png"></th>
                   <th><img src="/static/images/icon_elipse_verde_01.png"></th>
