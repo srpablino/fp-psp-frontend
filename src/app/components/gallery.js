@@ -115,7 +115,10 @@ class Gallery extends React.Component {
             checked={this.state.isGoing}
             onChange={this.handleInputChange}
           />
-          &#32;&#32; Skip question
+          <span
+            className="labelCheck"
+          >  Skip question 
+          </span>
         </div>
       </div>
     );
