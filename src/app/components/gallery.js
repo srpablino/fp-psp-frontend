@@ -109,13 +109,13 @@ class Gallery extends React.Component {
         <div className="images col-md-10 col-md-offset-1">
           <div className="row">{images}</div>
         </div>
-        <div className="gallery-no-answer pull-right">
+        <div className="gallery-no-answer pull-left">
           <input
             type="checkbox"
             checked={this.state.isGoing}
             onChange={this.handleInputChange}
           />
-          &#32;&#32; I&#39;d prefer not to answer
+          &#32;&#32; Skip question
         </div>
       </div>
     );
