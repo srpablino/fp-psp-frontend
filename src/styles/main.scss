@@ -1498,9 +1498,18 @@ div.fp-form-container {
 .gallery-no-answer {
   font-family: 'Roboto';
   font-weight: 400;
-  font-size: 16px;
+  font-size: 13px;
   color: #788c9a;
-  margin-bottom: 10px;
+  margin-left: 121px;
+  bottom: -75px;
+  position: absolute;
+}
+.no-save {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 13px;
+  color: #788c9a;
+  margin-right: 35px;
 }
 .gallery-no-answer input {
   cursor: pointer;
@@ -1651,6 +1660,12 @@ div.fp-form-container {
   font-size: 14px;
 }
 
+
+.labelCheck {
+  position: relative;
+  top: -3px;
+  left: 2px;
+}
 .priority-indicator-red {
   box-shadow: 0 0 30px red;
   border: 2px solid #d40505;
@@ -1658,4 +1673,5 @@ div.fp-form-container {
 .priority-indicator-yellow {
   box-shadow: 0 0 30px yellow;
   border: 2px solid #e0d11d;
+
 }
