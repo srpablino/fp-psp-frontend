@@ -7,7 +7,6 @@ import Template from './template.hbs';
 import CollectionView from './collection-view';
 import UsersModel from './model';
 
-
 export default Mn.View.extend({
   template: Template,
   collection: new CollectionView(),
@@ -17,7 +16,8 @@ export default Mn.View.extend({
   events: {
     'keyup #search': 'handleSearch'
   },
-  initialize() {
+  initialize(options) {
+    this.app = options.app;
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
@@ -32,6 +32,15 @@ export default Mn.View.extend({
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
+  },
+  onAttach() {
+    const session = this.app.getSession();
+    if (session.userHasRole('ROLE_ROOT')
+      || session.userHasRole('ROLE_HUB_ADMIN')
+      || session.userHasRole('ROLE_APP_ADMIN')
+    ) {
+      this.$el.find('#add-new').show();
+    }
   },
   showList() {
     this.getRegion('list').show(

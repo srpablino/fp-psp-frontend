@@ -1,6 +1,9 @@
 import Mn from 'backbone.marionette';
 import Bn from 'backbone';
+import moment from 'moment';
+
 import Template from './template.hbs';
+import session from '../../../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -14,12 +17,20 @@ export default Mn.View.extend({
   initialize(options) {
     this.deleteSurvey = options.deleteSurvey;
     this.model = options.model;
+    this.model.attributes.created_at = this.formartterWithTime(this.model.attributes.created_at);
   },
 
   serializeData() {
     return {
       survey: this.model.attributes
     };
+  },
+
+  formartterWithTime(date) {
+    if (!date) {
+      return null;
+    }
+    return moment(date).format('MM/DD/YYYY HH:mm');
   },
 
   handleEdit(event) {
@@ -42,6 +53,9 @@ export default Mn.View.extend({
 
   handlerTermsAndConditions(event){
     event.preventDefault();
+      if (!session.userHasRole('ROLE_USER') && !session.userHasRole('ROLE_SURVEY_USER')) {
+        return;
+      }
     Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC`, true);
   },
 

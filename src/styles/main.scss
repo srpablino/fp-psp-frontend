@@ -376,6 +376,8 @@ div.fp-form-container {
   bottom: 0;
   width: 100%;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
 }
 .card-title,
 .card-description,
@@ -418,7 +420,7 @@ div.fp-form-container {
 }
 .card-text {
   font-size: 12px !important;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 .card-text-small,
 .card-text-small span {
@@ -635,6 +637,11 @@ article {
 .table > thead > tr > td,
 .table > thead > tr > th {
   border-top: none;
+}
+table.dataTable thead th,
+table.dataTable thead td,
+table.dataTable.no-footer {
+  border: none;
 }
 
 //Home de family - mcespedes
@@ -862,7 +869,7 @@ article {
   border-radius: 30px;
   cursor: pointer;
 }
-.card-user{
+.card-user {
   border-radius: 50%;
   background-color: #95e78b;
 }
@@ -1058,7 +1065,7 @@ article {
   background: url('/static/images/icon_edit_hover.png') no-repeat scroll 0px 0px;
   background-size: 45px;
 }
-.floating-item{
+.floating-item {
   position: absolute;
   z-index: 10;
   top: 8%;
@@ -1183,7 +1190,7 @@ div.fp-form-container {
   margin-left: -2%;
   margin-top: -2%;
 }
-#btn-login {
+.btn-login {
   background: #7cd071;
   border-radius: 2px;
   font-family: 'Roboto';
@@ -1625,4 +1632,30 @@ div.fp-form-container {
   .list-container-large > div:nth-child(4n + 1) {
     clear: both;
   }
+}
+.marginDraft {
+  margin-top: 20px;
+  margin-right: 10px;
+}
+
+#table-top-indicators_paginate {
+  display: none;
+}
+.no-data {
+  margin-top: 50px;
+}
+
+.link-email {
+  font-family: 'Helvetica';
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.priority-indicator-red {
+  box-shadow: 0 0 30px red;
+  border: 2px solid #d40505;
+}
+.priority-indicator-yellow {
+  box-shadow: 0 0 30px yellow;
+  border: 2px solid #e0d11d;
 }

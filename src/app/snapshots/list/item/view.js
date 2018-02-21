@@ -3,6 +3,7 @@ import 'eonasdan-bootstrap-datetimepicker';
 import Bn from 'backbone';
 import $ from 'jquery';
 import moment from 'moment';
+import 'moment-timezone';
 
 import Template from './template.hbs';
 import PriorityView from './priority/view';
@@ -30,7 +31,7 @@ export default Mn.View.extend({
 
   serializeData() {
     var self = this;
-    
+
     const headerItems = Storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
 
@@ -45,14 +46,24 @@ export default Mn.View.extend({
         data: this.model.attributes // ,
       },
       data: this.model.attributes.indicators_survey_data.map(value => ({
-        clazz: value.value !== null ? value.value.toLowerCase() : 'gray',
+        classNames: this.getClassNames(value.value),
         value: value.value,
-        name: value.name
+        name: value.name,
+        priority: this.getPriorityClass(value.name, value.value)
+
       })),
       priorities: this.props.model.attributes.indicators_priorities,
-      clazz:
+      classNames:
         this.props.model.attributes.indicators_priorities <= 0 ? 'hidden' : ''
     };
+  },
+
+  getPriorityClass(name, value){
+    const isPriority = this.model.attributes.indicators_priorities.find(data => data.indicator === name);
+    return isPriority && `priority-indicator-${value.toLowerCase()}`;
+  },
+  getClassNames(value) {
+    return value !== null ? value.toLowerCase() : 'none ' ;
   },
 
   handleOnDeletePriority(event) {
@@ -95,7 +106,9 @@ export default Mn.View.extend({
     if (!date) {
       return null;
     }
-    return moment(date).format('DD/MM/YYYY hh:mm:ss');
+
+       return moment.tz(date, "Etc/GMT").clone().tz(moment.tz.guess()).format('DD/MM/YYYY HH:mm:ss');
+
   },
 
   formartterOnlyDate(date) {
@@ -112,6 +125,7 @@ export default Mn.View.extend({
       e.target.parentNode.children['indicator-value'].innerHTML;
 
     var exists = [];
+
 
     exists = this.props.model.attributes.indicators_priorities.filter(
       priority => priority.indicator === indicatorSelected
@@ -145,9 +159,11 @@ export default Mn.View.extend({
     this.priorityDialog.open();
     this.priorityDialog.on('change', data => {
       this.props.model.attributes.indicators_priorities.push(data);
+
       setTimeout(() => {
         this.render();
       }, 300);
+
       this.priorityDialog.close();
     });
   },
@@ -166,9 +182,9 @@ export default Mn.View.extend({
   },
 
   handleShowFamilyMap() {
- 
+
     if(this.model.attributes.indicators_priorities.length<1 && (this.model.attributes.count_red_indicators>0 || this.model.attributes.count_yellow_indicators>0)){
-      
+
       ModalService.request('confirm', {
         title: 'Information',
         text: `You have not set any priorities yet, are sure you want to finish the survey?`
@@ -176,16 +192,25 @@ export default Mn.View.extend({
         if (!confirmed) {
           return;
         }
+        this.savedNotification();
         this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
           this.props.model.attributes.snapshot_economic_id
         }`);
       });
 
     } else {
+      this.savedNotification();
       this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
         this.props.model.attributes.snapshot_economic_id
       }`);
     }
+  },
+  savedNotification(){
+    FlashesService.request('add', {
+      timeout: 4000,
+      type: 'info',
+      title: `Your snapshot was completed successfully. The family's code is ${this.props.model.attributes.family.code}`
+    });
   },
 
   finishSurvey(e){
@@ -210,7 +235,7 @@ export default Mn.View.extend({
       });
     } else {
       this.handleShowFamilyMap();
-     
+
     }
   },
 

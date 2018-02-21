@@ -3,7 +3,7 @@ import NewUserView from '../users/add/view';
 import usersStorage from './storage';
 
 const users = props => {
-  const { app } = props;
+  const {app} = props;
 
   const routes = {
     appRoutes: {
@@ -13,7 +13,7 @@ const users = props => {
     controller: {
       showUsers() {
         usersStorage.find().then(model => {
-          app.showViewOnRoute(new UsersView({model}));
+          app.showViewOnRoute(new UsersView({model, app}));
         });
       },
       newUser() {

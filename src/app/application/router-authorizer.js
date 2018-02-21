@@ -5,6 +5,7 @@ import _keys from 'lodash/fp/keys';
 const anonymousRoutes = ['', 'home', 'logout'];
 
 const adminCrudRoutes = {
+  collaborators: ['collaborators(/)', 'collaborators'],
   applications: ['applications(/)', 'applications'],
   organizations: ['organizations(/)', 'organizations'],
   users: ['users(/)', 'users'],
@@ -45,6 +46,7 @@ class Authorizer {
 
     if (this.session.userHasRole('ROLE_HUB_ADMIN')) {
       return routesKeys
+        .filter(route => !_includes(adminCrudRoutes.collaborators, route))
         .filter(route => !_includes(adminCrudRoutes.applications, route));
     }
 
@@ -53,12 +55,14 @@ class Authorizer {
     // other organizations.
     if (this.session.userHasRole('ROLE_APP_ADMIN')) {
       return routesKeys
+        .filter(route => !_includes(adminCrudRoutes.collaborators, route))
         .filter(route => !_includes(adminCrudRoutes.organizations, route))
         .filter(route => !_includes(adminCrudRoutes.families, route));
     }
 
     // regular user
     return routesKeys
+      .filter(route => !_includes(adminCrudRoutes.collaborators, route))
       .filter(route => !_includes(adminCrudRoutes.organizations, route))
       .filter(route => !_includes(adminCrudRoutes.users, route))
       .filter(route => !_includes(adminCrudRoutes.families, route));
