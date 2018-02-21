@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <article class="card">
+
+      <div class="card-block">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card-title">
+              <h4> Add a User
+                <img class="pull-right" src="/static/images/icon_more.png">
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="margin-tb-35px" id="img-cam">
+              <img id="image-logo" class="card-img-top img-responsive center-block select-file"
+                   src="/static/images/icon_user_grey.png" alt=""/>
+              <p id="image-logo-text" class="text-center select-file">User</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+
+            <div class="fp-form-container padding-b-30px" id="add-organization">
+              <form data-toggle="validator" role="form" class="form-vertical" id="form">
+                <div class="alert alert-warning" style="display:none">
+                  <strong>Attention! All the fields with * are mandatory</strong>
+                </div>
+                <div class="form-group">
+                  <input type="text" name="username" value="{{user.username}}" placeholder="Username"
+                         class="input-bg-gray form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" name="email" value="{{user.email}}" placeholder="Email"
+                         class="input-bg-gray form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" name="pass" value="{{user.pass}}" placeholder="Password"
+                         class="input-bg-gray form-control" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" name="password-confirm" value="" placeholder="Confirm password"
+                         class="input-bg-gray form-control" required>
+                </div>
+                <div class="form-group">
+                  <select id="select-app" name="application" class="input-bg-gray form-control" style="display: none;">
+                    <option id="select-app-placeholder" selected disabled></option>
+                  </select>
+                  <select id="select-org" name="organization" class="input-bg-gray form-control" style="display: none;">
+                    <option id="select-org-placeholder" selected disabled></option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select id="select-role" name="role" class="form-control">
+                    <option id="select-role-placeholder" selected disabled></option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <button type="submit" name="register-submit" id="submit" class="btn" value="Save">ADD USER</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="text-center">
+                    <a href="#users" id="cancel" tabindex="5" class="">Cancel</a>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>

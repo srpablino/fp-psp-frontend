@@ -9,8 +9,8 @@ const allMenuItems = {
     { name: 'Reports', link: '#reports' },
     { name: 'Families', link: '#families' },
     { name: 'Surveys', link: '#surveys' },
+    { name: 'Users', link: '#users' },
     { name: 'FAQs', link: '#faqs' }
-    // { name: 'Users', link: '#users' }
   ]
 };
 
@@ -57,7 +57,7 @@ var HeaderStorage = Storage.extend({
       mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
       navigationItems: allMenuItems.navigationItems
         .filter(item => !(item.link === '#organizations'))
-        // .filter(item => !(item.link === '#users'))
+        .filter(item => !(item.link === '#users'))
         .filter(item => !(item.link === '#families'))
         .filter(item => !(item.link.indexOf('#collaborators') !== -1))
     };
