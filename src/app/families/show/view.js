@@ -1,3 +1,4 @@
+import Bn from 'backbone';
 import Mn from 'backbone.marionette';
 import moment from 'moment';
 import $ from 'jquery';
@@ -6,9 +7,13 @@ import Template from '../template.hbs';
 import SnapshotsTemplate from '../show/snapshot/template.hbs';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 import storage from '../storage';
+// import SnapshotView from '../../snapshots/add/view';
 
 export default Mn.View.extend({
   template: Template,
+  events: {
+    'click #newSurvey': 'newSurvey'
+  },
 
   initialize(options) {
     this.app = options.app;
@@ -51,5 +56,10 @@ export default Mn.View.extend({
       return null;
     }
     return moment(createdAt).format('YYYY-MM-DD');
+  },
+
+  newSurvey(event){
+    event.preventDefault();
+     Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/answer`, true);
   }
 });
