@@ -1,5 +1,5 @@
 import Mn from 'backbone.marionette';
-import { history } from 'backbone';
+import {history} from 'backbone';
 import Template from './template.hbs';
 import Model from '../model';
 import storage from '../storage';
@@ -27,10 +27,12 @@ export default Mn.View.extend({
     this.$el.find('#input-image-file').click();
   },
   previewFile() {
+    var self = this;
     var reader = new FileReader();
     let logoImage = this.$el.find('#image-logo');
-    reader.onload = function () {
-      logoImage.attr('src', reader.result);
+    reader.onload = () => {
+      self.file = reader.result;
+      logoImage.attr('src', self.file);
     };
     reader.readAsDataURL(this.$el.find('#input-image-file').prop('files')[0]);
   },
@@ -44,6 +46,7 @@ export default Mn.View.extend({
       .forEach(element => {
         this.model.set(element.name, element.value);
       });
+    this.model.set('file', this.file);
 
     let errors = this.model.validate();
 
@@ -59,63 +62,28 @@ export default Mn.View.extend({
       return;
     }
 
-    let file = this.$el.find('#input-image-file').prop('files')[0];
-    if (file !== undefined) {
-      let reader = new FileReader();
-      reader.readAsDataURL(file);
+    button.loading();
 
-      reader.onload = () => {
-        var fileBase64 = reader.result;
-        this.model.set('file', fileBase64);
-
-        button.loading();
-
-        storage
-          .save(this.model)
-          .then(() => {
-            button.reset();
-            history.navigate('applications', {trigger: true});
-            FlashesService.request('add', {
-              timeout: 3000,
-              type: 'info',
-              title: "Hub created successfully"
-            });
-          })
-          .catch(response => {
-            if (response.status === 400) {
-              FlashesService.request('add', {
-                timeout: 3000,
-                type: 'danger',
-                title: response.responseJSON.message
-              });
-            }
-            button.reset();
-          });
-      };
-    } else {
-      button.loading();
-
-      storage
-        .save(this.model)
-        .then(() => {
-          button.reset();
-          history.navigate('applications', {trigger: true});
+    storage
+      .save(this.model)
+      .then(() => {
+        button.reset();
+        history.navigate('applications', {trigger: true});
+        FlashesService.request('add', {
+          timeout: 3000,
+          type: 'info',
+          title: "Hub created successfully"
+        });
+      })
+      .catch(response => {
+        if (response.status === 400) {
           FlashesService.request('add', {
             timeout: 3000,
-            type: 'info',
-            title: "Hub created successfully"
+            type: 'danger',
+            title: response.responseJSON.message
           });
-        })
-        .catch(response => {
-          if (response.status === 400) {
-            FlashesService.request('add', {
-              timeout: 3000,
-              type: 'danger',
-              title: response.responseJSON.message
-            });
-          }
-          button.reset();
-        });
-    }
+        }
+        button.reset();
+      });
   }
 });

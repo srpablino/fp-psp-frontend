@@ -14,8 +14,5 @@ export default Mn.View.extend({
       application: this.model.attributes,
       logoUrl: this.model.get('logoUrl') || '/static/images/icon_logo_hub.png'
     };
-  },
-  editApplication(e) {
-    e.preventDefault();
   }
 });
