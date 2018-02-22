@@ -420,7 +420,7 @@ div.fp-form-container {
 }
 .card-text {
   font-size: 12px !important;
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 .card-text-small,
 .card-text-small span {
@@ -869,6 +869,10 @@ table.dataTable.no-footer {
   border-radius: 30px;
   cursor: pointer;
 }
+.card-user {
+  border-radius: 50%;
+  background-color: #95e78b;
+}
 
 .circle-header {
   width: 20px;
@@ -1060,6 +1064,14 @@ table.dataTable.no-footer {
 .floating-edit:hover {
   background: url('/static/images/icon_edit_hover.png') no-repeat scroll 0px 0px;
   background-size: 45px;
+}
+.floating-item {
+  position: absolute;
+  z-index: 10;
+  top: 8%;
+  width: 4%;
+  height: auto;
+  left: 92%;
 }
 .view-items {
   padding-top: 8px;
@@ -1486,9 +1498,18 @@ div.fp-form-container {
 .gallery-no-answer {
   font-family: 'Roboto';
   font-weight: 400;
-  font-size: 16px;
+  font-size: 13px;
   color: #788c9a;
-  margin-bottom: 10px;
+  margin-left: 121px;
+  bottom: -75px;
+  position: absolute;
+}
+.no-save {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 13px;
+  color: #788c9a;
+  margin-right: 35px;
 }
 .gallery-no-answer input {
   cursor: pointer;
@@ -1639,6 +1660,11 @@ div.fp-form-container {
   font-size: 14px;
 }
 
+.labelCheck {
+  position: relative;
+  top: -3px;
+  left: 2px;
+}
 .priority-indicator-red {
   box-shadow: 0 0 30px red;
   border: 2px solid #d40505;
