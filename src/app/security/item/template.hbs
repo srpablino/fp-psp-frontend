@@ -11,11 +11,11 @@
       </div>
       <div class="row card-description">
         <p class="text-blue">{{family.code}}</p>
-        <h5 class="card-text-sub-title text-blue">Contact:</h5>
+        <h5 class="card-text-sub-title text-blue">{{$t 'family.manage.contact'}}:</h5>
         <p class="card-text">{{family.person.firstName}} {{family.person.lastName}}</p>
-        <h5 class="card-text-sub-title text-blue">ID:</h5>
+        <h5 class="card-text-sub-title text-blue">{{$t 'family.manage.id'}}:</h5>
         <p class="card-text">{{family.person.identificationNumber}}</p>
-        <h5 class="card-text-sub-title text-blue">Place:</h5>
+        <h5 class="card-text-sub-title text-blue">{{$t 'family.manage.place'}}:</h5>
         <p class="card-text">{{family.city.city}}, {{family.country.country}}</p>
       </div>
       <div class="row card-menu">

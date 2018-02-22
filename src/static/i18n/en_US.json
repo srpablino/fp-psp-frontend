@@ -1,5 +1,9 @@
 {
-  "organization": "Organization",
+  "organization": {
+    "search": {
+      "title": "Find an organization"
+    }
+  },
   "general": {
     "buttons": {
       "accept": "Accept",
@@ -66,7 +70,11 @@
     },
     "family": "Family",
     "interventions": "Interventions",
-    "snapshots": "Snapshots"
+    "snapshots": "Snapshots",
+    "hubs": "Hubs",
+    "families": "Families",
+    "users": "Users",
+    "indicators": "Indicators"
   },
   "home": {
     "activity": "Activity Feed",
@@ -147,6 +155,13 @@
       "contact": "Contact",
       "cell": "Cell phone",
       "place": "Place"
+    },
+    "manage": {
+      "manage-families": "Manage families",
+      "contact": "Contact",
+      "id": "ID",
+      "place": "Place",
+      "select-delete": "Delete this family"
     }
   },
   "login": {
@@ -158,5 +173,28 @@
     "reset-pass": "Reset Password",
     "back-login": "Back to login",
     "reset-title": "Please enter your email to reset your password"
+  },
+  "hub": {
+    "search": {
+      "title": "Find a Hub"
+    }
+  },
+  "user": {
+    "search": {
+      "title": "Find a user"
+    },
+    "email": "Email",
+    "add": {
+      "title": "Add a user",
+      "username": "Username",
+      "user": "User",
+      "email": "Email",
+      "password": "Password",
+      "confirm-pass": "Confirm password",
+      "buttons": {
+        "add": "ADD USER",
+        "cancel": "Cancel"
+      }
+    }
   }
 }

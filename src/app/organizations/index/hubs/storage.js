@@ -13,15 +13,15 @@ var OrganizationsStorage = Storage.extend({
       },
       navigationItems: [
         {
-          name: 'Families',
+          name: t('subheader.families'),
           link: `/#organizations/${model.get('id')}/families`
         },
         {
-          name: 'Users',
+          name: t('subheader.users'),
           link: `/#organizations/${model.get('id')}/users`
         },
         {
-          name: 'Indicators',
+          name: t('subheader.indicators'),
           link: `/#organizations/${model.get('id')}/indicators`
         }
       ]
@@ -31,7 +31,7 @@ var OrganizationsStorage = Storage.extend({
     return {
       navigationItems: [
         {
-          name: 'Hubs',
+          name: t('subheader.hubs'),
           link: `/#collaborators/hubs`
         }
       ]

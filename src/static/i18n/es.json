@@ -1,5 +1,9 @@
 {
-  "organization": "Organizacion",
+  "organization": {
+    "search": {
+      "title": "Buscar una organización"
+    }
+  },
   "general": {
     "buttons": {
       "accept": "Aceptar",
@@ -66,7 +70,11 @@
     },
     "family": "Familia",
     "interventions": "Intervenciones",
-    "snapshots": "Semáforos tomados"
+    "snapshots": "Semáforos tomados",
+    "hubs": "Hubs",
+    "families": "Familias",
+    "users": "Usuarios",
+    "indicators": "Indicadores"
   },
   "home": {
     "activity": "Actividades Recientes",
@@ -147,6 +155,13 @@
       "contact": "Contacto",
       "cell": "Celular",
       "place": "Lugar"
+    },
+    "manage": {
+      "manage-families": "Gestión de familias",
+      "contact": "Contacto",
+      "id": "Identificador",
+      "place": "Lugar",
+      "select-delete": "Eliminar esta familia"
     }
   },
   "login": {
@@ -158,5 +173,28 @@
     "reset-pass": "Cambiar Contraseña",
     "back-login": "Volver al inicio de sesión",
     "reset-title": "Por favor ingrese su correo electrónico para cambiar su contraseña"
+  },
+  "hub": {
+    "search": {
+      "title": "Buscar un Hub"
+    }
+  },
+  "user": {
+    "search": {
+      "title": "Buscar un usuario"
+    },
+    "email": "Correo electrónico",
+    "add": {
+      "title": "Agregar un usuario",
+      "user": "Usuario",
+      "username": "Nombre de usuario",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirm-pass": "Confirmar contraseña",
+      "buttons": {
+        "add": "AGREGAR USUARIO",
+        "cancel": "Cancelar"
+      }
+    }
   }
 }
