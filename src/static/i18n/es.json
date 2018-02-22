@@ -51,7 +51,11 @@
     "families": "Familias",
     "manage-families": "Gestión de Familias",
     "logout": "Cerrar sesión",
-    "organizations": "Organizaciones"
+    "organizations": "Organizaciones",
+    "locale": {
+      "es": "Español",
+      "en_US": "Inglés"
+    }
   },
   "subheader": {
     "surveys": {
@@ -143,5 +147,15 @@
       "cell": "Celular",
       "place": "Lugar"
     }
+  },
+  "login": {
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "login": "INICIAR SESIÓN",
+    "forgot-pass": "¿Olvidó su contraseña?",
+    "email": "Correo electrónico",
+    "reset-pass": "Cambiar Contraseña",
+    "back-login": "Volver al inicio de sesión",
+    "reset-title": "Por favor ingrese su correo electrónico para cambiar su contraseña"
   }
 }

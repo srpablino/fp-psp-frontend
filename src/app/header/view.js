@@ -10,7 +10,7 @@ export default Mn.View.extend({
   events: {
     'click #menu-left .menu-item': 'highlight',
     'click #menu-left img': 'highlightFirstElement',
-    'change #locales': 'languageSelected'
+    'click #locales li': 'localeSelected'
   },
 
   highlight(e) {
@@ -62,14 +62,14 @@ export default Mn.View.extend({
     return {
       mainItem: this.model.get('mainItem'),
       navigationItems: this.model.get('navigationItems'),
-      username: this.getUserProfileName()
+      username: this.getUserProfileName(),
+      currentLocale: t(`header.locale.${this.app.getSession().get('language')}`)
+
     };
   },
 
-  languageSelected(event){
-    event.preventDefault(); 
-    this.app.changeLocale($('#locales').val());
-
-
+  localeSelected(event){
+    event.preventDefault();    
+    this.app.changeLocale($(event.currentTarget).attr('class'));
   }
 });

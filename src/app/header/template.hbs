@@ -24,14 +24,6 @@
 
         </ul>
 
-
-{{$t 'organization'}}
-        <select id="locales" class="nav navbar-nav navbar-right">
-          <option value="">Select language</option>
-          <option value="en">English</option>
-          <option value="es" > Spanish </option>
-        </select>
-
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}}
@@ -49,6 +41,15 @@
           </li>
         </ul>
 
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentLocale}} <span class="caret"></span></a>
+            <ul class="dropdown-menu" id="locales" role="menu">
+              <li class="es"><a>{{$t 'header.locale.es'}}</a></li>
+              <li class="en_US"><a>{{$t 'header.locale.en_US'}}</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
       <!--/.nav-collapse -->
     </div>

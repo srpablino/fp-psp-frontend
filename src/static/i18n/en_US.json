@@ -51,7 +51,11 @@
     "families": "Families",
     "manage-families": "Manage families",
     "logout": "Logout",
-    "organizations": "Organizations"
+    "organizations": "Organizations",
+    "locale": {
+      "es": "Spanish",
+      "en_US": "English"
+    }
   },
   "subheader": {
     "surveys": {
@@ -143,5 +147,15 @@
       "cell": "Cell phone",
       "place": "Place"
     }
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "login": "LOGIN",
+    "forgot-pass": "Forgot password?",
+    "email": "Email",
+    "reset-pass": "Reset Password",
+    "back-login": "Back to login",
+    "reset-title": "Please enter your email to reset your password"
   }
 }
