@@ -26,7 +26,7 @@
     "personal-info": "Información Personal",
     "economic-info": "Información Socioeconómica",
     "indicators": "Indicadores",
-    "not-answer": "Prefiero no responder",
+    "not-answer": "Omitir pregunta",
     "buttons": {
       "save-draft": "Guardar Borrador"
     },
@@ -49,6 +49,7 @@
     "faqs": "FAQs",
     "collaborators": "Colaboradores",
     "families": "Familias",
+    "users": "Usuarios",
     "manage-families": "Gestión de Familias",
     "logout": "Cerrar sesión",
     "organizations": "Organizaciones",

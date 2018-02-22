@@ -26,7 +26,7 @@
     "personal-info": "Personal Information",
     "economic-info": "Socio-economic Information",
     "indicators": "Indicators",
-    "not-answer": "I'd prefer not to answer",
+    "not-answer": "Skip question",
     "buttons": {
       "save-draft": "Save Draft"
     },
@@ -49,6 +49,7 @@
     "faqs": "FAQs",
     "collaborators": "Collaborators",
     "families": "Families",
+    "users": "Users",
     "manage-families": "Manage families",
     "logout": "Logout",
     "organizations": "Organizations",
