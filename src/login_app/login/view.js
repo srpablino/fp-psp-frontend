@@ -23,7 +23,14 @@ export default Mn.View.extend({
 
   initialize(options) {
     this.app = options.app;
+    this.localeConfiguration = options.localeConfiguration;
+
     session.fetch();
+    
+    if(this.localeConfiguration){
+      session.set('language',this.localeConfiguration.locale);
+      session.set('messages',this.localeConfiguration.messages);
+    }
 
     FlashesService.setup({
       container: this.getRegion('flashes')
