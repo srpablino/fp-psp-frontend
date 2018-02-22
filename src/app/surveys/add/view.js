@@ -1,6 +1,8 @@
 import Mn from 'backbone.marionette';
 import CodeMirror from 'codemirror';
 import Bn from 'backbone';
+import $ from 'jquery';
+import 'select2';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/comment/continuecomment';
 import 'codemirror/addon/comment/comment';
@@ -11,18 +13,56 @@ import Template from './template.hbs';
 import Model from './model';
 import utils from '../../utils';
 import FlashesService from '../../flashes/service';
+import OrganizationsModel from '../../organizations/model';
 
 export default Mn.View.extend({
   template: Template,
+  organizationsCollection: new OrganizationsModel(),
   events: {
     'click #submit': 'handleSubmit'
   },
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model || new Model();
+
   },
   onRender() {
     this.startCodeMirror();
+     setTimeout(() => {
+       this.$el.find('#organization').select2({
+         placeholder: "Assign survey to Organisations",
+       });
+
+       const self = this;
+
+       this.organizationsCollection.fetch({
+         success(response) {
+           self.organizationsCollection = response.get('list');
+           $.each(self.organizationsCollection, (index, element) => {
+             $('#organization').append(
+               $('<option></option>')
+                 .attr('value', element.id)
+                 .text(element.name)
+             );
+           });
+
+           if(!$.isEmptyObject(self.model.attributes)){
+              if(!$.isEmptyObject(self.model.attributes.organizations)){
+                 let array = [];
+                self.model.attributes.organizations.forEach(element => {
+                  array.push(element.id)
+                });
+                self.$el.find('#organization').val(array).trigger("change");
+              }
+              self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
+              self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
+           }
+
+         }
+       });
+
+     }, 0);
+
   },
   startCodeMirror() {
     this.schema = CodeMirror.fromTextArea(this.$el.find('#schema-editor')[0], {
@@ -79,6 +119,12 @@ export default Mn.View.extend({
       .forEach(element => {
         this.model.set(element.name, element.value);
       });
+
+      let array = [];
+      $("#organization").val().forEach(element => {
+        array.push({id: element})
+      });
+      this.model.set('organizations', array)
 
       let validate = {
         title: this.model.get('title'),
