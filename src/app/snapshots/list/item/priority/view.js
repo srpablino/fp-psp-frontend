@@ -36,7 +36,7 @@ export default Marionette.View.extend({
     let html = Template();
     this.$el.html(html);
     let title = (this.options && this.options.indicatorName) || '';
-    this.$el.find('.title-blue').append(title);
+    this.$el.find('.title-blue').append(this.options.isSuccess ? `I'm proud of: ${title}` : title);
     this.$el.find('#modal-content').attr('data-id', this.options.dataId);
     let $fecha = this.$el.find('#datetimepicker');
     $fecha.datetimepicker({
