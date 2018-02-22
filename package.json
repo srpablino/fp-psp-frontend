@@ -116,6 +116,7 @@
     "start": "gulp",
     "build": "gulp build --type production",
     "build:UK": "gulp build --type production --region UK",
+    "build:US-DEMO": "gulp build --type production --region US-DEMO",
     "fix:config": "prettier --ignore-path .gitignore --write \"**/*.json\"",
     "fix:docs": "prettier --ignore-path .gitignore --write \"**/*.md\"",
     "fix:script": "npm run lint -- --fix",
@@ -126,6 +127,7 @@
     "test": "karma start && npm run lint",
     "deploy": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-w6fez --force --nocdn",
     "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
+    "deploy:US-DEMO": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-demo --force --nocdn",
     "release": "generate-release",
     "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
