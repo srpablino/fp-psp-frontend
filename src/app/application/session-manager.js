@@ -16,8 +16,8 @@ const SessionManager = Bn.Model.extend({
   getAccessToken() {
     return session.get('access_token');
   },
-  getLanguage(){
-    return session.get('language');
+  getLocale(){
+    return session.get('locale');
   },
   logout() {
     return $.ajax({

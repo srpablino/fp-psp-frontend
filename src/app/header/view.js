@@ -63,7 +63,7 @@ export default Mn.View.extend({
       mainItem: this.model.get('mainItem'),
       navigationItems: this.model.get('navigationItems'),
       username: this.getUserProfileName(),
-      currentLocale: t(`header.locale.${this.app.getSession().get('language')}`)
+      currentLocale: t(`header.locale.${this.app.getSession().get('locale')}`)
 
     };
   },

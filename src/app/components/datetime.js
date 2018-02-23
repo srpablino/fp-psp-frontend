@@ -57,7 +57,7 @@ class DatetimeFormat extends React.Component {
         dateFormat="MM/DD/YYYY"
         inputProps={{ disabled: true }}
         timeFormat={false}
-        locale={session.get('language')?session.get('language'):'es'}
+        locale={session.get('locale')?session.get('locale'):'es'}
         disableOnClickOutside
         renderInput={this.renderInput}
         onChange={this._handleOnChange}

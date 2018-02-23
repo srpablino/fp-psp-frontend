@@ -103,7 +103,7 @@ export default Mn.Application.extend({
     new I18nModel({code: newLocale}).fetch({
       success(locale) {
         app.sessionMgr.getSession().save({
-          language: newLocale,
+          locale: newLocale,
           messages: locale.toJSON()
         });
         window.location.reload();

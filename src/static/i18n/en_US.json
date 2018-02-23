@@ -132,6 +132,10 @@
     "disagree": "I don't agree",
     "buttons": {
       "next": "Next"
+    },
+    "messages": {
+      "not-answer": "Select your answer!",
+      "answer-validation": "You must first accept the terms and conditions!"
     }
   },
   "family": {

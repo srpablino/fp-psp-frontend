@@ -28,7 +28,7 @@ export default Mn.View.extend({
     session.fetch();
     
     if(this.localeConfiguration){
-      session.set('language',this.localeConfiguration.locale);
+      session.set('locale',this.localeConfiguration.locale);
       session.set('messages',this.localeConfiguration.messages);
     }
 

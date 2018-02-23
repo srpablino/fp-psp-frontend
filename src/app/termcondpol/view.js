@@ -39,7 +39,7 @@ export default Mn.View.extend({
         return FlashesService.request('add', {
           timeout: 2000,
           type: 'info',
-          title: `Select your answer!`
+          title: t('termcondpol.messages.not-answer')
         });
       } else if(checked){
         if(checked==='Yes'  && this.model.attributes.type_cod==='TC'){
@@ -54,7 +54,7 @@ export default Mn.View.extend({
             return FlashesService.request('add', {
               timeout: 2000,
               type: 'info',
-              title: `You must first accept the terms and conditions!`
+              title: t('termcondpol.messages.answer-validation')
             });
           }
         } else if(checked==='No'){

@@ -31,7 +31,7 @@ export default Mn.View.extend({
     if(moment(key).isSame(moment(), 'month')){
       return t('general.today');
     }
-    return moment(key).locale(session.get('language')?session.get('language'):'es').format('MMMM');    
+    return moment(key).locale(session.get('locale')?session.get('locale'):'es').format('MMMM');    
   },
 
   generateData(){
