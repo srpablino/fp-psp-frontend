@@ -7,7 +7,7 @@ import Template from '../template.hbs';
 import SnapshotsTemplate from '../show/snapshot/template.hbs';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 import storage from '../storage';
-// import SnapshotView from '../../snapshots/add/view';
+ import SnapshotView from '../../snapshots/add/view';
 
 export default Mn.View.extend({
   template: Template,
@@ -58,8 +58,35 @@ export default Mn.View.extend({
     return moment(createdAt).format('YYYY-MM-DD');
   },
 
+  getJsonData(){
+    let data = {};
+    data.firstName = this.model.attributes.person.firstName;
+    data.lastName = this.model.attributes.person.lastName;
+    data.identificationNumber = this.model.attributes.person.identificationNumber;
+    data.identificationType = this.model.attributes.person.identificationType;
+    data.birthdate = this.model.attributes.person.birthdate;
+    data.countryOfBirth = this.model.attributes.country.alfa2Code;
+    data.phoneNumber = this.model.attributes.person.phoneNumber;
+    return data;
+  },
+
   newSurvey(event){
     event.preventDefault();
-     Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/answer`, true);
+    let self = this;
+    this.app.getSession().save({termCond: 0, priv: 0});
+    const newSnapshotView = new SnapshotView({
+
+      surveyId: this.model.attributes.snapshot_indicators.survey_id,
+      handleCancel() {
+        Bn.history.navigate(`/surveys`, true);
+      },
+       app: this.app,
+       reAnswer: true,
+       formData: self.getJsonData()
+    });
+
+    this.app.showViewOnRoute(newSnapshotView);
+
+     Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/reanswer/${this.model.attributes.familyId}`, { replace: true });
   }
 });

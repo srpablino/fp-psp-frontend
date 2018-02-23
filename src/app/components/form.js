@@ -20,7 +20,7 @@ class Form extends Component {
       countIndicator: 0,
       countPersonal: 0
     };
-    
+
     let component = this;
 
     for (let i = 0; i < order.length; i++) {
@@ -28,26 +28,36 @@ class Form extends Component {
       stepsUISchema.push(component.uischemaNewEntry(props.uiSchema, order[i]));
     }
 
-    if(!props.stateDraft){
+    if(props.reAnswer){
       this.state = {
         step: 0,
-        formData: {},
+        formData: props.formData,
         stepsSchema,
         stepsUISchema,
         lastValue: {}
       };
+
+    }else if(!props.stateDraft){
+        this.state = {
+          step: 0,
+          formData: {},
+          stepsSchema,
+          stepsUISchema,
+          lastValue: {}
+        };
     } else {
-       // If the survey definition was changed, we should update this.state.
-      this.updateState(stepsSchema, stepsUISchema);   
+        // If the survey definition was changed, we should update this.state.
+        this.updateState(stepsSchema, stepsUISchema);
+
     }
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   updateState(stepsSchema, stepsUISchema){
-   
+
     // Case 1: one o more fields were removed.
-    
+
     const formDataCopy = this.props.stateDraft.formData;
 
     Object.keys(formDataCopy).forEach(field => {
@@ -56,14 +66,14 @@ class Form extends Component {
         this.props.stateDraft.step = this.props.stateDraft.step -1;
       }
     });
-    
+
     this.state = {
       step: this.getSavedDraftStep(stepsSchema),
       formData: this.props.stateDraft.formData,
       stepsSchema,
       stepsUISchema,
       lastValue: this.props.stateDraft.formData
-    };    
+    };
   }
 
   getSavedDraftStep(stepsSchema){
@@ -72,27 +82,27 @@ class Form extends Component {
     let firstIndexNotFound = -1;
 
     // Case2: the fields order were changed.
-    
+
     for(let i=0; i < stepsSchema.length; i++){
       if(stepsSchema[i].key === stepKey){
         indexActualKey = i + 1;
-      } 
-    
+      }
+
     // Case 3: the field wasn't answered (for example, changed from optional to required).
-    // stepsSchema[i].required.length>0 && 
+    // stepsSchema[i].required.length>0 &&
      if(firstIndexNotFound===-1 && this.props.stateDraft.formData[stepsSchema[i].key] === undefined){
         firstIndexNotFound = i;
       }
     }
-    
+
     if(indexActualKey!==-1){
       if(this.props.stateDraft.step + 1 >= indexActualKey){
         return indexActualKey;
       }
       return firstIndexNotFound;
-    } 
+    }
     return this.props.stateDraft.step;
-    
+
   }
 
   existInSchemaGroup(field){
@@ -114,6 +124,7 @@ class Form extends Component {
     }
     if (uischema['ui:custom:fields'] && uischema['ui:custom:fields'][key]) {
       uischemaToRet[key] = uischema['ui:custom:fields'][key];
+
     }
     if (
       uischema['ui:group:economics'] &&
@@ -126,6 +137,13 @@ class Form extends Component {
       uischema['ui:group:indicators'].includes(key)
     ) {
       uischemaToRet['ui:group:indicators'].push(key);
+    }
+
+    if (
+      uischema['ui:group:personal'] &&
+      uischema['ui:group:personal'].includes(key)
+    ) {
+      if(this.props.reAnswer)  uischemaToRet[key] = {"ui:readonly": true};
     }
 
     return uischemaToRet;
@@ -220,7 +238,7 @@ class Form extends Component {
 
     if(this.checkShowSaveDraft(this.state)){
 
-      // We should obtain an actual data in the form for 
+      // We should obtain an actual data in the form for
       // store in the draft
 
       let newData = JSON.parse(JSON.stringify(this.state.formData));
@@ -234,7 +252,7 @@ class Form extends Component {
 
       this.state.formData = newData;
       this.props.handleSaveDraft(this.state);
-    
+
     } else {
       this.render();
     }
@@ -268,7 +286,7 @@ class Form extends Component {
       <div className="col-md-12">
         {this.checkShowSaveDraft(this.state)?
           <button className="btn btn-primary pull-right marginDraft" onClick={() => this.onSaveDraft()}> Save Draft </button> :'' }
-  
+
 
         <article className="card">
           <div className="card-block">
