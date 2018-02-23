@@ -20,7 +20,7 @@ export default Mn.View.extend({
   },
   serializeData() {
     return {
-      organization: this.model.attributes
+      application: this.model.attributes
     };
   },
   selectFile() {
@@ -38,7 +38,6 @@ export default Mn.View.extend({
   },
   handleSubmit(event) {
     event.preventDefault();
-    const session = this.app.getSession();
     const button = utils.getLoadingButton(this.$el.find('#submit'));
 
     this.$el
@@ -47,7 +46,6 @@ export default Mn.View.extend({
       .forEach(element => {
         this.model.set(element.name, element.value);
       });
-    this.model.set('application', session.get('user').application);
     this.model.set('file', this.file);
 
     let errors = this.model.validate();
@@ -70,11 +68,11 @@ export default Mn.View.extend({
       .save(this.model)
       .then(() => {
         button.reset();
-        history.navigate('organizations', {trigger: true});
+        history.navigate('applications', {trigger: true});
         FlashesService.request('add', {
           timeout: 3000,
           type: 'info',
-          title: "Organisation created successfully"
+          title: "Hub created successfully"
         });
       })
       .catch(response => {

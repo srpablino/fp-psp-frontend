@@ -5,6 +5,7 @@ const allMenuItems = {
   mainItem: { link: '#' },
   navigationItems: [
     { name: 'Collaborators', link: '#collaborators/hubs' },
+    { name: 'Hubs', link: '#applications' },
     { name: 'Organisations', link: '#organizations' },
     { name: 'Reports', link: '#reports' },
     { name: 'Families', link: '#families' },
@@ -31,8 +32,10 @@ var HeaderStorage = Storage.extend({
 
     if (session.userHasRole('ROLE_HUB_ADMIN')) {
       const items = {
+        mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
         navigationItems: allMenuItems.navigationItems
           .filter(item => !(item.link.indexOf('#collaborators') !== -1))
+          .filter(item => !(item.link === '#applications'))
       };
       return new Model(items);
     }
@@ -44,8 +47,8 @@ var HeaderStorage = Storage.extend({
       const items = {
         mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
         navigationItems: allMenuItems.navigationItems
+          .filter(item => !(item.link === '#applications'))
           .filter(item => !(item.link === '#organizations'))
-          // .filter(item => !(item.link === '#users'))
           .filter(item => !(item.link === '#families'))
           .filter(item => !(item.link.indexOf('#collaborators') !== -1))
       };
@@ -56,6 +59,7 @@ var HeaderStorage = Storage.extend({
     const items = {
       mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
       navigationItems: allMenuItems.navigationItems
+        .filter(item => !(item.link === '#applications'))
         .filter(item => !(item.link === '#organizations'))
         .filter(item => !(item.link === '#users'))
         .filter(item => !(item.link === '#families'))
