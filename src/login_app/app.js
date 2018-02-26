@@ -3,8 +3,13 @@ import Bn from 'backbone';
 import Polyglot from 'node-polyglot';
 import LoginView from './view';
 import Router from './routes';
-import es from '../static/i18n/es';
+import es from '../static/i18n/es_PY';
 import I18nModel from '../app/i18n/model';
+
+const acceptedLanguages = [ 
+  'es_PY', 
+  'en_US'
+];
 
 export default Mn.Application.extend({
   region: '#main',
@@ -12,8 +17,22 @@ export default Mn.Application.extend({
   onStart() {
 
     let locale = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage);
-    locale = locale.replace('-', '_');
+    locale = this.detectLocale(locale.replace('-', '_'));
     this.initializeI18nAndView(locale);
+  },
+
+  detectLocale(locale){
+
+    if (locale === 'es') return this.detectLocale('es_PY');
+    if (locale === 'en') return this.detectLocale('en_US');
+
+    if (acceptedLanguages.indexOf(locale) >= 0) return locale; 
+
+    if (locale.indexOf('_') >= 0) {
+      return this.detectLocale(locale.substring(0, locale.indexOf('_')));
+    }
+
+    return 'es_PY';
   },
 
   initializeI18nAndView(locale){
