@@ -1,6 +1,6 @@
 @import 'base/base';
 @import '../common/styles';
-
+@import 'flags.css';
 html {
   position: relative;
   min-height: 100%;
@@ -1678,4 +1678,10 @@ div.fp-form-container {
 .priority-indicator-yellow {
   box-shadow: 0 0 30px yellow;
   border: 2px solid #e0d11d;
+}
+
+img.current-language-flag {
+  transform: scale(1.5);
+  margin-top: 3px;
+  margin-bottom: auto;
 }
