@@ -34,7 +34,7 @@ export default Mn.View.extend({
     if (session.userHasRole('ROLE_ROOT')) {
       //  List all applications (Hubs and Partners)
       this.genericFetch(
-        '/applications',
+        '/applications/hubsandpartners',
         '#select-app',
         'Select Application',
         'application',
@@ -87,7 +87,7 @@ export default Mn.View.extend({
     modelCollection.urlRoot = `${env.API}${path}`;
     modelCollection.fetch({
       success(response) {
-        var list = response.toJSON();
+        var list = response.toJSON().list || response.toJSON();
         self.loadSelect(list, selectId, placeholder, type, fieldDisplayed);
       }
     });
@@ -130,13 +130,9 @@ export default Mn.View.extend({
       });
 
     if (session.userHasRole('ROLE_APP_ADMIN')) {
-        if (session.get('user').organization !== null) {
-          let userOrganization = session.get('user').organization;
-          userModel.set('organization', userOrganization.id);
-        } else if (session.get('user').application !== null) {
-          let userPartner = session.get('user').application;
-          userModel.set('application', userPartner.id);
-        }
+        let user = session.get('user');
+        userModel.set('application', user.application && user.application.id);
+        userModel.set('organization', user.organization && user.organization.id);
     }
 
     let errors = userModel.validate();
