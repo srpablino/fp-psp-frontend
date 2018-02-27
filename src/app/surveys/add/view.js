@@ -24,41 +24,42 @@ export default Mn.View.extend({
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model || new Model();
-
+    const self = this;
+    this.organizationsCollection.fetch({
+      success(response) {
+        self.organizationsCollection = response.get('list');
+          $.each(self.organizationsCollection, (index, element) => {
+              self.buildOrganizationsOption(element);
+           });
+          if(!$.isEmptyObject(self.model.attributes)){
+            if(!$.isEmptyObject(self.model.attributes.organizations)){
+              self.$el.find('#organization').val(self.getOrganizationIdArray()).trigger("change");
+            }
+            self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
+            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
+        }
+      }
+    });
   },
+  buildOrganizationsOption(element){
+    $('#organization').append(
+      $('<option></option>')
+        .attr('value', element.id)
+        .text(element.name)
+    );
+  },
+  getOrganizationIdArray(){
+    let array = [];
+    this.model.attributes.organizations.forEach(element => {
+      array.push(element.id)                
+    });
+    return array;
+  },  
   onRender() {
     this.startCodeMirror();
      setTimeout(() => {
        this.$el.find('#organization').select2({
          placeholder: "Assign survey to Organisations",
-       });
-
-       const self = this;
-
-       this.organizationsCollection.fetch({
-         success(response) {
-           self.organizationsCollection = response.get('list');
-           $.each(self.organizationsCollection, (index, element) => {
-             $('#organization').append(
-               $('<option></option>')
-                 .attr('value', element.id)
-                 .text(element.name)
-             );
-           });
-
-           if(!$.isEmptyObject(self.model.attributes)){
-              if(!$.isEmptyObject(self.model.attributes.organizations)){
-                 let array = [];
-                self.model.attributes.organizations.forEach(element => {
-                  array.push(element.id)
-                });
-                self.$el.find('#organization').val(array).trigger("change");
-              }
-              self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
-              self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
-           }
-
-         }
        });
 
      }, 0);
