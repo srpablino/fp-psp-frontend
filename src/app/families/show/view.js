@@ -65,7 +65,7 @@ export default Mn.View.extend({
     data.identificationNumber = this.model.attributes.person.identificationNumber;
     data.identificationType = this.model.attributes.person.identificationType;
     data.birthdate = this.model.attributes.person.birthdate;
-    data.countryOfBirth = this.model.attributes.country.alfa2Code;
+    data.countryOfBirth = this.model.attributes.country.alfa2code;
     data.phoneNumber = this.model.attributes.person.phoneNumber;
     return data;
   },

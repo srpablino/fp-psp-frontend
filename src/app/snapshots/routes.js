@@ -93,7 +93,7 @@ const snapshots = props => {
         data.identificationNumber = model.person.identificationNumber;
         data.identificationType = model.person.identificationType;
         data.birthdate = model.person.birthdate;
-        data.countryOfBirth = model.country.alfa2Code;
+        data.countryOfBirth = model.country.alfa2code;
         data.phoneNumber = model.person.phoneNumber;
         return data;
       },
