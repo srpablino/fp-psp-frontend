@@ -36,7 +36,7 @@ export default Marionette.View.extend({
     let html = Template();
     this.$el.html(html);
     let title = (this.options && this.options.indicatorName) || '';
-    this.$el.find('.title-blue').append(this.options.isSuccess ? `I'm proud of: ${title}` : title);
+    this.$el.find('.title-blue').append(this.options.isAttainment ? `I'm proud of: ${title}` : title);
     this.$el.find('#modal-content').attr('data-id', this.options.dataId);
     let $fecha = this.$el.find('#datetimepicker');
     $fecha.datetimepicker({
@@ -44,7 +44,7 @@ export default Marionette.View.extend({
       minDate: moment(),
       locale: 'en'
     });
-    if (this.options.isSuccess) {
+    if (this.options.isAttainment) {
       this.$el.find('.forPriority').hide();
       this.$el.find('#reasonTitle').text('Comments');
     }
@@ -75,7 +75,7 @@ export default Marionette.View.extend({
       });
     this.indicatorPriority.estimated_date = this.$el.find('#fecha').val() === '' ? null : this.$el.find('#fecha').val();
     this.indicatorPriority.snapshot_indicator_id = this.options.snapshotIndicatorId;
-    this.indicatorPriority.is_success = this.options.isSuccess;
+    this.indicatorPriority.is_attainment = this.options.isAttainment;
 
 
     let errors = this.model.validate(this.indicatorPriority);

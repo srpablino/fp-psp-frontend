@@ -40,7 +40,7 @@
           <div class="col-md-12">
             <div class="list-priorities">
               {{#each family.snapshot_indicators.indicators_priorities}}
-                {{^if this.is_success}}
+                {{^if this.is_attainment}}
                   <div class="row margin-tb-10px">
                     <div class="col-md-12">
                       <span id="item-number" class="pull-left ">{{[helpers/counter] @index}}</span>

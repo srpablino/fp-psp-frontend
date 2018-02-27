@@ -66,7 +66,7 @@ export default Mn.View.extend({
     return value !== null ? value.toLowerCase() : 'none ' ;
   },
   getTableClass(ban){
-    const isPriority = this.model.attributes.indicators_priorities.find(data => data.is_success === ban);
+    const isPriority = this.model.attributes.indicators_priorities.find(data => data.is_attainment === ban);
     return isPriority ? '' : 'hidden';
   },
 
@@ -175,7 +175,7 @@ export default Mn.View.extend({
     this.priorityDialog = new PriorityView({
       dataId: dataIdConfirmOperacion,
       indicatorName: indicator,
-      isSuccess: success,
+      isAttainment: success,
       snapshotIndicatorId: this.model.attributes.snapshot_indicator_id,
       obj: this
     });

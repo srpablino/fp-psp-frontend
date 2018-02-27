@@ -7,7 +7,7 @@ export default Bn.Model.extend({
 
   validate(attrs = {}) {
     const errors = [];
-    if(!attrs.is_success){
+    if(!attrs.is_attainment){
       if (attrs.action === '') {
         errors.push('Missing "action" field');
       }
@@ -19,7 +19,7 @@ export default Bn.Model.extend({
     }
 
     if (attrs.reason === '') {
-      attrs.is_success ? errors.push('Missing "comments" field') : errors.push('Missing "reason" field');
+      attrs.is_attainment ? errors.push('Missing "comments" field') : errors.push('Missing "reason" field');
     }
 
 

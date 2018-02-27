@@ -54,7 +54,7 @@
     </thead>
     <tbody id="tbodypriorities">
       {{#each priorities}}
-        {{^if this.is_success}}
+        {{^if this.is_attainment}}
           <tr>
             <td> {{this.indicator}}</td>
             <td> {{this.reason}}</td>
@@ -81,7 +81,7 @@
     </thead>
     <tbody id="tbodypriorities">
       {{#each priorities}}
-        {{#if this.is_success}}
+        {{#if this.is_attainment}}
           <tr>
             <td> {{this.indicator}}</td>
             <td> {{this.reason}}</td>
