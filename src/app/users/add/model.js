@@ -39,14 +39,13 @@ export default Bn.Model.extend({
       return errors;
     }
 
-    if (this.attributes.application === undefined && this.attributes.organization === undefined) {
+    if (!this.attributes.application && !this.attributes.organization) {
       errors.push('Missing "Organization" field');
       return errors;
-    } else if (this.attributes.role === undefined) {
+    }
+
+    if (!this.attributes.role) {
       errors.push('Missing "Role" field');
-      return errors;
-    } else if (this.attributes.role === null) {
-      errors.push('Role null');
       return errors;
     }
 
