@@ -36,7 +36,7 @@ export default Mn.View.extend({
               self.$el.find('#organization').val(self.getOrganizationIdArray()).trigger("change");
             }
             self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
-            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
+            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));            
         }
       }
     });
@@ -50,9 +50,11 @@ export default Mn.View.extend({
   },
   getOrganizationIdArray(){
     let array = [];
+    console.log(this.model.attributes);
     this.model.attributes.organizations.forEach(element => {
-      array.push(element.id)                
+      array.push(element.id)
     });
+    console.log(array);
     return array;
   },  
   onRender() {
@@ -61,9 +63,16 @@ export default Mn.View.extend({
        this.$el.find('#organization').select2({
          placeholder: "Assign survey to Organisations",
        });
+       
+       if(!$.isEmptyObject(this.model.attributes)){
+        this.$el.find('.inputdisable').attr('disabled',true);
+        this.schema.setOption('readOnly', true);
+        this.schemaUI.setOption('readOnly', true);        
+        this.$el.find('#organization').val(this.getOrganizationIdArray()).trigger('change');
+       }
 
      }, 0);
-
+     
   },
   startCodeMirror() {
     this.schema = CodeMirror.fromTextArea(this.$el.find('#schema-editor')[0], {
