@@ -87,13 +87,14 @@ const snapshots = props => {
       },
 
       getJsonData(model){
+        console.log(model);
         let data = {};
         data.firstName = model.person.firstName;
         data.lastName = model.person.lastName;
         data.identificationNumber = model.person.identificationNumber;
         data.identificationType = model.person.identificationType;
         data.birthdate = model.person.birthdate;
-        data.countryOfBirth = model.country.alfa2code;
+        data.countryOfBirth = model.person.countryOfBirth.alfa2Code;
         data.phoneNumber = model.person.phoneNumber;
         return data;
       },
