@@ -1,3 +1,4 @@
+import Bn from "backbone";
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 
@@ -7,7 +8,7 @@ export default Mn.View.extend({
     'click .card-menu-delete':'delete:model'
   },
   events: {
-    'click .card-menu-edit':'editOrg'
+    'click .card-menu-edit':'editOrganization'
   },
   serializeData() {
     return {
@@ -15,8 +16,9 @@ export default Mn.View.extend({
       logoUrl: this.model.get('logoUrl') || '/static/images/icon_logo_place.png'
     };
   },
-  // TODO: implementar
-  editOrg(e){
-    e.preventDefault();
+  editOrganization(event){
+    event.preventDefault();
+
+    Bn.history.navigate(`/organizations/edit/${this.model.get('id')}`, true);
   }
 });

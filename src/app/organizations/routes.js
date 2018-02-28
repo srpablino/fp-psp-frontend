@@ -1,7 +1,7 @@
 import OrganizationsView from './index/layout-view';
 import HubView from './index/hubs/layout-view';
 import OrganizationView from './show/view';
-import NewOrganizationView from './add/view';
+import OrganizationFormView from './add/view';
 // import organizationsStorage from './storage';
 import hubStorage from './index/hubs/storage';
 import OrganizationDashboard from './dashboard/model';
@@ -16,6 +16,7 @@ const organizations = props => {
       'collaborators(/:entity)/:id': 'showOrganizationsByApplication',
       'organizations(/)': 'showOrganizations',
       'organizations/new': 'newOrganization',
+      'organizations/edit/:id': 'editOrganization',
       'organizations/:id(/:entity)': 'showOrganization'
     },
     controller: {
@@ -89,7 +90,15 @@ const organizations = props => {
           });
       },
       newOrganization() {
-        app.showViewOnRoute(new NewOrganizationView({app}));
+        app.showViewOnRoute(new OrganizationFormView({app}));
+      },
+      editOrganization(organizationId) {
+        const model = new Model();
+        model.set('id', organizationId);
+        model.fetch()
+          .then(() => {
+            app.showViewOnRoute(new OrganizationFormView({model, app}));
+          });
       }
     }
   };

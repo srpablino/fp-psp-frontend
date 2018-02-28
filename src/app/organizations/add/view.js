@@ -15,12 +15,13 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
-    this.props = Object.assign({}, options);
-    this.model = this.props.model || new Model();
+    this.model = options.model || new Model();
   },
   serializeData() {
     return {
-      organization: this.model.attributes
+      organization: this.model.attributes,
+      editing: this.model.get('id') !== undefined,
+      logoImage: this.model.get('logoUrl') || '/static/images/icon_camara.png'
     };
   },
   selectFile() {
@@ -74,7 +75,7 @@ export default Mn.View.extend({
         FlashesService.request('add', {
           timeout: 3000,
           type: 'info',
-          title: "Organisation created successfully"
+          title: "Organisation saved successfully"
         });
       })
       .catch(response => {
