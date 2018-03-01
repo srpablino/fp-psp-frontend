@@ -10,7 +10,6 @@ const termcondpol = props => {
     controller: {
 
       showTermCondPol(hashSurvey, hashType) {
-
         const model = new TermCondPolModel();
         const surveyId = parseInt(hashSurvey, 10);
         model

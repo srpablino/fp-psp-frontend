@@ -7,7 +7,8 @@ import Template from '../template.hbs';
 import SnapshotsTemplate from '../show/snapshot/template.hbs';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 import storage from '../storage';
- import SnapshotView from '../../snapshots/add/view';
+import TermCondPolView from '../../termcondpol/view';
+import TermCondPolModel from '../../termcondpol/model';
 
 export default Mn.View.extend({
   template: Template,
@@ -60,6 +61,7 @@ export default Mn.View.extend({
 
   getJsonData(){
     let data = {};
+
     data.firstName = this.model.attributes.person.firstName;
     data.lastName = this.model.attributes.person.lastName;
     data.identificationNumber = this.model.attributes.person.identificationNumber;
@@ -67,6 +69,7 @@ export default Mn.View.extend({
     data.birthdate = this.model.attributes.person.birthdate;
     data.countryOfBirth = this.model.attributes.person.countryOfBirth.alfa2Code;
     data.phoneNumber = this.model.attributes.person.phoneNumber;
+    data.familyId = this.model.attributes.familyId;
     return data;
   },
 
@@ -74,19 +77,27 @@ export default Mn.View.extend({
     event.preventDefault();
     let self = this;
     this.app.getSession().save({termCond: 0, priv: 0});
-    const newSnapshotView = new SnapshotView({
+    const model = new TermCondPolModel();
+    const app = this.app;
+    model
+      .fetch({
+        data: {
+          type: 'TC'
+        }
+      })
+      .then(() => {
+        this.app.showViewOnRoute(new TermCondPolView({
 
-      surveyId: this.model.attributes.snapshot_indicators.survey_id,
-      handleCancel() {
-        Bn.history.navigate(`/surveys`, true);
-      },
-       app: this.app,
-       reAnswer: true,
-       formData: self.getJsonData()
-    });
+           app,
+           model,
+           surveyId: this.model.attributes.snapshot_indicators.survey_id,
+           reAnswer: true,
+           formData: self.getJsonData()
 
-    this.app.showViewOnRoute(newSnapshotView);
+         }));
+      });
 
-     Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/reanswer/${this.model.attributes.familyId}`, { replace: true });
+    Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/termcondpol/TC`);
+
   }
 });

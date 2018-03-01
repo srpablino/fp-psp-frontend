@@ -87,7 +87,6 @@ const snapshots = props => {
       },
 
       getJsonData(model){
-        console.log(model);
         let data = {};
         data.firstName = model.person.firstName;
         data.lastName = model.person.lastName;
@@ -96,6 +95,7 @@ const snapshots = props => {
         data.birthdate = model.person.birthdate;
         data.countryOfBirth = model.person.countryOfBirth.alfa2Code;
         data.phoneNumber = model.person.phoneNumber;
+        data.familyId = this.model.familyId;
         return data;
       },
     }
