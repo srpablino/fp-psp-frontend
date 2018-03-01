@@ -77,6 +77,7 @@ export default Mn.View.extend({
     event.preventDefault();
     let self = this;
     this.app.getSession().save({termCond: 0, priv: 0});
+    this.app.getSession().save({reAnswer: false, formData: null});
     const model = new TermCondPolModel();
     const app = this.app;
     model

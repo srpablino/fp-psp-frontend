@@ -68,6 +68,7 @@ const snapshots = props => {
         model.fetch().then(() => {
 
           app.getSession().save({termCond: 0, priv: 0});
+          app.getSession().save({reAnswer: false, formData: null});
 
           const newSnapshot = new NewSnapshot({
 
@@ -95,7 +96,7 @@ const snapshots = props => {
         data.birthdate = model.person.birthdate;
         data.countryOfBirth = model.person.countryOfBirth.alfa2Code;
         data.phoneNumber = model.person.phoneNumber;
-        data.familyId = this.model.familyId;
+        data.familyId = model.familyId;
         return data;
       },
     }

@@ -24,6 +24,14 @@ export default Mn.View.extend({
 
   onRender(){
     this.$el.find('#text').append(this.model.attributes.html);
+
+    if(this.reAnswer){
+      this.app.getSession().save({
+        reAnswer: this.reAnswer,
+        formData: this.formData,
+
+        });
+    }
   },
 
   showNextButton(event){
