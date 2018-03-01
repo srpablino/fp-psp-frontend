@@ -14,26 +14,34 @@ import Model from './model';
 import utils from '../../utils';
 import FlashesService from '../../flashes/service';
 import OrganizationsModel from '../../organizations/model';
+import ApplicationModel from '../../applications/model';
 
 export default Mn.View.extend({
   template: Template,
   organizationsCollection: new OrganizationsModel(),
+  applicationsCollections: new ApplicationModel(),
   events: {
     'click #submit': 'handleSubmit'
   },
   initialize(options) {
     this.props = Object.assign({}, options);
     this.model = this.props.model || new Model();
-    const self = this;
-    this.organizationsCollection.fetch({
+    this.app = this.props.app;
+        
+    this.app.getSession().userHasRole('ROLE_ROOT') ? this.getApplications() : this.getOrganizations();     
+    console.log(this.model.attributes)
+  },
+  getApplications(){
+    let self = this;
+    self.applicationsCollections.fetch({
       success(response) {
-        self.organizationsCollection = response.get('list');
-          $.each(self.organizationsCollection, (index, element) => {
-              self.buildOrganizationsOption(element);
+        self.applicationsCollections = response.get('list');
+          $.each(self.applicationsCollections, (index, element) => {
+            self.buildOption(element);
            });
           if(!$.isEmptyObject(self.model.attributes)){
-            if(!$.isEmptyObject(self.model.attributes.organizations)){
-              self.$el.find('#organization').val(self.getOrganizationIdArray()).trigger("change");
+            if(!$.isEmptyObject(self.model.attributes.applications)){
+              self.$el.find('#organization').val(self.getValuesIdArray()).trigger("change");
             }
             self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
             self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));            
@@ -41,34 +49,56 @@ export default Mn.View.extend({
       }
     });
   },
-  buildOrganizationsOption(element){
+  getOrganizations(){
+    let self = this;
+    self.organizationsCollection.fetch({
+      success(response) {
+        self.organizationsCollection = response.get('list');
+          $.each(self.organizationsCollection, (index, element) => {
+            self.buildOption(element);
+           });
+          if(!$.isEmptyObject(self.model.attributes)){
+            if(!$.isEmptyObject(self.model.attributes.organizations)){
+              self.$el.find('#organization').val(self.getValuesIdArray()).trigger("change");
+            }
+            self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
+            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));            
+        }
+      }
+    });
+  },
+  buildOption(element){
     $('#organization').append(
       $('<option></option>')
         .attr('value', element.id)
         .text(element.name)
     );
   },
-  getOrganizationIdArray(){
+  getValuesIdArray(){
     let array = [];
-    console.log(this.model.attributes);
-    this.model.attributes.organizations.forEach(element => {
-      array.push(element.id)
-    });
-    console.log(array);
+    if(this.app.getSession().userHasRole('ROLE_ROOT')){
+      this.model.attributes.applications.forEach(element => {
+        array.push(element.id)
+      });
+    }else{
+      this.model.attributes.organizations.forEach(element => {
+        array.push(element.id)
+      });
+    }
     return array;
-  },  
+  },
   onRender() {
     this.startCodeMirror();
      setTimeout(() => {
        this.$el.find('#organization').select2({
-         placeholder: "Assign survey to Organisations",
+         placeholder: "Assign survey",
        });
        
        if(!$.isEmptyObject(this.model.attributes)){
         this.$el.find('.inputdisable').attr('disabled',true);
         this.schema.setOption('readOnly', true);
         this.schemaUI.setOption('readOnly', true);        
-        this.$el.find('#organization').val(this.getOrganizationIdArray()).trigger('change');
+        this.$el.find('#organization').val(this.getValuesIdArray()).trigger('change');
        }
 
      }, 0);
@@ -130,11 +160,25 @@ export default Mn.View.extend({
         this.model.set(element.name, element.value);
       });
 
-      let array = [];
-      $("#organization").val().forEach(element => {
-        array.push({id: element})
-      });
-      this.model.set('organizations', array)
+      let organizationArray = [];
+      let applicationArray = [];
+
+      console.log(this.app.getSession())
+      if(!this.app.getSession().userHasRole('ROLE_ROOT')){
+        $("#organization").val().forEach(element => {
+          organizationArray.push(
+            {id: element,
+               application:{id: this.app.getSession().get('user').application.id}
+          })
+        });
+      }else{
+        $("#organization").val().forEach(element => {
+          applicationArray.push({id: element})
+        });
+      }
+      
+      this.model.set('organizations', organizationArray);
+      this.model.set('applications', applicationArray);
 
       let validate = {
         title: this.model.get('title'),
