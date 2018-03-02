@@ -42,14 +42,18 @@ export default Mn.View.extend({
       // to the list/table
       element.append(itemView.render().el);
     });
-    
+
     if (session.userHasRole('ROLE_SURVEY_USER')) {
       $('#add-new').hide();
       $('.delete-survey-btn').hide();
-      $('.take-survey-btn').show();
+      $('.floating-buttom').show();
+    }else if (session.userHasRole('ROLE_APP_ADMIN')) {
+      $('.card-menu-edit').hide();
+      $('.delete-survey-btn').hide();
+      $('.floating-buttom').hide();
     }else{
       $('#add-new').show();
-      $('.take-survey-btn').hide();
+      $('.floating-buttom').hide();
     }
   },
 
