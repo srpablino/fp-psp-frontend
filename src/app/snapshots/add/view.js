@@ -24,18 +24,20 @@ export default Mn.View.extend({
   },
 
   initialize(options) {
-    const { organizationId, surveyId, handleCancel, app, stateDraft, snapshotDraftId } = options;
-    
+    const { organizationId, surveyId, handleCancel, app, stateDraft, snapshotDraftId, reAnswer, formData } = options;
+
     this.surveyModel = new SurveyModel({ id: surveyId });
     this.surveyModel.on('sync', () => this.renderForm());
     this.surveyModel.fetch();
-        
+
     this.props = {};
     this.props.handleCancel = handleCancel;
     this.props.surveyId = surveyId;
     this.props.organizationId = organizationId;
     this.props.stateDraft = stateDraft;
     this.props.snapshotDraftId = snapshotDraftId;
+    this.props.reAnswer = reAnswer;
+    this.props.formData = formData;
     this.app = app;
   },
 
@@ -77,6 +79,8 @@ export default Mn.View.extend({
       handleSaveDraft: this.handleSaveDraft.bind(this),
       view: this,
       stateDraft: this.props.stateDraft,
+      reAnswer: this.props.reAnswer,
+      formData: this.props.formData,
       draftId: this.props.snapshotDraftId
     });
     ReactDOM.unmountComponentAtNode(placeHolder);
@@ -143,7 +147,7 @@ export default Mn.View.extend({
     };
 
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
-    
+
       if(draftId){
         let snapshotDraftModel = new SnapshotDraftModel();
         snapshotDraftModel.set('id', draftId);
@@ -206,7 +210,7 @@ export default Mn.View.extend({
           type: 'info',
           title: 'The information has been saved'
         });
-        
+
         Bn.history.navigate(url, true);
       },
       error => {

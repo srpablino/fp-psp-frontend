@@ -4,6 +4,7 @@ import FamilySnapshotListView from './show/snapshot/list/view';
 import FamilySnapshotView from './show/snapshot/view';
 import familiesStorage from './storage';
 import SnapshotItemModel from '../snapshots/list/item/model';
+import FamilyUserView from './user/view';
 
 const families = props => {
   const { app } = props;
@@ -15,11 +16,11 @@ const families = props => {
     },
     controller: {
       showFamilies() {
-        // familiesStorage.findAll().then(collection => {
-        //   app.showViewOnRoute(new FamiliesView({ collection ));
-        // });
-
-        app.showViewOnRoute(new FamiliesView({ app }));
+        if (app.getSession().userHasRole('ROLE_SURVEY_USER') ||app.getSession().userHasRole('ROLE_USER')) {
+          app.showViewOnRoute(new FamilyUserView({ app }));
+        }else{
+          app.showViewOnRoute(new FamiliesView({ app }));
+        }
       },
       showFamily(familyId, entity) {
         familiesStorage.find(familyId).then(model => {
