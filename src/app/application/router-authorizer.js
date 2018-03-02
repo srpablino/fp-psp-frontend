@@ -65,7 +65,7 @@ class Authorizer {
       .filter(route => !_includes(adminCrudRoutes.collaborators, route))
       .filter(route => !_includes(adminCrudRoutes.organizations, route))
       .filter(route => !_includes(adminCrudRoutes.users, route))
-      .filter(route => !_includes(adminCrudRoutes.families, route));
+    //  .filter(route => !_includes(adminCrudRoutes.families, route));
   }
 
   isAuthorizedRoute(routeParam) {
