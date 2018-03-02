@@ -46,15 +46,18 @@ export default Mn.View.extend({
     if (session.userHasRole('ROLE_SURVEY_USER')) {
       $('#add-new').hide();
       $('.delete-survey-btn').hide();
-      $('.floating-buttom').show();
+      $('.floating-buttom').hide();
+      $('.card-menu-edit').hide();
     }else if (session.userHasRole('ROLE_APP_ADMIN')) {
       $('.card-menu-edit').hide();
       $('.delete-survey-btn').hide();
       $('.floating-buttom').hide();
     }else{
       $('#add-new').show();
-      $('.floating-buttom').hide();
+      $('.floating-buttom').show();
     }
+
+
   },
 
   handleAddNew(e) {
