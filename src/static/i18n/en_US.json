@@ -110,12 +110,11 @@
       "title": "My priorities",
       "messages": {
         "select": "Set priority for this indicator",
-        "select-green": "The \"%{indicator}\" indicator is really good",
         "previous-selected": "The \"%{indicator}\" indicator was previously selected",
         "without-priorities": "You have not set any priorities yet, are sure you want to finish the survey?",
-        "delete-done": "The priority has been deleted!",
+        "delete-done": "The information has been deleted!",
         "add-done": "The information has been saved",
-        "delete-confirm": "Are you sure you want to delete this priority?",
+        "delete-confirm": "Are you sure you want to delete this information?",
         "delete-confirm-title": "Confirm Deletion",
         "indicator-not-answered": "You have chosen not to answer the question",
         "select-delete": "Remove this priority"

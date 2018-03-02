@@ -110,12 +110,11 @@
       "title": "Mis prioridades",
       "messages": {
         "select": "Agregar prioridad para este indicador",
-        "select-green": "El indicador \"%{indicator}\" es realmente bueno",
         "previous-selected": "El indicador \"%{indicator}\" ya fue previamente seleccionado",
         "without-priorities": "Aún no ha agregado ninguna prioridad, ¿Está seguro de que desea finalizar la encuesta?",
-        "delete-done": "La prioridad ha sido eliminada",
+        "delete-done": "La información ha sido eliminada",
         "add-done": "La información ha sido guardada",
-        "delete-confirm": "¿Está seguro de que desea eliminar esta prioridad?",
+        "delete-confirm": "¿Está seguro de que desea eliminar esta información?",
         "delete-confirm-title": "Confirmación de eliminación",
         "indicator-not-answered": "Durante la encuesta, has elegido no responder la pregunta",
         "select-delete": "Eliminar esta prioridad"

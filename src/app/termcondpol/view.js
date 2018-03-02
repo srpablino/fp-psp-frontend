@@ -3,6 +3,8 @@ import Bn from 'backbone';
 import $ from 'jquery';
 import Template from './template.hbs';
 import FlashesService from '../flashes/service';
+import TermCondPolModel from './model';
+import NewSnapshot from '../snapshots/add/view';
 
 export default Mn.View.extend({
   template: Template,
@@ -15,11 +17,21 @@ export default Mn.View.extend({
   initialize(options) {
     this.model = options.model;
     this.app = options.app;
-    this.surveyId = options.surveyId;   
+    this.surveyId = options.surveyId;
+    this.reAnswer = options.reAnswer;
+    this.formData = options.formData;
   },
 
   onRender(){
     this.$el.find('#text').append(this.model.attributes.html);
+
+    if(this.reAnswer){
+      this.app.getSession().save({
+        reAnswer: this.reAnswer,
+        formData: this.formData,
+
+        });
+    }
   },
 
   showNextButton(event){
@@ -28,13 +40,48 @@ export default Mn.View.extend({
     if(checked){
       $('#accept').removeClass('disabled');
     }
- 
+
+  },
+
+  reCheckPriv(){
+    $("#response input:radio").prop("checked", false);
+    $('#accept').addClass("disabled");
+      this.$el.find('#text').empty();
+      const termCondPolModel = new TermCondPolModel();
+      termCondPolModel
+        .fetch({
+          data: {
+            type: 'PRIV'
+          }
+        })
+        .then(() => {
+          this.model = termCondPolModel;
+           this.$el.find('#text').append(termCondPolModel.attributes.html);
+        });
+
+      Bn.history.navigate(`/survey/${this.surveyId}/termcondpol/PRIV`);
+  },
+
+  reAnswerSurvey(){
+    const newSnapshot = new NewSnapshot({
+
+          surveyId: this.surveyId,
+          handleCancel() {
+              Bn.history.navigate(`/surveys`, true);
+          },
+          app: this.app,
+          reAnswer: this.reAnswer,
+          formData: this.formData
+    });
+
+    this.app.showViewOnRoute(newSnapshot);
+
+    Bn.history.navigate(`/survey/${this.surveyId}/reanswer/${this.formData.familyId}`);
   },
 
   handleNext(event){
       event.preventDefault();
-      let checked = $('#response input:radio:checked').val();   
-
+      let checked = $('#response input:radio:checked').val();
       if(!checked){
         return FlashesService.request('add', {
           timeout: 2000,
@@ -44,11 +91,19 @@ export default Mn.View.extend({
       } else if(checked){
         if(checked==='Yes'  && this.model.attributes.type_cod==='TC'){
           this.app.getSession().save({termCond: this.model.attributes.id});
+          if(this.reAnswer){
+            this.reCheckPriv();
+            return;
+          }
           Bn.history.navigate(`/survey/${this.surveyId}/termcondpol/PRIV`, true);
         } else if(checked==='Yes' && this.model.attributes.type_cod==='PRIV'){
-  
+
           if(this.app.getSession().get('termCond') && this.app.getSession().get('termCond')>0){
             this.app.getSession().save({priv: this.model.attributes.id});
+            if(this.reAnswer){
+              this.reAnswerSurvey();
+              return;
+            }
             Bn.history.navigate(`/survey/${this.surveyId}/answer`, true);
           } else {
             return FlashesService.request('add', {
@@ -61,7 +116,7 @@ export default Mn.View.extend({
           Bn.history.navigate(`/surveys`, true);
         }
 
-      }  
+      }
   }
 
 });

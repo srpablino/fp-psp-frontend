@@ -42,28 +42,56 @@
     {{/each}}
   </div>
 
-  <h3 class="{{this.classNames}}" style="font-weight: bold" >{{$t 'survey.priority.title'}} </h3>
-  <table class="table table-hover margin bottom center {{this.classNames}}" id="prioritiesTable">
+  <h3 class="{{this.tablePriorityClassNames}}" style="font-weight: bold" >{{$t 'survey.priority.title'}} </h3>
+  <table class="table table-hover margin bottom center {{this.tablePriorityClassNames}}" id="prioritiesTable">
     <thead class="thead-light">
       <tr>
-        <th>{{$t 'survey.priority.add.indicator'}}</th>
-        <th>{{$t 'survey.priority.add.reason'}}</th>
-        <th>{{$t 'survey.priority.add.action'}}</th>
-        <th>{{$t 'survey.priority.add.estimated-date'}}</th>
+        <th class="col-md-3">{{$t 'survey.priority.add.indicator'}}</th>
+        <th class="col-md-3">{{$t 'survey.priority.add.reason'}}</th>
+        <th class="col-md-3">{{$t 'survey.priority.add.action'}}</th>
+        <th class="col-md-3">{{$t 'survey.priority.add.estimated-date'}}</th>
+
       </tr>
     </thead>
     <tbody id="tbodypriorities">
       {{#each priorities}}
+        {{^if this.is_attainment}}
+          <tr>
+            <td> {{this.indicator}}</td>
+            <td> {{this.reason}}</td>
+            <td> {{this.action}}</td>
+            <td> {{this.estimated_date}}</td>
+            <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right noPrint" data-id="{{ this.snapshot_indicator_priority_id }}"
+              data-toggle="tooltip" title="{{$t 'survey.priority.messages.select-delete'}}">
+              <span class="glyphicon glyphicon-trash pull-right"></span>
+            </a> </td>
+          </tr>
+        {{/if}}
+      {{/each}}
+
+    </tbody>
+  </table>
+
+  <h3 class="{{this.tableAchievedClassNames}}" style="font-weight: bold" >My Indicators Achieved </h3>
+  <table class="table table-hover margin bottom center {{this.tableAchievedClassNames}}" id="achievedTable">
+    <thead class="thead-light">
       <tr>
-        <td> {{this.indicator}}</td>
-        <td> {{this.reason}}</td>
-        <td> {{this.action}}</td>
-        <td> {{this.estimated_date}}</td>
-        <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right noPrint" data-id="{{ this.snapshot_indicator_priority_id }}"
-        data-toggle="tooltip" title="{{$t 'survey.priority.messages.select-delete'}}">
-            <span class="glyphicon glyphicon-trash pull-right"></span>
-        </a> </td>
+        <th class="col-md-6">Indicator</th>
+        <th class="col-md-6"> Comments</th>
       </tr>
+    </thead>
+    <tbody id="tbodypriorities">
+      {{#each priorities}}
+        {{#if this.is_attainment}}
+          <tr>
+            <td> {{this.indicator}}</td>
+            <td> {{this.reason}}</td>
+            <td style="text-align: center;"> <a id="delete"  class="btn btn-danger right noPrint" data-id="{{ this.snapshot_indicator_priority_id }}"
+              data-toggle="tooltip" title="Remove this priority">
+              <span class="glyphicon glyphicon-trash pull-right"></span>
+            </a> </td>
+          </tr>
+        {{/if}}
       {{/each}}
 
     </tbody>

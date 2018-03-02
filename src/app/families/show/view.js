@@ -1,3 +1,4 @@
+import Bn from 'backbone';
 import Mn from 'backbone.marionette';
 import moment from 'moment';
 import $ from 'jquery';
@@ -6,13 +7,19 @@ import Template from '../template.hbs';
 import SnapshotsTemplate from '../show/snapshot/template.hbs';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 import storage from '../storage';
+import TermCondPolView from '../../termcondpol/view';
+import TermCondPolModel from '../../termcondpol/model';
 
 export default Mn.View.extend({
   template: Template,
+  events: {
+    'click #newSurvey': 'newSurvey'
+  },
 
   initialize(options) {
     this.app = options.app;
     this.entity = options.entity;
+
   },
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
@@ -51,5 +58,48 @@ export default Mn.View.extend({
       return null;
     }
     return moment(createdAt).format('YYYY-MM-DD');
+  },
+
+  getJsonData(){
+    let data = {};
+
+    data.firstName = this.model.attributes.person.firstName;
+    data.lastName = this.model.attributes.person.lastName;
+    data.identificationNumber = this.model.attributes.person.identificationNumber;
+    data.identificationType = this.model.attributes.person.identificationType;
+    data.birthdate = this.model.attributes.person.birthdate;
+    data.countryOfBirth = this.model.attributes.person.countryOfBirth.alfa2Code;
+    data.phoneNumber = this.model.attributes.person.phoneNumber;
+    data.familyId = this.model.attributes.familyId;
+    return data;
+  },
+
+  newSurvey(event){
+    event.preventDefault();
+    let self = this;
+    this.app.getSession().save({termCond: 0, priv: 0});
+    this.app.getSession().save({reAnswer: false, formData: null});
+    const model = new TermCondPolModel();
+    const app = this.app;
+    model
+      .fetch({
+        data: {
+          type: 'TC'
+        }
+      })
+      .then(() => {
+        this.app.showViewOnRoute(new TermCondPolView({
+
+           app,
+           model,
+           surveyId: this.model.attributes.snapshot_indicators.survey_id,
+           reAnswer: true,
+           formData: self.getJsonData()
+
+         }));
+      });
+
+    Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/termcondpol/TC`);
+
   }
 });

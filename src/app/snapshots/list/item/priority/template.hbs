@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class='col-sm-12'>
                             <div class="form-group">
-                                <p> {{$t 'survey.priority.add.reason'}} * </p>
+                                <p id="reasonTitle"> {{$t 'survey.priority.add.reason'}} * </p>
                                 <textarea value="{{indicatorPriority.reason}}" 
                                           class="form-control" 
                                           name="reason"
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row forPriority">
                         <div class='col-sm-12'>
                             <div class="form-group">
                                 <p> {{$t 'survey.priority.add.action'}} * </p>
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row forPriority">
                         <div class='col-sm-12'>
                             <div class="form-group">
                                 <p> {{$t 'survey.priority.add.estimated-date'}} * </p>
