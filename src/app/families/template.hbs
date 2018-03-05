@@ -7,7 +7,7 @@
     <article class="card mg-bottom-25px">
       <div class="card-block">
         <div class="card-title row">
-          <p class="text-left text-blue">File</p>
+          <p class="text-left text-blue">{{$t 'family.map.file'}}</p>
         </div>
         <div class="margin-tb-20px row">
           <div class="col-md-2 col-xs-12 col-sm-2">
@@ -15,13 +15,13 @@
           </div>
           <div class="col-md-7 col-xs-12 col-sm-7">
             <p>{{family.code}}</p>
-            <p class="text-blue">Contact:
+            <p class="text-blue">{{$t 'family.map.contact'}}:
               <span class="text-gray">{{family.person.firstName}} {{family.person.lastName}}</span>
             </p>
-            <p class="text-blue">Cell phone:
+            <p class="text-blue">{{$t 'family.map.cell'}}:
               <span class="text-gray">{{family.person.phoneNumber}}</span>
             </p>
-            <p class="text-blue">Place:
+            <p class="text-blue">{{$t 'family.map.place'}}:
               <span class="text-gray">{{family.city.city}}, {{family.country.country}}</span>
             </p>
           </div>
@@ -34,7 +34,7 @@
     <article class="card mg-bottom-25px">
       <div class="card-block">
         <div class="card-title row">
-          <p class="text-left text-blue">Priorities / Snapshot {{createdAt}}</p>
+          <p class="text-left text-blue">{{$t 'family.map.priorities'}} / {{$t 'family.map.snapshot'}} {{createdAt}}</p>
         </div>
         <div class="row">
           <div class="col-md-12">
@@ -62,7 +62,7 @@
     <article class="card mg-bottom-25px">
       <div class="card-block">
         <div class="card-title row">
-          <p class="text-left text-blue">Indicators / Snapshot</p>
+          <p class="text-left text-blue">{{$t 'family.map.indicators'}} / {{$t 'family.map.snapshot'}}</p>
         </div>
         <div class="snapshot-indicators row">
           <div class="light">
@@ -76,7 +76,7 @@
     <article class="card">
       <div class="card-block" id="card-interventions">
         <div class="card-title row">
-          <p class="text-left text-blue">Interventions</p>
+          <p class="text-left text-blue">{{$t 'family.map.interventions'}}</p>
         </div>
         <div class="row">
           <div id="interventions-list" class="col-md-12 maintenance-watermark">

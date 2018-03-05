@@ -1,4 +1,5 @@
 import React from 'react';
+import session from '../../common/session';
 
 class NumberFormat extends React.Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class NumberFormat extends React.Component {
         );
     }
 
-    parseNumber(value, locale = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage)) {
+    parseNumber(value, locale = session.get('locale')?session.get('locale'):'es' ) {
 
         const example = Intl.NumberFormat(locale).format('1.1');      
         const cleanPattern = new RegExp(`[^-+0-9${ example.charAt( 1 ) }]`, 'g');
@@ -36,7 +37,7 @@ class NumberFormat extends React.Component {
         return parseFloat(normalized);
     }
 
-    prettyNumber(original, number, locale = navigator.languages ? navigator.languages[0] : (navigator.language || navigator.userLanguage)) {
+    prettyNumber(original, number, locale = session.get('locale')?session.get('locale'):'es') {
 
         const example = Intl.NumberFormat(locale).format('1.1');
         const decimalSepartor = example.charAt(1);

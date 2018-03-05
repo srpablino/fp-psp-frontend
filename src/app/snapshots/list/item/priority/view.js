@@ -10,6 +10,7 @@ import FlashesService from '../../../../flashes/service';
 export default Marionette.View.extend({
   initialize(options) {
     this.options = options;
+    this.app = options.app;
     this.model = new PriorityModel();
     this.collection = new PriorityCollection();
     this.collection.fetch({
@@ -42,7 +43,7 @@ export default Marionette.View.extend({
     $fecha.datetimepicker({
       format: 'DD/MM/YYYY',
       minDate: moment(),
-      locale: 'en'
+      locale: this.app.getSession().get('locale')?this.app.getSession().get('locale'):'es'
     });
     if (this.options.isAttainment) {
       this.$el.find('.forPriority').hide();
@@ -95,7 +96,7 @@ export default Marionette.View.extend({
           FlashesService.request('add', {
             timeout: 2000,
             type: 'info',
-            title: 'The information has been saved'
+            title: t('survey.priority.messages.add-done')
           });
         },
         error => {

@@ -164,7 +164,7 @@ class Form extends Component {
       this.props.uiSchema['ui:group:economics'].includes(key)
     ) {
       this.counter.countEconomic++;
-      schemaToRet.description = `Socio-economic Information ${
+      schemaToRet.description = `${t('schemaForm.economic-info')} ${
         this.counter.countEconomic
       }/`;
       schemaToRet.counter = 'countEconomic';
@@ -175,7 +175,7 @@ class Form extends Component {
     ) {
       this.counter.countIndicator++;
       schemaToRet.counter = 'countIndicator';
-      schemaToRet.description = `Indicators ${this.counter.countIndicator}/`;
+      schemaToRet.description = `${t('schemaForm.indicators')} ${this.counter.countIndicator}/`;
     }
     if (
       this.props.uiSchema['ui:group:personal'] &&
@@ -183,7 +183,7 @@ class Form extends Component {
     ) {
       this.counter.countPersonal++;
       schemaToRet.counter = 'countPersonal';
-      schemaToRet.description = `Personal Information ${
+      schemaToRet.description = `${t('schemaForm.personal-info')} ${
         this.counter.countPersonal
       }/`;
     }
@@ -280,13 +280,22 @@ class Form extends Component {
     this.state.lastValue = data.formData;
   }
 
+  mapErrors(errors){
+        
+    return errors.map(error => {
+      if (t(`schemaForm.errors.${error.name}`) !== `schemaForm.errors.${error.name}`) {
+        error.message = t(`schemaForm.errors.${error.name}`, {argument: error.argument.toString()});
+      }
+      return error;
+    });
+  }
+
   render() {
 
     return (
       <div className="col-md-12">
         {this.checkShowSaveDraft(this.state)?
-          <button className="btn btn-primary pull-right marginDraft" onClick={() => this.onSaveDraft()}> Save Draft </button> :'' }
-
+          <button className="btn btn-primary pull-right marginDraft" onClick={() => this.onSaveDraft()}> {t('schemaForm.buttons.save-draft')} </button> :'' }
 
         <article className="card">
           <div className="card-block">
@@ -306,6 +315,9 @@ class Form extends Component {
                   onError={log('errors')}
                   formData={this.state.formData}
                   onChange={(event) => {this.onChange(event)}}
+                  transformErrors={this.mapErrors}
+                  noHtml5Validate
+                  showErrorList={false}
                 >
                   <button
                     type="button"

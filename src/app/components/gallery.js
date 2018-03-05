@@ -88,7 +88,7 @@ class Gallery extends React.Component {
         images.push(
           this.renderImage(
             '/static/images/image_default.png',
-            'Loading...',
+            t('schemaForm.loading'),
             'NONE',
             i,
             'gallery-image gallery-image-div'
@@ -117,7 +117,7 @@ class Gallery extends React.Component {
           />
           <span
             className="labelCheck"
-          >  Skip question 
+          >  {t('schemaForm.not-answer')}
           </span>
         </div>
       </div>

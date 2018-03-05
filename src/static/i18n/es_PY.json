@@ -1,0 +1,204 @@
+{
+  "organization": {
+    "search": {
+      "title": "Buscar una organización"
+    }
+  },
+  "general": {
+    "buttons": {
+      "accept": "Aceptar",
+      "cancel": "Cancelar"
+    },
+    "messages": {
+      "information": "Información"
+    },
+    "flashes": {
+      "close": "Cerrar"
+    },
+    "today": "Hoy",
+    "yellow": "Amarillo",
+    "green": "Verde",
+    "red": "Rojo"
+  },
+  "schemaForm": {
+    "errors": {
+      "pattern": "Wrong pattern",
+      "format": "No se ajusta  al formato de \"fecha\" requerido",
+      "required": "El campo es requerido",
+      "type": "Debe ser del tipo \"%{argument}\""
+    },
+    "personal-info": "Información Personal",
+    "economic-info": "Información Socioeconómica",
+    "indicators": "Indicadores",
+    "not-answer": "Omitir pregunta",
+    "buttons": {
+      "save-draft": "Guardar Borrador"
+    },
+    "loading": "Cargando"
+  },
+  "draft": {
+    "messages": {
+      "save-draft": "La información ha sido guardada",
+      "delete-confirm": "¿Está seguro de que desea eliminar el borrador?",
+      "delete-confirm-title": "Confirmación de Eliminación",
+      "delete-done": "El borrador ha sido eliminado"
+    },
+    "search-parameter": "Nombre o Apellido",
+    "search": "Buscar",
+    "created": "Creado el"
+  },
+  "header": {
+    "reports": "Reportes",
+    "surveys": "Encuestas",
+    "faqs": "FAQs",
+    "collaborators": "Colaboradores",
+    "families": "Familias",
+    "users": "Usuarios",
+    "manage-families": "Gestión de Familias",
+    "logout": "Cerrar sesión",
+    "organizations": "Organizaciones",
+    "hubs": "Hubs",
+    "locale": {
+      "es_PY": "Español",
+      "en_US": "Inglés"
+    }
+  },
+  "subheader": {
+    "surveys": {
+      "list-surveys": "Encuestas Disponibles",
+      "list-drafts": "Borradores",
+      "priority": "Seleccione sus prioridades"
+    },
+    "family": "Familia",
+    "interventions": "Intervenciones",
+    "snapshots": "Semáforos tomados",
+    "hubs": "Hubs",
+    "families": "Familias",
+    "users": "Usuarios",
+    "indicators": "Indicadores"
+  },
+  "home": {
+    "activity": "Actividades Recientes",
+    "number-families": "Número de Familias",
+    "snapshots-taken": "Semáforos tomados",
+    "map-results": "Mapa de resultados",
+    "total": "en total",
+    "indicators": "Indicadores",
+    "top-indicators": "Top de indicadores",
+    "indicator": "Indicador",
+    "no-data": "Sin datos"
+  },
+  "survey": {
+    "contains": "Contiene",
+    "indicators": "indicadores",
+    "created": "Creado el",
+    "survey": "Encuesta",
+    "summary": {
+      "buttons": {
+        "finish": "Finalizar esta encuesta",
+        "print": "Imprimir"
+      },
+      "family": "Familia",
+      "snapshot": "Semáforo tomado",
+      "not-share": "Prefiero no compartir la situación de mi familia",
+      "print-header": "Resultados de la Encuesta",
+      "messages": {
+        "not-save": "Su información personal no será guardada en la plataforma"
+      }
+    },
+    "priority": {
+      "title": "Mis prioridades",
+      "messages": {
+        "select": "Agregar prioridad para este indicador",
+        "previous-selected": "El indicador \"%{indicator}\" ya fue previamente seleccionado",
+        "without-priorities": "Aún no ha agregado ninguna prioridad, ¿Está seguro de que desea finalizar la encuesta?",
+        "delete-done": "La información ha sido eliminada",
+        "add-done": "La información ha sido guardada",
+        "delete-confirm": "¿Está seguro de que desea eliminar esta información?",
+        "delete-confirm-title": "Confirmación de eliminación",
+        "indicator-not-answered": "Durante la encuesta, has elegido no responder la pregunta",
+        "select-delete": "Eliminar esta prioridad"
+      },
+      "add": {
+        "indicator": "Indicador",
+        "reason": "¿Por qué no lo tengo?",
+        "action": "¿Qué debo hacer para lograrlo?",
+        "estimated-date": "¿Cuándo lo tendré?"
+      }
+    }
+  },
+  "termcondpol": {
+    "agree": "Estoy de acuerdo",
+    "disagree": "No estoy de acuerdo",
+    "buttons": {
+      "next": "Siguiente"
+    },
+    "messages": {
+      "not-answer": "Seleccione su respuesta",
+      "answer-validation": "Primero debe aceptar los términos y condiciones"
+    }
+  },
+  "family": {
+    "search": {
+      "search": "Buscar",
+      "city": "Ciudad",
+      "country": "País",
+      "organization": "Organización",
+      "name-code": "Apellido/Código",
+      "name-code-parameter": "Apellido o código",
+      "choose": "Seleccione"
+    },
+    "family": "Familia",
+    "code": "Cód",
+    "map": {
+      "snapshot": "Semáforo tomado",
+      "priorities": "Prioridades",
+      "indicators": "Indicadores",
+      "file": "Ficha",
+      "interventions": "Intervenciones",
+      "contact": "Contacto",
+      "cell": "Celular",
+      "place": "Lugar"
+    },
+    "manage": {
+      "manage-families": "Gestión de familias",
+      "contact": "Contacto",
+      "id": "Identificador",
+      "place": "Lugar",
+      "select-delete": "Eliminar esta familia"
+    }
+  },
+  "login": {
+    "username": "Nombre de usuario",
+    "password": "Contraseña",
+    "login": "INICIAR SESIÓN",
+    "forgot-pass": "¿Olvidó su contraseña?",
+    "email": "Correo electrónico",
+    "reset-pass": "Cambiar Contraseña",
+    "back-login": "Volver al inicio de sesión",
+    "reset-title": "Por favor ingrese su correo electrónico para cambiar su contraseña"
+  },
+  "hub": {
+    "search": {
+      "title": "Buscar un Hub"
+    }
+  },
+  "user": {
+    "search": {
+      "title": "Buscar un usuario"
+    },
+    "email": "Correo electrónico",
+    "add": {
+      "title": "Agregar un usuario",
+      "user": "Usuario",
+      "username": "Nombre de usuario",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirm-pass": "Confirmar contraseña",
+      "buttons": {
+        "add": "AGREGAR USUARIO",
+        "cancel": "Cancelar"
+      }
+    }
+  }
+}

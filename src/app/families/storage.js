@@ -8,16 +8,16 @@ var FamiliesStorage = Storage.extend({
   getSubHeaderItems(model) {
     return {
       mainItem: {
-        name: `Family ${model.get('person').lastName}`,
+        name: `${t('subheader.family')} ${model.get('person').lastName}`,
         link: `/#families/${model.get('id')}`
       },
       navigationItems: [
         {
-          name: 'Interventions',
+          name: t('subheader.interventions'),
           link: `/#families/${model.get('id')}/interventions`
         },
         {
-          name: 'Snapshots',
+          name: t('subheader.snapshots'),
           link: `/#families/${model.get('id')}/snapshots`
         }
       ]

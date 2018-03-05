@@ -3,7 +3,7 @@
     <article class="card">
       <div class="card-block">
         <div class="card-title row">
-          <p class="text-left text-blue">Snapshot {{createdAt}}</p>
+          <p class="text-left text-blue">{{$t 'family.map.snapshot'}} {{createdAt}}</p>
         </div>
         <div class="snapshot-indicators row">
           <div class="light">
@@ -19,7 +19,7 @@
     <article class="card">
       <div class="card-block">
         <div class="card-title row">
-          <p class="text-left text-blue">Priorities</p>
+          <p class="text-left text-blue">{{$t 'family.map.priorities'}}</p>
         </div>
         <div class="margin-tb-20px row">
           <div class="col-md-12">
@@ -47,7 +47,7 @@
       <article class="card">
         <div  class="card-block">
           <div class="card-title row">
-            <p class="text-left text-blue">Indicators</p>
+            <p class="text-left text-blue">{{$t 'family.map.indicators'}}</p>
           </div>
           <div class="indicator-list margin-tb-20px row">
             {{#each snapshotIndicators}}

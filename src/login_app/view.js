@@ -12,6 +12,10 @@ export default Mn.View.extend({
         content: '#content'
     },
 
+    initialize(options){
+        this.localeConfiguration = options.localeConfiguration;
+    },
+
     onRender() {
       if(Bb.history.location.href.indexOf('?token=') > 0){
         this.showReset();
@@ -21,7 +25,7 @@ export default Mn.View.extend({
     },
 
     showLogin() {
-        this.getRegion('content').show(new LoginView())
+        this.getRegion('content').show(new LoginView({localeConfiguration: this.localeConfiguration}))
     },
 
     showReset() {

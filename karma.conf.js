@@ -1,8 +1,11 @@
 /* eslint-disable */
-
+var path = require("path");
 var webpack = require('webpack');
 
+
+
 module.exports = function(config) {
+
   config.set({
     basePath: '',
 
@@ -17,6 +20,9 @@ module.exports = function(config) {
     },
 
     webpack: {
+      resolve: {
+        fallback: __dirname + '/webpack/helpers'
+      },
       module: {
         loaders: [
           { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },

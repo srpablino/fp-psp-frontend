@@ -9,7 +9,7 @@ var SurveysStorage = Storage.extend({
       return {
         navigationItems: [
           {
-            name: `Available Surveys`,
+            name: t(`subheader.surveys.list-surveys`),
             link: `/#surveys`
           }
         ]
@@ -19,11 +19,11 @@ var SurveysStorage = Storage.extend({
       return {
         navigationItems: [
           {
-            name: `Available Surveys`,
+            name: t(`subheader.surveys.list-surveys`),
             link: `/#surveys`
           },
           {
-            name: `Drafts`,
+            name: t(`subheader.surveys.list-drafts`),
             link: `/#surveys/drafts`
           }
         ]
