@@ -6,6 +6,7 @@ import Template from './template.hbs';
 import PriorityModel from './model';
 import PriorityCollection from './collection';
 import FlashesService from '../../../../flashes/service';
+import utils from '../../../../utils';
 
 export default Marionette.View.extend({
   initialize(options) {
@@ -68,6 +69,8 @@ export default Marionette.View.extend({
 
   addPriority(e) {
     e.preventDefault();
+    const button = utils.getLoadingButton(this.$el.find('#add-priority'));
+
     this.$el
       .find('#form')
       .serializeArray()
@@ -90,8 +93,10 @@ export default Marionette.View.extend({
         });
       });
     } else {
+      button.loading();
       this.model.save(this.indicatorPriority).then(
         model => {
+          button.reset();
           this.trigger('change', model);
           FlashesService.request('add', {
             timeout: 2000,
@@ -100,6 +105,7 @@ export default Marionette.View.extend({
           });
         },
         error => {
+          button.reset();
           FlashesService.request('add', {
             timeout: 2000,
             type: 'warning',
