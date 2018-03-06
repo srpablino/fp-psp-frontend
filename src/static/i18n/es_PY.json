@@ -130,8 +130,22 @@
         "comments": "Comentarios"
       }
     },
+
     "attainment": {
       "title": "Mis logros"
+    },
+
+    "add": {
+      "main-title": "Encuesta",
+      "title-placeholder": "Título de la encuesta",
+      "short-desc-placeholder": "Descripción corta",
+      "assign-survey-placeholder": "Asignar encuesta",
+      "json-schema": "JSON Esquema *",
+      "json-ui-schema": "JSON Esquema Visual *",
+      "buttons": {
+        "save": "GRABAR",
+        "cancel": "Cancelar"
+      }
     }
   },
   "termcondpol": {
@@ -211,6 +225,12 @@
         "add": "AGREGAR USUARIO",
         "cancel": "Cancelar"
       }
+    }
+  },
+  "footer": {
+    "version": {
+      "title": "VERSION WEB",
+      "name": "SEMAFORO DE ELIMINACIÓN DE POBREZA"
     }
   }
 }
