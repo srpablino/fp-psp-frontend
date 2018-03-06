@@ -125,6 +125,18 @@
         "action": "What do I do to attain it?",
         "estimated-date": "When will I have it?"
       }
+    },
+    "add": {
+      "main-title": "Survey",
+      "title-placeholder": "Surveys´s title",
+      "short-desc-placeholder": "Short description",
+      "assign-survey-placeholder": "Assign survey",
+      "json-schema": "JSON Schema *",
+      "json-ui-schema": "JSON UI Schema *",
+      "buttons": {
+        "save": "SAVE",
+        "cancel": "Cancel"
+      }
     }
   },
   "termcondpol": {
@@ -199,6 +211,12 @@
         "add": "ADD USER",
         "cancel": "Cancel"
       }
+    }
+  },
+  "footer": {
+    "version": {
+      "title": "WEB VERSION",
+      "name": "POVERTY STOPLIGHT"
     }
   }
 }
