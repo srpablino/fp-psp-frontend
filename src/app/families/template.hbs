@@ -31,13 +31,14 @@
         </div>
       </div>
     </article>
-    <article class="card mg-bottom-25px">
+    <article class="card mg-bottom-25px" style="min-height: 200px;">
       <div class="card-block">
         <div class="card-title row">
           <p class="text-left text-blue">{{$t 'family.map.priorities'}} / {{$t 'family.map.snapshot'}} {{createdAt}}</p>
         </div>
         <div class="row">
           <div class="col-md-12">
+            <p class="strike-text centered no-data {{ className }}">{{$t 'family.map.no-priority'}}</p>
             <div class="list-priorities">
               {{#each family.snapshot_indicators.indicators_priorities}}
                 {{^if this.is_attainment}}

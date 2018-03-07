@@ -197,7 +197,8 @@
       "interventions": "Intervenciones",
       "contact": "Contacto",
       "cell": "Celular",
-      "place": "Lugar"
+      "place": "Lugar",
+      "no-priority": "Ningún indicador fue priorizado en este snapshot"
     },
     "manage": {
       "manage-families": "Gestión de familias",

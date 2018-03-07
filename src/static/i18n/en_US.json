@@ -196,7 +196,8 @@
       "interventions": "Interventions",
       "contact": "Contact",
       "cell": "Cell phone",
-      "place": "Place"
+      "place": "Place",
+      "no-priority": "No indicator was prioritized in this snapshot"
     },
     "manage": {
       "manage-families": "Manage households",

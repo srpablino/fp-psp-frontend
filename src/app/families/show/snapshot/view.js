@@ -21,6 +21,7 @@ export default Mn.View.extend({
     return {
       snapshot: this.snapshotModel.attributes,
       createdAt: this.formatCreatedDate(),
+      className: this.isPrioritized(),
       snapshotIndicators: this.snapshotModel.attributes.indicators_survey_data.map(
         set => ({
           clazz: set.value !== null ? set.value.toLowerCase() : 'gray',
@@ -29,6 +30,9 @@ export default Mn.View.extend({
         })
       )
     };
+  },
+  isPrioritized(){
+    return this.model.attributes.snapshot_indicators.indicators_priorities.length > 0 ? 'hidden' : '' ;
   },
   formatCreatedDate() {
     const createdAt = this.snapshotModel.attributes.created_at;

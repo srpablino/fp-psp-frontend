@@ -48,7 +48,8 @@ export default Mn.View.extend({
   serializeData() {
     return {
       family: this.model.attributes,
-      createdAt: this.getCreatedAt()
+      createdAt: this.getCreatedAt(),
+      className: this.isPrioritized()
     };
   },
 
@@ -58,6 +59,10 @@ export default Mn.View.extend({
       return null;
     }
     return moment(createdAt).format('YYYY-MM-DD');
+  },
+
+  isPrioritized(){
+    return this.model.attributes.snapshot_indicators.indicators_priorities.length > 0 ? 'hidden' : '' ;
   },
 
   getJsonData(){
