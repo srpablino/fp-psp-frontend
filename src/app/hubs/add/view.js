@@ -15,12 +15,13 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
-    this.props = Object.assign({}, options);
-    this.model = this.props.model || new Model();
+    this.model = options.model || new Model();
   },
   serializeData() {
     return {
-      application: this.model.attributes
+      application: this.model.attributes,
+      isNew: this.model.get('id') === undefined,
+      logoImage: this.model.get('logoUrl') || '/static/images/icon_camara.png'
     };
   },
   selectFile() {

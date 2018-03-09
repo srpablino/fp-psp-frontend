@@ -16,10 +16,10 @@
       "information": "Information",
       "buttons": {
         "add": "ADD ORGANIZATION",
-        "edit": "SAVE ORGANIZATION",
+        "save": "SAVE ORGANIZATION",
         "cancel": "Cancel"
       },
-      "add-success": "Organization created successfully",
+      "add-success": "Organization saved successfully",
       "add-failed": "Organization already exist"
     }
   },
@@ -244,9 +244,10 @@
       "information": "Information",
       "buttons": {
         "add": "ADD HUB",
+        "save": "SAVE HUB",
         "cancel": "Cancel"
       },
-      "add-success": "Hub created successfully",
+      "add-success": "Hub saved successfully",
       "add-failed": "Hub already exist"
     }
   },

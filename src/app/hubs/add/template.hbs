@@ -6,7 +6,12 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card-title">
-              <h4> {{$t 'hub.form.add-title'}}
+              <h4>
+                {{#if isNew}}
+                  {{$t 'hub.form.add-title'}}
+                {{else}}
+                  {{$t 'hub.form.edit-title'}}
+                {{/if}}
                 <img class="pull-right" src="/static/images/icon_more.png">
               </h4>
             </div>
@@ -15,10 +20,11 @@
         <div class="row">
           <div class="col-md-12">
             <div class="margin-tb-35px" id="img-cam">
-              <img id="image-logo" class="card-img-top img-responsive center-block select-file" src="/static/images/icon_camara.png" alt="" />
+              <img id="image-logo" src="{{logoImage}}" class="card-img-top img-responsive center-block select-file"/>
               <p id="image-logo-text" class="text-center select-file">{{$t 'hub.form.logo-upload'}}</p>
               <div class="form-group">
-                <input value="{{application.image}}" id="input-image-file" type="file" class="form-control" name="image" style="display: none;">
+                <input type="file" name="image" id="input-image-file" value="{{application.image}}"
+                       class="form-control" style="display: none;">
               </div>
             </div>
           </div>
@@ -28,26 +34,33 @@
             <div class="fp-form-container padding-b-30px" id="add-application">
               <form data-toggle="validator" role="form" class="form-vertical" id="form">
                 <div class="form-group">
-                  <input value="{{application.name}}" type="text" name="name" value="" placeholder="* {{$t 'hub.form.name'}}"
+                  <input name="name" type="text" value="{{application.name}}" placeholder="* {{$t 'hub.form.name'}}"
                          class="input-bg-gray form-control" required>
                 </div>
                 <div class="form-group">
-                  <input value="{{application.code}}" type="text" name="code" placeholder="* {{$t 'hub.form.code'}}"
-                         class="input-bg-gray form-control" required>
+                  <input name="code" type="text" value="{{application.code}}" placeholder="* {{$t 'hub.form.code'}}"
+                         class="input-bg-gray form-control" required
+                         {{#unless isNew}} readonly {{/unless}}if}}>
                 </div>
                 <div class="form-group">
-                  <input value="{{application.description}}" type="text" name="description" placeholder="* {{$t 'hub.form.description'}}"
-                         class="input-bg-gray form-control" required>
+                  <input name="description" type="text" value="{{application.description}}"
+                         placeholder="* {{$t 'hub.form.description'}}" class="input-bg-gray form-control" required>
                 </div>
                 <div class="form-group">
-                  <input value="{{application.information}}" type="text" name="information" placeholder="{{$t 'hub.form.information'}}"
-                         class="input-bg-gray form-control" required>
+                  <input name="information" type="text" value="{{application.information}}"
+                         placeholder="{{$t 'hub.form.information'}}" class="input-bg-gray form-control" required>
                 </div>
 
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
-                      <button type="submit" name="register-submit" id="submit" class="btn" value="Save">{{$t 'hub.form.buttons.add'}}</button>
+                      <button type="submit" name="register-submit" id="submit" class="btn" value="Save">
+                        {{#if isNew}}
+                          {{$t 'hub.form.buttons.add'}}
+                        {{else}}
+                          {{$t 'hub.form.buttons.save'}}
+                        {{/if}}
+                      </button>
                     </div>
                   </div>
                 </div>

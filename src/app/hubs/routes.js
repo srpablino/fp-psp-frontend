@@ -1,27 +1,34 @@
 import ApplicationsView from './index/layout-view';
 import applicationsStorage from './storage';
-import NewApplicationView from './add/view';
+import ApplicationFormView from './add/view';
+import Model from './model';
 
 const applications = props => {
   const {app} = props;
   const routes = {
     appRoutes: {
       'applications(/)': 'showApplications',
-      'applications/new': 'newApplication'
+      'applications/new': 'newApplication',
+      'applications/edit/:id': 'editApplication',
     },
     controller: {
       showApplications() {
-        applicationsStorage.find().then(model => {
+        applicationsStorage.find().then(models => {
           app.showViewOnRoute(
-            new ApplicationsView({
-              model,
-              app
-            })
+            new ApplicationsView({models, app})
           );
         });
       },
       newApplication() {
-        app.showViewOnRoute(new NewApplicationView({app}));
+        app.showViewOnRoute(new ApplicationFormView({app}));
+      },
+      editApplication(applicationId) {
+        const model = new Model();
+        model.set('id', applicationId);
+        model.fetch()
+          .then(() => {
+            app.showViewOnRoute(new ApplicationFormView({model, app}));
+          });
       }
     }
   };

@@ -16,10 +16,10 @@
       "information": "Información",
       "buttons": {
         "add": "AGREGAR ORGANIZACION",
-        "edit": "GUARDAR ORGANIZACION",
+        "save": "GUARDAR ORGANIZACION",
         "cancel": "Cancelar"
       },
-      "add-success": "Organización creada exitosamente",
+      "add-success": "Organización guardada exitosamente",
       "add-failed": "La Organización ya existe"
     }
   },
@@ -245,9 +245,10 @@
       "information": "Información",
       "buttons": {
         "add": "AGREGAR HUB",
+        "save": "GUARDAR HUB",
         "cancel": "Cancelar"
       },
-      "add-success": "Hub creado exitosamente",
+      "add-success": "Hub guardado exitosamente",
       "add-failed": "El Hub ya existe"
     }
   },
