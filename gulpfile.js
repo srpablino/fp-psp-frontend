@@ -74,8 +74,17 @@ gulp.task('static', () => {
     .pipe($.size({ title: 'static/images' }))
     .pipe(isProduction ? imagemin() : noop())
     .pipe(gulp.dest(`${dist}static/images/`));
+  let locales = gulp
+    .src(`${src}static/i18n/*`)
+    .pipe($.size({ title: 'static/i18n' }))
+    .pipe(gulp.dest(`${dist}static/i18n/`));
 
-  return merge(fonts, images);
+  let favicon = gulp
+    .src(`${src}favicon.ico`)
+    .pipe($.size({ title: 'favicon' }))
+    .pipe(gulp.dest(`${dist}`));
+
+  return merge(fonts, images, locales, favicon);
 });
 
 gulp.task('clean', cb => {

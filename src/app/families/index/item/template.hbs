@@ -3,7 +3,7 @@
   <article class="card">
     <div class="card-block">
       <div class="row card-title">
-        <p class="text-left text-blue">Cod: {{family.code}}</p>
+        <p class="text-left text-blue">{{$t 'family.code'}}: {{family.code}}</p>
       </div>
       <div class="row card-image">
         <div class="col-md-12">
@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="row card-title">
-        <p class="text-center">Family {{family.person.lastName}}</p>
+        <p class="text-center">{{$t 'family.family'}} {{family.name}}</p>
       </div>
     </div>
   </article>

@@ -81,3 +81,77 @@ To detect potential errors and bugs we use [ESLint](https://eslint.org/):
 ```shell
 $ npm run lint
 ```
+
+### Internationalization
+
+We use [Polyglot](http://airbnb.io/polyglot.js/) library to include internationalization.
+
+The language selection is made within the application, but for the pages that are previously shown as the login page, the language of the browser that is used is detected. If the language is not supported by the application, a default language is used. Therefore, you must keep the supported languages ​​in the `/src/login_app/app.js` file, where the default languages ​​are also defined.
+
+
+#### How can I add support to another language?
+
+All messages supported by internationalization are stored in the `/src/static/i18n` directory, separated according to language.
+
+Files for each locale must be of type json and be named `XX_YY.json`, where `XX` is the language code and `YY` is the country code. For example, `es_PY.json` for Paraguay.
+
+The keys for the values that will be localized have to be the same in every file, with values appropriate to the language they correspond to. 
+
+The content of the files must follow the following format:
+
+```
+{
+  "family": {
+    "messages": {
+      "add-done": "The family has been saved!",
+      "delete-done": "The \"%{nameOfFamily}\" family has been deleted!"
+    },
+    "buttons": {
+      "add": "Add Family"
+    }
+  }
+}
+```
+
+The parameters are obtained with `%{nameOfParameter}`.
+
+
+#### How can I internationalize a message, word, etc.?
+
+For the translation the helper "t" was created, which uses Polyglot together with the jsons to carry out the translation.
+
+##### Using "t" in a javascript file
+
+Suppose we want to internationalize the following message to show the user:
+
+```
+FlashesService.request('add', {
+  timeout: 2000,
+  type: 'info',
+  body: 'The ${nameOfFamily} family has been deleted!'
+});
+```
+
+To internationalize it we should replace it with the following:
+
+```
+FlashesService.request('add', {
+  timeout: 2000,
+  type: 'info',
+  body: t('family.messages.delete-done', {nameOfFamily: "García"})
+});
+```
+
+##### Using "t" with handlebars
+
+Suppose we want to internationalize the label of a button, for example:
+
+```
+<button type="button">Add Family</button>
+```
+
+To internationalize it we should replace it with the following:
+
+```
+<button type="button">{{$t 'family.buttons.add'}}</button>
+```

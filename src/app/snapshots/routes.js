@@ -3,6 +3,7 @@ import SnapshotsView from './view';
 import NewSnapshot from './add/view';
 import SnapshotView from './list/item/view';
 import SnapshotItemModel from './list/item/model';
+import FamilytModel from '../families/model';
 
 const snapshots = props => {
   const { app } = props;
@@ -11,7 +12,8 @@ const snapshots = props => {
     appRoutes: {
       'snapshots/:id': 'showSnapshots',
       'survey/:id/answer': 'answerSurvey',
-      'survey/:id/snapshot/:idSnap': 'showSnapshot'
+      'survey/:id/snapshot/:idSnap': 'showSnapshot',
+      'survey/:id/reanswer/:familyId': 'reAnswerSurvey'
     },
     controller: {
       showSnapshots(hash) {
@@ -19,7 +21,7 @@ const snapshots = props => {
         app.showViewOnRoute(new SnapshotsView({ surveyId }));
       },
       answerSurvey(hash) {
-     
+
       const surveyId = parseInt(hash, 10);
         if(app.getSession().get('termCond') && app.getSession().get('termCond')>0 && app.getSession().get('priv') && app.getSession().get('priv')>0){
           const newSnapshotView = new NewSnapshot({
@@ -39,11 +41,11 @@ const snapshots = props => {
         } else if(app.getSession().get('termCond') && app.getSession().get('termCond')>0){
           Bn.history.navigate(`/survey/${surveyId}/termcondpol/PRIV`, true);
         }
-        
+
       },
       showSnapshot(hash, hashSnapshot) {
-       
-        
+
+
         const snapshotId = parseInt(hashSnapshot, 10);
 
         const model = new SnapshotItemModel();
@@ -56,7 +58,47 @@ const snapshots = props => {
           .then(() => {
             app.showViewOnRoute(new SnapshotView({ model, app }));
           });
-      }
+      },
+
+      reAnswerSurvey(hash, familyId) {
+        const surveyId = parseInt(hash, 10);
+
+        let model =  new FamilytModel();
+        model.set('id', familyId);
+        model.fetch().then(() => {
+
+          app.getSession().save({termCond: 0, priv: 0});
+          app.getSession().save({reAnswer: false, formData: null});
+
+          const newSnapshot = new NewSnapshot({
+
+                surveyId,
+                handleCancel() {
+                    Bn.history.navigate(`/surveys`, true);
+                },
+                app,
+                reAnswer: true,
+                formData: this.getJsonData(model.attributes)
+          });
+
+          app.showViewOnRoute(newSnapshot);
+
+        });
+
+      },
+
+      getJsonData(model){
+        let data = {};
+        data.firstName = model.person.firstName;
+        data.lastName = model.person.lastName;
+        data.identificationNumber = model.person.identificationNumber;
+        data.identificationType = model.person.identificationType;
+        data.birthdate = model.person.birthdate;
+        data.countryOfBirth = model.person.countryOfBirth.alfa2Code;
+        data.phoneNumber = model.person.phoneNumber;
+        data.familyId = model.familyId;
+        return data;
+      },
     }
   };
 

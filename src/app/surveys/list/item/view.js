@@ -1,5 +1,7 @@
 import Mn from 'backbone.marionette';
 import Bn from 'backbone';
+import moment from 'moment';
+
 import Template from './template.hbs';
 import session from '../../../../common/session';
 
@@ -15,6 +17,7 @@ export default Mn.View.extend({
   initialize(options) {
     this.deleteSurvey = options.deleteSurvey;
     this.model = options.model;
+    this.model.attributes.created_at = this.formartterWithTime(this.model.attributes.created_at);
   },
 
   serializeData() {
@@ -23,10 +26,17 @@ export default Mn.View.extend({
     };
   },
 
+  formartterWithTime(date) {
+    if (!date) {
+      return null;
+    }
+    return moment(date).format('MM/DD/YYYY HH:mm');
+  },
+
   handleEdit(event) {
     event.preventDefault();
-    // @fhermosilla FIXME: this line doesn't work
-    // this.props.addSurvey(this.model);
+    Bn.history.navigate(`/surveys/${this.model.attributes.id}/edit`, true);
+
   },
   handleDelete(event) {
     event.preventDefault();

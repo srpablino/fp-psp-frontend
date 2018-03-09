@@ -1,5 +1,6 @@
 import merge from 'lodash/merge';
 import BaseRouter from './baserouter';
+import applications from '../hubs/routes';
 import organizations from '../organizations/routes';
 import surveys from '../surveys/routes';
 import snapshots from '../snapshots/routes';
@@ -18,6 +19,7 @@ const initRouter = props => {
 
   const { appRoutes, controller } = merge(
     logout(props),
+    applications(props),
     organizations(props),
     surveys(props),
     snapshots(props),

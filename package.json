@@ -1,9 +1,10 @@
 {
   "name": "fp-psp-frentend",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Frontend para el FP-PSP-SERVER del semáforo de la pobreza",
   "main": "main.js",
   "devDependencies": {
+    "auto-changelog": "^1.4.1",
     "autoprefixer": "^6.3.6",
     "babel-core": "^6.1.2",
     "babel-eslint": "^8.0.1",
@@ -26,6 +27,7 @@
     "express": "^4.11.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "fs-jetpack": "^1.2.0",
+    "generate-release": "^0.14.0",
     "gulp": "^3.8.11",
     "gulp-connect": "^5.0.0",
     "gulp-imagemin": "^4.0.0",
@@ -60,12 +62,13 @@
     "mocha": "^3.2.0",
     "morgan": "^1.5.1",
     "node-sass": "^4.7.2",
+    "prettier": "^1.9.2",
     "prettier-eslint": "^8.2.0",
     "run-sequence": "^1.2.2",
     "sass-loader": "^4.1.1",
-    "style-loader": "^0.19.1",
-    "prettier": "^1.9.2",
     "scottyjs": "^1.10.0",
+    "style-loader": "^0.19.1",
+    "url-loader": "^1.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0",
@@ -90,17 +93,22 @@
     "codemirror": "^5.32.0",
     "create-react-class": "^15.5.2",
     "d3": "^4.12.2",
+    "datatables.net": "^1.10.16",
+    "datatables.net-bs": "^1.10.16",
     "eonasdan-bootstrap-datetimepicker": "^4.17.43",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
+    "moment-timezone": "^0.5.14",
     "nprogress": "^0.2.0",
     "parsleyjs": "^2.7.2",
     "react": "^15.6.2",
     "react-datetime": "^2.11.1",
     "react-dom": "^15.6.2",
     "react-gmaps": "^1.7.0",
-    "react-jsonschema-form": "^0.50.1"
+    "react-jsonschema-form": "^0.50.1",
+    "node-polyglot": "^2.2.2",
+    "select2": "^4.0.6-rc.1"
   },
   "lint-staged": {
     "*.js": ["eslint --fix --ignore-path .gitignore \"src/**/*.js\"", "git add"],
@@ -111,6 +119,7 @@
     "start": "gulp",
     "build": "gulp build --type production",
     "build:UK": "gulp build --type production --region UK",
+    "build:US-DEMO": "gulp build --type production --region US-DEMO",
     "fix:config": "prettier --ignore-path .gitignore --write \"**/*.json\"",
     "fix:docs": "prettier --ignore-path .gitignore --write \"**/*.md\"",
     "fix:script": "npm run lint -- --fix",
@@ -120,6 +129,9 @@
     "lint": "eslint --ignore-path .gitignore \"src/**/*.js\"",
     "test": "karma start && npm run lint",
     "deploy": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-w6fez --force --nocdn",
-    "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn"
+    "deploy:UK": "scotty --spa --source ./dist --region eu-west-2 --bucket aws-website-povertystoplight-london --force --nocdn",
+    "deploy:US-DEMO": "scotty --spa --source ./dist --region us-east-1 --bucket aws-website-povertystoplight-demo --force --nocdn",
+    "release": "generate-release",
+    "auto-changelog": "auto-changelog && git add CHANGELOG.md"
   }
 }

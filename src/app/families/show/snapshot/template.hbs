@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+  <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
     <article class="card">
       <div class="card-block">
         <div class="card-title row">
-          <p class="text-left text-blue">Snapshot {{createdAt}}</p>
+          <p class="text-left text-blue">{{$t 'family.map.snapshot'}} {{createdAt}}</p>
         </div>
         <div class="snapshot-indicators row">
           <div class="light">
@@ -15,16 +15,18 @@
       </div>
     </article>
   </div>
-  <div class="col-md-9 col-xs-6 ">
-    <article class="card">
+  <div class="col-md-8 col-xs-6 ">
+    <article class="card" style="min-height: 440px;">
       <div class="card-block">
         <div class="card-title row">
-          <p class="text-left text-blue">Priorities</p>
+          <p class="text-left text-blue">{{$t 'family.map.priorities'}}</p>
         </div>
         <div class="margin-tb-20px row">
           <div class="col-md-12">
+            <p class="strike-text centered no-data {{ className }}">{{$t 'family.map.no-priority'}}</p>
             <div class="list-priorities">
               {{#each snapshot.indicators_priorities}}
+              {{^if this.is_attainment}}
               <div class="row margin-tb-10px">
                 <div class="col-md-12">
                   <span id="item-number" class="pull-left ">{{[../../../helpers/counter] @index}}</span>
@@ -32,7 +34,7 @@
                   <span>{{this.reason}}</span>
                 </div>
               </div>
-
+              {{/if}}
               {{/each}}
             </div>
           </div>
@@ -46,12 +48,12 @@
       <article class="card">
         <div  class="card-block">
           <div class="card-title row">
-            <p class="text-left text-blue">Indicators</p>
+            <p class="text-left text-blue">{{$t 'family.map.indicators'}}</p>
           </div>
           <div class="indicator-list margin-tb-20px row">
             {{#each snapshotIndicators}}
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 indicator-circle-snapshot">
-              <img class="center-block" src="{{ this.image }}" >
+              <div id="circle" class="circle-content {{ this.clazz }}" />
               <br> <p class="text-center article-title">{{ this.name }}</p>
             </div>
             {{/each}}

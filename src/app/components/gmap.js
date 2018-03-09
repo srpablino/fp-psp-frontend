@@ -79,7 +79,7 @@ class Gmap extends React.Component {
             lat={this.state.center.lat}
             lng={this.state.center.lng}
             zoom={this.state.zoom}
-            loadingMessage="Loading..."
+            loadingMessage={t('schemaForm.loading')}
             params={params}
             onMapCreated={this.onMapCreated}
             onClick={this.onClick()}
@@ -87,7 +87,6 @@ class Gmap extends React.Component {
             <Marker
               lat={this.state.point.lat}
               lng={this.state.point.lng}
-              draggable
             />
           </Gmaps>
         </div>

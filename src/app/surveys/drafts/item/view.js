@@ -27,8 +27,8 @@ export default Mn.View.extend({
     var self = this;
     event.preventDefault();
     ModalService.request('confirm', {
-      title: 'Confirm Deletion',
-      text: `Are you sure you want to delete the draft"?`
+      title: t('draft.messages.delete-confirm-title'),
+      text: t('draft.messages.delete-confirm')
     }).then(confirmed => {
       if (!confirmed) {
         return;
@@ -40,7 +40,7 @@ export default Mn.View.extend({
           FlashesService.request('add', {
             timeout: 2000,
             type: 'info',
-             title: 'The draft has been deleted!'
+             title: t('draft.messages.delete-done')
           });
     
          

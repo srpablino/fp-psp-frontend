@@ -21,14 +21,18 @@ export default Mn.View.extend({
     return {
       snapshot: this.snapshotModel.attributes,
       createdAt: this.formatCreatedDate(),
+      className: this.isPrioritized(),
       snapshotIndicators: this.snapshotModel.attributes.indicators_survey_data.map(
         set => ({
-          image: this.stoplightImage(set.value),
+          clazz: set.value !== null ? set.value.toLowerCase() : 'gray',
           value: set.value,
           name: set.name
         })
       )
     };
+  },
+  isPrioritized(){
+    return this.model.attributes.snapshot_indicators.indicators_priorities.length > 0 ? 'hidden' : '' ;
   },
   formatCreatedDate() {
     const createdAt = this.snapshotModel.attributes.created_at;
@@ -36,16 +40,5 @@ export default Mn.View.extend({
       return null;
     }
     return moment(createdAt).format('YYYY-MM-DD');
-  },
-  stoplightImage(color) {
-    if (color === 'GREEN') {
-      return '/static/images/icon_elipse_verde_02.png';
-    } else if (color === 'YELLOW') {
-      return '/static/images/icon_elipse_amarillo_02.png';
-    } else if (color === 'RED') {
-      return '/static/images/icon_elipse_rojo_02.png';
-    }else if (color === 'NONE') {
-      return '/static/images/icon_elipse_gris_02.png';
-    }
   }
 });

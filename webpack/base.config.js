@@ -1,11 +1,15 @@
-var webpack = require('webpack');
+/* eslint import/no-extraneous-dependencies:0 */
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: {
     'js/main': './src/app/main',
     'js/login_main': './src/login_app/login_main',
     vendor: ['jquery', 'bootstrap', 'backbone', 'backbone.marionette', 'lodash']
+  },
+  resolve: {
+    fallback: path.join(__dirname, 'helpers')
   },
   module: {
     loaders: [
@@ -15,10 +19,17 @@ module.exports = {
       {
         test: /bootstrap.+\.(jsx|js)$/,
         loader: 'imports?jQuery=jquery,$=jquery,this=>window'
+      },
+      {
+        test: /\.(png|jp(e*)g|svg)$/,
+        loader: 'url-loader'
       }
     ]
   },
   plugins: [
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /es|en/)
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /es|en/),
+    new webpack.DefinePlugin({
+      APP_VERSION: JSON.stringify(require('../package.json').version)
+    })
   ]
 };

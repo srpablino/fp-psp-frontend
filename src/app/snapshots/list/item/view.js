@@ -3,6 +3,7 @@ import 'eonasdan-bootstrap-datetimepicker';
 import Bn from 'backbone';
 import $ from 'jquery';
 import moment from 'moment';
+import 'moment-timezone';
 
 import Template from './template.hbs';
 import PriorityView from './priority/view';
@@ -30,7 +31,7 @@ export default Mn.View.extend({
 
   serializeData() {
     var self = this;
-    
+
     const headerItems = Storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
 
@@ -45,14 +46,28 @@ export default Mn.View.extend({
         data: this.model.attributes // ,
       },
       data: this.model.attributes.indicators_survey_data.map(value => ({
-        clazz: value.value !== null ? value.value.toLowerCase() : 'gray',
+        classNames: this.getClassNames(value.value),
         value: value.value,
-        name: value.name
+        name: value.name,
+        priority: this.getPriorityClass(value.name, value.value)
+
       })),
       priorities: this.props.model.attributes.indicators_priorities,
-      clazz:
-        this.props.model.attributes.indicators_priorities <= 0 ? 'hidden' : ''
+      tablePriorityClassNames: this.getTableClass(false),
+      tableAchievedClassNames: this.getTableClass(true)
     };
+  },
+
+  getPriorityClass(name, value){
+    const isPriority = this.model.attributes.indicators_priorities.find(data => data.indicator === name);
+    return isPriority && `priority-indicator-${value.toLowerCase()}`;
+  },
+  getClassNames(value) {
+    return value !== null ? value.toLowerCase() : 'none ' ;
+  },
+  getTableClass(ban){
+    const isPriority = this.model.attributes.indicators_priorities.find(data => data.is_attainment === ban);
+    return isPriority ? '' : 'hidden';
   },
 
   handleOnDeletePriority(event) {
@@ -64,8 +79,8 @@ export default Mn.View.extend({
     });
 
     ModalService.request('confirm', {
-      title: 'Confirm Deletion',
-      text: `Are you sure you want to delete this priority?`
+      title: t('survey.priority.messages.delete-confirm-title'),
+      text: t('survey.priority.messages.delete-confirm')
     }).then(confirmed => {
       if (!confirmed) {
         return;
@@ -85,7 +100,7 @@ export default Mn.View.extend({
       return FlashesService.request('add', {
         timeout: 2000,
         type: 'info',
-        title: `The priority has been deleted!`
+        title: t('survey.priority.messages.delete-done')
       });
 
     });
@@ -95,7 +110,9 @@ export default Mn.View.extend({
     if (!date) {
       return null;
     }
-    return moment(date).format('DD/MM/YYYY hh:mm:ss');
+
+       return moment.tz(date, "Etc/GMT").clone().tz(moment.tz.guess()).format('DD/MM/YYYY HH:mm:ss');
+
   },
 
   formartterOnlyDate(date) {
@@ -111,7 +128,9 @@ export default Mn.View.extend({
     const indicatorSelectedValue =
       e.target.parentNode.children['indicator-value'].innerHTML;
 
+    let success = false;
     var exists = [];
+
 
     exists = this.props.model.attributes.indicators_priorities.filter(
       priority => priority.indicator === indicatorSelected
@@ -121,43 +140,43 @@ export default Mn.View.extend({
       return FlashesService.request('add', {
         timeout: 2000,
         type: 'info',
-        title: `The "${indicatorSelected}" indicator was previously selected`
+        title: t('survey.priority.messages.previous-selected', {indicator: indicatorSelected})
       });
 
     }
 
-    if (indicatorSelectedValue.toUpperCase() === 'GREEN') {
-      return FlashesService.request('add', {
-        timeout: 2000,
-        type: 'info',
-        title: `The "${indicatorSelected}" indicator is really good`
-      });
-
-    }else if (indicatorSelectedValue.toUpperCase() === 'NONE') {
+    if (indicatorSelectedValue.toUpperCase() === 'NONE') {
         return FlashesService.request('add', {
           timeout: 2000,
           type: 'info',
-          title: `You have chosen not to answer the question`
+          title: t('survey.priority.messages.indicator-not-answered')
         });
 
     }
-    this.showDialogPriority(indicatorSelected);
+
+    success = indicatorSelectedValue.toUpperCase() === 'GREEN' ;
+
+    this.showDialogPriority(indicatorSelected, success );
     this.priorityDialog.open();
     this.priorityDialog.on('change', data => {
       this.props.model.attributes.indicators_priorities.push(data);
+
       setTimeout(() => {
         this.render();
       }, 300);
+
       this.priorityDialog.close();
     });
   },
 
-  showDialogPriority(indicator) {
+  showDialogPriority(indicator, success) {
     const dataIdConfirmOperacion = Math.random();
 
     this.priorityDialog = new PriorityView({
+      app: this.app,
       dataId: dataIdConfirmOperacion,
       indicatorName: indicator,
+      isAttainment: success,
       snapshotIndicatorId: this.model.attributes.snapshot_indicator_id,
       obj: this
     });
@@ -166,26 +185,35 @@ export default Mn.View.extend({
   },
 
   handleShowFamilyMap() {
- 
+
     if(this.model.attributes.indicators_priorities.length<1 && (this.model.attributes.count_red_indicators>0 || this.model.attributes.count_yellow_indicators>0)){
-      
+
       ModalService.request('confirm', {
-        title: 'Information',
-        text: `You have not set any priorities yet, are sure you want to finish the survey?`
+        title: t('general.messages.information'),
+        text: t('survey.priority.messages.without-priorities')
       }).then(confirmed => {
         if (!confirmed) {
           return;
         }
+        this.savedNotification();
         this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
           this.props.model.attributes.snapshot_economic_id
         }`);
       });
 
     } else {
+      this.savedNotification();
       this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
         this.props.model.attributes.snapshot_economic_id
       }`);
     }
+  },
+  savedNotification(){
+    FlashesService.request('add', {
+      timeout: 4000,
+      type: 'info',
+      title: t('survey.summary.messages.finish', {code: `${this.props.model.attributes.family.code}`} )
+    });
   },
 
   finishSurvey(e){
@@ -194,8 +222,8 @@ export default Mn.View.extend({
 
     if($('#check-privacity').is(':checked')) {
       ModalService.request('confirm', {
-        title: 'Information',
-        text: `Your personal information has not been saved in the platform`
+        title: t('general.messages.information'),
+        text: t('survey.summary.messages.not-save')
       }).then(confirmed => {
         if (!confirmed) {
           return;
@@ -210,7 +238,7 @@ export default Mn.View.extend({
       });
     } else {
       this.handleShowFamilyMap();
-     
+
     }
   },
 
@@ -228,7 +256,7 @@ export default Mn.View.extend({
       debug: false,
       importStyle: true,
       pageTitle: '',
-      header: '<h3>Survey Results</h3>',
+      header: `<h3>${t('survey.summary.print-header')}</h3>`,
       footer: null,
       base: false,
       removeScripts: true,

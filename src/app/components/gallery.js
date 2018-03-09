@@ -1,4 +1,5 @@
 import React from 'react';
+import defaultImage from '../../static/images/image_default.png';
 
 class Gallery extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class Gallery extends React.Component {
 
   imagesWillRender() {
     let images = [];
-    for (let i = 0; i < this.state.images.length; i++) {
+    for (let i = 0; i < this.state.images.length - 1; i++) {
       let url = this.state.images[i].url;
       let description = this.state.images[i].description;
       let value = this.state.images[i].value;
@@ -87,8 +88,9 @@ class Gallery extends React.Component {
       for (let i = 0; i < this.state.images.length - 1; i++) {
         images.push(
           this.renderImage(
-            '/static/images/image_default.png',
-            'Loading...',
+            // '/static/images/image_default.png',
+            defaultImage,
+            t('schemaForm.loading'),
             'NONE',
             i,
             'gallery-image gallery-image-div'
@@ -105,16 +107,16 @@ class Gallery extends React.Component {
           {this.state.title} {this.state.required}
         </label>
 
-        <div className="gallery-no-answer text-center">
+        <div className="images col-md-10 col-md-offset-1">
+          <div className="row">{images}</div>
+        </div>
+        <div className="gallery-no-answer pull-left">
           <input
             type="checkbox"
             checked={this.state.isGoing}
             onChange={this.handleInputChange}
           />
-          &#32;&#32; I&#39;d prefer not to answer
-        </div>
-        <div className="images col-md-10 col-md-offset-1">
-          <div className="row">{images}</div>
+          <span className="labelCheck"> {t('schemaForm.not-answer')}</span>
         </div>
       </div>
     );
