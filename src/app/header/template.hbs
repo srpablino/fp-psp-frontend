@@ -1,62 +1,67 @@
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid fp-navbar">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid fp-navbar">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
 
-      </div>
-      <div id="navbar1" class="navbar-collapse collapse">
-        <ul id="menu-left" class="nav navbar-nav navbar-left">
-          <li>
-            <a class="menu-item" href="{{mainItem.link}}" style="">
-              <img src="/static/images/icon_stoplight.png" alt="Dashboard">
-            </a>
-          </li>
-          {{#each navigationItems}}
-            <li>
-              <a href="{{this.link}}" class="menu-item">{{this.name}}</a>
-            </li>
-          {{/each}}
-
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}}
-              <b class="caret"></b>
-              <img class="center-block" src="/static/images/icon_user.png" alt="Poverty Stoplight">
-            </a>
-            <ul class="dropdown-menu">
-              <li id="menu-manage" style="display:none;">
-                <a href="#security" data-bypass>{{$t 'header.manage-families'}}</a>
-              </li>
-              <li>
-                <a id="logout-link" href="#logout" data-bypass>{{$t 'header.logout'}}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-              <img src="/static/images/blank.gif" class="current-language-flag flag flag-{{currentFlag}}" /> {{currentLocale}} <span class="caret"></span>
-              </a>
-            <ul class="dropdown-menu" id="locales" role="menu">
-              <li class="es_PY"><a><img src="/static/images/blank.gif" class="flag flag-py" /> {{$t 'header.locale.es_PY'}}</a></li>
-              <li class="en_US"><a><img src="/static/images/blank.gif" class="flag flag-us" /> {{$t 'header.locale.en_US'}}</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <!--/.nav-collapse -->
     </div>
-    <!--/.container-fluid -->
-  </nav>
+    <div id="navbar1" class="navbar-collapse collapse">
+      <ul id="menu-left" class="nav navbar-nav navbar-left">
+        <li>
+          <a class="menu-item" href="{{mainItem.link}}" style="">
+            <img src="/static/images/icon_stoplight.png" alt="Dashboard">
+          </a>
+        </li>
+        {{#each navigationItems}}
+        <li>
+          <a href="{{this.link}}" class="menu-item">{{this.name}}</a>
+        </li>
+        {{/each}}
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}}
+            <b class="caret"></b>
+            <img class="center-block" src="/static/images/icon_user.png" alt="Poverty Stoplight">
+          </a>
+          <ul class="dropdown-menu">
+            <li id="menu-manage" style="display:none;">
+              <a href="#security" data-bypass>{{$t 'header.manage-families'}}</a>
+            </li>
+            <li>
+              <a id="logout-link" href="#logout" data-bypass>{{$t 'header.logout'}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <img src="/static/images/blank.gif" class="current-language-flag flag flag-{{currentFlag}}" /> {{currentLocale}}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" id="locales" role="menu">
+            <li class="es_PY">
+              <a>
+                <img src="/static/images/blank.gif" class="flag flag-py" /> {{$t 'header.locale.es_PY'}}</a>
+            </li>
+            <li class="en_US">
+              <a>
+                <img src="/static/images/blank.gif" class="flag flag-gb" /> {{$t 'header.locale.en_US'}}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!--/.nav-collapse -->
+  </div>
+  <!--/.container-fluid -->
+</nav>
 </div>
-
-

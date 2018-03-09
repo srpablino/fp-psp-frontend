@@ -63,14 +63,29 @@ export default Mn.View.extend({
       mainItem: this.model.get('mainItem'),
       navigationItems: this.model.get('navigationItems'),
       username: this.getUserProfileName(),
-      currentLocale: this.app.getSession().get('locale')? t(`header.locale.${this.app.getSession().get('locale')}`):t('header.locale.es_PY'),
-      currentFlag: this.app.getSession().get('locale')?this.app.getSession().get('locale').substring(3).toLowerCase():'py'
-
+      currentLocale: this.app.getSession().get('locale')
+        ? t(`header.locale.${this.app.getSession().get('locale')}`)
+        : t('header.locale.es_PY'),
+      currentFlag: this.getFlag()
     };
   },
+  getFlag() {
+    if (this.app.getSession().get('locale')) {
+      if (
+        this.app
+          .getSession()
+          .get('locale')
+          .substring(3)
+          .toLowerCase() === 'us'
+      ) {
+        return 'gb';
+      }
+    }
+    return 'py';
+  },
 
-  localeSelected(event){
-    event.preventDefault();    
+  localeSelected(event) {
+    event.preventDefault();
     this.app.changeLocale($(event.currentTarget).attr('class'));
   }
 });
