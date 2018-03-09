@@ -1,12 +1,15 @@
 import Storage from 'backbone.storage';
+import Collection from './list/collection';
+import Model from './add/model';
 
 var SurveysStorage = Storage.extend({
-
+  model: Model,
+  collection: Collection,
     getSubHeaderItems() {
       return {
         navigationItems: [
           {
-            name: `Available Surveys`,
+            name: t(`subheader.surveys.list-surveys`),
             link: `/#surveys`
           }
         ]
@@ -16,11 +19,11 @@ var SurveysStorage = Storage.extend({
       return {
         navigationItems: [
           {
-            name: `Available Surveys`,
+            name: t(`subheader.surveys.list-surveys`),
             link: `/#surveys`
           },
           {
-            name: `Drafts`,
+            name: t(`subheader.surveys.list-drafts`),
             link: `/#surveys/drafts`
           }
         ]

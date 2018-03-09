@@ -55,6 +55,7 @@ const organizations = props => {
       },
       showOrganizationsByApplication(entity, applicationId) {
         const model = new Model();
+        model.urlRoot = `${env.API}/organizations/application`;
         model
           .fetch({
             data: {applicationId}

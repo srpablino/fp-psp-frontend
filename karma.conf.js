@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = function(config) {
@@ -17,11 +17,18 @@ module.exports = function(config) {
     },
 
     webpack: {
+      resolve: {
+        fallback: __dirname + '/webpack/helpers'
+      },
       module: {
         loaders: [
           { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' },
           { test: /\.hbs$/, loader: 'handlebars-loader' },
-          { test: /\.json$/, loader: 'json-loader' }
+          { test: /\.json$/, loader: 'json-loader' },
+          {
+            test: /\.(png|jp(e*)g|svg)$/,
+            loader: 'url-loader'
+          }
         ]
       }
     },

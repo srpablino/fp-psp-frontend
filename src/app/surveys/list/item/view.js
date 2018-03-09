@@ -35,8 +35,8 @@ export default Mn.View.extend({
 
   handleEdit(event) {
     event.preventDefault();
-    // @fhermosilla FIXME: this line doesn't work
-    // this.props.addSurvey(this.model);
+    Bn.history.navigate(`/surveys/${this.model.attributes.id}/edit`, true);
+
   },
   handleDelete(event) {
     event.preventDefault();

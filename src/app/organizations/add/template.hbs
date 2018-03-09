@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card-title">
-              <h4> Add an Organisation
+              <h4> {{$t 'organization.form.add-title'}}
                 <img class="pull-right" src="/static/images/icon_more.png">
               </h4>
             </div>
@@ -15,9 +15,8 @@
         <div class="row">
           <div class="col-md-12">
             <div class="margin-tb-35px" id="img-cam">
-              <img id="image-logo" src="{{logoImage}}"
-                   class="card-img-top img-responsive center-block select-file" alt="" />
-              <p id="image-logo-text" class="text-center select-file">Click to upload a logo</p>
+              <img id="image-logo" src="{{logoImage}}" class="card-img-top img-responsive center-block select-file" alt="" />
+              <p id="image-logo-text" class="text-center select-file">{{$t 'organization.form.logo-upload'}}</p>
               <div class="form-group">
                 <input type="file" name="image" id="input-image-file" value="{{organization.image}}"
                        class="form-control" style="display: none;">
@@ -29,24 +28,21 @@
           <div class="col-md-8 col-md-offset-2">
             <div class="fp-form-container padding-b-30px" id="add-organization">
               <form data-toggle="validator" role="form" class="form-vertical" id="form">
-                <div class="alert alert-warning" style="display:none">
-                  <strong>Attention! All the fields with * are mandatory</strong>
-                </div>
                 <div class="form-group">
-                  <input name="name" type="text" value="{{organization.name}}" placeholder="Organisation name"
+                  <input name="name" type="text" value="{{organization.name}}" placeholder="* {{$t 'organization.form.name'}}"
                          class="input-bg-gray form-control" required>
                 </div>
                 <div class="form-group">
-                  <input name="code" type="text" value="{{organization.code}}" placeholder="Code"
+                  <input name="code" type="text" value="{{organization.code}}" placeholder="* {{$t 'organization.form.code'}}"
                          class="input-bg-gray form-control" required
                          {{#if editing}} readonly {{/if}}if}}>
                 </div>
                 <div class="form-group">
-                  <input name="description" type="text" value="{{organization.description}}" placeholder="Description"
+                  <input name="description" type="text" value="{{organization.description}}" placeholder="* {{$t 'organization.form.description'}}"
                          class="input-bg-gray form-control" required>
                 </div>
                 <div class="form-group">
-                  <input name="information" type="text" value="{{organization.information}}" placeholder="information"
+                  <input name="information" type="text" value="{{organization.information}}" placeholder="{{$t 'organization.form.information'}}"
                          class="input-bg-gray form-control" required>
                 </div>
 
@@ -54,14 +50,14 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <button type="submit" name="register-submit" id="submit" class="btn" value="Save">
-                        SAVE ORGANISATION
+                        {{$t 'organization.form.buttons.add'}}
                       </button>
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="text-center">
-                    <a href="#organizations" id="cancel" tabindex="5" class="">Cancel</a>
+                    <a href="#organizations" id="cancel" tabindex="5" class="">{{$t 'organization.form.buttons.cancel'}}</a>
                   </div>
                 </div>
               </form>

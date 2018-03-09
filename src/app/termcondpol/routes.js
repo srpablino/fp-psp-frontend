@@ -10,9 +10,10 @@ const termcondpol = props => {
     controller: {
 
       showTermCondPol(hashSurvey, hashType) {
-
         const model = new TermCondPolModel();
         const surveyId = parseInt(hashSurvey, 10);
+        const formData = app.getSession().get('formData');
+        const reAnswer = app.getSession().get('reAnswer');
         model
           .fetch({
             data: {
@@ -20,7 +21,9 @@ const termcondpol = props => {
             }
           })
           .then(() => {
-            app.showViewOnRoute(new TermCondPolView({ model, app, surveyId }));
+            app.showViewOnRoute(new TermCondPolView({
+               model, app, surveyId, reAnswer, formData
+             }));
           });
       }
     }

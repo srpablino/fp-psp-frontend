@@ -11,8 +11,10 @@ class ErrorHandler {
     $.ajaxSetup({
       beforeSend: xhr => {
         const accessToken = this.sessionMgr.getAccessToken();
+      
         if (accessToken) {
           xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+          xhr.setRequestHeader('X-Locale', this.sessionMgr.getLocale() || 'es');
         }
       },
       statusCode: {

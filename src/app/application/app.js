@@ -1,5 +1,6 @@
 import Bb from 'backbone';
 import Mn from 'backbone.marionette';
+import Polyglot from 'node-polyglot';
 import nprogress from 'nprogress';
 import initRouter from './router';
 import LayoutView from './layout-view';
@@ -7,14 +8,27 @@ import sessionMgr from './session-manager';
 import FlashesService from '../flashes/service';
 import ModalService from '../modal/service';
 import errorHandler from './error-handler';
+import es from '../../static/i18n/es_PY';
+import I18nModel from '../i18n/model';
+
+
 
 export default Mn.Application.extend({
   region: '#main',
 
   initialize() {
+
     this.sessionMgr = sessionMgr;
+    let phrases = this.sessionMgr.getSession().get('messages')
+    if (!phrases) phrases = es;
+
+    this.polyglot = new Polyglot({phrases});
+    window.polyglot = this.polyglot
+    window.t = (string, data) => this.polyglot.t(string, data);
+
     this.layoutView = new LayoutView({ app: this });
     this.router = {};
+
   },
 
   onStart() {
@@ -83,6 +97,17 @@ export default Mn.Application.extend({
     this.sessionMgr.logout().then(() => {
       this.toLoginPage();
     });
+  },
+  changeLocale(newLocale){
+    const app = this;
+    new I18nModel({code: newLocale}).fetch({
+      success(locale) {
+        app.sessionMgr.getSession().save({
+          locale: newLocale,
+          messages: locale.toJSON()
+        });
+        window.location.reload();
+    }});
   },
   toLoginPage() {
     this.sessionMgr.rememberRoute();

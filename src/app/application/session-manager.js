@@ -16,6 +16,9 @@ const SessionManager = Bn.Model.extend({
   getAccessToken() {
     return session.get('access_token');
   },
+  getLocale(){
+    return session.get('locale');
+  },
   logout() {
     return $.ajax({
       url: `${env.API_AUTH}/revoke-token`,

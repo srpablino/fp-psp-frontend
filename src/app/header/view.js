@@ -9,7 +9,8 @@ export default Mn.View.extend({
 
   events: {
     'click #menu-left .menu-item': 'highlight',
-    'click #menu-left img': 'highlightFirstElement'
+    'click #menu-left img': 'highlightFirstElement',
+    'click #locales li': 'localeSelected'
   },
 
   highlight(e) {
@@ -61,7 +62,30 @@ export default Mn.View.extend({
     return {
       mainItem: this.model.get('mainItem'),
       navigationItems: this.model.get('navigationItems'),
-      username: this.getUserProfileName()
+      username: this.getUserProfileName(),
+      currentLocale: this.app.getSession().get('locale')
+        ? t(`header.locale.${this.app.getSession().get('locale')}`)
+        : t('header.locale.es_PY'),
+      currentFlag: this.getFlag()
     };
+  },
+  getFlag() {
+    if (this.app.getSession().get('locale')) {
+      if (
+        this.app
+          .getSession()
+          .get('locale')
+          .substring(3)
+          .toLowerCase() === 'us'
+      ) {
+        return 'gb';
+      }
+    }
+    return 'py';
+  },
+
+  localeSelected(event) {
+    event.preventDefault();
+    this.app.changeLocale($(event.currentTarget).attr('class'));
   }
 });
