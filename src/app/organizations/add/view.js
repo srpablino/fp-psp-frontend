@@ -20,7 +20,7 @@ export default Mn.View.extend({
   serializeData() {
     return {
       organization: this.model.attributes,
-      editing: this.model.get('id') !== undefined,
+      isNew: this.model.get('id') === undefined,
       logoImage: this.model.get('logoUrl') || '/static/images/icon_camara.png'
     };
   },

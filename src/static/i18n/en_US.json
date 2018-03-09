@@ -16,6 +16,7 @@
       "information": "Information",
       "buttons": {
         "add": "ADD ORGANIZATION",
+        "edit": "SAVE ORGANIZATION",
         "cancel": "Cancel"
       },
       "add-success": "Organization created successfully",

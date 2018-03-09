@@ -16,6 +16,7 @@
       "information": "Información",
       "buttons": {
         "add": "AGREGAR ORGANIZACION",
+        "edit": "GUARDAR ORGANIZACION",
         "cancel": "Cancelar"
       },
       "add-success": "Organización creada exitosamente",

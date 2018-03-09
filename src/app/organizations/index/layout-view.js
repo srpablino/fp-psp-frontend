@@ -2,7 +2,7 @@ import Mn from 'backbone.marionette';
 import Bn from 'backbone';
 import $ from 'jquery';
 
-import { debounce } from 'lodash';
+import {debounce} from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
@@ -20,6 +20,7 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
+    this.model = options.models;
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
@@ -30,7 +31,6 @@ export default Mn.View.extend({
     this.search = debounce(this.search, 300);
   },
   onRender() {
-
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
@@ -46,13 +46,13 @@ export default Mn.View.extend({
   },
   showList() {
     this.getRegion('list').show(
-      new CollectionView({ collection: this.collection })
+      new CollectionView({collection: this.collection})
     );
   },
   handleSearch() {
     var name = this.$el.find('#search').val();
     this.collection = new Bn.Collection(this.model.get('list'));
-    if(!name){
+    if (!name) {
       this.showList();
       return;
     }
@@ -65,10 +65,10 @@ export default Mn.View.extend({
     setTimeout(() => {
 
       let params = {};
-      if(self.app.getSession().get('user').application !== null){
+      if (self.app.getSession().get('user').application !== null) {
         params.applicationId = self.app.getSession().get('user').application.id;
       }
-      if(self.app.getSession().get('user').organization !== null){
+      if (self.app.getSession().get('user').organization !== null) {
         params.organizationId = self.app.getSession().get('user').organization.id
       }
 

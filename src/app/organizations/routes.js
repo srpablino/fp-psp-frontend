@@ -2,14 +2,13 @@ import OrganizationsView from './index/layout-view';
 import HubView from './index/hubs/layout-view';
 import OrganizationView from './show/view';
 import OrganizationFormView from './add/view';
-// import organizationsStorage from './storage';
 import hubStorage from './index/hubs/storage';
 import OrganizationDashboard from './dashboard/model';
 import Model from './model';
 import env from "../env";
 
 const organizations = props => {
-  const { app } = props;
+  const {app} = props;
   const routes = {
     appRoutes: {
       'collaborators(/:entity)': 'showHubs',
@@ -23,35 +22,25 @@ const organizations = props => {
       // paginated organizations
       showHubs(entity) {
         hubStorage.find().then(model => {
-          app.showViewOnRoute(new HubView({ model, app, entity }));
+          app.showViewOnRoute(new HubView({model, app, entity}));
         });
       },
       showOrganizations() {
-        // organizationsStorage.find().then(model => {
-        //   app.showViewOnRoute(new OrganizationsView({ model, app }));
-        // });
-
-        const model = new Model();
+        const models = new Model();
         let params = {};
         params.applicationId = app.getSession().get('user').application.id;
-        if(app.getSession().get('user').organization !== null){
+        if (app.getSession().get('user').organization !== null) {
           params.organizationId = app.getSession().get('user').organization.id
         }
 
-        model.urlRoot = `${env.API}/organizations/application`;
-        model
-          .fetch({
-            data: params
-          })
+        models.urlRoot = `${env.API}/organizations/application`;
+        models.fetch({
+          data: params
+        })
           .then(() => {
             app.showViewOnRoute(
-              new OrganizationsView({
-                model,
-                app,
-              })
-            );
+              new OrganizationsView({models, app,}));
           });
-
       },
       showOrganizationsByApplication(entity, applicationId) {
         const model = new Model();
