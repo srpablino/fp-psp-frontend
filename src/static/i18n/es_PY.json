@@ -18,9 +18,17 @@
         "add": "AGREGAR ORGANIZACION",
         "save": "GUARDAR ORGANIZACION",
         "cancel": "Cancelar"
-      },
-      "add-success": "Organización guardada exitosamente",
-      "add-failed": "La Organización ya existe"
+      }
+    },
+    "save": {
+      "success": "Organización guardada exitosamente",
+      "failed": "La Organización ya existe"
+    },
+    "delete": {
+      "confirm-title": "Confirmar Eliminado",
+      "confirm-text": "Está seguro que desea eliminar esta Organización?",
+      "success": "La Organización ha sido eliminada",
+      "failed": "La Organización no pudo ser elimianda"
     }
   },
   "general": {
@@ -149,11 +157,9 @@
         "comments": "Comentarios"
       }
     },
-
     "attainment": {
       "title": "Mis logros"
     },
-
     "add": {
       "main-title": "Encuesta",
       "title-placeholder": "Título de la encuesta",
@@ -247,9 +253,17 @@
         "add": "AGREGAR HUB",
         "save": "GUARDAR HUB",
         "cancel": "Cancelar"
-      },
-      "add-success": "Hub guardado exitosamente",
-      "add-failed": "El Hub ya existe"
+      }
+    },
+    "save": {
+      "success": "Hub guardado exitosamente",
+      "failed": "El Hub ya existe"
+    },
+    "delete": {
+      "confirm-title": "Confirmar Eliminado",
+      "confirm-text": "Está seguro que desea eliminar este Hub?",
+      "success": "El Hub ha sido eliminado",
+      "failed": "El Hub no pudo ser elimiando"
     }
   },
   "user": {

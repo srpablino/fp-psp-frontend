@@ -18,9 +18,17 @@
         "add": "ADD ORGANIZATION",
         "save": "SAVE ORGANIZATION",
         "cancel": "Cancel"
-      },
-      "add-success": "Organization saved successfully",
-      "add-failed": "Organization already exist"
+      }
+    },
+    "save": {
+      "success": "Organization saved successfully",
+      "failed": "Organization already exist"
+    },
+    "delete": {
+      "confirm-title": "Confirm Deletion",
+      "confirm-text": "Are you sure you want to delete this Organization?",
+      "success": "The organisation has been deleted",
+      "failed": "The organisation could not be deleted"
     }
   },
   "general": {
@@ -152,7 +160,6 @@
     "attainment": {
       "title": "My Indicators Achieved"
     },
-
     "add": {
       "main-title": "Survey",
       "title-placeholder": "Surveys´s title",
@@ -246,9 +253,17 @@
         "add": "ADD HUB",
         "save": "SAVE HUB",
         "cancel": "Cancel"
-      },
-      "add-success": "Hub saved successfully",
-      "add-failed": "Hub already exist"
+      }
+    },
+    "save": {
+      "success": "Hub saved successfully",
+      "failed": "Hub already exist"
+    },
+    "delete": {
+      "confirm-title": "Confirm Deletion",
+      "confirm-text": "Are you sure you want to delete this Hub?",
+      "success": "The Hub has been deleted",
+      "failed": "The Hub could not be deleted"
     }
   },
   "user": {
