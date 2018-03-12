@@ -117,9 +117,9 @@
         "print": "Imprimir"
       },
       "family": "Familia",
-      "snapshot": "Semáforo tomado",
+      "snapshot": "Semáforo tomado el",
       "not-share": "Prefiero no compartir la situación de mi familia",
-      "print-header": "Resultados de la Encuesta",
+      "print-header": "Mapa de vida",
       "messages": {
         "not-save": "Su información personal no será guardada en la plataforma",
         "finish": "Has completado tu semaforo satisfactoriamente. El codigo de tu familia es \"%{code}\" "

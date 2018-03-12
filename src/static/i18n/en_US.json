@@ -118,8 +118,8 @@
       },
       "family": "Household",
       "snapshot": "Snapshot",
-      "not-share": "I'd prefer not to share my household's situation",
-      "print-header": "Survey Results",
+      "not-share": "I'd prefer not to share my family's situation",
+      "print-header": "Life Map",
       "messages": {
         "not-save": "Your personal information has not been saved in the platform",
         "finish": "Your snapshot was completed successfully. The household's code is \"%{code}\" "
