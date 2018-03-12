@@ -256,7 +256,7 @@ export default Mn.View.extend({
       debug: false,
       importStyle: true,
       pageTitle: '',
-      header: `<h3>${t('survey.summary.print-header')}</h3>`,
+      header: `<h3> &nbsp; ${t('survey.summary.print-header')}</h3>`,
       footer: null,
       base: false,
       removeScripts: true,
