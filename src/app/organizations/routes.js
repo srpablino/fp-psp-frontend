@@ -27,21 +27,27 @@ const organizations = props => {
         });
       },
       showOrganizations() {
-        const models = new Model();
+        const model = new Model();
         let params = {};
         params.applicationId = app.getSession().get('user').application.id;
-        if (app.getSession().get('user').organization !== null) {
+        if(app.getSession().get('user').organization !== null){
           params.organizationId = app.getSession().get('user').organization.id
         }
 
-        models.urlRoot = `${env.API}/organizations/application`;
-        models.fetch({
-          data: params
-        })
+        model.urlRoot = `${env.API}/organizations/application`;
+        model
+          .fetch({
+            data: params
+          })
           .then(() => {
             app.showViewOnRoute(
-              new OrganizationsView({models, app,}));
+              new OrganizationsView({
+                model,
+                app,
+              })
+            );
           });
+
       },
       showOrganizationsByApplication(entity, applicationId) {
         const model = new Model();
