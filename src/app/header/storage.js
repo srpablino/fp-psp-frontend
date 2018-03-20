@@ -7,7 +7,7 @@ const allMenuItems = {
     { name: 'collaborators', link: '#collaborators/hubs' },
     { name: 'hubs', link: '#applications' },
     { name: 'organizations', link: '#organizations' },
-    { name: 'reports', link: '#reports' },
+    { name: 'reports', link: '#reports/families/byOrganization' },
     { name: 'families', link: '#families' },
     { name: 'surveys', link: '#surveys' },
     { name: 'users', link: '#users' },
