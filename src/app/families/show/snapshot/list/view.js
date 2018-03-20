@@ -21,7 +21,8 @@ export default Mn.View.extend({
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
 
-    $('.sub-menu-tiem > a[href$="snapshots"]')
+
+    $('a.sub-menu-item[href$="snapshots"]')
       .parent()
       .addClass('subActive');
 
@@ -35,7 +36,9 @@ export default Mn.View.extend({
         data: { family_id: this.model.attributes.id }
       })
       .done(() => {
+
         self.getRegion('list').show(new CollectionView({ collection }));
       });
+
   }
 });

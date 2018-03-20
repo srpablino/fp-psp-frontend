@@ -1,15 +1,25 @@
 <article class="card">
   <div class="card-block">
     <div class="card-title row">
-      <p class="text-left text-blue">{{$t 'family.map.snapshot'}} {{createdAt}}</p>
+      <h3 class="text-left text-blue text-center" >{{createdAt}}</h3>
+      <p><span class="text-left text-blue">{{$t 'family.search.organization'}}: </span>{{snapshot.family.organization.name}}</p>
+      <p><span class="text-left text-blue">{{$t 'user.form.user-label'}}:</span> {{snapshot.user.username}}</p>
     </div>
     <a href="#families/{{snapshot.family_id}}/snapshots/{{snapshot.snapshot_economic_id}}" style="text-decoration: none;">
-      <div class="snapshot-indicators row">
-        <div class="light">
-          <span class="center-block light-green light-medium">{{snapshot.count_green_indicators}}</span>
-          <span class="center-block light-yellow light-medium">{{snapshot.count_yellow_indicators}}</span>
-          <span class="center-block light-red light-medium">{{snapshot.count_red_indicators}}</span>
-        </div>
+      <div class=" ">
+
+
+        <table class="table table-striped table-fixed" >
+          <tbody >
+        {{#each snapshotIndicators}}
+
+          <tr>
+            <td  class="col-md-10 " style="vertical-align: middle;"><p class="">{{ this.name }}</p></td>
+            <td  class="col-md-2 "> <div id="circle" class="circle-content {{ this.clazz }}"  style="width: 45px; height: 45px;"/></td>
+          </tr>
+        {{/each}}
+      </tbody>
+      </table>
       </div>
     </a>
 </article>

@@ -1727,3 +1727,19 @@ img.current-language-flag {
   box-shadow: 0 0 30px green;
   border: 2px solid #123512;
 }
+
+.table-fixed thead {
+  width: 97%;
+}
+.table-fixed tbody {
+  height: 350px;
+  overflow-y: auto;
+  width: 100%;
+}
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
