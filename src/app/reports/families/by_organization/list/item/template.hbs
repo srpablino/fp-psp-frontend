@@ -1,0 +1,13 @@
+<div class="indicators-list">
+   
+    {{#each snapshots}}
+    
+         {{#each this.indicators_survey_data}}
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 indicator-circle-snapshot">
+                <div id="circle" class="circle-content {{ this.value }}" data-toggle="tooltip" title="{{$t 'survey.priority.messages.select'}}" />
+                <p id="indicator-name">{{ this.name }}</p>
+                
+            </div>
+        {{/each}}
+    {{/each}}
+</div>
