@@ -13,7 +13,9 @@ export default Mn.View.extend({
 
   serializeData() {
     return {
-     snapshots: this.model.attributes.snapshots
+     snapshots: this.model.attributes
     };
   }
+
+  
 });

@@ -1,13 +1,29 @@
-<div class="indicators-list">
-   
-    {{#each snapshots}}
-    
-         {{#each this.indicators_survey_data}}
-            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 indicator-circle-snapshot">
-                <div id="circle" class="circle-content {{ this.value }}" data-toggle="tooltip" title="{{$t 'survey.priority.messages.select'}}" />
-                <p id="indicator-name">{{ this.name }}</p>
-                
-            </div>
-        {{/each}}
+<div class="indicators-list" >
+    {{#each snapshots}}    
+        <h3 class="text-gray col-md-12" style="font-size: 18px"> Survey: {{this.surveyName}}</h3>
+        
+         
+         <table class="table table-striped margin bottom center col-md-12" >
+            <thead class="thead-light">
+            <tr>
+                {{#each this.snapshots.headers}}
+                    <th class="col-md-3 text-gray">{{this}}</th>
+                {{/each}}
+
+            </tr>
+            </thead>
+            <tbody id="tbodypriorities">
+            {{#each this.snapshots.rows}}
+               
+                <tr>
+                    {{#each this}}
+                        <td class="text-gray"> {{this}}</td>
+                    {{/each}}
+                </tr>
+               
+            {{/each}}
+
+            </tbody>
+        </table>
     {{/each}}
 </div>
