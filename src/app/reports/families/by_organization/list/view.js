@@ -10,14 +10,11 @@ export default Mn.View.extend({
     'click #family-organization-items .panel-heading': 'familySelected'
   },
   regions: {
-    list: '#family-snapshot-items'
   },
 
   initialize(options){
     this.collection = options.collection;
     this.filters = options.filters;
-    this.model = new Model();
-
   },
 
   serializeData() {
@@ -31,19 +28,25 @@ export default Mn.View.extend({
     let self = this;
     let familyId = $(event.currentTarget).attr('data-target').replace('#', '');
     this.filters.family_id = familyId;
-    this.model
+    const regionName = `list-${familyId}`;
+
+    if (!this.hasRegion(regionName)) 
+      this.addRegion(regionName, `#family-snapshot-items-${familyId}`);
+
+    let model = new Model();
+    model
       .fetch({
         data: this.filters,
         success() {
-          self.showList();
+          self.showList(regionName, model);
         }
       });
      
   },
 
-  showList() {
-    this.getRegion('list').show(
-      new ItemView({model: this.model})
+  showList(regionName, model) {
+    this.getRegion(regionName).show(
+      new ItemView({model})
     );
   },
 });

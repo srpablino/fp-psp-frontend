@@ -10,7 +10,6 @@ const reports = props => {
 
 
         showFamiliesByOrgamization() {
-            console.log("aca tengo que mostrar familias por organization");
             app.showViewOnRoute(new FamilyOrganizationView({app}));
         }
     }
