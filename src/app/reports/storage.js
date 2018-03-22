@@ -1,6 +1,6 @@
 import Storage from 'backbone.storage';
-import CollectionFamilyOrganization from './families/by_organization/collection';
-import ModelFamilyOrganization from './families/by_organization/model';
+import CollectionFamilyOrganization from './snapshots/by_organization/collection';
+import ModelFamilyOrganization from './snapshots/by_organization/model';
 
 var ReportsStorage = Storage.extend({
   model: ModelFamilyOrganization,
@@ -9,8 +9,8 @@ var ReportsStorage = Storage.extend({
       return {
         navigationItems: [
           {
-            name: t(`header.reports`),
-            link: `/#reports/families/byOrganization`
+            name: t('report.snapshot.title'),
+            link: `/#reports/snapshots/byOrganization`
           }
         ]
       };
