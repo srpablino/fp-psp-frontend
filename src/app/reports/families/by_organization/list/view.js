@@ -3,11 +3,13 @@ import $ from 'jquery';
 import Template from './template.hbs';
 import Model from './model';
 import ItemView from './item/view';
+import CsvModel from './csv/model';
 
 export default Mn.View.extend({
   template: Template,
   events: {
-    'click #family-organization-items .panel-heading': 'familySelected'
+    'click #family-organization-items .panel-heading': 'familySelected',
+    'click #export':'generateCsv'
   },
   regions: {
   },
@@ -49,4 +51,29 @@ export default Mn.View.extend({
       new ItemView({model})
     );
   },
+
+  generateCsv(event){
+    event.preventDefault();
+    let csvModel = new CsvModel();
+
+
+    csvModel.fetch({
+      data: this.filters,
+      success() {
+        let blob = new Blob([csvModel.attributes.csv]);
+          if (window.navigator.msSaveOrOpenBlob)  
+              window.navigator.msSaveBlob(blob, "snapshots.csv");
+          else
+          {
+              let a = window.document.createElement("a");
+              a.href = window.URL.createObjectURL(blob, {type: "text/plain"});
+              a.download = "filename.csv";
+              document.body.appendChild(a);
+              a.click(); 
+              document.body.removeChild(a);
+          }
+        }
+      
+    }) ;
+  }
 });
