@@ -301,7 +301,8 @@
         "organization": "Organization",
         "search": "Search",
         "choose": "Choose",
-        "all": "All"
+        "all": "All",
+        "not-found": "No results found"
       },
       "buttons": {
         "export": "Download Report"

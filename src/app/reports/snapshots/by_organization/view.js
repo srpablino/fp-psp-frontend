@@ -125,6 +125,8 @@ export default Mn.View.extend({
       this.getRegion('list').show(
         new CollectionView({ collection: this.collection.models, filters: this.filters })
       );
+    } else {
+      this.getRegion('list').show(`<br/> <br/> <p class="text-gray" style="font-size: 20px; text-align:center;">${t('report.snapshot.search.not-found')}</p>`);
     }
   },
 
