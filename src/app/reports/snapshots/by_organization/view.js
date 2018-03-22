@@ -5,6 +5,8 @@ import Collection from './collection';
 import CollectionView from './list/view';
 import OrganizationModel from '../../../organizations/model'
 import utils from '../../../utils';
+import FlashesService from '../../../flashes/service';
+import storage from '../../storage';
 
 export default Mn.View.extend({
   template: Template,
@@ -30,9 +32,21 @@ export default Mn.View.extend({
   },
 
   onRender(){
+
+    const headerItems = storage.getSubHeaderItems();
+    this.app.updateSubHeader(headerItems);
+
     this.setCalendarToVariable('#dateFrom');
     this.setCalendarToVariable('#dateTo');
-    this.obtainOrganizations();
+
+    if(this.app.getSession().userHasRole('ROLE_APP_ADMIN')){
+      this.$el.find('#organizationForm').empty();
+      this.filters.organization_id = this.app.getSession().get('user').organization!==null? 
+      this.app.getSession().get('user').organization.id : '';
+    } else {
+      this.obtainOrganizations();
+    }
+    
 
     return this.organizations;
   },
@@ -76,30 +90,61 @@ export default Mn.View.extend({
 
         this.filters.date_from = this.$el.find('#date1').val() === '' ? '' : this.$el.find('#date1').val();
         this.filters.date_to = this.$el.find('#date2').val() === '' ? '' : this.$el.find('#date2').val();
-        this.filters.organization_id = this.$el.find('#organization').val()==='all'? '' : this.$el.find('#organization').val();
+        if(this.app.getSession().userHasRole('ROLE_HUB_ADMIN')){
+          this.filters.organization_id = this.$el.find('#organization').val()==='all'? '' : this.$el.find('#organization').val();
+        }
         this.filters.application_id = this.$el.find('#organization').val()==='all' && this.app.getSession().get('user').application!==null? 
                 this.app.getSession().get('user').application.id : '';
 
-        this.collection.fetch({
+        let errors = this.validate(this.filters);
+
+        if (errors) {
+          errors.forEach(error => {
+            FlashesService.request('add', {
+              timeout: 2000,
+              type: 'warning',
+              title: error
+            });
+          });
+        } else {
+
+          this.collection.fetch({
             data: this.filters,
             success() {
              self.showList();
              section.reset();
             }
 
-        });
-
-       
+          });
+        } 
     }
-
   },
 
   showList() {
-    this.getRegion('list').show(
-      new CollectionView({ collection: this.collection.models, filters: this.filters })
-    );
+    if(this.collection.models.length>0){
+      this.getRegion('list').show(
+        new CollectionView({ collection: this.collection.models, filters: this.filters })
+      );
+    }
   },
 
+  validate(filters) {
+    const errors = [];
+   
+      if ((filters.organization_id === '' || filters.organization_id ===null) && filters.application_id==='') {
+        errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.organization')}));
+      }
+
+      if (filters.date_from === '') {
+        errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.date-from')}));
+      }
+
+      if (filters.date_to === '') {
+        errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.date-to')}));
+      }
+
+      return errors.length > 0 ? errors : undefined;
+  }
 
 
 });

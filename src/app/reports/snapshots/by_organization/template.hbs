@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <form class="form-inline">
           <div class="form-group">
-            <label>Fecha desde * :</label>
+            <label>{{$t 'report.snapshot.search.date-from'}} * :</label>
             <div class='input-group date' id='dateFrom'>
                 <input id="date1" value={{filters.dateFrom}} type='text' class="form-control" placeholder="DD/MM/YYYY" />
                 <span class="input-group-addon">
@@ -13,7 +13,7 @@
             </div>            
           </div>
           <div class="form-group">
-            <label>Fecha hasta * :</label>
+            <label>{{$t 'report.snapshot.search.date-to'}} * :</label>
             <div class='input-group date' id='dateTo'>
                 <input id="date2" value={{filters.dateTo}} type='text' class="form-control" placeholder="DD/MM/YYYY" />
                 <span class="input-group-addon">
@@ -21,15 +21,15 @@
                 </span>
             </div>            
           </div>
-          <div class="form-group">
-              <label>Organizacion * : </label>
+          <div class="form-group" id="organizationForm">
+              <label is="organizationLabel">{{$t 'report.snapshot.search.organization'}} * : </label>
               <select class="form-control" id="organization">
-                  <option selected disabled>{{$t 'family.search.choose'}}</option>
-                  <option value="all">Todas</option>
+                  <option selected disabled value="choose">{{$t 'report.snapshot.search.choose'}}</option>
+                  <option value="all">{{$t 'report.snapshot.search.all'}}</option>
               </select>
           </div>
           <div class="form-group">
-            <button type="button" id="submit" class="btn btn"><i class="fa fa-search"></i> {{$t 'family.search.search'}}</button>
+            <button type="button" id="submit" class="btn btn"><i class="fa fa-search"></i> {{$t 'report.snapshot.search.search'}}</button>
           </div>
         </form>
       </div>

@@ -67,7 +67,7 @@ export default Mn.View.extend({
           {
               let a = window.document.createElement("a");
               a.href = window.URL.createObjectURL(blob, {type: "text/plain"});
-              a.download = "filename.csv";
+              a.download = "snapshots.csv";
               document.body.appendChild(a);
               a.click(); 
               document.body.removeChild(a);
