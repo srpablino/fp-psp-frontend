@@ -71,15 +71,12 @@ export default Mn.View.extend({
   },
   getFlag() {
     if (this.app.getSession().get('locale')) {
-      if (
-        this.app
+     
+      return  this.app
           .getSession()
           .get('locale')
           .substring(3)
-          .toLowerCase() === 'us'
-      ) {
-        return 'gb';
-      }
+          .toLowerCase();
     }
     return 'py';
   },
