@@ -59,13 +59,14 @@ export default Mn.View.extend({
 
     csvModel.fetch({
       data: this.filters,
-      success() {
-        let blob = new Blob([csvModel.attributes.csv]);
+      dataType: 'text',
+      success(response, model) {
+        const blob = new Blob([model]);
           if (window.navigator.msSaveOrOpenBlob)  
               window.navigator.msSaveBlob(blob, "snapshots.csv");
           else
           {
-              let a = window.document.createElement("a");
+              const a = window.document.createElement("a");
               a.href = window.URL.createObjectURL(blob, {type: "text/plain"});
               a.download = "snapshots.csv";
               document.body.appendChild(a);
