@@ -82,12 +82,12 @@ export default Mn.View.extend({
 
   generateTable(indicators, snapshots){
     let header = [];
-    header.push("<th style='vertical-align: middle;'><h3 class='text-blue text-center' >Indicators</h3></th>")
+    header.push(`<th style='vertical-align: middle;'><h3 class='text-blue' > &nbsp;${t('subheader.indicators')}</h3></th>`)
     $.each(snapshots, (index, element) => {
       header.push(
       `<th><h3 class="text-center text-blue" >${this.getCreatedAt(element.created_at)}</h3>
-      <p class="text-center"><span class="text-blue">Organizacion: </span>${element.family.organization.name}&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="text-blue">Usuario: </span> ${this.getUser(element.user)}</p></th>`)
+      <p class="text-center"><span class="text-blue">${t('family.search.organization')}: </span>${element.family.organization.name}&nbsp;&nbsp;&nbsp;&nbsp;
+      <span class="text-blue">${t('user.form.user-label')}: </span> ${this.getUser(element.user)}</p></th>`)
     });
 
     let data = [];
