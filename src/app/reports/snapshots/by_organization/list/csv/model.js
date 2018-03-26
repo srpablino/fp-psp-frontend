@@ -2,5 +2,5 @@ import Bn from 'backbone';
 import env from '../../../../../env';
 
 export default Bn.Model.extend({
-  urlRoot: `${env.API}/families/reports/indicators/csv`
+  urlRoot: `${env.API}/reports/family/indicators/csv`
 });
