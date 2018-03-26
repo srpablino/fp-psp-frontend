@@ -43,7 +43,10 @@
   "schemaForm": {
     "errors": {
       "pattern": "Wrong pattern",
-      "format": "No se ajusta  al formato de \"fecha\" requerido",
+      "format": {
+        "date": "No se ajusta  al formato de \"Fecha\" requerido",
+        "email": "No es un email válido"
+      },
       "required": "El campo es requerido",
       "type": "Debe ser del tipo \"%{argument}\""
     },
