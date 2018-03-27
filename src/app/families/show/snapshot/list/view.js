@@ -1,6 +1,5 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
-
 import Template from './template.hbs';
 import storage from '../../../storage';
 import CollectionView from './collection-view';
@@ -21,7 +20,7 @@ export default Mn.View.extend({
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
 
-    $('.sub-menu-tiem > a[href$="snapshots"]')
+    $('a.sub-menu-item[href$="snapshots"]')
       .parent()
       .addClass('subActive');
 
@@ -32,10 +31,10 @@ export default Mn.View.extend({
     var collection = new Collection();
     collection
       .fetch({
-        data: { family_id: this.model.attributes.id }
+        data: {family_id: this.model.attributes.id}
       })
       .done(() => {
-        self.getRegion('list').show(new CollectionView({ collection }));
+        self.getRegion('list').show(new CollectionView({collection}));
       });
   }
 });
