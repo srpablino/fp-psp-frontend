@@ -12,11 +12,7 @@ const applications = props => {
     },
     controller: {
       showApplications() {
-        applicationsStorage.find().then(models => {
-          app.showViewOnRoute(
-            new ApplicationsView({models, app})
-          );
-        });
+        app.showViewOnRoute(new ApplicationsView({app}));
       },
       newApplication() {
         app.showViewOnRoute(new ApplicationFormView({app}));

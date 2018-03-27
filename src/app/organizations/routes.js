@@ -5,8 +5,6 @@ import OrganizationFormView from './add/view';
 import organizationsStorage from './storage';
 import hubsStorage from './index/hubs/storage';
 import OrganizationDashboard from './dashboard/model';
-import Model from './model';
-import env from "../env";
 
 const organizations = props => {
   const {app} = props;
@@ -27,44 +25,10 @@ const organizations = props => {
         });
       },
       showOrganizations() {
-        const model = new Model();
-        let params = {};
-        params.applicationId = app.getSession().get('user').application.id;
-        if(app.getSession().get('user').organization !== null){
-          params.organizationId = app.getSession().get('user').organization.id
-        }
-
-        model.urlRoot = `${env.API}/organizations/application`;
-        model
-          .fetch({
-            data: params
-          })
-          .then(() => {
-            app.showViewOnRoute(
-              new OrganizationsView({
-                model,
-                app,
-              })
-            );
-          });
-
+        app.showViewOnRoute(new OrganizationsView({app}));
       },
       showOrganizationsByApplication(entity, applicationId) {
-        const model = new Model();
-        model.urlRoot = `${env.API}/organizations/application`;
-        model
-          .fetch({
-            data: {applicationId}
-          })
-          .then(() => {
-            app.showViewOnRoute(
-              new OrganizationsView({
-                model,
-                app,
-              })
-            );
-          });
-
+        app.showViewOnRoute(new OrganizationsView({app, applicationId}));
       },
       showOrganization(organizationId, entity) {
         // show the organization dashboard
