@@ -18,6 +18,7 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
+    this.model = options.models;
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     $(window).scroll(this.loadMore);
