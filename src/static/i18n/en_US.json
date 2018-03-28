@@ -52,8 +52,11 @@
   "schemaForm": {
     "errors": {
       "pattern": "Wrong pattern",
-      "format": "Does not conform to the \"date\" format",
-      "required": "Requires property \"%{argument}\"",
+      "format": {
+        "date": "Does not conform to the \"Date\" format",
+        "email": "Is not a valid email"
+      },
+      "required": "This property is required",
       "type": "Is not of a type(s) \"%{argument}\""
     },
     "personal-info": "Personal Information",
