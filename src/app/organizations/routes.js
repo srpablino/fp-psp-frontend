@@ -1,8 +1,9 @@
 import OrganizationsView from './index/layout-view';
 import HubView from './index/hubs/layout-view';
 import OrganizationView from './show/view';
-import NewOrganizationView from './add/view';
-import hubStorage from './index/hubs/storage';
+import OrganizationFormView from './add/view';
+import organizationsStorage from './storage';
+import hubsStorage from './index/hubs/storage';
 import OrganizationDashboard from './dashboard/model';
 
 const organizations = props => {
@@ -13,12 +14,13 @@ const organizations = props => {
       'collaborators(/:entity)/:id': 'showOrganizationsByApplication',
       'organizations(/)': 'showOrganizations',
       'organizations/new': 'newOrganization',
+      'organizations/edit/:id': 'editOrganization',
       'organizations/:id(/:entity)': 'showOrganization'
     },
     controller: {
       // paginated organizations
       showHubs(entity) {
-        hubStorage.find().then(model => {
+        hubsStorage.find().then(model => {
           app.showViewOnRoute(new HubView({model, app, entity}));
         });
       },
@@ -49,7 +51,12 @@ const organizations = props => {
           });
       },
       newOrganization() {
-        app.showViewOnRoute(new NewOrganizationView({app}));
+        app.showViewOnRoute(new OrganizationFormView({app}));
+      },
+      editOrganization(organizationId) {
+        organizationsStorage.find(organizationId).then(model => {
+          app.showViewOnRoute(new OrganizationFormView({model, app}));
+        });
       }
     }
   };
