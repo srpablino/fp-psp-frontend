@@ -1,6 +1,6 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
-import {debounce} from 'lodash';
+import { debounce } from 'lodash';
 import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
@@ -21,13 +21,16 @@ export default Mn.View.extend({
     this.model = options.models;
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
-    $(window).scroll(this.loadMore);
+    $(window).scroll(debounce(this.loadMore, 50));
 
     this.collection = new Collection();
     this.collection.on('update', this.showList());
     this.serverFetch();
 
-    this.debounceServerFetch = debounce(this.serverFetch, 500, {leading: false, trailing: true});
+    this.debounceServerFetch = debounce(this.serverFetch, 500, {
+      leading: false,
+      trailing: true
+    });
   },
   onAttach() {
     if (this.app.getSession().userHasRole('ROLE_ROOT')) {
@@ -39,7 +42,7 @@ export default Mn.View.extend({
   },
   showList() {
     this.getRegion('list').show(
-      new CollectionView({collection: this.collection})
+      new CollectionView({ collection: this.collection })
     );
   },
   onSearchInput() {
