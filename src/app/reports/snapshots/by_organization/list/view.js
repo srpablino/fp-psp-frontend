@@ -9,7 +9,7 @@ export default Mn.View.extend({
   template: Template,
   events: {
     'click #family-organization-items .panel-heading': 'familySelected',
-    'click #export':'generateCsv'
+    'click #export':'downloadCsv'
   },
   regions: {
   },
@@ -17,6 +17,7 @@ export default Mn.View.extend({
   initialize(options){
     this.collection = options.collection;
     this.filters = options.filters;
+    this.csvModel = new CsvModel();
   },
 
   serializeData() {
@@ -52,29 +53,12 @@ export default Mn.View.extend({
     );
   },
 
-  generateCsv(event){
+  downloadCsv(event){
     event.preventDefault();
-    let csvModel = new CsvModel();
-
-
-    csvModel.fetch({
-      data: this.filters,
-      dataType: 'text',
-      success(response, model) {
-        const blob = new Blob([model]);
-          if (window.navigator.msSaveOrOpenBlob)  
-              window.navigator.msSaveBlob(blob, "snapshots.csv");
-          else
-          {
-              const a = window.document.createElement("a");
-              a.href = window.URL.createObjectURL(blob, {type: "text/plain"});
-              a.download = "snapshots.csv";
-              document.body.appendChild(a);
-              a.click(); 
-              document.body.removeChild(a);
-          }
-        }
-      
-    }) ;
+    const a = window.document.createElement("a");
+    a.href = `${this.csvModel.urlRoot}?${$.param(this.filters)}`;
+    document.body.appendChild(a);
+    a.click(); 
+    document.body.removeChild(a);
   }
 });
