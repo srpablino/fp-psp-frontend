@@ -21,7 +21,7 @@ export default Mn.View.extend({
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
-    $(window).scroll(this.loadMore);
+    $(window).scroll(debounce(this.loadMore, 50));
 
     this.collection = new Bn.Collection(this.model.get('list'));
     this.collection.on('remove', this.render);
@@ -35,9 +35,10 @@ export default Mn.View.extend({
   },
   onAttach() {
     const session = this.app.getSession();
-    if (session.userHasRole('ROLE_ROOT')
-      || session.userHasRole('ROLE_HUB_ADMIN')
-      || session.userHasRole('ROLE_APP_ADMIN')
+    if (
+      session.userHasRole('ROLE_ROOT') ||
+      session.userHasRole('ROLE_HUB_ADMIN') ||
+      session.userHasRole('ROLE_APP_ADMIN')
     ) {
       this.$el.find('#add-new').show();
     }
@@ -50,7 +51,7 @@ export default Mn.View.extend({
   handleSearch() {
     var userName = this.$el.find('#search').val();
     this.collection = new Bn.Collection(this.model.get('list'));
-    if(!userName){
+    if (!userName) {
       this.showList();
       return;
     }
@@ -59,7 +60,12 @@ export default Mn.View.extend({
     section.loading();
     this.getRegion('list').empty();
     setTimeout(() => {
-      var filtered = this.collection.filter((user) => user.get("username").toLowerCase().includes(userName.toLowerCase()));
+      var filtered = this.collection.filter(user =>
+        user
+          .get('username')
+          .toLowerCase()
+          .includes(userName.toLowerCase())
+      );
       this.collection = new Bn.Collection(filtered);
       this.showList();
       section.reset();
@@ -91,7 +97,6 @@ export default Mn.View.extend({
   },
   searchMore() {
     var self = this;
-
     // if not all users have been loaded
     if (self.model.get('currentPage') < self.model.get('totalPages')) {
       let params = {

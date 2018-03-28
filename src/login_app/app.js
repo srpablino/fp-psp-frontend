@@ -8,6 +8,7 @@ import I18nModel from '../app/i18n/model';
 
 const acceptedLanguages = [ 
   'es_PY', 
+  'en_GB',
   'en_US'
 ];
 
@@ -24,7 +25,7 @@ export default Mn.Application.extend({
   detectLocale(locale){
 
     if (locale === 'es') return this.detectLocale('es_PY');
-    if (locale === 'en') return this.detectLocale('en_US');
+    if (locale === 'en') return this.detectLocale('en_GB');
 
     if (acceptedLanguages.indexOf(locale) >= 0) return locale; 
 

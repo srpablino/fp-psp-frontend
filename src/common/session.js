@@ -55,6 +55,13 @@ var SessionModel = Bb.Model.extend({
       this.userHasRole('ROLE_APP_ADMIN') ||
       this.userHasRole('ROLE_HUB_ADMIN')
     );
+  },
+  getLocale(){
+    if(this.get('locale')){
+      return this.get('locale');
+    } 
+      
+    return 'es_PY';
   }
 });
 
