@@ -13,6 +13,7 @@ import termcondpol from '../termcondpol/routes'
 import security from '../security/routes';
 import faqs from '../faqs/routes';
 import snapshotsDraft from '../snapshots_drafts/routes';
+import reports from '../reports/routes'
 
 const initRouter = props => {
   const { app, before, onAccessDenied } = props;
@@ -29,7 +30,8 @@ const initRouter = props => {
     termcondpol(props),
     security(props),
     faqs(props),
-    snapshotsDraft(props)
+    snapshotsDraft(props),
+    reports(props)
   );
   const authorizer = initAuthorizer({
     onAccessDenied,

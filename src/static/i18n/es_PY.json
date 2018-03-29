@@ -314,5 +314,29 @@
       "title": "VERSION WEB",
       "name": "SEMAFORO DE ELIMINACIÓN DE POBREZA"
     }
+  },
+  "report": {
+    "snapshot": {
+      "title": "Reporte de Semáforos Tomados",
+      "search": {
+        "date-from": "Fecha Desde",
+        "date-to": "Fecha Hasta",
+        "organization": "Organización",
+        "search": "Buscar",
+        "choose": "Seleccione",
+        "all": "Todas",
+        "not-found": "No se encontraron resultados"
+      },
+      "buttons": {
+        "export": "Descargar Reporte"
+      },
+      "status": "Estado",
+      "survey": "Encuesta",
+      "messages": {
+        "validation": {
+          "required": "Debe especificar un valor para el campo '\"%{field}\"'"
+        }
+      }
+    }
   }
 }

@@ -314,5 +314,29 @@
       "title": "WEB VERSION",
       "name": "POVERTY STOPLIGHT"
     }
+  },
+  "report": {
+    "snapshot": {
+      "title": "Snapshots Taken Report",
+      "search": {
+        "date-from": "Date From",
+        "date-to": "Date To",
+        "organization": "Organization",
+        "search": "Search",
+        "choose": "Choose",
+        "all": "All",
+        "not-found": "No results found"
+      },
+      "buttons": {
+        "export": "Download Report"
+      },
+      "status": "Status",
+      "survey": "Survey",
+      "messages": {
+        "validation": {
+          "required": "You must specify a value for the '\"%{field}\"' field"
+        }
+      }
+    }
   }
 }

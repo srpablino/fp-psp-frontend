@@ -1727,3 +1727,8 @@ img.current-language-flag {
   box-shadow: 0 0 30px green;
   border: 2px solid #123512;
 }
+
+.indicators-list {
+  overflow: auto;
+  white-space: nowrap;
+}
