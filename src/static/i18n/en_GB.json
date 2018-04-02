@@ -16,10 +16,19 @@
       "information": "Information",
       "buttons": {
         "add": "ADD ORGANIZATION",
+        "save": "SAVE ORGANIZATION",
         "cancel": "Cancel"
-      },
-      "add-success": "Organization created successfully",
-      "add-failed": "Organization already exist"
+      }
+    },
+    "save": {
+      "success": "Organization saved successfully",
+      "failed": "Organization already exist"
+    },
+    "delete": {
+      "confirm-title": "Confirm Deletion",
+      "confirm-text": "Are you sure you want to delete this Organization?",
+      "success": "The organisation has been deleted",
+      "failed": "The organisation could not be deleted"
     }
   },
   "general": {
@@ -43,8 +52,11 @@
   "schemaForm": {
     "errors": {
       "pattern": "Wrong pattern",
-      "format": "Does not conform to the \"date\" format",
-      "required": "Requires property \"%{argument}\"",
+      "format": {
+        "date": "Does not conform to the \"Date\" format",
+        "email": "Is not a valid email"
+      },
+      "required": "This property is required",
       "type": "Is not of a type(s) \"%{argument}\""
     },
     "personal-info": "Personal Information",
@@ -154,7 +166,6 @@
     "attainment": {
       "title": "My Indicators Achieved"
     },
-
     "add": {
       "main-title": "Survey",
       "title-placeholder": "Surveys´s title",
@@ -246,10 +257,19 @@
       "information": "Information",
       "buttons": {
         "add": "ADD HUB",
+        "save": "SAVE HUB",
         "cancel": "Cancel"
-      },
-      "add-success": "Hub created successfully",
-      "add-failed": "Hub already exist"
+      }
+    },
+    "save": {
+      "success": "Hub saved successfully",
+      "failed": "Hub already exist"
+    },
+    "delete": {
+      "confirm-title": "Confirm Deletion",
+      "confirm-text": "Are you sure you want to delete this Hub?",
+      "success": "The Hub has been deleted",
+      "failed": "The Hub could not be deleted"
     }
   },
   "user": {
@@ -293,6 +313,30 @@
     "version": {
       "title": "WEB VERSION",
       "name": "POVERTY STOPLIGHT"
+    }
+  },
+  "report": {
+    "snapshot": {
+      "title": "Snapshots Taken Report",
+      "search": {
+        "date-from": "Date From",
+        "date-to": "Date To",
+        "organization": "Organization",
+        "search": "Search",
+        "choose": "Choose",
+        "all": "All",
+        "not-found": "No results found"
+      },
+      "buttons": {
+        "export": "Download Report"
+      },
+      "status": "Status",
+      "survey": "Survey",
+      "messages": {
+        "validation": {
+          "required": "You must specify a value for the '\"%{field}\"' field"
+        }
+      }
     }
   }
 }
