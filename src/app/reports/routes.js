@@ -4,7 +4,7 @@ const reports = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
-        'reports/snapshots/byOrganization(/)': 'showFamiliesByOrgamization'
+        'reports/snapshots/organizations(/)': 'showFamiliesByOrgamization'
     },
     controller: {
 

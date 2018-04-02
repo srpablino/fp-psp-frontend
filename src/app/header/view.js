@@ -33,14 +33,6 @@ export default Mn.View.extend({
   initialize(options) {
     this.app = options.app;
   },
-  onRender() {
-    if (
-      this.app.getSession().userHasRole('ROLE_ROOT') ||
-      this.app.getSession().userHasRole('ROLE_HUB_ADMIN')
-    ) {
-      this.$el.find('#menu-manage').show();
-    }
-  },
 
   // FIXME Temporary function.
   // The full profile user name should
@@ -68,7 +60,7 @@ export default Mn.View.extend({
     };
   },
   getFlag() {
- 
+
     return  this.app.getSession().getLocale()
         .substring(3)
         .toLowerCase();

@@ -3,7 +3,7 @@ import $ from 'jquery';
 import Template from './template.hbs';
 import Collection from './collection';
 import CollectionView from './list/view';
-import OrganizationModel from '../../../organizations/model'
+import OrganizationModel from '../../../management/organizations/model'
 import utils from '../../../utils';
 import FlashesService from '../../../flashes/service';
 import storage from '../../storage';
@@ -45,7 +45,10 @@ export default Mn.View.extend({
     } else {
       this.obtainOrganizations();
     }
-    
+
+    $('.sub-menu-item[href$="reports/snapshots/organizations"]')
+      .parent()
+      .addClass('subActive');
 
     return this.organizations;
   },
@@ -92,7 +95,7 @@ export default Mn.View.extend({
         if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')){
           this.filters.organization_id = this.$el.find('#organization').val() === 'all'? '' : this.$el.find('#organization').val();
         }
-        this.filters.application_id = this.$el.find('#organization').val() === 'all' && 
+        this.filters.application_id = this.$el.find('#organization').val() === 'all' &&
                                       this.app.getSession().get('user').application ? this.app.getSession().get('user').application.id : '';
 
         let errors = this.validate(this.filters);
@@ -115,7 +118,7 @@ export default Mn.View.extend({
             }
 
           });
-        } 
+        }
     }
   },
 
@@ -126,8 +129,8 @@ export default Mn.View.extend({
       );
     } else {
       this.getRegion('list').show(`
-            <br/> 
-            <br/> 
+            <br/>
+            <br/>
             <p class="text-gray" style="font-size: 20px; text-align:center;">
               ${t('report.snapshot.search.not-found')}
             </p>`);
@@ -137,7 +140,7 @@ export default Mn.View.extend({
   validate(filters) {
 
     const errors = [];
-   
+
     if (!filters.organization_id && !filters.application_id) {
       errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.organization')}));
     }

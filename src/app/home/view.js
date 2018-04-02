@@ -6,7 +6,7 @@ import _ from 'lodash';
 import moment from 'moment';
 import Template from './template.hbs';
 import session from '../../common/session';
-import storage from '../hubs/storage';
+import storage from '../management/hubs/storage';
 
 export default Mn.View.extend({
   template: Template,
@@ -36,17 +36,17 @@ export default Mn.View.extend({
     if(moment(key).isSame(moment(), 'month')){
       return t('general.today');
     }
-    return moment(key).locale(session.get('locale')?session.get('locale'):'es').format('MMMM');    
+    return moment(key).locale(session.get('locale')?session.get('locale'):'es').format('MMMM');
   },
 
   generateData(){
      let snapshots = this.organization.dashboard.snapshotTaken.byMonth;
      let data={};
-     data.x = [ 
-      'x', 
+     data.x = [
+      'x',
        ... _.keys(snapshots).map(key => this.formatDate(key))
-    ]; 
-    data.data1 = [ 
+    ];
+    data.data1 = [
         'data1',
         ... _.values(snapshots)
     ];

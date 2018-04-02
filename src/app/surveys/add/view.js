@@ -13,7 +13,7 @@ import Template from './template.hbs';
 import Model from './model';
 import utils from '../../utils';
 import FlashesService from '../../flashes/service';
-import OrganizationsModel from '../../organizations/model';
+import OrganizationsModel from '../../management/organizations/model';
 import ApplicationModel from '../../applications/model';
 
 export default Mn.View.extend({
@@ -27,7 +27,7 @@ export default Mn.View.extend({
     this.props = Object.assign({}, options);
     this.model = this.props.model || new Model();
     this.app = this.props.app;
-        
+
     this.app.getSession().userHasRole('ROLE_ROOT') ? this.getApplications() : this.getOrganizations();
   },
   getApplications(){
@@ -43,7 +43,7 @@ export default Mn.View.extend({
               self.$el.find('#organization').val(self.getValuesIdArray()).trigger("change");
             }
             self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
-            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));            
+            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
         }
       }
     });
@@ -61,7 +61,7 @@ export default Mn.View.extend({
               self.$el.find('#organization').val(self.getValuesIdArray()).trigger("change");
             }
             self.schema.setValue(JSON.stringify(self.model.attributes.survey_schema));
-            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));            
+            self.schemaUI.setValue(JSON.stringify(self.model.attributes.survey_ui_schema));
         }
       }
     });
@@ -92,16 +92,16 @@ export default Mn.View.extend({
        this.$el.find('#organization').select2({
          placeholder: t('survey.add.assign-survey-placeholder')
        });
-       
+
        if(!$.isEmptyObject(this.model.attributes)){
         this.$el.find('.inputdisable').attr('disabled',true);
         this.schema.setOption('readOnly', true);
-        this.schemaUI.setOption('readOnly', true);        
+        this.schemaUI.setOption('readOnly', true);
         this.$el.find('#organization').val(this.getValuesIdArray()).trigger('change');
        }
 
      }, 0);
-     
+
   },
   startCodeMirror() {
     this.schema = CodeMirror.fromTextArea(this.$el.find('#schema-editor')[0], {
@@ -174,7 +174,7 @@ export default Mn.View.extend({
           applicationArray.push({id: element})
         });
       }
-      
+
       this.model.set('organizations', organizationArray);
       this.model.set('applications', applicationArray);
 

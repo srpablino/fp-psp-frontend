@@ -90,6 +90,7 @@
     "logout": "Cerrar sesión",
     "organizations": "Organizaciones",
     "hubs": "Hubs",
+    "management": "Administración",
     "locale": {
       "es_PY": "Español",
       "en_US": "Inglés",
@@ -108,7 +109,13 @@
     "hubs": "Hubs",
     "families": "Familias",
     "users": "Usuarios",
-    "indicators": "Indicadores"
+    "indicators": "Indicadores",
+    "management": {
+      "hubs": "Hubs",
+      "users": "Usuarios",
+      "manage-families": "Gestión de familias",
+      "organizations": "Organizaciones"
+    }
   },
   "home": {
     "activity": "Actividades Recientes",

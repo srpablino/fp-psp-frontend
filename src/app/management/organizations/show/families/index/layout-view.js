@@ -1,14 +1,14 @@
 import Mn from 'backbone.marionette';
-import Bn from 'backbone';
 import $ from 'jquery';
+import Bn from 'backbone';
 
-import Template from './layout-template.hbs';
-import CollectionView from './collection-view';
-import utils from '../../utils';
-import FamiliesColecction from '../collection';
-import OrganizationsModel from '../../management/organizations/model';
-import CitiesModel from '../../cities/model';
-import CountiesModel from '../../countries/model';
+import Template from '../../../../../families/index/layout-template.hbs';
+import CollectionView from '../../../../../families/index/collection-view';
+import utils from '../../../../../utils';
+import FamiliesColecction from '../../../../../families/collection';
+import OrganizationsModel from '../../../../organizations/model';
+import CitiesModel from '../../../../../cities/model';
+import CountiesModel from '../../../../../countries/model';
 
 export default Mn.View.extend({
   template: Template,
@@ -20,20 +20,19 @@ export default Mn.View.extend({
     list: '#family-list'
   },
   events: {
-    'click #submit': 'handleSubmit',
-    'keypress #search': 'handleSubmit'
+    'click #submit': 'handleSubmit'
   },
   initialize(options) {
     this.collection = new Bn.Collection();
-    this.app = options.app;
+    this.organizationId = options.organizationId;
   },
   onRender() {
+    let { organizationId } = this;
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
     this.showList();
-
-    const self = this;
+    let self = this;
 
     this.citiesCollection.fetch({
       success(response) {
@@ -71,45 +70,47 @@ export default Mn.View.extend({
               .text(element.name)
           );
         });
-
-        // if (!(session.userHasRole('ROLE_ROOT') || session.userHasRole('ROLE_HUB_ADMIN'))) {
-        //   $('#organization').attr('disabled', 'true');
-        //   $('#organization').val(session.get('user').organization.id);
-        // }
+        $('#organization').val(organizationId);
+        $('#organization').attr('disabled', 'true');
       }
     });
+    setTimeout(() => {
+      $(`a[href$="organizations/${this.organizationId}/families"]`)
+        .parent()
+        .addClass('subActive');
+    }, 200);
+
   },
   showList() {
     this.getRegion('list').show(
       new CollectionView({ collection: this.collection })
     );
   },
-  handleSubmit(event) {
-    if (event.which === 13 || event.which === 1) {
-      const self = this;
-      const container = this.$el.find('.list-container').eq(0);
-      const section = utils.getLoadingSection(container);
+  handleSubmit() {
+    var self = this;
+    let container = this.$el.find('.list-container').eq(0);
+    const section = utils.getLoadingSection(container);
 
-      self.collection.reset();
-      this.getRegion('list').empty();
-      section.loading();
+    self.collection.reset();
+    this.getRegion('list').empty();
+    section.loading();
 
-      const params = {
-        organization_id: $('#organization').val(),
-        country_id: $('#country').val(),
-        city_id: $('#city').val(),
-        free_text: $('#search').val()
-      };
+    let params = {
+      organization_id: $('#organization').val(),
+      country_id: $('#country').val(),
+      city_id: $('#city').val(),
+      free_text: $('#search').val()
+    };
 
-      const elements = new FamiliesColecction();
-      elements.fetch({
-        data: params,
-        success(response) {
-          self.collection = response;
-          self.showList();
-          section.reset();
-        }
-      });
-    }
+    let elements = new FamiliesColecction();
+    elements.fetch({
+      data: params,
+      success(response) {
+        // setear al collection
+        self.collection = response;
+        self.showList();
+        section.reset();
+      }
+    });
   }
 });

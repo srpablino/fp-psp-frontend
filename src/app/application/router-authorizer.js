@@ -6,12 +6,17 @@ const anonymousRoutes = ['', 'home', 'logout'];
 
 const adminCrudRoutes = {
   collaborators: ['collaborators(/)', 'collaborators'],
-  applications: ['applications(/)', 'applications'],
-  organizations: ['organizations(/)', 'organizations'],
-  users: ['users(/)', 'users'],
+  organizationsInfo: ['organizations(/)', 'organizationsInfo'],
   families: ['families(/)', 'families'],
   surveys: ['surveys(/)', 'surveys'],
-  reports: ['reports(/)', 'reports']
+  reports: ['reports(/)', 'reports'],
+  organizationReports: ['reports/snapshots/organizations(/)', 'organizationReports'],
+  management: ['management(/)', 'management'],
+  manageFamilies: ['management/manage-families', 'manageFamilies'],
+  users: ['management/users(/)', 'users'],
+  applications: ['management/applications(/)', 'applications'],
+  organizations: ['management/organizations(/)', 'organizations'],
+  organizationsList: ['management/organizations', 'organizationsList']
 };
 
 // Cached regular expressions for matching named param parts and splatted
@@ -41,12 +46,18 @@ class Authorizer {
   getAuthorizedRoutes() {
     const routesKeys = _keys(this.appRoutes);
     if (this.session.userHasRole('ROLE_ROOT')) {
-      return routesKeys;
+      return routesKeys
+      .filter(route => !_includes(adminCrudRoutes.organizationsInfo, route))
+      .filter(route => !_includes(adminCrudRoutes.reports, route))
+      .filter(route => !_includes(adminCrudRoutes.organizationReports, route))
+      .filter(route => !_includes(adminCrudRoutes.organizations, route));
     }
 
     if (this.session.userHasRole('ROLE_HUB_ADMIN')) {
       return routesKeys
+        .filter(route => !_includes(adminCrudRoutes.organizationsInfo, route))
         .filter(route => !_includes(adminCrudRoutes.collaborators, route))
+        .filter(route => !_includes(adminCrudRoutes.manageFamilies, route))
         .filter(route => !_includes(adminCrudRoutes.applications, route));
     }
 
@@ -57,6 +68,10 @@ class Authorizer {
       return routesKeys
         .filter(route => !_includes(adminCrudRoutes.collaborators, route))
         .filter(route => !_includes(adminCrudRoutes.organizations, route))
+        .filter(route => !_includes(adminCrudRoutes.organizationsList, route))
+        .filter(route => !_includes(adminCrudRoutes.organizationsInfo, route))
+        .filter(route => !_includes(adminCrudRoutes.management, route))
+        .filter(route => !_includes(adminCrudRoutes.manageFamilies, route))
         .filter(route => !_includes(adminCrudRoutes.families, route));
     }
 
@@ -64,8 +79,11 @@ class Authorizer {
     return routesKeys
       .filter(route => !_includes(adminCrudRoutes.collaborators, route))
       .filter(route => !_includes(adminCrudRoutes.organizations, route))
+      .filter(route => !_includes(adminCrudRoutes.organizationsInfo, route))
+      .filter(route => !_includes(adminCrudRoutes.management, route))
       .filter(route => !_includes(adminCrudRoutes.users, route))
-    //  .filter(route => !_includes(adminCrudRoutes.families, route));
+      .filter(route => !_includes(adminCrudRoutes.reports, route))
+      .filter(route => !_includes(adminCrudRoutes.organizationReports, route));
   }
 
   isAuthorizedRoute(routeParam) {
