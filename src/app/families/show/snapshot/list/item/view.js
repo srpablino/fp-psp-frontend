@@ -7,7 +7,14 @@ export default Mn.View.extend({
   serializeData() {
     return {
       snapshot: this.model.attributes,
-      createdAt: this.getCreatedAt()
+      createdAt: this.getCreatedAt(),
+      snapshotIndicators: this.model.attributes.indicators_survey_data.map(
+        set => ({
+          clazz: set.value !== null ? set.value.toLowerCase() : 'gray',
+          value: set.value,
+          name: set.name
+        })
+      )
     };
   },
   getCreatedAt() {
