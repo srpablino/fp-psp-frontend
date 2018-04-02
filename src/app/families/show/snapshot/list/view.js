@@ -1,7 +1,6 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import moment from 'moment';
-
 import Template from './template.hbs';
 import storage from '../../../storage';
 import CollectionView from './collection-view';
@@ -22,7 +21,6 @@ export default Mn.View.extend({
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
-
 
     $('a.sub-menu-item[href$="snapshots"]')
       .parent()
@@ -132,5 +130,5 @@ export default Mn.View.extend({
         }
 
       });
-  }
-});
+    }
+  });

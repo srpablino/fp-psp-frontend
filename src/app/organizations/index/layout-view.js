@@ -7,6 +7,7 @@ import CollectionView from './collection-view';
 import utils from '../../utils';
 import Model from '../model';
 import Collection from '../collection';
+import hubStorage from '../../hubs/storage';
 
 export default Mn.View.extend({
   template: Template,
@@ -39,6 +40,14 @@ export default Mn.View.extend({
       leading: false,
       trailing: true
     });
+  },
+  onRender() {
+    if (this.applicationId) {
+      hubStorage.find(this.applicationId).then(model => {
+        const headerItems = hubStorage.getSubHeaderItems(model);
+        this.app.updateSubHeader(headerItems);
+      })
+    }
   },
   onAttach() {
     if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')) {
