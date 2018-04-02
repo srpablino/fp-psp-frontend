@@ -281,10 +281,15 @@ class Form extends Component {
   }
 
   mapErrors(errors){
-        
     return errors.map(error => {
-      if (t(`schemaForm.errors.${error.name}`) !== `schemaForm.errors.${error.name}`) {
-        error.message = t(`schemaForm.errors.${error.name}`, {argument: error.argument.toString()});
+      if (error.name === 'required') {
+        error.message = t('schemaForm.errors.required');
+      }
+      if (error.name === 'format' && error.argument === 'date') {
+        error.message = t('schemaForm.errors.format.date');
+      }
+      if (error.name === 'format' && error.argument === 'email') {
+        error.message = t('schemaForm.errors.format.email');
       }
       return error;
     });

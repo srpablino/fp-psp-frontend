@@ -24,7 +24,7 @@ export default Mn.View.extend({
     // eslint-disable-next-line no-undef
     _.bindAll(this, 'loadMore');
     // bind scroll event to window
-    $(window).scroll(this.loadMore);
+    $(window).scroll(debounce(this.loadMore, 50));
 
     this.collection = new Bn.Collection(this.model.get('list'));
     this.collection.on('remove', this.render);
@@ -34,9 +34,9 @@ export default Mn.View.extend({
     const headerItems = storage.getMainSubHeaderItems();
     this.app.updateSubHeader(headerItems);
 
-      $(`#subMenuItem > a[href$="collaborators/${this.entity}"]`)
-        .parent()
-        .addClass('subActive');
+    $(`#subMenuItem > a[href$="collaborators/${this.entity}"]`)
+      .parent()
+      .addClass('subActive');
 
     setTimeout(() => {
       this.$el.find('#search').focus();

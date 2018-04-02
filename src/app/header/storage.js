@@ -7,7 +7,7 @@ const allMenuItems = {
     { name: 'collaborators', link: '#collaborators/hubs' },
     { name: 'hubs', link: '#applications' },
     { name: 'organizations', link: '#organizations' },
-    { name: 'reports', link: '#reports' },
+    { name: 'reports', link: '#reports/snapshots/byOrganization' },
     { name: 'families', link: '#families' },
     { name: 'surveys', link: '#surveys' },
     { name: 'users', link: '#users' },
@@ -26,6 +26,7 @@ var HeaderStorage = Storage.extend({
       const items = {
         navigationItems: allMenuItems.navigationItems
           .filter(item => !(item.link === '#organizations'))
+          .filter(item => !(item.link === '#reports/snapshots/organizations'))
           .map(item => {
             item.name = t(`header.${item.name}`);
             return item;
@@ -76,6 +77,7 @@ var HeaderStorage = Storage.extend({
         .filter(item => !(item.link === '#applications'))
         .filter(item => !(item.link === '#organizations'))
         .filter(item => !(item.link === '#users'))
+        .filter(item => !(item.link === '#reports/snapshots/organizations'))
         // .filter(item => !(item.link === '#families'))
         .filter(item => !(item.link.indexOf('#collaborators') !== -1))
         .map(item => {

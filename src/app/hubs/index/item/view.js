@@ -1,3 +1,4 @@
+import Bn from "backbone";
 import Mn from 'backbone.marionette';
 import Template from './template.hbs';
 
@@ -14,5 +15,10 @@ export default Mn.View.extend({
       application: this.model.attributes,
       logoUrl: this.model.get('logoUrl') || '/static/images/icon_logo_hub.png'
     };
+  },
+  editApplication(event) {
+    event.preventDefault();
+
+    Bn.history.navigate(`/applications/edit/${this.model.get('id')}`, true);
   }
 });
