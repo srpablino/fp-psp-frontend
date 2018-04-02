@@ -35,31 +35,33 @@ export default Mn.View.extend({
     let self = this;
     let collection = new Collection();
 
-
-    let indicators = [];
-    let snapshots = [];
-
       collection.fetch({
         data: { family_id: this.model.attributes.id },
 
         success(response) {
-          self.collection = response.toJSON();
-          $.each(self.collection, (index, snapshot) => {
-            $.each(snapshot.indicators_survey_data, (j, indicator) => {
-              if (!indicators.includes(indicator.name))  indicators.push(indicator.name);
-            });
-            snapshots.push(snapshot);
-          });
-          self.generateTable(indicators, snapshots);
-          $.each(self.collection, (index, snapshot) => {
-            $.each(snapshot.indicators_survey_data, (j, indicator) => {
-                self.setValues(index+1, indicator.name , self.getCircleClass(indicator.value))
-            });
-          });
+          self.processData(response.toJSON());
 
         }
       });
 
+  },
+
+  processData(collection){
+    let indicators = [];
+    let snapshots = [];
+
+    $.each(collection, (index, snapshot) => {
+      $.each(snapshot.indicators_survey_data, (j, indicator) => {
+        if (!indicators.includes(indicator.name))  indicators.push(indicator.name);
+      });
+      snapshots.push(snapshot);
+    });
+    this.generateTable(indicators, snapshots);
+    $.each(collection, (index, snapshot) => {
+      $.each(snapshot.indicators_survey_data, (j, indicator) => {
+          this.setValues(index+1, indicator.name , this.getCircleClass(indicator.value))
+      });
+    });
   },
 
   getCreatedAt(createdAt) {
