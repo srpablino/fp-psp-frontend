@@ -1,12 +1,11 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
-
 import template from './template.hbs';
 
 export default Mn.View.extend({
   template,
   events: {
-    'click .sub-menu-tiem': 'highlight'
+    'click .sub-menu-item': 'highlight'
   },
   highlight(e) {
     $(e.target)
@@ -17,7 +16,6 @@ export default Mn.View.extend({
       .parent()
       .addClass('subActive');
   },
-
   serializeData() {
     return {
       mainItem: this.model.get('mainItem'),

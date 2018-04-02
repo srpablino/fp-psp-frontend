@@ -3,24 +3,18 @@ import $ from 'jquery';
 import c3 from 'c3';
 import 'datatables.net-bs';
 import Template from './template.hbs';
-// import UsersTemplate from './users-template.hbs';
-// import IndicatorsTemplate from './indicators-template.hbs';
 import FamiliesView from './families/index/layout-view';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
-
 import storage from '../storage';
 
 export default Mn.View.extend({
   template: Template,
-
   initialize(options) {
     this.app = options.app;
     this.entity = options.entity;
     this.organizationId = options.organizationId;
     this.organization = this.model.attributes;
-
   },
-
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
@@ -28,7 +22,7 @@ export default Mn.View.extend({
     if (this.entity == null) {
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
     } else {
-      $(`.sub-menu-tiem > a[href$="${this.entity}"]`)
+      $(`a.sub-menu-item[href$="${this.entity}"]`)
         .parent()
         .addClass('subActive');
     }
@@ -39,7 +33,6 @@ export default Mn.View.extend({
     }, 0);
 
   },
-
   dataTables(){
       $('#table-top-indicators').dataTable({
         "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
@@ -49,10 +42,9 @@ export default Mn.View.extend({
         "info": false,
         "order": [[ 1, "desc" ], [ 2, "desc" ], [ 3, "desc" ]]
 
-      });
+    });
   },
-
-  chart(){
+  chart() {
     c3.generate({
         bindto: '#bar-indicators',
         data: {
@@ -81,7 +73,6 @@ export default Mn.View.extend({
           }
     });
   },
-
   getTemplate() {
     if (this.entity === 'families') {
       let organizationId = this.organizationId;
@@ -102,10 +93,8 @@ export default Mn.View.extend({
       return UnderConstrucionTemplate;
     }
 
-
     return Template;
   },
-
   serializeData() {
     return {
       organization: this.model.attributes
