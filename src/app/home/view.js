@@ -28,14 +28,14 @@ export default Mn.View.extend({
     if (this.model.get('id')) {
       this.app.updateSubHeader(storage.getSubHeaderItems(this.model));
     }
-    this.months = ["","January", "February", "March", "April", "May", "June","July",
-     "August","September","October","November","December"]
+
   },
 
   formatDate(key){
-    if(moment(key).isSame(moment(), 'month')){
-      return t('general.today');
-    }
+    console.log(key);
+    // if(moment(key).isSame(moment(), 'month')){
+    //   return t('general.today');
+    // }
     return moment(key).locale(session.get('locale')?session.get('locale'):'es').format('MMMM');
   },
 
@@ -69,7 +69,7 @@ export default Mn.View.extend({
           colors:{
                 data1: '#60b4ef',
               },
-          type: 'bar',
+          type: 'line',
           labels: true,
           empty: {
             label: {
@@ -82,7 +82,7 @@ export default Mn.View.extend({
                 type: 'category'
             },
             y: {
-               show: false
+               show: true
              }
         },
         bar: {
