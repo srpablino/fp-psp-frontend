@@ -221,6 +221,7 @@
     },
     "family": "Familia",
     "code": "Cód",
+    "no-assignment": "Sin Asignación",
     "map": {
       "snapshot": "Semáforo tomado",
       "priorities": "Prioridades",

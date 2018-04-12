@@ -221,6 +221,7 @@
     },
     "family": "Household",
     "code": "Cod",
+    "no-assignment": "No assignment",
     "map": {
       "snapshot": "Stoplight",
       "priorities": "Priorities",

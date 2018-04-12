@@ -71,7 +71,7 @@ export default Mn.View.extend({
 
   getUser(user) {
     if (!user) {
-      return null;
+      return t('family.no-assignment');
     }
     return user.username;
   },
@@ -79,15 +79,24 @@ export default Mn.View.extend({
   getCircleClass(value){
     return value !== null ? value.toLowerCase() : 'gray';
   },
+  getClassName(value){
+    return ( {
+        1: "col-md-6 col-md-offset-3",
+        2: "col-md-8 col-md-offset-2",
+    } )[ value ] || "col-md-12";
+  },
 
   generateTable(indicators, snapshots){
+
     let header = [];
+    let className = this.getClassName(snapshots.length);
+
     header.push(`<th style='vertical-align: middle;'><h3 class='text-blue' > &nbsp;${t('subheader.indicators')}</h3></th>`)
     $.each(snapshots, (index, element) => {
       header.push(
       `<th><h3 class="text-center text-blue" >${this.getCreatedAt(element.created_at)}</h3>
-      <p class="text-center"><span class="text-blue">${t('family.search.organization')}: </span>${element.family.organization.name}&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="text-blue">${t('user.form.user-label')}: </span> ${this.getUser(element.user)}</p></th>`)
+      <p><span class="text-blue">${t('family.search.organization')}: </span>${element.family.organization.name}</p>
+      <p><span class="text-blue">${t('user.form.user-label')}: </span> ${this.getUser(element.user)}</p></th>`)
     });
 
     let data = [];
@@ -118,7 +127,7 @@ export default Mn.View.extend({
                 row.append(cell);
             }
         }
-
+        this.$el.find('#dvSnapshotsTable').addClass(className);
         this.$el.find('#dvSnapshotsTable').append(table);
 
 
