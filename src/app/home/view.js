@@ -32,15 +32,11 @@ export default Mn.View.extend({
   },
 
   formatDate(key){
-    console.log(key);
-    // if(moment(key).isSame(moment(), 'month')){
-    //   return t('general.today');
-    // }
     return moment(key).locale(session.get('locale')?session.get('locale'):'es').format('MMMM');
   },
 
   generateData(){
-     let snapshots = this.organization.dashboard.snapshotTaken.byMonth;
+     let snapshots = this.sortData(this.organization.dashboard.snapshotTaken.byMonth);
      let data={};
      data.x = [
       'x',
@@ -50,7 +46,19 @@ export default Mn.View.extend({
         'data1',
         ... _.values(snapshots)
     ];
+
+
+
     return data;
+  },
+
+  sortData(data){
+    return Object.keys(data)
+    .sort()
+    .reduce((result, key) => {
+       result[key] = data[key];
+       return result;
+   }, {});
   },
 
   chart(){
