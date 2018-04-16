@@ -6,9 +6,10 @@ var FamiliesStorage = Storage.extend({
   model: Model,
   collection: Collection,
   getSubHeaderItems(model) {
+    model.set('person', model.set('person') || {});
     return {
       mainItem: {
-        name: `${t('subheader.family')} ${model.get('person').lastName}`,
+        name: `${t('subheader.family')} ${model.get('person').lastName || ''}`,
         link: `/#families/${model.get('id')}`
       },
       navigationItems: [

@@ -6,7 +6,7 @@ import Template from './layout-template.hbs';
 import CollectionView from './collection-view';
 import utils from '../../utils';
 import FamiliesColecction from '../collection';
-import OrganizationsModel from '../../organizations/model';
+import OrganizationsModel from '../../management/organizations/model';
 import CitiesModel from '../../cities/model';
 import CountiesModel from '../../countries/model';
 

@@ -8,11 +8,9 @@ import SnapshotDraftColecction from '../../snapshots_drafts/collection';
 import ItemView from './item/view';
 import storage from '../storage';
 
-
-
 export default Mn.View.extend({
   template: Template,
-  collection:  new Bn.Collection(),
+  collection: new Bn.Collection(),
   regions: {
     list: '#snapshot-list'
   },
@@ -21,29 +19,23 @@ export default Mn.View.extend({
     'keypress #search': 'handleSubmit'
   },
   initialize(app) {
-    this.app=app.app
-
+    this.app = app.app
   },
   onRender() {
     const headerItems = storage.getUserSubHeaderItems();
     this.app.updateSubHeader(headerItems);
 
-
-      $(`.sub-menu-tiem > a[href$="/#surveys/drafts"]`)
-        .parent()
-        .addClass('subActive');
-
+    $('a.sub-menu-item[href$="/#surveys/drafts"]')
+      .parent()
+      .addClass('subActive');
 
     setTimeout(() => {
       this.$el.find('#search').focus();
     }, 0);
 
     this.showList();
-
   },
-
   showList() {
-
     let element = this.$el.find('#snapshot-list');
     element.empty();
 
@@ -52,7 +44,7 @@ export default Mn.View.extend({
       let itemView = new ItemView({
         app: this.app,
         model: item,
-        showList:  this.showList.bind(this),
+        showList: this.showList.bind(this),
         itemViewOptions: {
           className: "col-md-4 col-xs-6"
         },
@@ -63,7 +55,6 @@ export default Mn.View.extend({
       element.append(itemView.render().el);
     });
   },
-
   handleSubmit(event) {
     let freeText = $('#search').val();
     if (event.which === 13 || event.which === 1) {
@@ -92,6 +83,4 @@ export default Mn.View.extend({
 
     }
   }
-
-
 });

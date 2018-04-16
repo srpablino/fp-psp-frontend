@@ -1,0 +1,360 @@
+{
+  "organization": {
+    "search": {
+      "title": "Find an organization"
+    },
+    "form": {
+      "add-title": "Add an Organization",
+      "edit-title": "Edit Organization",
+      "logo-upload": "Click to upload a logo",
+      "name": "Organization name",
+      "name-required": "Organization name is required",
+      "code": "Code",
+      "code-required": "Code is required",
+      "description": "Description",
+      "description-required": "Description is required",
+      "information": "Information",
+      "buttons": {
+        "add": "ADD ORGANIZATION",
+        "save": "SAVE ORGANIZATION",
+        "cancel": "Cancel"
+      }
+    },
+    "save": {
+      "success": "Organization saved successfully",
+      "failed": "Organization already exist"
+    },
+    "delete": {
+      "confirm-title": "Confirm Deletion",
+      "confirm-text": "Are you sure you want to delete this Organization?",
+      "success": "The organisation has been deleted",
+      "failed": "The organisation could not be deleted"
+    }
+  },
+  "general": {
+    "buttons": {
+      "search": "Search",
+      "ok": "OK",
+      "accept": "Accept",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "information": "Information"
+    },
+    "flashes": {
+      "close": "Close"
+    },
+    "today": "Today",
+    "yellow": "Yellow",
+    "green": "Green",
+    "red": "Red"
+  },
+  "schemaForm": {
+    "errors": {
+      "pattern": "Wrong pattern",
+      "format": {
+        "date": "Does not conform to the \"Date\" format",
+        "email": "Is not a valid email"
+      },
+      "required": "This property is required",
+      "type": "Is not of a type(s) \"%{argument}\""
+    },
+    "personal-info": "Personal Information",
+    "economic-info": "Socio-economic Information",
+    "indicators": "Indicators",
+    "not-answer": "Skip question",
+    "buttons": {
+      "save-draft": "Save Draft"
+    },
+    "loading": "Loading"
+  },
+  "draft": {
+    "messages": {
+      "save-draft": "The information has been saved",
+      "delete-confirm": "Are you sure you want to delete the draft?",
+      "delete-confirm-title": "Confirm Deletion",
+      "delete-done": "The draft has been deleted!"
+    },
+    "search-parameter": "Name or Last name",
+    "search": "Search",
+    "created": "Created at"
+  },
+  "header": {
+    "reports": "Reports",
+    "surveys": "Surveys",
+    "faqs": "FAQs",
+    "collaborators": "Collaborators",
+    "families": "Households",
+    "users": "Users",
+    "manage-families": "Manage households",
+    "logout": "Logout",
+    "organizations": "Organizations",
+    "hubs": "Hubs",
+    "management": "Management",
+    "locale": {
+      "es_PY": "Spanish",
+      "en_US": "English",
+      "en_GB": "English"
+    }
+  },
+  "subheader": {
+    "surveys": {
+      "list-surveys": "Available Surveys",
+      "list-drafts": "Drafts",
+      "priority": "Select your priorities"
+    },
+    "family": "Household",
+    "interventions": "Interventions",
+    "snapshots": "Snapshots",
+    "hubs": "Hubs",
+    "families": "Households",
+    "users": "Users",
+    "indicators": "Indicators",
+    "management": {
+      "hubs": "Hubs",
+      "users": "Users",
+      "manage-families": "Manage households",
+      "organizations": "Organizations"
+    }
+  },
+  "home": {
+    "activity": "Activity Feed",
+    "number-families": "Number of Households",
+    "snapshots-taken": "Snapshots taken",
+    "map-results": "Map results",
+    "total": "in total",
+    "indicators": "Indicators",
+    "top-indicators": "Top of indicators",
+    "indicator": "Indicator",
+    "no-data": "No data"
+  },
+  "survey": {
+    "contains": "Contains",
+    "indicators": "indicators",
+    "created": "Created at",
+    "survey": "Survey",
+    "summary": {
+      "buttons": {
+        "finish": "Finish this survey",
+        "print": "Print"
+      },
+      "family": "Household",
+      "snapshot": "Snapshot",
+      "not-share": "I'd prefer not to share my family's situation",
+      "print-header": "Life Map",
+      "messages": {
+        "not-save": "Your personal information has not been saved in the platform",
+        "finish": "Your snapshot was completed successfully. The household's code is \"%{code}\" "
+      }
+    },
+    "priority": {
+      "title": "My priorities",
+      "attainment": "I'm proud of: \"%{title}\"",
+      "messages": {
+        "select": "Set priority for this indicator",
+        "previous-selected": "The \"%{indicator}\" indicator was previously selected",
+        "without-priorities": "You have not set any priorities yet, are sure you want to finish the survey?",
+        "delete-done": "The information has been deleted!",
+        "add-done": "The information has been saved",
+        "delete-confirm": "Are you sure you want to delete this information?",
+        "delete-confirm-title": "Confirm Deletion",
+        "indicator-not-answered": "You have chosen not to answer the question",
+        "select-delete": "Remove this priority",
+        "mising-field": "Missing '\"%{field}\"' field"
+      },
+      "add": {
+        "indicator": "Indicator",
+        "reason": "Why I don't have it?",
+        "action": "What do I do to attain it?",
+        "estimated-date": "When will I have it?",
+        "comments": "Comments"
+      }
+    },
+    "attainment": {
+      "title": "My Indicators Achieved"
+    },
+    "add": {
+      "main-title": "Survey",
+      "title-placeholder": "Surveys´s title",
+      "short-desc-placeholder": "Short description",
+      "assign-survey-placeholder": "Assign survey",
+      "json-schema": "JSON Schema *",
+      "json-ui-schema": "JSON UI Schema *",
+      "buttons": {
+        "save": "SAVE",
+        "cancel": "Cancel"
+      }
+    },
+    "save": {
+      "confirm-title": "Save Survey",
+      "confirm-text": "Are you sure you want to save this changes?",
+      "success": "Survey saved successfully"
+    },
+    "form": {
+      "title-required": "Missing Survey Title field",
+      "schema-required": "Missing JSON Schema field",
+      "schema-format-not-valid": "JSON Schema format is not valid",
+      "schema-ui-required": "Missing JSON UI Schema field",
+      "schema-ui-format-not-valid": "JSON UI Schema format is not valid"
+    }
+  },
+  "termcondpol": {
+    "agree": "I agree",
+    "disagree": "I don't agree",
+    "buttons": {
+      "next": "Next"
+    },
+    "messages": {
+      "not-answer": "Select your answer!",
+      "answer-validation": "You must first accept the terms and conditions!"
+    }
+  },
+  "family": {
+    "search": {
+      "search": "Search",
+      "city": "City",
+      "country": "Country",
+      "organization": "Organization",
+      "name-code": "Last Name/Code",
+      "name-code-parameter": "Last name or code",
+      "choose": "Choose"
+    },
+    "family": "Household",
+    "code": "Cod",
+    "map": {
+      "snapshot": "Snapshot",
+      "priorities": "Priorities",
+      "indicators": "Indicators",
+      "file": "File",
+      "interventions": "Interventions",
+      "contact": "Contact",
+      "cell": "Cell phone",
+      "email": "Email",
+      "place": "Place",
+      "no-priority": "No indicator was prioritized in this snapshot"
+    },
+    "manage": {
+      "manage-families": "Manage households",
+      "contact": "Contact",
+      "id": "ID",
+      "place": "Place",
+      "select-delete": "Delete this household",
+      "messages": {
+        "delete-confirm": "¿Are sure you want to delete all the information about your household? Once you have deleted you will not able to go back.",
+        "delete-confirm-title": "Confirm Deletion",
+        "delete-done": "The household has been deleted!"
+      }
+    }
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "login": "LOGIN",
+    "forgot-pass": "Forgot password?",
+    "email": "Email",
+    "reset-pass": "Reset Password",
+    "back-login": "Back to login",
+    "reset-title": "Please enter your email to reset your password",
+    "server-error-conn": "No connection to server",
+    "server-unauthorized-error": "Not authorized",
+    "server-wrong-credentials": "Wrong credentials. Please try again.",
+    "mail-reset-success": "Thanks! Please check '\"%{email}\"' for a link to reset your password"
+  },
+  "hub": {
+    "search": {
+      "title": "Find a Hub"
+    },
+    "form": {
+      "add-title": "Add a Hub",
+      "edit-title": "Edit Hub",
+      "logo-upload": "Click to upload a logo",
+      "name": "Hub name",
+      "name-required": "Hub name is required",
+      "code": "Code",
+      "code-required": "Code is required",
+      "description": "Description",
+      "description-required": "Description is required",
+      "information": "Information",
+      "buttons": {
+        "add": "ADD HUB",
+        "save": "SAVE HUB",
+        "cancel": "Cancel"
+      },
+      "add-success": "Hub created successfully",
+      "add-failed": "Hub already exist"
+    },
+    "delete": {
+      "confirm-title": "Confirm Deletion",
+      "confirm-text": "Are you sure you want to delete this Hub?",
+      "success": "The Hub has been deleted",
+      "failed": "The Hub could not be deleted"
+    }
+  },
+  "user": {
+    "search": {
+      "title": "Find a user"
+    },
+    "card": {
+      "email": "Email",
+      "organization": "Organization",
+      "hub": "Hub"
+    },
+    "form": {
+      "add-title": "Add a user",
+      "edit-title": "Edit user",
+      "user-label": "User",
+      "username": "Username",
+      "username-required": "Username is required",
+      "email": "Email",
+      "email-required": "Email is required",
+      "email-not-valid": "The email is not valid",
+      "password": "Password",
+      "password-required": "Password is required",
+      "password-confirm": "Confirm password",
+      "password-confirm-required": "Password confirmation is required",
+      "password-confirm-failed": "Password confirmation failed",
+      "select-hub": "Select Hub",
+      "select-hub-required": "Hub is required",
+      "select-organization": "Select Organization",
+      "select-organization-required": "Organization is required",
+      "select-role": "Select Role",
+      "select-role-required": "Role is required",
+      "buttons": {
+        "add": "ADD USER",
+        "cancel": "Cancel"
+      },
+      "add-success": "User created successfully",
+      "add-failed": "User already exist"
+    }
+  },
+  "footer": {
+    "version": {
+      "title": "WEB VERSION",
+      "name": "POVERTY STOPLIGHT"
+    }
+  },
+  "report": {
+    "snapshot": {
+      "title": "Snapshots Taken Report",
+      "search": {
+        "date-from": "Date From",
+        "date-to": "Date To",
+        "organization": "Organization",
+        "search": "Search",
+        "choose": "Choose",
+        "all": "All",
+        "not-found": "No results found"
+      },
+      "buttons": {
+        "export": "Download Report"
+      },
+      "status": "Status",
+      "survey": "Survey",
+      "messages": {
+        "validation": {
+          "required": "You must specify a value for the '\"%{field}\"' field"
+        }
+      }
+    }
+  }
+}

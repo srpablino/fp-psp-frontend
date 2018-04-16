@@ -31,9 +31,6 @@
             <img class="center-block" src="/static/images/icon_user.png" alt="Poverty Stoplight">
           </a>
           <ul class="dropdown-menu">
-            <li id="menu-manage" style="display:none;">
-              <a href="#security" data-bypass>{{$t 'header.manage-families'}}</a>
-            </li>
             <li>
               <a id="logout-link" href="#logout" data-bypass>{{$t 'header.logout'}}</a>
             </li>
@@ -52,9 +49,13 @@
               <a>
                 <img src="/static/images/blank.gif" class="flag flag-py" /> {{$t 'header.locale.es_PY'}}</a>
             </li>
+            <li class="en_GB">
+              <a>
+                <img src="/static/images/blank.gif" class="flag flag-gb" /> {{$t 'header.locale.en_GB'}}</a>
+            </li>
             <li class="en_US">
               <a>
-                <img src="/static/images/blank.gif" class="flag flag-gb" /> {{$t 'header.locale.en_US'}}</a>
+                <img src="/static/images/blank.gif" class="flag flag-us" /> {{$t 'header.locale.en_US'}}</a>
             </li>
           </ul>
         </li>

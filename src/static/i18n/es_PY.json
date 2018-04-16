@@ -16,14 +16,25 @@
       "information": "Información",
       "buttons": {
         "add": "AGREGAR ORGANIZACION",
+        "save": "GUARDAR ORGANIZACION",
         "cancel": "Cancelar"
-      },
-      "add-success": "Organización creada exitosamente",
-      "add-failed": "La Organización ya existe"
+      }
+    },
+    "save": {
+      "success": "Organización guardada exitosamente",
+      "failed": "La Organización ya existe"
+    },
+    "delete": {
+      "confirm-title": "Confirmar Eliminado",
+      "confirm-text": "¿Está seguro que desea eliminar esta Organización?",
+      "success": "La Organización ha sido eliminada",
+      "failed": "La Organización no pudo ser elimianda"
     }
   },
   "general": {
     "buttons": {
+      "search": "Buscar",
+      "ok": "Aceptar",
       "accept": "Aceptar",
       "cancel": "Cancelar"
     },
@@ -41,7 +52,10 @@
   "schemaForm": {
     "errors": {
       "pattern": "Wrong pattern",
-      "format": "No se ajusta  al formato de \"fecha\" requerido",
+      "format": {
+        "date": "No se ajusta  al formato de \"Fecha\" requerido",
+        "email": "No es un email válido"
+      },
       "required": "El campo es requerido",
       "type": "Debe ser del tipo \"%{argument}\""
     },
@@ -76,9 +90,11 @@
     "logout": "Cerrar sesión",
     "organizations": "Organizaciones",
     "hubs": "Hubs",
+    "management": "Administración",
     "locale": {
       "es_PY": "Español",
-      "en_US": "Inglés"
+      "en_US": "Inglés",
+      "en_GB": "Inglés"
     }
   },
   "subheader": {
@@ -93,7 +109,13 @@
     "hubs": "Hubs",
     "families": "Familias",
     "users": "Usuarios",
-    "indicators": "Indicadores"
+    "indicators": "Indicadores",
+    "management": {
+      "hubs": "Hubs",
+      "users": "Usuarios",
+      "manage-families": "Gestión de familias",
+      "organizations": "Organizaciones"
+    }
   },
   "home": {
     "activity": "Actividades Recientes",
@@ -148,11 +170,9 @@
         "comments": "Comentarios"
       }
     },
-
     "attainment": {
       "title": "Mis logros"
     },
-
     "add": {
       "main-title": "Encuesta",
       "title-placeholder": "Título de la encuesta",
@@ -164,6 +184,18 @@
         "save": "GRABAR",
         "cancel": "Cancelar"
       }
+    },
+    "save": {
+      "confirm-title": "Guardar Encuesta",
+      "confirm-text": "¿Está seguro que desea guardar estos cambios?",
+      "success": "Encuesta guardada exitosamente"
+    },
+    "form": {
+      "title-required": "Título de la Encuesta es requerido",
+      "schema-required": "El JSON Esquema es requerido",
+      "schema-format-not-valid": "El formato del JSON Esquema no es válido",
+      "schema-ui-required": "El JSON Esquema Visual es requerido",
+      "schema-ui-format-not-valid": "El formato del JSON Esquema Visual no es válido"
     }
   },
   "termcondpol": {
@@ -197,6 +229,7 @@
       "interventions": "Intervenciones",
       "contact": "Contacto",
       "cell": "Celular",
+      "email": "Correo electrónico",
       "place": "Lugar",
       "no-priority": "Ningún indicador fue priorizado en este snapshot"
     },
@@ -244,10 +277,19 @@
       "information": "Información",
       "buttons": {
         "add": "AGREGAR HUB",
+        "save": "GUARDAR HUB",
         "cancel": "Cancelar"
-      },
-      "add-success": "Hub creado exitosamente",
-      "add-failed": "El Hub ya existe"
+      }
+    },
+    "save": {
+      "success": "Hub guardado exitosamente",
+      "failed": "El Hub ya existe"
+    },
+    "delete": {
+      "confirm-title": "Confirmar Eliminado",
+      "confirm-text": "¿Está seguro que desea eliminar este Hub?",
+      "success": "El Hub ha sido eliminado",
+      "failed": "El Hub no pudo ser elimiando"
     }
   },
   "user": {
@@ -291,6 +333,30 @@
     "version": {
       "title": "VERSION WEB",
       "name": "SEMAFORO DE ELIMINACIÓN DE POBREZA"
+    }
+  },
+  "report": {
+    "snapshot": {
+      "title": "Reporte de Semáforos Tomados",
+      "search": {
+        "date-from": "Fecha Desde",
+        "date-to": "Fecha Hasta",
+        "organization": "Organización",
+        "search": "Buscar",
+        "choose": "Seleccione",
+        "all": "Todas",
+        "not-found": "No se encontraron resultados"
+      },
+      "buttons": {
+        "export": "Descargar Reporte"
+      },
+      "status": "Estado",
+      "survey": "Encuesta",
+      "messages": {
+        "validation": {
+          "required": "Debe especificar un valor para el campo '\"%{field}\"'"
+        }
+      }
     }
   }
 }

@@ -33,14 +33,6 @@ export default Mn.View.extend({
   initialize(options) {
     this.app = options.app;
   },
-  onRender() {
-    if (
-      this.app.getSession().userHasRole('ROLE_ROOT') ||
-      this.app.getSession().userHasRole('ROLE_HUB_ADMIN')
-    ) {
-      this.$el.find('#menu-manage').show();
-    }
-  },
 
   // FIXME Temporary function.
   // The full profile user name should
@@ -63,25 +55,15 @@ export default Mn.View.extend({
       mainItem: this.model.get('mainItem'),
       navigationItems: this.model.get('navigationItems'),
       username: this.getUserProfileName(),
-      currentLocale: this.app.getSession().get('locale')
-        ? t(`header.locale.${this.app.getSession().get('locale')}`)
-        : t('header.locale.es_PY'),
+      currentLocale: t(`header.locale.${this.app.getSession().getLocale()}`),
       currentFlag: this.getFlag()
     };
   },
   getFlag() {
-    if (this.app.getSession().get('locale')) {
-      if (
-        this.app
-          .getSession()
-          .get('locale')
-          .substring(3)
-          .toLowerCase() === 'us'
-      ) {
-        return 'gb';
-      }
-    }
-    return 'py';
+
+    return  this.app.getSession().getLocale()
+        .substring(3)
+        .toLowerCase();
   },
 
   localeSelected(event) {

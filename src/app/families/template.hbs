@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12">
-    <a class="floating-edit floating-buttom" id="newSurvey" style="cursor: pointer;">
+    <a class="floating-edit floating-buttom" id="newSurvey" style="cursor: pointer; display: none">
     </a>
   </div>
   <div class="col-md-8">
@@ -20,6 +20,9 @@
             </p>
             <p class="text-blue">{{$t 'family.map.cell'}}:
               <span class="text-gray">{{family.person.phoneNumber}}</span>
+            </p>
+            <p class="text-blue">{{$t 'family.map.email'}}:
+              <span class="text-gray">{{family.person.email}}</span>
             </p>
             <p class="text-blue">{{$t 'family.map.place'}}:
               <span class="text-gray">{{family.city.city}}, {{family.country.country}}</span>

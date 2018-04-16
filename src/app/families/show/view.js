@@ -2,20 +2,19 @@ import Bn from 'backbone';
 import Mn from 'backbone.marionette';
 import moment from 'moment';
 import $ from 'jquery';
-
 import Template from '../template.hbs';
 import SnapshotsTemplate from '../show/snapshot/template.hbs';
 import UnderConstrucionTemplate from '../../utils/under_construction_template.hbs';
 import storage from '../storage';
 import TermCondPolView from '../../termcondpol/view';
 import TermCondPolModel from '../../termcondpol/model';
+import session from "../../../common/session";
 
 export default Mn.View.extend({
   template: Template,
   events: {
     'click #newSurvey': 'newSurvey'
   },
-
   initialize(options) {
     this.app = options.app;
     this.entity = options.entity;
@@ -28,12 +27,15 @@ export default Mn.View.extend({
     if (this.entity == null) {
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
     } else {
-      $(`.sub-menu-tiem > a[href$="${this.entity}"]`)
+      $(`a.sub-menu-item[href$="${this.entity}"]`)
         .parent()
         .addClass('subActive');
     }
-  },
 
+    if (session.userHasRole('ROLE_SURVEY_USER')) {
+      this.$el.find('#newSurvey').show();
+    }
+  },
   getTemplate() {
     if (this.entity === 'interventions') {
       // return InterventionsTemplate;
@@ -52,7 +54,6 @@ export default Mn.View.extend({
       className: this.isPrioritized()
     };
   },
-
   getCreatedAt() {
     const createdAt = this.model.attributes.snapshot_indicators.created_at;
     if (!createdAt) {
@@ -60,16 +61,14 @@ export default Mn.View.extend({
     }
     return moment(createdAt).format('YYYY-MM-DD');
   },
-
-  isPrioritized(){
+  isPrioritized() {
     const isPrioritized = this.model.attributes.snapshot_indicators.indicators_priorities;
     if (!isPrioritized) {
       return null;
     }
-    return isPrioritized.length > 0 ? 'hidden' : '' ;
+    return isPrioritized.length > 0 ? 'hidden' : '';
   },
-
-  getJsonData(){
+  getJsonData() {
     let data = {};
 
     data.firstName = this.model.attributes.person.firstName;
@@ -82,8 +81,7 @@ export default Mn.View.extend({
     data.familyId = this.model.attributes.familyId;
     return data;
   },
-
-  newSurvey(event){
+  newSurvey(event) {
     event.preventDefault();
     let self = this;
     this.app.getSession().save({termCond: 0, priv: 0});
@@ -105,10 +103,9 @@ export default Mn.View.extend({
            reAnswer: true,
            formData: self.getJsonData()
 
-         }));
+        }));
       });
 
     Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/termcondpol/TC`);
-
   }
 });
