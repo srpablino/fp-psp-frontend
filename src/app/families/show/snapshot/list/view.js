@@ -5,6 +5,7 @@ import Template from './template.hbs';
 import storage from '../../../storage';
 import CollectionView from './collection-view';
 import Collection from './collection';
+import session from '../../../../../common/session';
 
 export default Mn.View.extend({
   template: Template,
@@ -66,7 +67,7 @@ export default Mn.View.extend({
     if (!createdAt) {
       return null;
     }
-    return moment(createdAt).format('YYYY-MM-DD');
+    return moment(createdAt).locale(session.get('locale')?session.get('locale'):'es').format('LL');
   },
 
   getUser(user) {
