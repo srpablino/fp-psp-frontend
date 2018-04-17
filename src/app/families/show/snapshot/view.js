@@ -2,6 +2,7 @@ import Mn from 'backbone.marionette';
 import moment from 'moment';
 
 import Template from './template.hbs';
+import storage from '../../storage';
 
 export default Mn.View.extend({
   template: Template,
@@ -13,7 +14,7 @@ export default Mn.View.extend({
     this.snapshotModel = options.snapshotModel;
   },
   onRender() {
-    const headerItems = this.app.getSession().getSubHeaderItems(this.model);
+    const headerItems = storage.getSubHeaderItems(this.model);
     this.app.updateSubHeader(headerItems);
   },
   serializeData() {
