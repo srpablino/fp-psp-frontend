@@ -70,15 +70,14 @@ export default Mn.View.extend({
   },
   getJsonData() {
     let data = {};
-
-    data.firstName = this.model.attributes.person.firstName;
-    data.lastName = this.model.attributes.person.lastName;
-    data.identificationNumber = this.model.attributes.person.identificationNumber;
-    data.identificationType = this.model.attributes.person.identificationType;
-    data.birthdate = this.model.attributes.person.birthdate;
-    data.countryOfBirth = this.model.attributes.person.countryOfBirth.alfa2Code;
-    data.phoneNumber = this.model.attributes.person.phoneNumber;
-    data.familyId = this.model.attributes.familyId;
+    data.firstName = this.model.attributes.snapshot_indicators.family.person.firstName;
+    data.lastName = this.model.attributes.snapshot_indicators.family.person.lastName;
+    data.identificationNumber = this.model.attributes.snapshot_indicators.family.person.identificationNumber;
+    data.identificationType = this.model.attributes.snapshot_indicators.family.person.identificationType;
+    data.birthdate = this.model.attributes.snapshot_indicators.family.person.birthdate;
+    data.countryOfBirth = this.model.attributes.snapshot_indicators.family.person.countryOfBirth.alfa2Code;
+    data.phoneNumber = this.model.attributes.snapshot_indicators.family.person.phoneNumber;
+    data.familyId = this.model.attributes.snapshot_indicators.family.familyId;
     return data;
   },
   newSurvey(event) {
