@@ -28,19 +28,15 @@ export default Mn.View.extend({
     if (this.model.get('id')) {
       this.app.updateSubHeader(storage.getSubHeaderItems(this.model));
     }
-    this.months = ["","January", "February", "March", "April", "May", "June","July",
-     "August","September","October","November","December"]
+
   },
 
   formatDate(key){
-    if(moment(key).isSame(moment(), 'month')){
-      return t('general.today');
-    }
     return moment(key).locale(session.get('locale')?session.get('locale'):'es').format('MMMM');
   },
 
   generateData(){
-     let snapshots = this.organization.dashboard.snapshotTaken.byMonth;
+     let snapshots = this.sortData(this.organization.dashboard.snapshotTaken.byMonth);
      let data={};
      data.x = [
       'x',
@@ -50,7 +46,19 @@ export default Mn.View.extend({
         'data1',
         ... _.values(snapshots)
     ];
+
+
+
     return data;
+  },
+
+  sortData(data){
+    return Object.keys(data)
+    .sort()
+    .reduce((result, key) => {
+       result[key] = data[key];
+       return result;
+   }, {});
   },
 
   chart(){
@@ -69,7 +77,7 @@ export default Mn.View.extend({
           colors:{
                 data1: '#60b4ef',
               },
-          type: 'bar',
+          type: 'line',
           labels: true,
           empty: {
             label: {
@@ -82,7 +90,7 @@ export default Mn.View.extend({
                 type: 'category'
             },
             y: {
-               show: false
+               show: true
              }
         },
         bar: {
