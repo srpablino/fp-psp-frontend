@@ -4,6 +4,7 @@ import Gallery from './gallery';
 import Gmap from './gmap';
 import NumberFormat from './number';
 import DatetimeFormat from './datetime';
+import FlashesService from "../flashes/service";
 
 const log = type => console.log.bind(console, type);
 
@@ -191,8 +192,18 @@ class Form extends Component {
   }
 
   onSubmit(data) {
-    var newData = JSON.parse(JSON.stringify(this.state.formData));
     var currentStep = this.state.stepsSchema[this.state.step];
+
+    if (data.formData[currentStep.key] === undefined) {
+      FlashesService.request('add', {
+        timeout: 3000,
+        type: 'warning',
+        title: t('schemaForm.select-an-option')
+      });
+      return;
+    }
+
+    let newData = JSON.parse(JSON.stringify(this.state.formData));
     newData[currentStep.key] = data.formData[currentStep.key];
 
     if (this.state.step < this.state.stepsSchema.length - 1) {
