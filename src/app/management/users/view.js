@@ -8,6 +8,7 @@ import UsersModel from './model';
 import Collection from './collection';
 import storage from './storage';
 import OrganizationModel from '../organizations/model';
+import env from "../../env";
 
 
 export default Mn.View.extend({
@@ -86,6 +87,7 @@ export default Mn.View.extend({
     const container = this.$el.find('.list-container').eq(0);
     const section = utils.getLoadingSection(container);
     section.loading();
+    this.collection.url = `${env.API}/users/includeNotActive`;
 
     this.params = {
       filter: searchTerm,
@@ -120,6 +122,7 @@ export default Mn.View.extend({
       this.params.page = this.collection.currentPage + 1;
 
       let moreElements = new UsersModel();
+      moreElements.url=`${env.API}/users/includeNotActive`;
       moreElements.fetch({
         data: this.params,
         success(response) {

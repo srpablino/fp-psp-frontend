@@ -311,7 +311,8 @@
     "card": {
       "email": "Email",
       "organization": "Organization",
-      "hub": "Hub"
+      "hub": "Hub",
+      "active": "Active"
     },
     "form": {
       "add-title": "Add a user",
@@ -339,6 +340,21 @@
       },
       "add-success": "User created successfully",
       "add-failed": "User already exist"
+    },
+    "formedit": {
+      "edit-title": "Edit user",
+      "user-label": "User",
+      "username": "Username",
+      "username-required": "Username is required",
+      "email": "Email",
+      "email-required": "Email is required",
+      "email-not-valid": "The email is not valid",
+      "buttons": {
+        "add": "ADD USER",
+        "cancel": "Cancel"
+      },
+      "add-success": "User updated",
+      "add-failed": "Could not update user"
     }
   },
   "footer": {
