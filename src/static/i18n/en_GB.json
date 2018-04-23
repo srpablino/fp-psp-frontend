@@ -63,6 +63,7 @@
     "economic-info": "Socio-economic Information",
     "indicators": "Indicators",
     "not-answer": "Skip question",
+    "select-an-option": "Select an option for this Indicator",
     "buttons": {
       "save-draft": "Save Draft"
     },
@@ -280,9 +281,11 @@
         "add": "ADD HUB",
         "save": "SAVE HUB",
         "cancel": "Cancel"
-      },
-      "add-success": "Hub created successfully",
-      "add-failed": "Hub already exist"
+      }
+    },
+    "save": {
+      "success": "Hub saved successfully",
+      "failed": "Hub already exist"
     },
     "delete": {
       "confirm-title": "Confirm Deletion",
