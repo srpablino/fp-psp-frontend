@@ -300,7 +300,8 @@
     "card": {
       "email": "Correo electrónico",
       "organization": "Organización",
-      "hub": "Hub"
+      "hub": "Hub",
+      "active": "Activo"
     },
     "form": {
       "add-title": "Agregar un usuario",
@@ -328,6 +329,21 @@
       },
       "add-success": "Usuario creado exitosamente",
       "add-failed": "El usuario ya existe"
+    },
+    "formedit": {
+      "edit-title": "Editar usuario",
+      "user-label": "Usuario",
+      "username": "Nombre de usuario",
+      "username-required": "Nombre de usuario es requerido",
+      "email": "Correo electrónico",
+      "email-required": "Correo electrónico es requerido",
+      "email-not-valid": "El correo electrónico no es válido",
+      "buttons": {
+        "add": "AGREGAR USUARIO",
+        "cancel": "Cancelar"
+      },
+      "add-success": "Usuario actualizado correctamente",
+      "add-failed": "No es posible actualizar usuario"
     }
   },
   "footer": {

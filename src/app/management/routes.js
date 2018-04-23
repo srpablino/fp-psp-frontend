@@ -6,6 +6,7 @@ import ApplicationFormView from './hubs/add/view';
 // Users
 import UsersView from './users/view';
 import NewUserView from './users/add/view';
+import EditUserView from './users/edit/view';
 import usersStorage from './users/storage';
 // Manage household
 import SecurityView from './security/layout-view';
@@ -21,6 +22,7 @@ const management = props => {
       'management/applications/edit/:id': 'editApplication',
       'management/users(/)': 'showUsers',
       'management/users/new': 'newUser',
+      'management/users/edit/:userId': 'editUser',
       'management/manage-families': 'showManageFamilies'
     },
     controller: {
@@ -47,6 +49,11 @@ const management = props => {
       },
       newUser() {
         app.showViewOnRoute(new NewUserView({app}));
+      },
+      editUser(userId) {
+        usersStorage.find(userId).then(model => {
+          app.showViewOnRoute(new EditUserView({model, app}));
+        });
       },
       showManageFamilies() {
         if ((app.getSession().userHasRole('ROLE_ROOT') || app.getSession().userHasRole('ROLE_HUB_ADMIN'))) {
