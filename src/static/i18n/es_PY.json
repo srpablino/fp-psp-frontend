@@ -314,6 +314,9 @@
       "email": "Correo electrónico",
       "organization": "Organización",
       "hub": "Hub",
+      "role": "Rol",
+      "true": "Verdadero",
+      "false": "Falso",
       "active": "Activo"
     },
     "form": {
@@ -347,6 +350,8 @@
       "edit-title": "Editar usuario",
       "user-label": "Usuario",
       "username": "Nombre de usuario",
+      "role": "Rol",
+      "active": "Activo",
       "username-required": "Nombre de usuario es requerido",
       "email": "Correo electrónico",
       "email-required": "Correo electrónico es requerido",

@@ -87,7 +87,7 @@ export default Mn.View.extend({
     const container = this.$el.find('.list-container').eq(0);
     const section = utils.getLoadingSection(container);
     section.loading();
-    this.collection.url = `${env.API}/users/includeNotActive`;
+    this.collection.url = `${env.API}/users`;
 
     this.params = {
       filter: searchTerm,
@@ -122,7 +122,7 @@ export default Mn.View.extend({
       this.params.page = this.collection.currentPage + 1;
 
       let moreElements = new UsersModel();
-      moreElements.url=`${env.API}/users/includeNotActive`;
+      moreElements.url=`${env.API}/users`;
       moreElements.fetch({
         data: this.params,
         success(response) {

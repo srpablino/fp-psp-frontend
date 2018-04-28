@@ -5,8 +5,8 @@ import Model from './model';
 import userStorage from './storage';
 import utils from '../../../utils';
 import FlashesService from '../../../flashes/service';
-import env from '../../../env';
 import storage from '../../storage';
+
 
 export default Mn.View.extend({
   template: Template,
@@ -38,22 +38,10 @@ export default Mn.View.extend({
     }
     this.app.updateSubHeader(headerItems);
   },
-  genericFetch(path, selectId, placeholder, type, fieldDisplayed) {
-    const self = this;
-    var modelCollection = new Bn.Model();
-    modelCollection.urlRoot = `${env.API}${path}`;
-    modelCollection.fetch({
-      success(response) {
-        var list = response.toJSON().list || response.toJSON();
-        self.loadSelect(list, selectId, placeholder, type, fieldDisplayed);
-      }
-    });
-  },
   handleSubmit(event) {
     event.preventDefault();
     const button = utils.getLoadingButton(this.$el.find('#submit'));
     const session = this.app.getSession();
-
 
     this.$el
       .find('#formedit')
@@ -63,10 +51,12 @@ export default Mn.View.extend({
       });
     this.model.set('active',this.model.get('active')==="on");
 
+    // let errors = this.model.validate();
     let errors = this.model.validate();
 
     if (errors) {
       errors.forEach(error => {
+        this.model.fetch();
         FlashesService.request('add', {
           timeout: 3000,
           type: 'danger',
@@ -95,17 +85,17 @@ export default Mn.View.extend({
           type: 'info',
           title: t('user.formedit.add-success')
         });
-      })
-      .catch(response => {
-        if (response.status === 400) {
-          FlashesService.request('add', {
-            timeout: 3000,
-            type: 'danger',
-            title: t('user.formedit.add-failed')
-          });
-        }
-        button.reset();
+      }).catch(response => {
+      this.model.fetch();
+      if (response.status === 400) {
+        FlashesService.request('add', {
+          timeout: 3000,
+          type: 'danger',
+          title: t('user.formedit.add-failed')
+        });
+      }
+      button.reset();
 
-      });
+    });
   }
 });

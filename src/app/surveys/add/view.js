@@ -161,6 +161,7 @@ export default Mn.View.extend({
     },
 
     saveySurvey(){
+      let isNew= this.model.get('id') === undefined;
       const button = utils.getLoadingButton(this.$el.find('#submit'));
       button.loading();
 
@@ -198,6 +199,9 @@ export default Mn.View.extend({
       let errors = this.model.validate();
 
       if (errors) {
+        if (!isNew){
+          this.model.fetch();
+        }
         errors.forEach(error => {
            if (error.required)  this.$el.find(`#${error.field}`).parent().addClass('has-error');
           FlashesService.request('add', {
@@ -229,6 +233,9 @@ export default Mn.View.extend({
           this.model.fetch();
         },
         error => {
+          if (!isNew){
+            this.model.fetch();
+          }
           FlashesService.request('add', {
             timeout: 2000,
             type: 'warning',

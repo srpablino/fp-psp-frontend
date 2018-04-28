@@ -13,10 +13,9 @@ export default Mn.View.extend({
     return {
       user: this.model.attributes,
       organizationLabel: this.model.get('organization') ? t('user.card.organization') : t('user.card.hub'),
-      organization: this.model.get('organization') || this.model.get('application')
+      organization: this.model.get('organization') || this.model.get('application'),
     };
   },
-
   editUser(event) {
     event.preventDefault();
 
