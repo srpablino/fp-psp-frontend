@@ -56,6 +56,7 @@ export default Mn.View.extend({
     reader.readAsDataURL(this.$el.find('#input-image-file').prop('files')[0]);
   },
   handleSubmit(event) {
+    let isNew = this.model.get('id') === undefined;
     event.preventDefault();
     const session = this.app.getSession();
     const button = utils.getLoadingButton(this.$el.find('#submit'));
@@ -73,6 +74,9 @@ export default Mn.View.extend({
 
     if (errors) {
       errors.forEach(error => {
+        if (!isNew){
+          this.model.fetch();
+        }
         FlashesService.request('add', {
           timeout: 3000,
           type: 'danger',
@@ -97,7 +101,11 @@ export default Mn.View.extend({
         });
       })
       .catch(response => {
+        if (!isNew){
+          this.model.fetch();
+        }
         if (response.status === 400) {
+
           FlashesService.request('add', {
             timeout: 3000,
             type: 'danger',

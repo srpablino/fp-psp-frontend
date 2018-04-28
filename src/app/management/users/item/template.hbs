@@ -15,8 +15,11 @@
           {{/if}}
           <h6 class="card-text-sub-title text-blue">{{organizationLabel}}:</h6>
           <p class="card-text" title={{{organization.name}}}>{{organization.name}}</p>
+          <h6 class="card-text-sub-title text-blue">{{$t 'user.card.role'}}:</h6>
+          <p class="card-text" title={{{user.role}}}>{{user.role}}</p>
           <h6 class="card-text-sub-title text-blue">{{$t 'user.card.active'}}:</h6>
-          <p class="card-text" title={{{user.active}}}>{{user.active}}</p>
+          <input type="checkbox" name="active" {{#if user.active}} checked {{/if}}
+                  disabled="disabled" >
           <p class="card-text-small">
             <span class="text-blue">&nbsp</span>
           </p>

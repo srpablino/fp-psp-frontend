@@ -302,6 +302,9 @@
       "email": "Email",
       "organization": "Organization",
       "hub": "Hub",
+      "role": "Role",
+      "true": "True",
+      "false": "False",
       "active": "Active"
     },
     "form": {
@@ -335,6 +338,8 @@
       "edit-title": "Edit user",
       "user-label": "User",
       "username": "Username",
+      "role": "Role",
+      "active": "Active",
       "username-required": "Username is required",
       "email": "Email",
       "email-required": "Email is required",
