@@ -12,9 +12,11 @@ import PriorityModel from './priority/model';
 import SnapshotModel from '../../add/model';
 import ModalService from '../../../modal/service';
 import Storage from './storage';
+import ParameterModel from '../../../parameter/model';
 
 export default Mn.View.extend({
   template: Template,
+  parameterModel: new ParameterModel(),
   events: {
     'click #circle': 'handlerOnClickIndicator',
     'click #delete': 'handleOnDeletePriority',
@@ -27,6 +29,17 @@ export default Mn.View.extend({
     this.model = this.props.model;
     this.app = this.props.app;
     this.model.on('sync', this.render);
+  },
+
+  onRender(){
+    const self = this;
+    this.parameterModel = new ParameterModel();
+    this.parameterModel.fetch({
+      data: { keyParameter: 'minimum_priority'},
+      success(response) {
+        self.parameterModel = response.toJSON();
+      }
+    });
   },
 
   serializeData() {
@@ -93,6 +106,7 @@ export default Mn.View.extend({
         );
         this.props.model.attributes.indicators_priorities = elements;
         setTimeout(() => {
+
           this.render();
         }, 300);
       });
@@ -151,7 +165,6 @@ export default Mn.View.extend({
           type: 'info',
           title: t('survey.priority.messages.indicator-not-answered')
         });
-
     }
 
     success = indicatorSelectedValue.toUpperCase() === 'GREEN' ;
@@ -184,9 +197,16 @@ export default Mn.View.extend({
     $('#modal-region').append(this.priorityDialog.render().el);
   },
 
+  isAttainment(data){
+    return data.is_attainment === false;
+  },
+
   handleShowFamilyMap() {
 
-    if(this.model.attributes.indicators_priorities.length<1 && (this.model.attributes.count_red_indicators>0 || this.model.attributes.count_yellow_indicators>0)){
+   let countPriorities = this.model.attributes.indicators_priorities.filter(this.isAttainment);
+   let totRedYellowIndicators = this.model.attributes.count_red_indicators + this.model.attributes.count_yellow_indicators;
+
+    if(countPriorities.length <= 0 && totRedYellowIndicators >= countPriorities.length){
 
       ModalService.request('confirm', {
         title: t('general.messages.information'),
@@ -202,6 +222,15 @@ export default Mn.View.extend({
       });
 
     } else {
+
+      if (totRedYellowIndicators >= this.parameterModel.value && countPriorities.length < this.parameterModel.value) {
+        return FlashesService.request('add', {
+          timeout: 2000,
+          type: 'warning',
+          title: t('survey.priority.messages.min-priorities', {min: this.parameterModel.value})
+        });
+      }
+
       this.savedNotification();
       this.redirect(`families/${this.props.model.attributes.family_id}/snapshots/${
         this.props.model.attributes.snapshot_economic_id
@@ -219,6 +248,7 @@ export default Mn.View.extend({
   finishSurvey(e){
 
     e.preventDefault();
+
 
     if($('#check-privacity').is(':checked')) {
       ModalService.request('confirm', {
