@@ -2,8 +2,8 @@ import Bn from 'backbone';
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import Template from './template.hbs';
-import Model from '../model';
-import userStorage from '../storage';
+import Model from './model';
+import userStorage from './storage';
 import utils from '../../../utils';
 import FlashesService from '../../../flashes/service';
 import env from '../../../env';
@@ -19,18 +19,19 @@ export default Mn.View.extend({
   initialize(options) {
     this.app = options.app;
     this.model = new Model();
-    if (options.model){
-      this.model.attributes = this.options.model.attributes;
+
+    if (this.options.model){
+      this.model.attributes = this.options.model.attributes
     }else{
       this.model.urlRoot = `${env.API}/users/addUserRoleApplication`;
-    }
 
+    }
   },
   serializeData() {
     return {
       user: this.model.attributes,
-      isChecked: this.model.attributes.active,
-      isNew: this.model.get('id') === undefined
+      isNew: this.model.get('id')===undefined,
+      isChecked: this.model.attributes.active
     };
   },
   onRender() {
@@ -148,6 +149,8 @@ export default Mn.View.extend({
       .forEach(element => {
         this.model.set(element.name, element.value);
       });
+    this.model.set('active',this.model.get('active')==="on");
+
 
     if (session.userHasRole('ROLE_APP_ADMIN')) {
         let user = session.get('user');
@@ -158,8 +161,8 @@ export default Mn.View.extend({
     let errors = this.model.validate();
 
     if (errors) {
-      this.model.fetch();
       errors.forEach(error => {
+        this.model.fetch();
         FlashesService.request('add', {
           timeout: 3000,
           type: 'danger',
@@ -171,7 +174,8 @@ export default Mn.View.extend({
     }
 
     button.loading();
-
+    let outcome;
+    let modelIsNew = this.model.isNew();
     userStorage
       .save(this.model)
       .then(() => {
@@ -183,21 +187,29 @@ export default Mn.View.extend({
         }else{
           Bn.history.navigate('management/users', { trigger: true });
         }
-
-
+        if (modelIsNew){
+          outcome = 'user.form.add-success';
+        }else{
+          outcome = 'user.form.edit-success';
+        }
         FlashesService.request('add', {
           timeout: 3000,
           type: 'info',
-          title: t('user.form.add-success')
+          title: t(outcome)
         });
       })
       .catch(response => {
+        if (modelIsNew){
+          outcome = 'user.form.add-failed';
+        }else{
+          outcome = 'user.form.edit-failed';
+        }
         this.model.fetch();
         if (response.status === 400) {
           FlashesService.request('add', {
             timeout: 3000,
             type: 'danger',
-            title: t('user.form.add-failed')
+            title: t(outcome)
           });
         }
         button.reset();

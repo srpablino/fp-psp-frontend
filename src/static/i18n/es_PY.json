@@ -320,8 +320,10 @@
       "active": "Activo"
     },
     "form": {
-      "add-title": "Agregar un usuario",
       "edit-title": "Editar usuario",
+      "role": "Rol",
+      "active": "Activo",
+      "add-title": "Agregar un usuario",
       "user-label": "Usuario",
       "username": "Nombre de usuario",
       "username-required": "Nombre de usuario es requerido",
@@ -344,24 +346,9 @@
         "cancel": "Cancelar"
       },
       "add-success": "Usuario creado exitosamente",
-      "add-failed": "El usuario ya existe"
-    },
-    "formedit": {
-      "edit-title": "Editar usuario",
-      "user-label": "Usuario",
-      "username": "Nombre de usuario",
-      "role": "Rol",
-      "active": "Activo",
-      "username-required": "Nombre de usuario es requerido",
-      "email": "Correo electrónico",
-      "email-required": "Correo electrónico es requerido",
-      "email-not-valid": "El correo electrónico no es válido",
-      "buttons": {
-        "add": "AGREGAR USUARIO",
-        "cancel": "Cancelar"
-      },
-      "add-success": "Usuario actualizado correctamente",
-      "add-failed": "No es posible actualizar usuario"
+      "add-failed": "El usuario ya existe",
+      "edit-success": "Usuario actualizado correctamente",
+      "edit-failed": "No es posible actualizar usuario"
     }
   },
   "footer": {
