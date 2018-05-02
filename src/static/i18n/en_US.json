@@ -307,8 +307,10 @@
       "active": "Active"
     },
     "form": {
-      "add-title": "Add a user",
       "edit-title": "Edit user",
+      "role": "Role",
+      "active": "Active",
+      "add-title": "Add a user",
       "user-label": "User",
       "username": "Username",
       "role": "Role",
@@ -332,24 +334,9 @@
         "cancel": "Cancel"
       },
       "add-success": "User created successfully",
-      "add-failed": "User already exist"
-    },
-    "formedit": {
-      "edit-title": "Edit user",
-      "user-label": "User",
-      "username": "Username",
-      "username-required": "Username is required",
-      "email": "Email",
-      "role": "Role",
-      "active": "Active",
-      "email-required": "Email is required",
-      "email-not-valid": "The email is not valid",
-      "buttons": {
-        "add": "ADD USER",
-        "cancel": "Cancel"
-      },
-      "add-success": "User updated",
-      "add-failed": "Could not update user"
+      "add-failed": "User already exist",
+      "edit-success": "User updated",
+      "edit-failed": "Could not update user"
     }
   },
   "footer": {
