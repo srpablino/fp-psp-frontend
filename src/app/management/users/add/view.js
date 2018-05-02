@@ -2,8 +2,8 @@ import Bn from 'backbone';
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
 import Template from './template.hbs';
-import Model from './model';
-import userStorage from './storage';
+import Model from '../model';
+import userStorage from '../storage';
 import utils from '../../../utils';
 import FlashesService from '../../../flashes/service';
 import env from '../../../env';
@@ -18,12 +18,19 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
-    this.props = Object.assign({}, options);
-    this.model = this.props.model || new Model();
+    this.model = new Model();
+    if (options.model){
+      this.model.attributes = this.options.model.attributes;
+    }else{
+      this.model.urlRoot = `${env.API}/users/addUserRoleApplication`;
+    }
+
   },
   serializeData() {
     return {
-      user: this.model.attributes
+      user: this.model.attributes,
+      isChecked: this.model.attributes.active,
+      isNew: this.model.get('id') === undefined
     };
   },
   onRender() {
@@ -135,23 +142,23 @@ export default Mn.View.extend({
     const button = utils.getLoadingButton(this.$el.find('#submit'));
     const session = this.app.getSession();
 
-    let userModel = new Model();
     this.$el
       .find('#form')
       .serializeArray()
       .forEach(element => {
-        userModel.set(element.name, element.value);
+        this.model.set(element.name, element.value);
       });
 
     if (session.userHasRole('ROLE_APP_ADMIN')) {
         let user = session.get('user');
-        userModel.set('application', user.application && user.application.id);
-        userModel.set('organization', user.organization && user.organization.id);
+        this.model.set('application', user.application && user.application.id);
+        this.model.set('organization', user.organization && user.organization.id);
     }
 
-    let errors = userModel.validate();
+    let errors = this.model.validate();
 
     if (errors) {
+      this.model.fetch();
       errors.forEach(error => {
         FlashesService.request('add', {
           timeout: 3000,
@@ -166,7 +173,7 @@ export default Mn.View.extend({
     button.loading();
 
     userStorage
-      .save(userModel)
+      .save(this.model)
       .then(() => {
         button.reset();
         if (session.userHasRole('ROLE_APP_ADMIN')) {
@@ -185,6 +192,7 @@ export default Mn.View.extend({
         });
       })
       .catch(response => {
+        this.model.fetch();
         if (response.status === 400) {
           FlashesService.request('add', {
             timeout: 3000,

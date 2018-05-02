@@ -6,7 +6,6 @@ import ApplicationFormView from './hubs/add/view';
 // Users
 import UsersView from './users/view';
 import NewUserView from './users/add/view';
-import EditUserView from './users/edit/view';
 import usersStorage from './users/storage';
 // Manage household
 import SecurityView from './security/layout-view';
@@ -52,7 +51,7 @@ const management = props => {
       },
       editUser(userId) {
         usersStorage.find(userId).then(model => {
-          app.showViewOnRoute(new EditUserView({model, app}));
+          app.showViewOnRoute(new NewUserView({model, app}));
         });
       },
       showManageFamilies() {
