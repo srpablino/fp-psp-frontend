@@ -1,6 +1,5 @@
 import UsersView from './view';
-import NewUserView from '../users/add/view';
-import EditUserView from '../users/edit/view';
+import UserFormView from '../users/add/view';
 import UsersStorage from './storage'
 
 const users = props => {
@@ -17,12 +16,12 @@ const users = props => {
         app.showViewOnRoute(new UsersView({app}));
       },
       newUser() {
-        app.showViewOnRoute(new NewUserView({app}));
+        app.showViewOnRoute(new UserFormView({app}));
       },
       editUser(userId){
         UsersStorage.find(userId).then(model => {
           app.showViewOnRoute(
-            new EditUserView({model, app}));
+            new UserFormView({model, app}));
         })
       }
     }
