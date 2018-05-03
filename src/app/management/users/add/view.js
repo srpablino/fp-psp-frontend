@@ -17,9 +17,9 @@ export default Mn.View.extend({
     'change #select-org': 'loadRoles'
   },
   initialize(options) {
+    this.originalModel = options.model.clone();
     this.app = options.app;
     this.model = new Model();
-
     if (this.options.model){
       this.model.attributes = this.options.model.attributes
     }else{
@@ -162,7 +162,7 @@ export default Mn.View.extend({
 
     if (errors) {
       errors.forEach(error => {
-        this.model.fetch();
+        this.model.set(this.originalModel.attributes);
         FlashesService.request('add', {
           timeout: 3000,
           type: 'danger',
@@ -199,12 +199,13 @@ export default Mn.View.extend({
         });
       })
       .catch(response => {
+        this.model.set(this.originalModel.attributes);
         if (modelIsNew){
           outcome = 'user.form.add-failed';
         }else{
           outcome = 'user.form.edit-failed';
         }
-        this.model.fetch();
+        // this.model.fetch();
         if (response.status === 400) {
           FlashesService.request('add', {
             timeout: 3000,
