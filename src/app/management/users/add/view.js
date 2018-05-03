@@ -17,10 +17,10 @@ export default Mn.View.extend({
     'change #select-org': 'loadRoles'
   },
   initialize(options) {
-    this.originalModel = options.model.clone();
     this.app = options.app;
     this.model = new Model();
     if (this.options.model){
+      this.originalModel = options.model.clone();
       this.model.attributes = this.options.model.attributes
     }else{
       this.model.urlRoot = `${env.API}/users/addUserRoleApplication`;
