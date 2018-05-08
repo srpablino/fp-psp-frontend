@@ -34,7 +34,7 @@ export default Mn.View.extend({
   },
   getApplications(){
     let self = this;
-    this.applicationsCollections.urlRoot = `${env.API}/applications/listByUser`;
+    this.applicationsCollections.urlRoot = `${env.API}/applications/list`;
     self.applicationsCollections.fetch({
       success(response) {
         self.applicationsCollections = response.attributes;
@@ -53,7 +53,7 @@ export default Mn.View.extend({
   },
   getOrganizations(){
     let self = this;
-    this.organizationsCollection.urlRoot = `${env.API}/organizations/listByUser`;
+    this.organizationsCollection.urlRoot = `${env.API}/organizations/list`;
     self.organizationsCollection.fetch({
       success(response) {
         self.organizationsCollection = response.attributes;
