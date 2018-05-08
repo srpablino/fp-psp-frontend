@@ -16,6 +16,7 @@ import FlashesService from '../../flashes/service';
 import OrganizationsModel from '../../management/organizations/model';
 import ApplicationModel from '../../applications/model';
 import ModalService from "../../modal/service";
+import env from "../../env";
 
 export default Mn.View.extend({
   template: Template,
@@ -33,6 +34,7 @@ export default Mn.View.extend({
   },
   getApplications(){
     let self = this;
+    this.applicationsCollections.urlRoot = `${env.API}/applications?all=true`;
     self.applicationsCollections.fetch({
       success(response) {
         self.applicationsCollections = response.get('list');
@@ -51,6 +53,7 @@ export default Mn.View.extend({
   },
   getOrganizations(){
     let self = this;
+    this.organizationsCollection.urlRoot = `${env.API}/organizations?all=true`;
     self.organizationsCollection.fetch({
       success(response) {
         self.organizationsCollection = response.get('list');
