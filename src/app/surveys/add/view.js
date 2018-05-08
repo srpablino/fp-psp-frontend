@@ -34,10 +34,10 @@ export default Mn.View.extend({
   },
   getApplications(){
     let self = this;
-    this.applicationsCollections.urlRoot = `${env.API}/applications?all=true`;
+    this.applicationsCollections.urlRoot = `${env.API}/applications/listByUser`;
     self.applicationsCollections.fetch({
       success(response) {
-        self.applicationsCollections = response.get('list');
+        self.applicationsCollections = response.attributes;
           $.each(self.applicationsCollections, (index, element) => {
             self.buildOption(element);
            });
@@ -53,10 +53,10 @@ export default Mn.View.extend({
   },
   getOrganizations(){
     let self = this;
-    this.organizationsCollection.urlRoot = `${env.API}/organizations?all=true`;
+    this.organizationsCollection.urlRoot = `${env.API}/organizations/listByUser`;
     self.organizationsCollection.fetch({
       success(response) {
-        self.organizationsCollection = response.get('list');
+        self.organizationsCollection = response.attributes;
           $.each(self.organizationsCollection, (index, element) => {
             self.buildOption(element);
            });
