@@ -160,6 +160,47 @@ class Form extends Component {
     if (schema.required && schema.required.includes(key)) {
       schemaToRet.required.push(key);
     }
+
+    /* if (schema.dependencies && schema.dependencies.includes(key)) {
+      schemaToRet.dependencies.push(key);
+      schemaToRet.dependencies[key] = schema.dependencies[key];
+    } */
+
+    if (key === "gender") {
+      schemaToRet.dependencies = {
+          "gender": {
+            "oneOf": [
+              {
+                "properties": {
+                  "gender": {
+                    "enum": [
+                      "M",
+                      "F",
+                      "ND"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "gender": {
+                    "enum": [
+                      "SD"
+                    ]
+                  },
+                  "Provide a description": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "Provide a description"
+                ]
+              }
+            ]
+          }
+        };
+    }
+
     if (
       this.props.uiSchema['ui:group:economics'] &&
       this.props.uiSchema['ui:group:economics'].includes(key)
@@ -193,6 +234,8 @@ class Form extends Component {
 
   onSubmit(data) {
     var currentStep = this.state.stepsSchema[this.state.step];
+
+    // aca se puede preguntar si es un campo opcional, y luego checkear el valor.
 
     if (data.formData[currentStep.key] === undefined) {
       FlashesService.request('add', {
@@ -287,9 +330,10 @@ class Form extends Component {
     return show;
   }
 
-  onChange(data){
-    this.state.lastValue = data.formData;
-  }
+   onChange(data){
+    // aca tambien se puede ver si es dato condicional
+     this.state.lastValue = data.formData;
+   }
 
   mapErrors(errors){
     return errors.map(error => {
@@ -305,6 +349,7 @@ class Form extends Component {
       return error;
     });
   }
+
 
   render() {
 
