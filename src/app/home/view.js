@@ -13,9 +13,12 @@ export default Mn.View.extend({
 
   initialize(options) {
     this.app = options.app;
+
     if (this.model) {
       this.organization = this.model.attributes;
       setTimeout(() => {
+        let logo = this.model.attributes.logoUrl || '/static/images/icon_logo_place.png';
+        $('#sub-header-image').attr('src' ,logo)
       if(!$.isEmptyObject(this.organization.dashboard.snapshotTaken.byMonth)){
           $('.no-data').hide();
           this.chart();
@@ -112,7 +115,8 @@ export default Mn.View.extend({
       this.model = new Bb.Model();
     }
     return {
-      organization: this.model.attributes
+      organization: this.model.attributes,
+      logoUrl: this.model.attributes.logoUrl || '/static/images/icon_logo_place.png'
     };
   }
 });
