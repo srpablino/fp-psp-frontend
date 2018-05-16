@@ -39,6 +39,10 @@ export default Mn.View.extend({
   onRender() {
     setTimeout(() => {
       this.$el.find('#login-username').focus();
+      console.log(`mostrando el env ${  env.platform}`);
+      // $('#platform-name').val(env.platform);
+      $("#platform-name").text(env.platform);
+
     }, 0);
 
   },

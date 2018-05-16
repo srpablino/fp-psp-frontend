@@ -5,6 +5,6 @@ import env from '../env';
 export default Mn.View.extend({
   template: Template,
   serializeData() {
-    return { appVersion: env.appVersion };
+    return { appVersion: env.appVersion, appPlatform: env.platform };
   }
 });

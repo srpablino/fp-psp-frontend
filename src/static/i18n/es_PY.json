@@ -362,7 +362,8 @@
   "footer": {
     "version": {
       "title": "VERSION WEB",
-      "name": "SEMAFORO DE ELIMINACIÓN DE POBREZA"
+      "name": "SEMAFORO DE ELIMINACIÓN DE POBREZA",
+      "platform": "PLATAFORMA"
     }
   },
   "report": {
