@@ -115,8 +115,7 @@ export default Mn.View.extend({
       this.model = new Bb.Model();
     }
     return {
-      organization: this.model.attributes,
-      logoUrl: this.model.attributes.logoUrl || '/static/images/icon_logo_place.png'
+      organization: this.model.attributes
     };
   }
 });
