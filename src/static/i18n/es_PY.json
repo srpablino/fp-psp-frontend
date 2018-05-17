@@ -269,6 +269,7 @@
     "password": "Contraseña",
     "login": "INICIAR SESIÓN",
     "forgot-pass": "¿Olvidó su contraseña?",
+    "go-form": "Registrarse",
     "email": "Correo electrónico",
     "reset-pass": "Cambiar Contraseña",
     "back-login": "Volver al inicio de sesión",

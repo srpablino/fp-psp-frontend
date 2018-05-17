@@ -27,7 +27,7 @@ export default Mn.View.extend({
     this.localeConfiguration = options.localeConfiguration;
 
     session.fetch();
-    
+
     if(this.localeConfiguration){
       session.set('locale',this.localeConfiguration.locale);
       session.set('messages',this.localeConfiguration.messages);
@@ -41,6 +41,9 @@ export default Mn.View.extend({
   onRender() {
     setTimeout(() => {
       this.$el.find('#login-username').focus();
+      $("#platform-name").text(env.platform);
+      if(env.platform === 'DEMO') this.$el.find('#link-form').removeClass('hidden') ;
+
     }, 0);
 
   },
@@ -50,6 +53,7 @@ export default Mn.View.extend({
     this.$el.find('#login-email').focus();
 
   },
+
   backLogin(){
     $(".login").show();
     $(".recovery").hide();
@@ -137,7 +141,7 @@ export default Mn.View.extend({
           self.backLogin();
       },
       error(xmlHttpRequest, statusText) {
-        if (xmlHttpRequest && xmlHttpRequest.status === 0) {          
+        if (xmlHttpRequest && xmlHttpRequest.status === 0) {
           self.showError("danger", t('login.server-connection-error'));
           return;
         }
