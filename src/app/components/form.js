@@ -8,6 +8,13 @@ import FlashesService from "../flashes/service";
 
 const log = type => console.log.bind(console, type);
 
+/* const Form2 = JsonSchemaForm.default;
+
+<Form2
+  schema={this.state.stepsSchema[this.state.step]}
+  formData={this.state.formData}
+/> */
+
 class Form extends Component {
   constructor(props) {
     super(props);
@@ -127,6 +134,16 @@ class Form extends Component {
       uischemaToRet[key] = uischema['ui:custom:fields'][key];
 
     }
+
+    if (key==="gender"){
+
+      uischemaToRet.conditional={
+        "gender":{"type" : "string"}
+      };
+
+
+    }
+
     if (
       uischema['ui:group:economics'] &&
       uischema['ui:group:economics'].includes(key)
@@ -188,7 +205,8 @@ class Form extends Component {
                       "SD"
                     ]
                   },
-                  "Provide a description": {
+                  "yourGender": {
+                    "title" : "Your gender",
                     "type": "string"
                   }
                 },
@@ -332,7 +350,36 @@ class Form extends Component {
 
    onChange(data){
     // aca tambien se puede ver si es dato condicional
-     this.state.lastValue = data.formData;
+     const {
+       formData
+       , schema
+     } = data
+     // const dependencyField = schema.dependencies.gender.oneOf[1].properties["Provide a description"];
+     // const dependency = "Provide a description";
+     if (schema.key === "gender"){
+       if (formData.gender==="SD"){
+         schema.properties = Object.assign(schema.properties,
+           {
+             name: {
+               type: "string",
+               title: "Your gender"
+             }
+           })
+       }else{
+         schema.properties = Object.assign({},schema.properties)
+         delete formData.name
+         delete schema.properties.name
+       }
+     }
+
+     // this.state.lastValue = data.formData;
+
+     this.setState({
+       formData,
+       lastValue : formData
+     })
+
+
    }
 
   mapErrors(errors){
@@ -391,6 +438,7 @@ class Form extends Component {
                     <i className="fa fa-chevron-right" />
                   </button>
                 </JsonSchemaForm>
+
               </div>
             </div>
           </div>
