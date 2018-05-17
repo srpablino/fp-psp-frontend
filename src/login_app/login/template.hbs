@@ -9,8 +9,6 @@
     <div class="panel">
       <div class="panel-heading">
         <div class="panel-body">
-
-          <form role="form" id="loginform" class="col-sm-9 col-sm-offset-2">
             <div style="display:none;" id="login-alert"></div>
             <div class="form-group login">
               <input id="login-username" type="text" class="form-control " name="username" value="" placeholder="{{$t 'login.username'}}">
@@ -40,6 +38,8 @@
       </div>
       {{!-- <div class="panel-footer text-center" id="platform-name"></div> --}}
     </div>
-    <div class="pull-right" id="platform-name" style="color: #788c9a !important; font-size: 14px !important;"></div>
+    <div class="pull-right" id="platform-name" style="color: #788c9a !important; font-size: 14px !important;">
+      <span>{{{appPlatform}}}</span>
+    </div>
   </div>
   <div id="flashes"></div>

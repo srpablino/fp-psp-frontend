@@ -19,7 +19,9 @@ export default Mn.View.extend({
     'click #back-login': 'backLogin',
     'click #btn-recovery': 'sendEmail'
   },
-
+  serializeData() {
+    return { appPlatform: env.platform };
+  },
   initialize(options) {
     this.app = options.app;
     this.localeConfiguration = options.localeConfiguration;
