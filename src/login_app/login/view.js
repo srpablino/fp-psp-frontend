@@ -16,7 +16,6 @@ export default Mn.View.extend({
   events: {
     'click #btn-login': 'doLogin',
     'click #link-email': 'entryEmail',
-    'click #link-form': 'goForm',
     'click #back-login': 'backLogin',
     'click #btn-recovery': 'sendEmail'
   },
@@ -41,7 +40,7 @@ export default Mn.View.extend({
     setTimeout(() => {
       this.$el.find('#login-username').focus();
       $("#platform-name").text(env.platform);
-      if(env.platform === 'DEVELOPMENT') this.$el.find('#link-form').removeClass('hidden') ;
+      if(env.platform === 'DEMO') this.$el.find('#link-form').removeClass('hidden') ;
 
     }, 0);
 
@@ -52,10 +51,7 @@ export default Mn.View.extend({
     this.$el.find('#login-email').focus();
 
   },
-  goForm(){
-    window.open('http://stackoverflow.com/', '_blank');
 
-  },
   backLogin(){
     $(".login").show();
     $(".recovery").hide();
