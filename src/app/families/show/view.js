@@ -103,12 +103,13 @@ export default Mn.View.extend({
     model
       .fetch({
         data: {
-          type: 'TC'
+          type: 'TC',
+          surveyId: `${this.model.attributes.snapshot_indicators.survey_id}`,
+          familyId: `${this.model.attributes.snapshot_indicators.family.familyId}`
         }
       })
       .then(() => {
         this.app.showViewOnRoute(new TermCondPolView({
-
            app,
            model,
            surveyId: this.model.attributes.snapshot_indicators.survey_id,

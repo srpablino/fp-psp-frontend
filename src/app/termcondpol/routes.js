@@ -17,7 +17,8 @@ const termcondpol = props => {
         model
           .fetch({
             data: {
-              type: hashType
+              type: hashType,
+              surveyId
             }
           })
           .then(() => {
