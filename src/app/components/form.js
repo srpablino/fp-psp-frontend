@@ -205,13 +205,13 @@ class Form extends Component {
                       "SD"
                     ]
                   },
-                  "yourGender": {
+                  "dependencyGender": {
                     "title" : "Your gender",
                     "type": "string"
                   }
                 },
                 "required": [
-                  "Provide a description"
+                  "dependencyGender"
                 ]
               }
             ]
@@ -349,36 +349,60 @@ class Form extends Component {
   }
 
    onChange(data){
-    // aca tambien se puede ver si es dato condicional
+
      const {
        formData
        , schema
-     } = data
-     // const dependencyField = schema.dependencies.gender.oneOf[1].properties["Provide a description"];
-     // const dependency = "Provide a description";
-     if (schema.key === "gender"){
-       if (formData.gender==="SD"){
-         schema.properties = Object.assign(schema.properties,
-           {
-             name: {
-               type: "string",
-               title: "Your gender"
+     } = data;
+
+     let selected = formData[schema.key];
+     if (schema.dependencies){
+
+       let dependency = schema.dependencies[schema.key];
+
+       if (dependency.oneOf){
+         dependency.oneOf.forEach( (item) => {
+           let values = item.properties[schema.key].enum;
+           if (values.includes(selected)){
+             if (item.required){
+               if (schema.required){
+                 schema.required.push(...item.required);
+               }else{
+                 schema.required.set(item.required);
+               }
+             }else if (schema.required.includes(schema.key)){
+                 schema.required = [];
+                 schema.required.push(schema.key);
              }
-           })
-       }else{
-         schema.properties = Object.assign({},schema.properties)
-         delete formData.name
-         delete schema.properties.name
+
+             let newProperties = JSON.parse(JSON.stringify(item.properties));
+             delete newProperties[schema.key];
+             let length = Object.keys(newProperties).length;
+             if (length > 0){
+               schema.properties = Object.assign(schema.properties,newProperties);
+             }else{
+               const defaultProperty = schema.properties[schema.key];
+               schema.properties= {};
+               schema.properties[schema.key]=defaultProperty;
+             }
+           }
+         });
+
+
+         // delete schema.dependencies;
        }
+
      }
 
      // this.state.lastValue = data.formData;
 
+     this.setState({formData:{}, schema:{}});
+     this.state.schema;
      this.setState({
+       schema,
        formData,
        lastValue : formData
-     })
-
+     });
 
    }
 
