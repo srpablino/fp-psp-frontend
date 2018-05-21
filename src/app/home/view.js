@@ -7,6 +7,8 @@ import moment from 'moment';
 import Template from './template.hbs';
 import session from '../../common/session';
 import storage from '../management/hubs/storage';
+import ActivityFeed from './activities/collection';
+import FeedItem from './activities/item/view';
 
 export default Mn.View.extend({
   template: Template,
@@ -24,12 +26,24 @@ export default Mn.View.extend({
           this.chart();
         }
       }, 0);
+      this.activities = new ActivityFeed();
+      this.activities.on('sync', this.render);
+      this.activities.fetch();
     }
   },
 
   onRender() {
     if (this.model.get('id')) {
       this.app.updateSubHeader(storage.getSubHeaderItems(this.model));
+    }
+
+    if(this.activities){
+      const activityFeed = this.$el.find('#activity-feed-admin');
+      activityFeed.empty();
+      this.activities.each(model => {
+        const item = new FeedItem({ model });
+        activityFeed.append(item.render().el);
+      });
     }
 
   },
