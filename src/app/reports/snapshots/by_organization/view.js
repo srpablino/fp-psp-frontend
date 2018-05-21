@@ -1,5 +1,6 @@
 import Mn from 'backbone.marionette';
 import $ from 'jquery';
+import 'select2';
 import Template from './template.hbs';
 import Collection from './collection';
 import CollectionView from './list/view';
@@ -7,9 +8,11 @@ import OrganizationModel from '../../../management/organizations/model'
 import utils from '../../../utils';
 import FlashesService from '../../../flashes/service';
 import storage from '../../storage';
+import env from "../../../env";
 
-export default Mn.View.extend({
+export default Mn.View.extend({  
   template: Template,
+  organizationsCollection: new OrganizationModel(),
   events: {
     'click #submit': 'handleSearch',
     'keypress #search': 'handleSearch'
@@ -20,63 +23,61 @@ export default Mn.View.extend({
   initialize(options){
     this.app = options.app;
     this.collection = new Collection();
-    this.organizationModel = new OrganizationModel();
     this.filters = {
         date_from: '',
         date_to: '',
-        organization_id: '',
         family_id:'',
-        application_id:''
-    }
-    this.organizations = {};
+        application_id:'',
+        organizations:[]
+    }    
   },
 
   onRender(){
 
     const headerItems = storage.getSubHeaderItems();
     this.app.updateSubHeader(headerItems);
-
     this.setCalendarToVariable('#dateFrom');
     this.setCalendarToVariable('#dateTo');
-
-    if(this.app.getSession().userHasRole('ROLE_APP_ADMIN')){
-      this.$el.find('#organizationForm').empty();
-      this.filters.organization_id = this.app.getSession().get('user').organization!==null ?  this.app.getSession().get('user').organization.id : '';
-    } else {
-      this.obtainOrganizations();
-    }
+    this.$el.find('#organization').select2({});
 
     $('.sub-menu-item[href$="reports/snapshots/organizations"]')
       .parent()
       .addClass('subActive');
 
-    return this.organizations;
+    this.getOrganizations();
+
+    this.app.getSession().userHasRole('ROLE_APP_ADMIN') ? this.$el.find('#organizations').hide() : this.$el.find('#organizations').show();
+
+  },
+
+  getOrganizations(){
+    let self = this;
+    this.organizationsCollection.urlRoot = `${env.API}/organizations/list`;
+    self.organizationsCollection.fetch({
+      success(response) {
+        self.organizationsCollection = response.attributes;
+          $.each(self.organizationsCollection, (index, element) => {
+            self.buildOption(element);
+          });
+      }
+    });
+  },
+
+  buildOption(element){
+    $('#organization').append(
+      $('<option></option>')
+        .attr('value', element.id)
+        .text(element.name)
+    );
   },
 
   setCalendarToVariable(varName){
-
     let $date = this.$el.find(varName);
     $date.datetimepicker({
       format: 'DD/MM/YYYY',
       locale: this.app.getSession().get('locale') || 'es'
     });
-  },
-
-  obtainOrganizations(){
-    let self = this;
-    this.organizationModel.fetch({
-        success(response) {
-          self.organizationModel = response.get('list');
-          $.each(self.organizationModel, (index, element) => {
-            $('#organization').append(
-              $('<option></option>')
-                .attr('value', element.id)
-                .text(element.name)
-            );
-          });
-        }
-    });
-  },
+  }, 
 
   handleSearch(event){
     event.preventDefault();
@@ -92,11 +93,20 @@ export default Mn.View.extend({
 
         this.filters.date_from = this.$el.find('#date1').val();
         this.filters.date_to = this.$el.find('#date2').val();
-        if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')){
-          this.filters.organization_id = this.$el.find('#organization').val() === 'all'? '' : this.$el.find('#organization').val();
+        
+        let organizationArray = [];
+        
+        if (this.app.getSession().userHasRole('ROLE_HUB_ADMIN')){          
+          $("#organization").val().forEach(element => {
+            organizationArray.push(parseInt(element, 10));
+          });
+        }else if(this.app.getSession().userHasRole('ROLE_APP_ADMIN')){          
+          organizationArray.push(this.app.getSession().get('user').organization.id);
         }
-        this.filters.application_id = this.$el.find('#organization').val() === 'all' &&
-                                      this.app.getSession().get('user').application ? this.app.getSession().get('user').application.id : '';
+
+        this.filters.organizations = organizationArray;
+
+        this.filters.application_id = this.app.getSession().get('user').application ? this.app.getSession().get('user').application.id : '';
 
         let errors = this.validate(this.filters);
 
@@ -109,14 +119,12 @@ export default Mn.View.extend({
             });
           });
         } else {
-
           this.collection.fetch({
             data: this.filters,
             success() {
              self.showList();
              section.reset();
             }
-
           });
         }
     }
@@ -141,10 +149,6 @@ export default Mn.View.extend({
 
     const errors = [];
 
-    if (!filters.organization_id && !filters.application_id) {
-      errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.organization')}));
-    }
-
     if (!filters.date_from) {
       errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.date-from')}));
     }
@@ -155,6 +159,5 @@ export default Mn.View.extend({
 
     return errors;
   }
-
 
 });

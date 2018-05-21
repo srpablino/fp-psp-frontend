@@ -5,11 +5,11 @@ const termcondpol = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
-        'survey/:id/termcondpol/:type': 'showTermCondPol'
+        'survey/:id/termcondpol/:type/:language': 'showTermCondPol'
     },
     controller: {
 
-      showTermCondPol(hashSurvey, hashType) {
+      showTermCondPol(hashSurvey, hashType, hashLanguage) {
         const model = new TermCondPolModel();
         const surveyId = parseInt(hashSurvey, 10);
         const formData = app.getSession().get('formData');
@@ -18,6 +18,7 @@ const termcondpol = props => {
           .fetch({
             data: {
               type: hashType,
+              language: hashLanguage,
               surveyId
             }
           })
