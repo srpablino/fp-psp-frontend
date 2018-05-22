@@ -29,9 +29,6 @@ export default Mn.View.extend({
           this.chart(this.organization.dashboard.snapshotTaken.byMonth);
         }
       }, 0);
-      // this.activities = new ActivityFeed();
-      // this.activities.on('sync', this.render);
-      // this.activities.fetch();
     }
   },
 
@@ -54,15 +51,6 @@ export default Mn.View.extend({
         });
       }
     });
-
-    // if (this.activities) {
-    //   const activityFeed = this.$el.find('#activity-feed-admin');
-    //   activityFeed.empty();
-    //   this.activities.each(model => {
-    //     const item = new FeedItem({ model });
-    //     activityFeed.append(item.render().el);
-    //   });
-    // }
   },
   formatDate(key) {
     return moment(key)
