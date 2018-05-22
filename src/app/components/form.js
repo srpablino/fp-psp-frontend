@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import JsonSchemaForm from 'react-jsonschema-form';
 import Gallery from './gallery';
 import Gmap from './gmap';
@@ -7,13 +7,6 @@ import DatetimeFormat from './datetime';
 import FlashesService from "../flashes/service";
 
 const log = type => console.log.bind(console, type);
-
-/* const Form2 = JsonSchemaForm.default;
-
-<Form2
-  schema={this.state.stepsSchema[this.state.step]}
-  formData={this.state.formData}
-/> */
 
 class Form extends Component {
   constructor(props) {
@@ -30,13 +23,19 @@ class Form extends Component {
     };
 
     let component = this;
+    let dependencies = {};
 
     for (let i = 0; i < order.length; i++) {
       stepsSchema.push(component.schemaNewEntry(props.schema, order[i]));
       stepsUISchema.push(component.uischemaNewEntry(props.uiSchema, order[i]));
+
+      if (props.schema.dependencies &&
+        props.schema.dependencies[order[i]]){
+        dependencies[order[i]] = [];
+      }
     }
 
-    if(props.reAnswer){
+    if (props.reAnswer) {
       this.state = {
         step: 0,
         formData: props.formData,
@@ -45,33 +44,35 @@ class Form extends Component {
         lastValue: {}
       };
 
-    }else if(!props.stateDraft){
-        this.state = {
-          step: 0,
-          formData: {},
-          stepsSchema,
-          stepsUISchema,
-          lastValue: {}
-        };
+    } else if (!props.stateDraft) {
+      this.state = {
+        step: 0,
+        formData: {},
+        stepsSchema,
+        stepsUISchema,
+        lastValue: {}
+      };
     } else {
-        // If the survey definition was changed, we should update this.state.
-        this.updateState(stepsSchema, stepsUISchema);
+      // If the survey definition was changed, we should update this.state.
+      this.updateState(stepsSchema, stepsUISchema);
 
     }
+
+    this.state.formData.dependencies = dependencies;
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  updateState(stepsSchema, stepsUISchema){
+  updateState(stepsSchema, stepsUISchema) {
 
     // Case 1: one o more fields were removed.
 
     const formDataCopy = this.props.stateDraft.formData;
 
     Object.keys(formDataCopy).forEach(field => {
-      if(!this.existInSchemaGroup(field)){
+      if (!this.existInSchemaGroup(field)) {
         delete this.props.stateDraft.formData[field];
-        this.props.stateDraft.step = this.props.stateDraft.step -1;
+        this.props.stateDraft.step = this.props.stateDraft.step - 1;
       }
     });
 
@@ -84,27 +85,27 @@ class Form extends Component {
     };
   }
 
-  getSavedDraftStep(stepsSchema){
+  getSavedDraftStep(stepsSchema) {
     const stepKey = this.props.stateDraft.stepsSchema[this.props.stateDraft.step].key;
     let indexActualKey = -1;
     let firstIndexNotFound = -1;
 
     // Case2: the fields order were changed.
 
-    for(let i=0; i < stepsSchema.length; i++){
-      if(stepsSchema[i].key === stepKey){
+    for (let i = 0; i < stepsSchema.length; i++) {
+      if (stepsSchema[i].key === stepKey) {
         indexActualKey = i + 1;
       }
 
-    // Case 3: the field wasn't answered (for example, changed from optional to required).
-    // stepsSchema[i].required.length>0 &&
-     if(firstIndexNotFound===-1 && this.props.stateDraft.formData[stepsSchema[i].key] === undefined){
+      // Case 3: the field wasn't answered (for example, changed from optional to required).
+      // stepsSchema[i].required.length>0 &&
+      if (firstIndexNotFound === -1 && this.props.stateDraft.formData[stepsSchema[i].key] === undefined) {
         firstIndexNotFound = i;
       }
     }
 
-    if(indexActualKey!==-1){
-      if(this.props.stateDraft.step + 1 >= indexActualKey){
+    if (indexActualKey !== -1) {
+      if (this.props.stateDraft.step + 1 >= indexActualKey) {
         return indexActualKey;
       }
       return firstIndexNotFound;
@@ -113,10 +114,10 @@ class Form extends Component {
 
   }
 
-  existInSchemaGroup(field){
+  existInSchemaGroup(field) {
     return this.props.uiSchema['ui:group:personal'].includes(field) ||
-            this.props.uiSchema['ui:group:economics'].includes(field) ||
-            this.props.uiSchema['ui:group:indicators'].includes(field);
+      this.props.uiSchema['ui:group:economics'].includes(field) ||
+      this.props.uiSchema['ui:group:indicators'].includes(field);
   }
 
   uischemaNewEntry(uischema, key) {
@@ -135,10 +136,10 @@ class Form extends Component {
 
     }
 
-    if (key==="gender"){
+    if (key === "gender") {
 
-      uischemaToRet.conditional={
-        "gender":{"type" : "string"}
+      uischemaToRet.conditional = {
+        "gender": {"type": "string"}
       };
 
 
@@ -161,7 +162,7 @@ class Form extends Component {
       uischema['ui:group:personal'] &&
       uischema['ui:group:personal'].includes(key)
     ) {
-      if(this.props.reAnswer)  uischemaToRet[key] = {"ui:readonly": true};
+      if (this.props.reAnswer) uischemaToRet[key] = {"ui:readonly": true};
     }
 
     return uischemaToRet;
@@ -178,46 +179,45 @@ class Form extends Component {
       schemaToRet.required.push(key);
     }
 
-    /* if (schema.dependencies && schema.dependencies.includes(key)) {
-      schemaToRet.dependencies.push(key);
-      schemaToRet.dependencies[key] = schema.dependencies[key];
-    } */
+    if (schema.dependencies && schema.dependencies.key){
+      schemaToRet.dependencies.key = schema.dependencies.key;
+    }
 
-    if (key === "gender") {
+    /* if (key === "gender") {
       schemaToRet.dependencies = {
-          "gender": {
-            "oneOf": [
-              {
-                "properties": {
-                  "gender": {
-                    "enum": [
-                      "M",
-                      "F",
-                      "ND"
-                    ]
-                  }
+        "gender": {
+          "oneOf": [
+            {
+              "properties": {
+                "gender": {
+                  "enum": [
+                    "M",
+                    "F",
+                    "ND"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gender": {
+                  "enum": [
+                    "SD"
+                  ]
+                },
+                "dependencyGender": {
+                  "title": "Your gender",
+                  "type": "string"
                 }
               },
-              {
-                "properties": {
-                  "gender": {
-                    "enum": [
-                      "SD"
-                    ]
-                  },
-                  "dependencyGender": {
-                    "title" : "Your gender",
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "dependencyGender"
-                ]
-              }
-            ]
-          }
-        };
-    }
+              "required": [
+                "dependencyGender"
+              ]
+            }
+          ]
+        }
+      };
+    } */
 
     if (
       this.props.uiSchema['ui:group:economics'] &&
@@ -226,7 +226,7 @@ class Form extends Component {
       this.counter.countEconomic++;
       schemaToRet.description = `${t('schemaForm.economic-info')} ${
         this.counter.countEconomic
-      }/`;
+        }/`;
       schemaToRet.counter = 'countEconomic';
     }
     if (
@@ -245,7 +245,7 @@ class Form extends Component {
       schemaToRet.counter = 'countPersonal';
       schemaToRet.description = `${t('schemaForm.personal-info')} ${
         this.counter.countPersonal
-      }/`;
+        }/`;
     }
     return schemaToRet;
   }
@@ -304,11 +304,11 @@ class Form extends Component {
 
   }
 
-  onSaveDraft(){
+  onSaveDraft() {
     // When a survey has not been completed and we want to save a draft
     // , the method handleSaveDraft is called.
 
-    if(this.checkShowSaveDraft(this.state)){
+    if (this.checkShowSaveDraft(this.state)) {
 
       // We should obtain an actual data in the form for
       // store in the draft
@@ -316,9 +316,9 @@ class Form extends Component {
       let newData = JSON.parse(JSON.stringify(this.state.formData));
       let currentStep = this.state.stepsSchema[this.state.step];
 
-      if(this.state.lastValue !== this.state.formData){
+      if (this.state.lastValue !== this.state.formData) {
         newData[currentStep.key] = this.state.lastValue[currentStep.key];
-      } else if(currentStep.properties[currentStep.key].default){
+      } else if (currentStep.properties[currentStep.key].default) {
         newData[currentStep.key] = currentStep.properties[currentStep.key].default;
       }
 
@@ -330,16 +330,16 @@ class Form extends Component {
     }
   }
 
-  checkShowSaveDraft(state){
+  checkShowSaveDraft(state) {
     let show = true;
 
-    if(this.props.uiSchema['ui:group:personal'].length === 0){
+    if (this.props.uiSchema['ui:group:personal'].length === 0) {
       show = false;
-    } else if(!state.formData){
+    } else if (!state.formData) {
       show = false;
-    }else {
-      for(let i=0; i<this.props.uiSchema['ui:group:personal'].length; i++){
-        if(!state.formData[this.props.uiSchema['ui:group:personal'][i]]){
+    } else {
+      for (let i = 0; i < this.props.uiSchema['ui:group:personal'].length; i++) {
+        if (!state.formData[this.props.uiSchema['ui:group:personal'][i]]) {
           show = false;
         }
       }
@@ -348,65 +348,88 @@ class Form extends Component {
     return show;
   }
 
-   onChange(data){
+  onChange(data) {
 
-     const {
-       formData
-       , schema
-     } = data;
+    const {
+      formData
+      , schema
+    } = data;
+    let selected = formData[schema.key];
+    if (schema.dependencies[schema.key]) {
 
-     let selected = formData[schema.key];
-     if (schema.dependencies){
+      let dependency = schema.dependencies[schema.key];
+      // se pueden dar otro tipos de dependency, por ahora cubierto t0do lo que sea enum
+      if (dependency.oneOf) {
+        this.manageDependencyForEnums(dependency,selected,formData, schema);
+      }
+    }
 
-       let dependency = schema.dependencies[schema.key];
+    this.setState({formData: {}, schema: {}});
+    this.state.schema;
+    this.setState({
+      schema,
+      formData,
+      lastValue: formData
+    });
 
-       if (dependency.oneOf){
-         dependency.oneOf.forEach( (item) => {
-           let values = item.properties[schema.key].enum;
-           if (values.includes(selected)){
-             if (item.required){
-               if (schema.required){
-                 schema.required.push(...item.required);
-               }else{
-                 schema.required.set(item.required);
-               }
-             }else if (schema.required.includes(schema.key)){
-                 schema.required = [];
-                 schema.required.push(schema.key);
-             }
+  }
 
-             let newProperties = JSON.parse(JSON.stringify(item.properties));
-             delete newProperties[schema.key];
-             let length = Object.keys(newProperties).length;
-             if (length > 0){
-               schema.properties = Object.assign(schema.properties,newProperties);
-             }else{
-               const defaultProperty = schema.properties[schema.key];
-               schema.properties= {};
-               schema.properties[schema.key]=defaultProperty;
-             }
-           }
-         });
+  manageDependencyForEnums(dependency, selected, formData, schema){
+
+    dependency.oneOf.forEach((item) => {
+      let values = item.properties[schema.key].enum;
+      if (values.includes(selected)) {
+
+        // required fields (from properties)
+        if (schema.required && schema.required.includes(schema.key)){
+          schema.required = [schema.key];
+        }else{
+          schema.required = [];
+        }
+
+        // if there are required dependencies
+        if (item.required) {
+          schema.required.push(...item.required);
+        }
+
+        const defaultProperty = schema.properties[schema.key];
+        const defaultValue = formData[schema.key];
+
+        // delete old setup
+        schema.properties = {};
+
+        // preserve in schema and formData only original property values
+        schema.properties[schema.key] = defaultProperty;
+        formData[schema.key] = defaultValue;
+
+        // set the new properties from dependencies
+        let newProperties = JSON.parse(JSON.stringify(item.properties));
+        delete newProperties[schema.key];
+        let length = Object.keys(newProperties).length;
+
+        for (let i = 0; i<formData.dependencies[schema.key].length;i++ ){
+          let element = formData.dependencies[schema.key][i];
+          if (!newProperties[element]){
+            delete formData[element];
+          }
+        }
+
+        formData.dependencies[schema.key] = [];
+        if (length > 0) {
+          schema.properties = Object.assign(schema.properties, newProperties);
+          Object.keys(newProperties).forEach(key => {
+            formData.dependencies[schema.key].push(key);
+          })
+        }
+
+      }
+    });
 
 
-         // delete schema.dependencies;
-       }
 
-     }
+  }
 
-     // this.state.lastValue = data.formData;
-
-     this.setState({formData:{}, schema:{}});
-     this.state.schema;
-     this.setState({
-       schema,
-       formData,
-       lastValue : formData
-     });
-
-   }
-
-  mapErrors(errors){
+  mapErrors(errors) {
     return errors.map(error => {
       if (error.name === 'required') {
         error.message = t('schemaForm.errors.required');
@@ -426,8 +449,12 @@ class Form extends Component {
 
     return (
       <div className="col-md-12">
-        {this.checkShowSaveDraft(this.state)?
-          <button className="btn btn-primary pull-right marginDraft" onClick={() => this.onSaveDraft()}> {t('schemaForm.buttons.save-draft')} </button> :'' }
+        {this.checkShowSaveDraft(this.state) ?
+          <button
+            className="btn btn-primary pull-right marginDraft"
+            onClick={() => this.onSaveDraft()}
+          > {t('schemaForm.buttons.save-draft')} 
+          </button> : ''}
 
         <article className="card">
           <div className="card-block">
@@ -442,11 +469,13 @@ class Form extends Component {
                 <JsonSchemaForm
                   schema={this.state.stepsSchema[this.state.step]}
                   uiSchema={this.state.stepsUISchema[this.state.step]}
-                  fields={{ gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat, date:DatetimeFormat }}
+                  fields={{gallery: Gallery, gmap: Gmap, numberFormat: NumberFormat, date: DatetimeFormat}}
                   onSubmit={this.onSubmit}
                   onError={log('errors')}
                   formData={this.state.formData}
-                  onChange={(event) => {this.onChange(event)}}
+                  onChange={(event) => {
+                    this.onChange(event)
+                  }}
                   transformErrors={this.mapErrors}
                   noHtml5Validate
                   showErrorList={false}
