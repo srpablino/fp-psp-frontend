@@ -136,15 +136,6 @@ class Form extends Component {
 
     }
 
-    if (key === "gender") {
-
-      uischemaToRet.conditional = {
-        "gender": {"type": "string"}
-      };
-
-
-    }
-
     if (
       uischema['ui:group:economics'] &&
       uischema['ui:group:economics'].includes(key)
@@ -417,9 +408,9 @@ class Form extends Component {
         formData.dependencies[schema.key] = [];
         if (length > 0) {
           schema.properties = Object.assign(schema.properties, newProperties);
-          Object.keys(newProperties).forEach(key => {
-            formData.dependencies[schema.key].push(key);
-          })
+            Object.keys(newProperties).forEach(key => {
+              formData.dependencies[schema.key].push(key);
+            })
         }
 
       }
@@ -453,7 +444,7 @@ class Form extends Component {
           <button
             className="btn btn-primary pull-right marginDraft"
             onClick={() => this.onSaveDraft()}
-          > {t('schemaForm.buttons.save-draft')} 
+          > {t('schemaForm.buttons.save-draft')}
           </button> : ''}
 
         <article className="card">
