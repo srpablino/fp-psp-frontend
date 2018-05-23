@@ -146,6 +146,34 @@ export default Mn.View.extend({
       priv_pol_id: this.app.getSession().get('priv')
     };
 
+    if (formResult.dependencies){
+      Object.keys(formResult.dependencies).forEach(key => {
+        if (snapshot.personal_survey_data[key]){
+          for (let i=0;i<formResult.dependencies[key].length;i++){
+            let keyDependencie = formResult.dependencies[key][i];
+            snapshot.personal_survey_data[keyDependencie] = formResult[keyDependencie];
+          }
+
+        }
+
+        if (snapshot.economic_survey_data[key]) {
+          for (let i = 0; i < formResult.dependencies[key].length; i++) {
+            let keyDependencie = formResult.dependencies[key][i];
+            snapshot.economic_survey_data[keyDependencie] = formResult[keyDependencie];
+          }
+        }
+
+        if (snapshot.indicator_survey_data[key]) {
+          for (let i = 0; i < formResult.dependencies[key].length; i++) {
+            let keyDependencie = formResult.dependencies[key][i];
+            snapshot.indicator_survey_data[keyDependencie] = formResult[keyDependencie];
+          }
+        }
+
+      })
+    }
+
+
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
 
       if(draftId){
