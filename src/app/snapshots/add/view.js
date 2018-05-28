@@ -143,35 +143,9 @@ export default Mn.View.extend({
       economic_survey_data: this.getEconomics(formResult),
       user_name: this.app.getSession().get('user').username,
       term_cond_id: this.app.getSession().get('termCond'),
-      priv_pol_id: this.app.getSession().get('priv')
+      priv_pol_id: this.app.getSession().get('priv'),
+      dependencies : formResult.dependencies
     };
-
-    if (formResult.dependencies){
-      Object.keys(formResult.dependencies).forEach(key => {
-        if (snapshot.personal_survey_data[key]){
-          for (let i=0;i<formResult.dependencies[key].length;i++){
-            let keyDependencie = formResult.dependencies[key][i];
-            snapshot.personal_survey_data[keyDependencie] = formResult[keyDependencie];
-          }
-
-        }
-
-        if (snapshot.economic_survey_data[key]) {
-          for (let i = 0; i < formResult.dependencies[key].length; i++) {
-            let keyDependencie = formResult.dependencies[key][i];
-            snapshot.economic_survey_data[keyDependencie] = formResult[keyDependencie];
-          }
-        }
-
-        if (snapshot.indicator_survey_data[key]) {
-          for (let i = 0; i < formResult.dependencies[key].length; i++) {
-            let keyDependencie = formResult.dependencies[key][i];
-            snapshot.indicator_survey_data[keyDependencie] = formResult[keyDependencie];
-          }
-        }
-
-      })
-    }
 
 
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
