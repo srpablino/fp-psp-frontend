@@ -15,9 +15,15 @@ export default Mn.View.extend({
   },
   className: 'col-lg-2 col-md-4 col-sm-6 col-xs-12',
   initialize(options) {
+    this.app = options.app;
     this.deleteSurvey = options.deleteSurvey;
     this.model = options.model;
     this.model.attributes.created_at = this.formartterWithTime(this.model.attributes.created_at);
+  },
+  onRender() {
+    if (this.app.getSession().userHasRole('ROLE_ROOT')) {
+      this.$el.find('.card-menu-delete').show();
+    }
   },
 
   serializeData() {
@@ -59,10 +65,11 @@ export default Mn.View.extend({
 
   handlerTermsAndConditions(event){
     event.preventDefault();
+    const language = this.app.getSession().getLocale() === 'es_PY' ? 'ESP' : 'ENG';
       if (!session.userHasRole('ROLE_USER') && !session.userHasRole('ROLE_SURVEY_USER')) {
         return;
       }
-    Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC`, true);
+    Bn.history.navigate(`/survey/${this.model.attributes.id}/termcondpol/TC/${language}`, true);
   },
 
   handleAnswer(event) {

@@ -9,11 +9,15 @@
       "logo-upload": "Click to upload a logo",
       "name": "Organization name",
       "name-required": "Organization name is required",
+      "name-length-exceeded": "Organization Name must have a maximum of 50 characters",
       "code": "Code",
       "code-required": "Code is required",
+      "code-length-exceeded": "Code must have a maximum of 50 characters",
       "description": "Description",
       "description-required": "Description is required",
+      "description-length-exceeded": "Description must have a maximum of 256 characters",
       "information": "Information",
+      "information-length-exceeded": "Information must have a maximum of 256 characters",
       "buttons": {
         "add": "ADD ORGANIZATION",
         "save": "SAVE ORGANIZATION",
@@ -161,7 +165,8 @@
         "indicator-not-answered": "You have chosen not to answer the question",
         "select-delete": "Remove this priority",
         "mising-field": "Missing '\"%{field}\"' field",
-        "min-priorities": "Please select at least %{min} indicators"
+        "min-priorities": "Please select at least %{min} indicators",
+        "changes-saved": "Your changes have been saved successfully"
       },
       "add": {
         "indicator": "Indicator",
@@ -169,6 +174,10 @@
         "action": "What do I do to attain it?",
         "estimated-date": "When will I have it?",
         "comments": "Comments"
+      },
+      "buttons": {
+        "save": "Save changes",
+        "cancel": "Cancel"
       }
     },
     "attainment": {
@@ -233,7 +242,8 @@
       "email": "Email",
       "place": "Place",
       "edit": "Edit household file",
-      "no-priority": "No indicator was prioritized in this stoplight"
+      "no-priority": "No indicator was prioritized in this stoplight",
+      "prioritize": "Prioritize"
     },
     "manage": {
       "manage-families": "Manage households",
@@ -265,6 +275,7 @@
     "password": "Password",
     "login": "LOGIN",
     "forgot-pass": "Forgot password?",
+    "go-form": "Sign in",
     "email": "Email",
     "reset-pass": "Reset Password",
     "back-login": "Back to login",
@@ -284,11 +295,15 @@
       "logo-upload": "Click to upload a logo",
       "name": "Hub name",
       "name-required": "Hub name is required",
+      "name-length-exceeded": "Hub Name must have a maximum of 50 characters",
       "code": "Code",
       "code-required": "Code is required",
+      "code-length-exceeded": "Code must have a maximum of 50 characters",
       "description": "Description",
       "description-required": "Description is required",
+      "description-length-exceeded": "Description must have a maximum of 256 characters",
       "information": "Information",
+      "information-length-exceeded": "Information must have a maximum of 256 characters",
       "buttons": {
         "add": "ADD HUB",
         "save": "SAVE HUB",
@@ -354,7 +369,8 @@
   "footer": {
     "version": {
       "title": "WEB VERSION",
-      "name": "POVERTY STOPLIGHT"
+      "name": "POVERTY STOPLIGHT",
+      "platform": "PLATFORM"
     }
   },
   "report": {
@@ -363,7 +379,7 @@
       "search": {
         "date-from": "Date From",
         "date-to": "Date To",
-        "organization": "Organization",
+        "organization": "Organizations",
         "search": "Search",
         "choose": "Choose",
         "all": "All",

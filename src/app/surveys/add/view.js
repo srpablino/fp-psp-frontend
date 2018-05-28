@@ -16,6 +16,7 @@ import FlashesService from '../../flashes/service';
 import OrganizationsModel from '../../management/organizations/model';
 import ApplicationModel from '../../applications/model';
 import ModalService from "../../modal/service";
+import env from "../../env";
 
 export default Mn.View.extend({
   template: Template,
@@ -33,9 +34,10 @@ export default Mn.View.extend({
   },
   getApplications(){
     let self = this;
+    this.applicationsCollections.urlRoot = `${env.API}/applications/list`;
     self.applicationsCollections.fetch({
       success(response) {
-        self.applicationsCollections = response.get('list');
+        self.applicationsCollections = response.attributes;
           $.each(self.applicationsCollections, (index, element) => {
             self.buildOption(element);
            });
@@ -51,9 +53,10 @@ export default Mn.View.extend({
   },
   getOrganizations(){
     let self = this;
+    this.organizationsCollection.urlRoot = `${env.API}/organizations/list`;
     self.organizationsCollection.fetch({
       success(response) {
-        self.organizationsCollection = response.get('list');
+        self.organizationsCollection = response.attributes;
           $.each(self.organizationsCollection, (index, element) => {
             self.buildOption(element);
            });
