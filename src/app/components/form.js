@@ -31,7 +31,7 @@ class Form extends Component {
 
       if (props.schema.dependencies &&
         props.schema.dependencies[order[i]]){
-        dependencies[order[i]] = [];
+        dependencies[order[i]] = {};
       }
     }
 
@@ -173,42 +173,6 @@ class Form extends Component {
     if (schema.dependencies && schema.dependencies.key){
       schemaToRet.dependencies.key = schema.dependencies.key;
     }
-
-    /* if (key === "gender") {
-      schemaToRet.dependencies = {
-        "gender": {
-          "oneOf": [
-            {
-              "properties": {
-                "gender": {
-                  "enum": [
-                    "M",
-                    "F",
-                    "ND"
-                  ]
-                }
-              }
-            },
-            {
-              "properties": {
-                "gender": {
-                  "enum": [
-                    "SD"
-                  ]
-                },
-                "dependencyGender": {
-                  "title": "Your gender",
-                  "type": "string"
-                }
-              },
-              "required": [
-                "dependencyGender"
-              ]
-            }
-          ]
-        }
-      };
-    } */
 
     if (
       this.props.uiSchema['ui:group:economics'] &&
@@ -395,21 +359,23 @@ class Form extends Component {
 
         // set the new properties from dependencies
         let newProperties = JSON.parse(JSON.stringify(item.properties));
+
+        Object.keys(formData.dependencies[schema.key]).forEach(key => {
+          if (!newProperties[key]){
+            delete formData[key];
+          }
+        })
+
         delete newProperties[schema.key];
         let length = Object.keys(newProperties).length;
 
-        for (let i = 0; i<formData.dependencies[schema.key].length;i++ ){
-          let element = formData.dependencies[schema.key][i];
-          if (!newProperties[element]){
-            delete formData[element];
-          }
-        }
-
-        formData.dependencies[schema.key] = [];
+        formData.dependencies[schema.key] = {};
         if (length > 0) {
+          formData.dependencies[schema.key][schema.key] = selected;
           schema.properties = Object.assign(schema.properties, newProperties);
             Object.keys(newProperties).forEach(key => {
-              formData.dependencies[schema.key].push(key);
+              // formData.dependencies[schema.key].push(key);
+              formData.dependencies[schema.key][key] = formData[key];
             })
         }
 
