@@ -18,7 +18,8 @@ const termcondpol = props => {
           .fetch({
             data: {
               type: hashType,
-              language: hashLanguage
+              language: hashLanguage,
+              surveyId
             }
           })
           .then(() => {
