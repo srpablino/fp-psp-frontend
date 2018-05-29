@@ -8,6 +8,8 @@ import UsersView from '../../users/view';
 import UnderConstrucionTemplate from '../../../utils/under_construction_template.hbs';
 import storage from '../storage';
 import usersStorage from '../../users/storage';
+import ActivityFeed from '../activities/collection';
+import FeedItem from '../activities/item/view';
 
 
 export default Mn.View.extend({
@@ -17,6 +19,9 @@ export default Mn.View.extend({
     this.entity = options.entity;
     this.organizationId = options.organizationId;
     this.organization = this.model.attributes;
+    this.activities = new ActivityFeed();
+    this.activities.on('sync', this.render);
+    this.activities.fetch();
   },
   onRender() {
     let headerItems;
@@ -36,6 +41,14 @@ export default Mn.View.extend({
     }else{
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
     }
+
+    const activityFeed = this.$el.find('#activity-feed-hub');
+    activityFeed.empty();
+    this.activities.each(model => {
+      const item = new FeedItem({ model });
+      activityFeed.append(item.render().el);
+    });
+
     setTimeout(() => {
       this.chart();
       this.dataTables();
