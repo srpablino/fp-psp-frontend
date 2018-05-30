@@ -208,8 +208,6 @@ class Form extends Component {
   onSubmit(data) {
     var currentStep = this.state.stepsSchema[this.state.step];
 
-    // aca se puede preguntar si es un campo opcional, y luego checkear el valor.
-
     if (data.formData[currentStep.key] === undefined) {
       FlashesService.request('add', {
         timeout: 3000,
@@ -227,6 +225,7 @@ class Form extends Component {
         step: this.state.step + 1,
         formData: newData,
         lastValue: newData
+
       });
     } else {
       this.setState({
