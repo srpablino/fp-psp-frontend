@@ -95,6 +95,9 @@ export default Mn.View.extend({
     data.countryOfBirth = this.model.attributes.snapshot_indicators.family.person.countryOfBirth.alfa2Code;
     data.phoneNumber = this.model.attributes.snapshot_indicators.family.person.phoneNumber;
     data.familyId = this.model.attributes.snapshot_indicators.family.familyId;
+    data.gender = this.model.attributes.snapshot_indicators.family.person.gender;
+    data.email = this.model.attributes.snapshot_indicators.family.person.email;
+    data.postCode = this.model.attributes.snapshot_indicators.family.person.postCode;
     return data;
   },
   newSurvey(event) {
@@ -109,12 +112,13 @@ export default Mn.View.extend({
       .fetch({
         data: {
           type: 'TC',
-          language
+          language,
+          surveyId: `${this.model.attributes.snapshot_indicators.survey_id}`,
+          familyId: `${this.model.attributes.snapshot_indicators.family.familyId}`
         }
       })
       .then(() => {
         this.app.showViewOnRoute(new TermCondPolView({
-
            app,
            model,
            surveyId: this.model.attributes.snapshot_indicators.survey_id,
