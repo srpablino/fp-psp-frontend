@@ -52,15 +52,24 @@ class Form extends Component {
         stepsUISchema,
         lastValue: {}
       };
+      // empty dependencies only if it is a new snaphot
+      this.state.formData.dependencies = dependencies;
     } else {
       // If the survey definition was changed, we should update this.state.
       this.updateState(stepsSchema, stepsUISchema);
 
     }
 
-    this.state.formData.dependencies = dependencies;
-
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  getAllDependenciesKeys(formDataDependencies){
+    let arrayDependenciesKeys = [];
+    Object.keys(formDataDependencies).forEach(key => {
+      arrayDependenciesKeys.push(...Object.keys(formDataDependencies[key]));
+    })
+    arrayDependenciesKeys.push('dependencies');
+    return arrayDependenciesKeys;
   }
 
   updateState(stepsSchema, stepsUISchema) {
@@ -68,11 +77,26 @@ class Form extends Component {
     // Case 1: one o more fields were removed.
 
     const formDataCopy = this.props.stateDraft.formData;
+    const arrayDependenciesKeys = this.getAllDependenciesKeys(formDataCopy.dependencies);
 
     Object.keys(formDataCopy).forEach(field => {
-      if (!this.existInSchemaGroup(field)) {
+      if (!this.existInSchemaGroup(field) && !arrayDependenciesKeys.includes(field)){
         delete this.props.stateDraft.formData[field];
         this.props.stateDraft.step = this.props.stateDraft.step - 1;
+      }
+    });
+
+    stepsSchema.forEach(item => {
+      if (item.dependencies && item.dependencies !== null){
+        let formData = this.props.stateDraft.formData;
+        let selected = formData[item.key];
+        if (item.dependencies[item.key]) {
+          let dependency = item.dependencies[item.key];
+          // se pueden dar otro tipos de dependency, por ahora cubierto t0do lo que sea enum
+          if (dependency.oneOf) {
+            this.manageDependencyForEnums(dependency,selected,formData, item);
+          }
+        }
       }
     });
 
@@ -270,11 +294,13 @@ class Form extends Component {
       let newData = JSON.parse(JSON.stringify(this.state.formData));
       let currentStep = this.state.stepsSchema[this.state.step];
 
-      if (this.state.lastValue !== this.state.formData) {
+      newData[currentStep.key] = this.state.lastValue[currentStep.key];
+
+      /* if (this.state.lastValue !== this.state.formData) {
         newData[currentStep.key] = this.state.lastValue[currentStep.key];
       } else if (currentStep.properties[currentStep.key].default) {
         newData[currentStep.key] = currentStep.properties[currentStep.key].default;
-      }
+      } */
 
       this.state.formData = newData;
       this.props.handleSaveDraft(this.state);
@@ -308,6 +334,11 @@ class Form extends Component {
       formData
       , schema
     } = data;
+
+    if (!schema.dependencies || schema.dependencies===null){
+      return
+    }
+
     let selected = formData[schema.key];
     if (schema.dependencies[schema.key]) {
 
