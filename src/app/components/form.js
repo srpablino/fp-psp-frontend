@@ -336,7 +336,7 @@ class Form extends Component {
     } = data;
 
     if (!schema.dependencies || schema.dependencies===null){
-      return
+      return;
     }
 
     let selected = formData[schema.key];
