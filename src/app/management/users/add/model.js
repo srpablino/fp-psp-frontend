@@ -2,7 +2,9 @@ import Bn from 'backbone';
 import env from '../../../env';
 
 export default Bn.Model.extend({
-  urlRoot: `${env.API}/users/addUserRoleApplication`,
+  // urlRoot: `${env.API}/users/addUserRoleApplication`,
+  urlRoot: `${env.API}/users`,
+  idAttribute: "userId",
   validate() {
     const errors = [];
 
@@ -23,28 +25,28 @@ export default Bn.Model.extend({
       return errors;
     }
 
-    if (this.attributes.pass === '') {
+    if (this.attributes.pass === '' && this.isNew()) {
       errors.push(t('user.form.password-required'));
       return errors;
     }
 
-    if (this.attributes['password-confirm'] === '') {
+    if (this.attributes['password-confirm'] === '' && this.isNew()) {
       errors.push(t('user.form.password-confirm-required'));
       return errors;
     }
 
-    if (this.attributes.pass !== '' && this.attributes['password-confirm'] !== '' &&
+    if (this.isNew() && this.attributes.pass !== '' && this.attributes['password-confirm'] !== '' &&
       this.attributes.pass !== this.attributes['password-confirm']) {
       errors.push(t('user.form.password-confirm-failed'));
       return errors;
     }
 
-    if (!this.attributes.application && !this.attributes.organization) {
+    if (this.isNew() && !this.attributes.application && !this.attributes.organization) {
       errors.push(t('user.form.select-organization-required'));
       return errors;
     }
 
-    if (!this.attributes.role) {
+    if (this.isNew() && !this.attributes.role) {
       errors.push(t('user.form.select-role-required'));
       return errors;
     }

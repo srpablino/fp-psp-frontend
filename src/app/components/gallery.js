@@ -51,11 +51,11 @@ class Gallery extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.name !== nextProps.name) {
       let ban = false;
-      if (nextProps.formData[0].value === 'NONE') {
+      if (nextProps.formData && nextProps.formData[0].value === 'NONE') {
         ban = true;
       }
       this.setState({
-        selected: nextProps.formData[0].url,
+        selected: nextProps.formData ? nextProps.formData[0].url : '',
         images: nextProps.schema.items.enum,
         title: nextProps.schema.title,
         required: nextProps.required ? '*' : '',

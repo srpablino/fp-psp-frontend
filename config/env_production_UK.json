@@ -3,5 +3,6 @@
   "API_AUTH": "https://platform.backend.povertystoplight.org/oauth",
   "authenticationEnabled": true,
   "GOOGLEKEY": "AIzaSyAOJGqHfbWY_u7XhRnLi7EbVjdK-osBgAM",
-  "API_PUBLIC": "https://platform.backend.povertystoplight.org"
+  "API_PUBLIC": "https://platform.backend.povertystoplight.org",
+  "platform": "PLATFORM"
 }

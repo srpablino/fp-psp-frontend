@@ -1732,13 +1732,28 @@ img.current-language-flag {
   border-bottom: 1px solid grey;
 }
 
-#dvSnapshotsTable {
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 20px;
-}
+// #dvSnapshotsTable {
+//   margin-left: 15px;
+//   margin-right: 15px;
+//   margin-bottom: 20px;
+// }
 
 .indicators-list {
   overflow: auto;
   white-space: nowrap;
+}
+
+#sub-header-image {
+  height: 50px;
+  padding: 5px;
+  width: auto;
+  margin-left: 10px;
+}
+
+.c3-line {
+  stroke-width: 3px;
+}
+
+.c3-circle {
+  fill: rgb(12, 17, 21) !important;
 }

@@ -5,10 +5,10 @@
 
     <img src="/static/images/icon_logo_PSL.png" class="center-block login-logo" alt="PS" />
     <hr />
+    {{!-- <label class="center-block" id="platform-name" for=""></label> --}}
     <div class="panel">
       <div class="panel-heading">
-        <div class="panel-body">          
-          <form role="form" id="loginform" class="col-sm-9 col-sm-offset-2">
+        <div class="panel-body">
             <div style="display:none;" id="login-alert"></div>
             <div class="form-group login">
               <input id="login-username" type="text" class="form-control " name="username" value="" placeholder="{{$t 'login.username'}}">
@@ -29,10 +29,17 @@
         <a id="link-email">
            <div class="pull-right link-email login" style="margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.forgot-pass'}}</div>
         </a>​
+        <a id="link-form" class="hidden" href="https://www.surveymonkey.com/r/CheckOutPovertyStoplightPlatform">
+           <div class="pull-right link-email login"  style="margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.go-form'}}</div>
+        </a>​
         <a id="back-login" >
             <div class="pull-right link-email recovery" style="display:none;margin-top: -21px;margin-right: 71px;text-decoration: none;cursor: pointer;">{{$t 'login.back-login'}}</div>
-        </a>​
+        </a>
       </div>
+      {{!-- <div class="panel-footer text-center" id="platform-name"></div> --}}
+    </div>
+    <div class="pull-right" id="platform-name" style="color: #788c9a !important; font-size: 14px !important;">
+      <span>{{{appPlatform}}}</span>
     </div>
   </div>
   <div id="flashes"></div>

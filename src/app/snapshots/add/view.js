@@ -143,8 +143,10 @@ export default Mn.View.extend({
       economic_survey_data: this.getEconomics(formResult),
       user_name: this.app.getSession().get('user').username,
       term_cond_id: this.app.getSession().get('termCond'),
-      priv_pol_id: this.app.getSession().get('priv')
+      priv_pol_id: this.app.getSession().get('priv'),
+      dependencies : formResult.dependencies
     };
+
 
     new SnapshotModel().save(snapshot).then(savedSnapshot => {
 

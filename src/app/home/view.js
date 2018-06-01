@@ -7,18 +7,26 @@ import moment from 'moment';
 import Template from './template.hbs';
 import session from '../../common/session';
 import storage from '../management/hubs/storage';
+import ActivityFeed from './activities/collection';
+import FeedItem from './activities/item/view';
 
 export default Mn.View.extend({
   template: Template,
 
   initialize(options) {
     this.app = options.app;
+
     if (this.model) {
       this.organization = this.model.attributes;
       setTimeout(() => {
-      if(!$.isEmptyObject(this.organization.dashboard.snapshotTaken.byMonth)){
+        let logo =
+          this.model.attributes.logoUrl || '/static/images/icon_logo_place.png';
+        $('#sub-header-image').attr('src', logo);
+        if (
+          !$.isEmptyObject(this.organization.dashboard.snapshotTaken.byMonth)
+        ) {
           $('.no-data').hide();
-          this.chart();
+          this.chart(this.organization.dashboard.snapshotTaken.byMonth);
         }
       }, 0);
     }
@@ -28,74 +36,86 @@ export default Mn.View.extend({
     if (this.model.get('id')) {
       this.app.updateSubHeader(storage.getSubHeaderItems(this.model));
     }
-    this.months = ["","January", "February", "March", "April", "May", "June","July",
-     "August","September","October","November","December"]
+    this.renderFeed();
   },
 
-  formatDate(key){
-    if(moment(key).isSame(moment(), 'month')){
-      return t('general.today');
-    }
-    return moment(key).locale(session.get('locale')?session.get('locale'):'es').format('MMMM');
+  renderFeed() {
+    this.activities = new ActivityFeed();
+    this.activities.fetch({
+      success: () => {
+        const activityFeed = this.$el.find('#activity-feed-admin');
+        activityFeed.empty();
+        this.activities.each(model => {
+          const item = new FeedItem({ model });
+          activityFeed.append(item.render().el);
+        });
+      }
+    });
+  },
+  formatDate(key) {
+    return moment(key)
+      .locale(session.get('locale') ? session.get('locale') : 'es')
+      .format('MMMM');
   },
 
-  generateData(){
-     let snapshots = this.organization.dashboard.snapshotTaken.byMonth;
-     let data={};
-     data.x = [
-      'x',
-       ... _.keys(snapshots).map(key => this.formatDate(key))
-    ];
-    data.data1 = [
-        'data1',
-        ... _.values(snapshots)
-    ];
+  generateData(byMonthData) {
+    let snapshots = this.sortData(byMonthData);
+    let data = {};
+    data.x = ['x', ..._.keys(snapshots).map(key => this.formatDate(key))];
+    data.data1 = ['data1', ..._.values(snapshots)];
+
     return data;
   },
 
-  chart(){
-    const data = this.generateData();
+  sortData(data) {
+    return Object.keys(data)
+      .sort()
+      .reduce((result, key) => {
+        result[key] = data[key];
+        return result;
+      }, {});
+  },
+
+  chart(byMonthData) {
+    const data = this.generateData(byMonthData);
     c3.generate({
-        bindto: '#bar-snapshots-taken',
-        data: {
-           x: 'x',
-          columns: [
-            data.x,
-            data.data1,
-          ],
-          names: {
-            data1: t('home.snapshots-taken'),
-          },
-          colors:{
-                data1: '#60b4ef',
-              },
-          type: 'bar',
-          labels: true,
-          empty: {
-            label: {
-              text: t('home.no-data')
-            }
-          }
+      bindto: '#bar-snapshots-taken',
+      data: {
+        x: 'x',
+        columns: [data.x, data.data1],
+        names: {
+          data1: t('home.snapshots-taken')
         },
-        axis: {
-            x: {
-                type: 'category'
-            },
-            y: {
-               show: false
-             }
+        colors: {
+          data1: '#60b4ef'
         },
-        bar: {
-         width: {
-             ratio: 0.6
-            }
-         },
-        size: {
-            height: 200
-          },
-        legend: {
-            show: false
+        type: 'line',
+        labels: true,
+        empty: {
+          label: {
+            text: t('home.no-data')
           }
+        }
+      },
+      axis: {
+        x: {
+          type: 'category'
+        },
+        y: {
+          show: true
+        }
+      },
+      bar: {
+        width: {
+          ratio: 0.6
+        }
+      },
+      size: {
+        height: 200
+      },
+      legend: {
+        show: false
+      }
     });
   },
 

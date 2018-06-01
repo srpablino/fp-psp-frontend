@@ -5,14 +5,19 @@ import FamilySnapshotView from './show/snapshot/view';
 import familiesStorage from './storage';
 import SnapshotItemModel from '../snapshots/list/item/model';
 import FamilyUserView from './user/view';
+import FamilyForm from './edit/view';
+import SnapshotModel from "./show/indicators/model";
+import SnapshotIndicatorView from "./show/indicators/view"
 
 const families = props => {
   const { app } = props;
   const routes = {
     appRoutes: {
       'families(/)': 'showFamilies',
+      'families/:id/edit': 'editFamily',
       'families/:id(/:entity)': 'showFamily',
-      'families/:id/snapshots(/:snapshotId)': 'showSnapshotFamily'
+      'families/:id/snapshots(/:snapshotId)': 'showSnapshotFamily',
+      'families/:id/snapshots(/:snapshotId)/indicators': 'showSnapshotIndicators'
     },
     controller: {
       showFamilies() {
@@ -63,6 +68,25 @@ const families = props => {
               );
             });
           });
+      },
+      editFamily(familyId) {
+        familiesStorage.find(familyId).then(model => {
+          app.showViewOnRoute(new FamilyForm({model}));
+        });
+      },
+      showSnapshotIndicators(hash, hashSnapshot) {
+        const snapshotId = parseInt(hashSnapshot, 10);
+        const model = new SnapshotModel();
+        model
+          .fetch({
+            data: {
+              snapshot_id: snapshotId
+            }
+          })
+          .then(() => {
+            app.showViewOnRoute(new SnapshotIndicatorView({ model, app }));
+          });
+
       }
     }
   };

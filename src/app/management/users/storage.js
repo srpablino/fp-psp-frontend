@@ -6,6 +6,7 @@ var UsersStorage = Storage.extend({
   model: Model,
   collection: Collection,
   getSubHeaderItems() {
+
     return {
       navigationItems: [
         {

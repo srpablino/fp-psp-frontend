@@ -1,5 +1,6 @@
 import UsersView from './view';
 import NewUserView from '../users/add/view';
+import UsersStorage from './storage'
 
 const users = props => {
   const {app} = props;
@@ -8,6 +9,7 @@ const users = props => {
     appRoutes: {
       'users(/)': 'showUsers',
       'users/new': 'newUser',
+      'users/edit/:userId' : 'editUser'
     },
     controller: {
       showUsers() {
@@ -15,6 +17,12 @@ const users = props => {
       },
       newUser() {
         app.showViewOnRoute(new NewUserView({app}));
+      },
+      editUser(userId){
+        UsersStorage.find(userId).then(model => {
+          app.showViewOnRoute(
+            new NewUserView({model, app}));
+        })
       }
     }
   };

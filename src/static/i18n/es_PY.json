@@ -9,11 +9,15 @@
       "logo-upload": "Click para subir un logo",
       "name": "Nombre organización",
       "name-required": "Nombre de organización es requerido",
+      "name-length-exceeded": "El Nombre de organización debe tener como máximo 50 caracteres",
       "code": "Código",
       "code-required": "Código es requerido",
+      "code-length-exceeded": "Código debe tener como máximo 50 caracteres",
       "description": "Descripción",
       "description-required": "Descripción es requerida",
+      "description-length-exceeded": "Descripción debe tener como máximo 256 caracteres",
       "information": "Información",
+      "information-length-exceeded": "Información debe tener como máximo 256 caracteres",
       "buttons": {
         "add": "AGREGAR ORGANIZACION",
         "save": "GUARDAR ORGANIZACION",
@@ -160,7 +164,9 @@
         "delete-confirm-title": "Confirmación de eliminación",
         "indicator-not-answered": "Durante la encuesta, has elegido no responder la pregunta",
         "select-delete": "Eliminar esta prioridad",
-        "mising-field": "Campo '\"%{field}\"' faltante"
+        "mising-field": "Campo '\"%{field}\"' faltante",
+        "min-priorities": "Seleccione al menos %{min} prioridades",
+        "changes-saved": "Tus cambios han sido guardados exitosamente"
       },
       "add": {
         "indicator": "Indicador",
@@ -168,6 +174,10 @@
         "action": "¿Qué debo hacer para lograrlo?",
         "estimated-date": "¿Cuándo lo tendré?",
         "comments": "Comentarios"
+      },
+      "buttons": {
+        "save": "Guardar",
+        "cancel": "Cancelar"
       }
     },
     "attainment": {
@@ -207,6 +217,10 @@
     "messages": {
       "not-answer": "Seleccione su respuesta",
       "answer-validation": "Primero debe aceptar los términos y condiciones"
+    },
+    "templates": {
+      "term-cond": "<h1>Terms and Conditions</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>",
+      "pol": "<h1>Privacy Policies</h1><div class='text-box'>Please Read Carefully Before Using This Application</div>"
     }
   },
   "family": {
@@ -231,7 +245,9 @@
       "cell": "Celular",
       "email": "Correo electrónico",
       "place": "Lugar",
-      "no-priority": "Ningún indicador fue priorizado en este semáforo"
+      "edit": "Editar ficha de la familia",
+      "no-priority": "Ningún indicador fue priorizado en este semáforo",
+      "prioritize": "Priorizar"
     },
     "manage": {
       "manage-families": "Gestión de familias",
@@ -244,6 +260,18 @@
         "delete-confirm-title": "Confirmación de Eliminación",
         "delete-done": "La familia ha sido eliminada"
       }
+    },
+    "form": {
+      "title": "Editar ficha de la familia",
+      "household": "Familia",
+      "survey-user": "Usuario Encuestador Asignado",
+      "select-user": "-- Selecciona un usuario --",
+      "save": {
+        "confirm-title": "Guardar Familia",
+        "confirm-text": "¿Está seguro que desea guardar estos cambios?",
+        "success": "Familia guardada exitosamente",
+        "failed": "La familia no pudo ser guardada"
+      }
     }
   },
   "login": {
@@ -251,6 +279,7 @@
     "password": "Contraseña",
     "login": "INICIAR SESIÓN",
     "forgot-pass": "¿Olvidó su contraseña?",
+    "go-form": "Registrarse",
     "email": "Correo electrónico",
     "reset-pass": "Cambiar Contraseña",
     "back-login": "Volver al inicio de sesión",
@@ -270,11 +299,17 @@
       "logo-upload": "Click para subir un logo",
       "name": "Nombre hub",
       "name-required": "Nombre del hub es requerido",
+      "name-length-exceeded": "El Nombre de hub debe tener como máximo 50 caracteres",
       "code": "Código",
       "code-required": "Código es requerido",
+      "code-length-exceeded": "Código debe tener como máximo 50 caracteres",
       "description": "Descripción",
       "description-required": "Descripción es requerida",
+      "description-length-exceeded": "Descripción debe tener como máximo 256 caracteres",
       "information": "Información",
+      "information-length-exceeded": "Información debe tener como máximo 256 caracteres",
+      "terms-upload": "Click para subir los Terminos y Condiciones",
+      "pol-upload": "Click para subir la Política de Privacidad",
       "buttons": {
         "add": "AGREGAR HUB",
         "save": "GUARDAR HUB",
@@ -290,6 +325,10 @@
       "confirm-text": "¿Está seguro que desea eliminar este Hub?",
       "success": "El Hub ha sido eliminado",
       "failed": "El Hub no pudo ser elimiando"
+    },
+    "messages": {
+      "bad-file": "El archivo debe ser HTML. Porfavor seleccione otro archivo o el valor por defecto será applicado",
+      "insert-file": "Por avor inserte un archivo válido"
     }
   },
   "user": {
@@ -299,11 +338,17 @@
     "card": {
       "email": "Correo electrónico",
       "organization": "Organización",
-      "hub": "Hub"
+      "hub": "Hub",
+      "role": "Rol",
+      "true": "Verdadero",
+      "false": "Falso",
+      "active": "Activo"
     },
     "form": {
-      "add-title": "Agregar un usuario",
       "edit-title": "Editar usuario",
+      "role": "Rol",
+      "active": "Activo",
+      "add-title": "Agregar un usuario",
       "user-label": "Usuario",
       "username": "Nombre de usuario",
       "username-required": "Nombre de usuario es requerido",
@@ -326,13 +371,16 @@
         "cancel": "Cancelar"
       },
       "add-success": "Usuario creado exitosamente",
-      "add-failed": "El usuario ya existe"
+      "add-failed": "El usuario ya existe",
+      "edit-success": "Usuario actualizado correctamente",
+      "edit-failed": "No es posible actualizar usuario"
     }
   },
   "footer": {
     "version": {
       "title": "VERSION WEB",
-      "name": "SEMAFORO DE ELIMINACIÓN DE POBREZA"
+      "name": "SEMAFORO DE ELIMINACIÓN DE POBREZA",
+      "platform": "PLATAFORMA"
     }
   },
   "report": {
@@ -341,7 +389,7 @@
       "search": {
         "date-from": "Fecha Desde",
         "date-to": "Fecha Hasta",
-        "organization": "Organización",
+        "organization": "Organizaciones",
         "search": "Buscar",
         "choose": "Seleccione",
         "all": "Todas",

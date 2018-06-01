@@ -18,12 +18,20 @@ export default Mn.View.extend({
   },
   initialize(options) {
     this.app = options.app;
-    this.props = Object.assign({}, options);
-    this.model = this.props.model || new Model();
+    this.model = new Model();
+    if (this.options.model){
+      this.originalModel = options.model.clone();
+      this.model.attributes = this.options.model.attributes
+    }else{
+      this.model.urlRoot = `${env.API}/users/addUserRoleApplication`;
+
+    }
   },
   serializeData() {
     return {
-      user: this.model.attributes
+      user: this.model.attributes,
+      isNew: this.model.get('id')===undefined,
+      isChecked: this.model.attributes.active
     };
   },
   onRender() {
@@ -48,10 +56,9 @@ export default Mn.View.extend({
     if (session.userHasRole('ROLE_ROOT')) {
       //  List all applications (Hubs and Partners)
       this.genericFetch(
-        '/applications/hubsandpartners',
+        '/applications/list',
         '#select-app',
         t('user.form.select-hub'),
-        'application',
         'name'
       );
     } else if (session.userHasRole('ROLE_HUB_ADMIN')) {
@@ -61,7 +68,6 @@ export default Mn.View.extend({
         `/applications/${hubId}/organizations`,
         '#select-org',
         t('user.form.select-organization'),
-        'organization',
         'name'
       );
     } else if (session.userHasRole('ROLE_APP_ADMIN')) {
@@ -73,13 +79,7 @@ export default Mn.View.extend({
 
     var roles = [];
     if (session.userHasRole('ROLE_ROOT')) {
-      const appSelected = $('#select-app').find(":selected");
-
-      if (appSelected.attr('data-type') === 'hub') {
-        roles.push({role: "ROLE_HUB_ADMIN"});
-      } else if (appSelected.attr('data-type') === 'partner') {
-        roles.push({role: "ROLE_APP_ADMIN"});
-      }
+      roles.push({role: "ROLE_HUB_ADMIN"});
     } else if (session.userHasRole('ROLE_HUB_ADMIN')) {
       roles.push({role: "ROLE_APP_ADMIN"});
     } else if (session.userHasRole('ROLE_APP_ADMIN')) {
@@ -91,22 +91,21 @@ export default Mn.View.extend({
       roles,
       '#select-role',
       t('user.form.select-role'),
-      'role',
       'role'
     );
   },
-  genericFetch(path, selectId, placeholder, type, fieldDisplayed) {
+  genericFetch(path, selectId, placeholder, fieldDisplayed) {
     const self = this;
     var modelCollection = new Bn.Model();
     modelCollection.urlRoot = `${env.API}${path}`;
     modelCollection.fetch({
       success(response) {
         var list = response.toJSON().list || response.toJSON();
-        self.loadSelect(list, selectId, placeholder, type, fieldDisplayed);
+        self.loadSelect(list, selectId, placeholder, fieldDisplayed);
       }
     });
   },
-  loadSelect(list, selectId, placeholder, type, fieldDisplayed) {
+  loadSelect(list, selectId, placeholder, fieldDisplayed) {
     $(`${selectId}`).show();
     $(`${selectId}-placeholder`).text(`* ${placeholder}`);
     $(selectId).val(`* ${placeholder}`);
@@ -115,17 +114,9 @@ export default Mn.View.extend({
       .remove();
 
     $.each(list, (index, element) => {
-      var dataType = type;
-      if (dataType === 'application')
-        if (element.hub)
-          dataType = 'hub';
-        else if (element.partner)
-          dataType = 'partner';
-
       $(selectId).append(
         $('<option></option>')
           .attr('value', element.id)
-          .attr('data-type', dataType)
           .text(element[fieldDisplayed])
       );
     });
@@ -135,24 +126,26 @@ export default Mn.View.extend({
     const button = utils.getLoadingButton(this.$el.find('#submit'));
     const session = this.app.getSession();
 
-    let userModel = new Model();
     this.$el
       .find('#form')
       .serializeArray()
       .forEach(element => {
-        userModel.set(element.name, element.value);
+        this.model.set(element.name, element.value);
       });
+    this.model.set('active',this.model.get('active')==="on");
+
 
     if (session.userHasRole('ROLE_APP_ADMIN')) {
         let user = session.get('user');
-        userModel.set('application', user.application && user.application.id);
-        userModel.set('organization', user.organization && user.organization.id);
+        this.model.set('application', user.application && user.application.id);
+        this.model.set('organization', user.organization && user.organization.id);
     }
 
-    let errors = userModel.validate();
+    let errors = this.model.validate();
 
     if (errors) {
       errors.forEach(error => {
+        this.model.set(this.originalModel.attributes);
         FlashesService.request('add', {
           timeout: 3000,
           type: 'danger',
@@ -164,9 +157,10 @@ export default Mn.View.extend({
     }
 
     button.loading();
-
+    let outcome;
+    let modelIsNew = this.model.isNew();
     userStorage
-      .save(userModel)
+      .save(this.model)
       .then(() => {
         button.reset();
         if (session.userHasRole('ROLE_APP_ADMIN')) {
@@ -176,20 +170,30 @@ export default Mn.View.extend({
         }else{
           Bn.history.navigate('management/users', { trigger: true });
         }
-
-
+        if (modelIsNew){
+          outcome = 'user.form.add-success';
+        }else{
+          outcome = 'user.form.edit-success';
+        }
         FlashesService.request('add', {
           timeout: 3000,
           type: 'info',
-          title: t('user.form.add-success')
+          title: t(outcome)
         });
       })
       .catch(response => {
+        this.model.set(this.originalModel.attributes);
+        if (modelIsNew){
+          outcome = 'user.form.add-failed';
+        }else{
+          outcome = 'user.form.edit-failed';
+        }
+        // this.model.fetch();
         if (response.status === 400) {
           FlashesService.request('add', {
             timeout: 3000,
             type: 'danger',
-            title: t('user.form.add-failed')
+            title: t(outcome)
           });
         }
         button.reset();

@@ -98,6 +98,7 @@ export default Mn.View.extend({
       })
       .catch(response => {
         if (response.status === 400) {
+
           FlashesService.request('add', {
             timeout: 3000,
             type: 'danger',

@@ -9,16 +9,21 @@ import storage from '../storage';
 import TermCondPolView from '../../termcondpol/view';
 import TermCondPolModel from '../../termcondpol/model';
 import session from "../../../common/session";
+import ParameterModel from "../../parameter/model";
 
 export default Mn.View.extend({
   template: Template,
   events: {
-    'click #newSurvey': 'newSurvey'
+    'click #newSurvey': 'newSurvey',
+    'click #set-priorities' : 'setPriorities'
   },
   initialize(options) {
     this.app = options.app;
     this.entity = options.entity;
-
+    this.model = options.model;
+    if(this.app.getSession().attributes.user.application !== null) {
+      this.currentApplicationId = this.app.getSession().attributes.user.application.id;
+    }
   },
   onRender() {
     const headerItems = storage.getSubHeaderItems(this.model);
@@ -34,6 +39,13 @@ export default Mn.View.extend({
 
     if (session.userHasRole('ROLE_SURVEY_USER')) {
       this.$el.find('#newSurvey').show();
+    }
+
+    this.getParameter();
+  },
+  onAttach() {
+    if (this.app.getSession().userHasRole('ROLE_APP_ADMIN')) {
+      this.$el.find('#edit-family').show();
     }
   },
   getTemplate() {
@@ -51,7 +63,8 @@ export default Mn.View.extend({
     return {
       family: this.model.attributes,
       createdAt: this.getCreatedAt(),
-      className: this.isPrioritized()
+      className: this.isPrioritized(),
+      formattedPlace: this.getFormattedPlace()
     };
   },
   getCreatedAt() {
@@ -68,6 +81,13 @@ export default Mn.View.extend({
     }
     return isPrioritized.length > 0 ? 'hidden' : '';
   },
+  getFormattedPlace() {
+    if (this.model.get('city') || this.model.get('country')) {
+      return `${this.model.get('city') ? this.model.get('city').city : ''} \
+        - ${this.model.get('country') ? this.model.get('country').country : ''}`;
+    }
+    return null;
+  },
   getJsonData() {
     let data = {};
     data.firstName = this.model.attributes.snapshot_indicators.family.person.firstName;
@@ -78,6 +98,9 @@ export default Mn.View.extend({
     data.countryOfBirth = this.model.attributes.snapshot_indicators.family.person.countryOfBirth.alfa2Code;
     data.phoneNumber = this.model.attributes.snapshot_indicators.family.person.phoneNumber;
     data.familyId = this.model.attributes.snapshot_indicators.family.familyId;
+    data.gender = this.model.attributes.snapshot_indicators.family.person.gender;
+    data.email = this.model.attributes.snapshot_indicators.family.person.email;
+    data.postCode = this.model.attributes.snapshot_indicators.family.person.postCode;
     return data;
   },
   newSurvey(event) {
@@ -90,12 +113,14 @@ export default Mn.View.extend({
     model
       .fetch({
         data: {
-          type: 'TC'
+          type: 'TC',
+          surveyId: `${this.model.attributes.snapshot_indicators.survey_id}`,
+          familyId: `${this.model.attributes.snapshot_indicators.family.familyId}`,
+          applicationId: self.currentApplicationId
         }
       })
       .then(() => {
         this.app.showViewOnRoute(new TermCondPolView({
-
            app,
            model,
            surveyId: this.model.attributes.snapshot_indicators.survey_id,
@@ -104,7 +129,31 @@ export default Mn.View.extend({
 
         }));
       });
-
-    Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/termcondpol/TC`);
+    Bn.history.navigate(`/survey/${this.model.attributes.snapshot_indicators.survey_id}/termcondpol/TC/${this.currentApplicationId}`);
+  },
+  getParameter(){
+    const self = this;
+    this.parameterModel = new ParameterModel();
+    this.parameterModel.fetch({
+      data: { keyParameter: 'maximum_time_since_snapshot'},
+      success(response) {
+        self.parameterModel = response.toJSON();
+        self.validateParameter(self.parameterModel.value);
+      }
+    });
+  },
+  validateParameter(parameter) {
+    var createdAt = moment(this.model.attributes.snapshot_indicators.created_at);
+    if(moment().diff(createdAt, 'days') < parameter) {
+      if (session.userHasRole('ROLE_SURVEY_USER') || session.userHasRole('ROLE_APP_ADMIN')) {
+        $('#set-priorities').show();
+      }
+    }
+  },
+  setPriorities() {
+    Bn.history.navigate(
+      `families/${this.model.attributes.id}/snapshots/
+      ${this.model.attributes.snapshot_indicators.snapshot_economic_id}/indicators`, 
+      true);
   }
 });
