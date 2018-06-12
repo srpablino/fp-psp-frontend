@@ -7,6 +7,8 @@ import storage from '../storage';
 import managementStorage from '../../storage';
 import utils from '../../../utils';
 import FlashesService from '../../../flashes/service';
+import LabelSelectorView from '../../labels/label-selector-view';
+import OrganizationLabelModel from '../../labels/organization-label-model';
 
 export default Mn.View.extend({
   template: Template,
@@ -18,6 +20,13 @@ export default Mn.View.extend({
   initialize(options) {
     this.app = options.app;
     this.model = options.model || new Model();
+    this.organizationLabelModel = new OrganizationLabelModel({
+      organizationId:this.model.get('id') || null
+    });
+    this.labelSelectorView = new LabelSelectorView({
+      app:this.app,
+      toFilter:false
+     });
   },
   onRender() {
     let headerItems;
@@ -34,6 +43,9 @@ export default Mn.View.extend({
     }else{
       $('#sub-header .navbar-header > .navbar-brand').addClass('subActive');
     }
+    this.$el.find('#label-selector').html(this.labelSelectorView.render().el);
+    if(this.model.get('id')) this.getOrganizationLabels();
+
   },
   serializeData() {
     return {
@@ -57,6 +69,7 @@ export default Mn.View.extend({
   },
   handleSubmit(event) {
     event.preventDefault();
+    let self = this;
     const session = this.app.getSession();
     const button = utils.getLoadingButton(this.$el.find('#submit'));
 
@@ -89,6 +102,7 @@ export default Mn.View.extend({
       .save(this.model)
       .then(() => {
         button.reset();
+        self.addLabels();
         history.navigate('management/organizations', {trigger: true});
         FlashesService.request('add', {
           timeout: 3000,
@@ -107,5 +121,18 @@ export default Mn.View.extend({
         }
         button.reset();
       });
+  },
+  getOrganizationLabels(){
+    var self = this;
+    this.organizationLabelModel.fetch({
+      success(model, response){
+        if(response && response.length>0) self.labelSelectorView.setLabels(response);
+      }
+    })
+  },
+  addLabels() {
+    this.organizationLabelModel.set('labelId',
+      this.labelSelectorView.getLabelsSelected());
+    this.organizationLabelModel.save();
   }
 });
