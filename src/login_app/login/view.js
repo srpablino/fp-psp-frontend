@@ -17,9 +17,7 @@ export default Mn.View.extend({
     'click #btn-login': 'doLogin',
     'click #link-email': 'entryEmail',
     'click #back-login': 'backLogin',
-    'click #btn-recovery': 'sendEmail',
-    'keypress #login-username' : 'pressedEnterInLoginField',
-    'keypress #login-password' : 'pressedEnterInLoginField'
+    'click #btn-recovery': 'sendEmail'
   },
   serializeData() {
     return { appPlatform: env.platform };
@@ -60,13 +58,6 @@ export default Mn.View.extend({
     $(".login").show();
     $(".recovery").hide();
     this.$el.find('#login-username').focus();
-  },
-
-  pressedEnterInLoginField(event) {
-      // keyCode 13 -> ENTER
-      if (event.keyCode === 13) {
-          this.doLogin(event);
-      }
   },
 
   doLogin(event) {
