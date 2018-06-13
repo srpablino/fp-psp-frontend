@@ -39,7 +39,7 @@ export default Mn.View.extend({
   },
   buildDataParam(params) {
     let query = {
-      label: params.term
+      desc: params.term
     }
     return query;
   },
