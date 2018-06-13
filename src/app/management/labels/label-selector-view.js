@@ -25,52 +25,66 @@ export default Mn.View.extend({
       tokenSeparators: [',', ' '],
       ajax: {
         url: `${env.API}/labels/list`,
-        data(params) {
-          let query = {
-            label: params.term
-          }
-          return query;
-        },
-        processResults(data) {
-          let results = [];
-          for(let i=0;i<data.length;i++){
-            let item = data[i];
-            item.text=item.description;
-            results.push(item);
-          }
-          return {
-            results
-          };
-        }
+        data: this.buildDataParam,
+        processResults:this.processLabelResults
       },
-      createTag(params) {
-        let term = $.trim(params.term);
-        if (term === '') {
-          return null;
-        }
-        return {
-          id: term,
-          text: term
-        }
-      },
-      insertTag(data, labelItem) {
-        data.push(labelItem);
+      createTag:this.addLabelToComponent,
+      insertTag: this.insertLabelToComponent
+    }).on("select2:select", (e) => {
+      self.onSelectLabelEvent(e);
+    })
+    .on("select2:unselect", (e) => {
+        self.onUnSelectLabelEvent(e);
+    });
+  },
+  buildDataParam(params) {
+    let query = {
+      label: params.term
+    }
+    return query;
+  },
+  onSelectLabelEvent(e) {
+    if (e) e.preventDefault();
+    this.labelsSelected = this.labelSelector.val();
+    let results = [];
+    for(let i=0;i<this.labelsSelected.length;i++){
+      if(this.labelsSelected[i].length>0 &&
+        !$.isNumeric(this.labelsSelected[i])){
+        results.push(this.labelsSelected[i]);
       }
-    }).on("select2:select",
-      (e) => {
-        if (e) e.preventDefault();
-        self.labelsSelected = self.labelSelector.val();
-        const results = self.labelsSelected
-          .filter(label => Number.isNaN(label));
-        if (!self.toFilter &&
-          results.length > 0) {
-          self.createLabel(results[0]);
-        }
-      }).on("select2:unselect",
-      (e) => {
-        if (e) e.preventDefault();
-        self.labelsSelected = self.labelSelector.val();
-      });
+    }
+    if (!this.toFilter &&
+      results.length > 0) {
+      this.createLabel(results[0]);
+    }
+  },
+  onUnSelectLabelEvent(e) {
+    if (e) e.preventDefault();
+    this.labelsSelected = this.labelSelector.val();
+  },
+  insertLabelToComponent(data, labelItem) {
+    data.push(labelItem);
+  },
+  processLabelResults(data) {
+    let results = [];
+    for(let i=0;i<data.length;i++){
+      let item = data[i];
+      item.text=item.description;
+      results.push(item);
+    }
+    return {
+      results
+    };
+  },
+  addLabelToComponent(params) {
+    let term = $.trim(params.term);
+    if (term === '') {
+      return null;
+    }
+    return {
+      id: term,
+      text: term
+    }
   },
   createLabel(label) {
     let self = this;
@@ -78,12 +92,11 @@ export default Mn.View.extend({
     this.model.set('description', label);
     this.model.save({}, {
       success(model, response) {
-        let id = response.id;
         let filters = [];
-        for(let i=0;i<self.labelsSelected;i++){
+        for(let i=0;i<self.labelsSelected.length;i++){
           let labelItem = self.labelsSelected[i];
-          if(Number.isNaN(self.labelsSelected[i])) {
-            labelItem = id;
+          if(!$.isNumeric(self.labelsSelected[i])) {
+            labelItem = response.id;
           }
           filters.push(labelItem);
         }
