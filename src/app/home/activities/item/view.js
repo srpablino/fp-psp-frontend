@@ -6,6 +6,8 @@ import Template from './template.hbs';
 
 export default Mn.View.extend({
   template: Template,
+  tagName: 'li',
+  className: 'feed-item',
 
   initialize(options) {
     this.props = Object.assign({}, options);
