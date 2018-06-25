@@ -24,6 +24,7 @@ export default Mn.View.extend({
       multiple: "multiple",
       tokenSeparators: [',', ' '],
       ajax: {
+        delay: 500,
         url: `${env.API}/labels/list`,
         data: this.buildDataParam,
         processResults:this.processLabelResults
