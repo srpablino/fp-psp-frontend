@@ -24,7 +24,6 @@ export default Mn.View.extend({
       this.model.attributes = this.options.model.attributes
     }else{
       this.model.urlRoot = `${env.API}/users/addUserRoleApplication`;
-
     }
   },
   serializeData() {
@@ -134,8 +133,7 @@ export default Mn.View.extend({
       });
     this.model.set('active',this.model.get('active')==="on");
 
-
-    if (session.userHasRole('ROLE_APP_ADMIN')) {
+    if (!this.model.attributes.userId && session.userHasRole('ROLE_APP_ADMIN')) {
         let user = session.get('user');
         this.model.set('application', user.application && user.application.id);
         this.model.set('organization', user.organization && user.organization.id);
@@ -145,7 +143,6 @@ export default Mn.View.extend({
 
     if (errors) {
       errors.forEach(error => {
-        this.model.set(this.originalModel.attributes);
         FlashesService.request('add', {
           timeout: 3000,
           type: 'danger',

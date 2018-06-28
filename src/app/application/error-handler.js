@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import nprogress from 'nprogress';
-import FlashesService from '../flashes/service';
 
 class ErrorHandler {
   setup(options) {
@@ -11,20 +10,13 @@ class ErrorHandler {
     $.ajaxSetup({
       beforeSend: xhr => {
         const accessToken = this.sessionMgr.getAccessToken();
-      
+
         if (accessToken) {
           xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
           xhr.setRequestHeader('X-Locale', this.sessionMgr.getLocale() || 'es');
         }
       },
       statusCode: {
-        0: () => {
-          FlashesService.request('add', {
-            timeout: 2000,
-            type: 'danger',
-            title: 'No connection to server'
-          });
-        },
         401: () => {
           this.redirectToLoginAfterError();
         },
