@@ -1,12 +1,14 @@
 import FamilyOrganizationView from './snapshots/by_organization/view';
 import DatatableReportView from './datatables/view';
+import SnapshotsReportView from './snapshots/view';
 
 const reports = props => {
   const {app} = props;
   const routes = {
     appRoutes: {
       'reports/snapshots/organizations(/)': 'showFamiliesByOrganization',
-      'reports/datatable': 'datatableReport'
+      'reports/datatable': 'datatableReport',
+      'reports/snapshots': 'snapshotsReport'
     },
     controller: {
       showFamiliesByOrganization() {
@@ -14,6 +16,9 @@ const reports = props => {
       },
       datatableReport() {
         app.showViewOnRoute(new DatatableReportView({app}));
+      },
+      snapshotsReport() {
+        app.showViewOnRoute(new SnapshotsReportView({app}));
       }
     }
   };

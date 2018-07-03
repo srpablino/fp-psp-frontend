@@ -396,7 +396,8 @@
         "not-found": "No results found"
       },
       "buttons": {
-        "export": "Download Report"
+        "export": "Download Report",
+        "download-csv": "Download CSV"
       },
       "status": "Status",
       "survey": "Survey",
