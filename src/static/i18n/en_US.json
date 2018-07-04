@@ -390,13 +390,15 @@
         "date-from": "Date From",
         "date-to": "Date To",
         "organization": "Organizations",
+        "survey": "Survey",
         "search": "Search",
         "choose": "Choose",
         "all": "All",
         "not-found": "No results found"
       },
       "buttons": {
-        "export": "Download Report"
+        "export": "Download Report",
+        "download-csv": "Download CSV"
       },
       "status": "Status",
       "survey": "Survey",
