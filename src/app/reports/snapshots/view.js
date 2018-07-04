@@ -124,6 +124,9 @@ export default Mn.View.extend({
     if (!filters.date_to) {
       errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.date-to')}));
     }
+    if (!filters.survey_id) {
+      errors.push(t('report.snapshot.messages.validation.required', {field: t('report.snapshot.search.survey')}));
+    }
     return errors;
   }
 });
