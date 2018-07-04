@@ -9,16 +9,21 @@ var ReportsStorage = Storage.extend({
       return {
         navigationItems: [
           {
-            name: t('report.snapshot.title'),
-            link: `/#reports/snapshots/organizations`
-          },
-          {
-            name: t('report.datatable.title'),
-            link: `/#reports/datatable`
+            name: 'Snapshots Report',
+            link: `/#reports/snapshots`
           }
+          // {
+          //   name: t('report.snapshot.title'),
+          //   link: `/#reports/snapshots/organizations`
+          // },
+          // {
+          //   name: t('report.datatable.title'),
+          //   link: `/#reports/datatable`
+          // }
         ]
       };
     }
   });
+
 
   export default new ReportsStorage();
