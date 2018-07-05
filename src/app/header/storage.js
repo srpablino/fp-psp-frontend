@@ -24,7 +24,7 @@ var HeaderStorage = Storage.extend({
       const items = {
         navigationItems: allMenuItems.navigationItems
           .filter(item => !(item.link === '#organizations'))
-          .filter(item => !(item.link === '#reports/snapshots/organizations'))
+          .filter(item => !(item.link === '#reports/snapshots'))
           .map(item => {
             item.name = t(`header.${item.name}`);
             return item;
@@ -73,7 +73,7 @@ var HeaderStorage = Storage.extend({
       mainItem: { link: `#${session.getLoggedUserHomeRoute()}` },
       navigationItems: allMenuItems.navigationItems
         .filter(item => !(item.link === '#applications'))
-        .filter(item => !(item.link === '#reports/snapshots/organizations'))
+        .filter(item => !(item.link === '#reports/snapshots'))
         .filter(item => !(item.link.indexOf('#collaborators') !== -1))
         .filter(item => !(item.link === '#management'))
         .map(item => {
